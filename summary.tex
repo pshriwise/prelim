@@ -55,7 +55,7 @@ condition, and imprinting and merging.  This geometry file is used to
 generate a facetted representation of the geometry that is stored in a
 MOAB format, with precision adequate to guarantee reliable radiation
 transport results\cite{snouffer}.  When loaded into a physics solver
-modified with DAGMC, the material and boundary condition informaiton
+modified with DAGMC, the material and boundary condition information
 is extracted and an oriented bounding box tree is generated to enable
 accelerated geometry operations on this representation with $O(10^6)$
 facets.  DAGMC allows simulation of complex geometries without
@@ -69,10 +69,10 @@ operations typical of Monte Carlo radiation transport: ray-tracing,
 point inclusion, and normal determination.  The DAGMC interface also
 includes methods for handling meta-data such as material assignment
 and boundary conditions.  Integration with a physics solver typically
-requires identifying all the geometry queries made by the phsyics
+requires identifying all the geometry queries made by the physics
 solver and replacing them with queries to the DAGMC interface.  In
 addition, various approaches are necessary to manage the
-initialziation phase of the simulation, depending on the physics
+initialization phase of the simulation, depending on the physics
 solver's initialization methods.  The primary physics solver used with
 DAGMC has been MCNP5, providing unique computing capability for
 analysis of shielding in fusion systems\cite{fusion3d} and criticality
@@ -85,13 +85,13 @@ abstractions, depending on previous efforts to allow alternative
 geometry representations.  In its simplest form, this abstraction is a
 set of function names reserved for use by external geometry
 representations.  In its most advanced form, this abstraction uses
-langauge paradigms to define formal interface that can be implemented
-by any geoemtry representation.  Handling geometry and metadata
+language paradigms to define formal interface that can be implemented
+by any geometry representation.  Handling geometry and metadata
 initialization is often the most challenging aspect of integrating
 DAGMC with a physics solver.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Fluka, FluGG adn FluDAG}
+\section{Fluka, FluGG and FluDAG}
 
 \subsection{FLUKA}
 FLUKA [ref] is a MC code provided by the Italian Institute for Nuclear
@@ -141,7 +141,7 @@ routines were implemented with the aid of DAGMC geometry calls.
 
 As with FLUGG, preparation of the input files is a two step process
 that involves parsing the geometry input file to create material
-assinments that are then pasted into the input deck for the main
+assignments that are then pasted into the input deck for the main
 program run.  A difference between Geant4 geometry and DAGMC is that
 DAGMC does not make use of material information and contains no
 methods that could be modified to produce the material assignments
@@ -195,7 +195,7 @@ spherical shells. The particle source was defined to be an
 isotropically emitting point source at the centre of the
 model. Normalising each tally such that the volume is set to 1.0 cubic
 cm, we expect that the score for each tally should be the same as the
-incrmental radius of the volume, i.e. 10.0 cm. Running the calculation
+incremental radius of the volume, i.e. 10.0 cm. Running the calculation
 in both Fluka and FluDAG we get the following results.
 \begin{tabular}{l|c|c|c}
 Cell \# & Expected Score & Fluka  & FluDAG \\
@@ -205,7 +205,7 @@ Cell \# & Expected Score & Fluka  & FluDAG \\
 3 & 10.0 & 9.999996 & 9.999995 \\
 \end{tabular}
 
-The variation bewteen Fluka and FluDAG results are no larger than the
+The variation between Fluka and FluDAG results are no larger than the
 4th significant figure (SF), this is commensurate with previous
 studies [ref] shows that faceting to a accuracy of $10^{-n}$ can
 effect the $n$th SF.
@@ -281,16 +281,16 @@ physics solvers.  The earliest development of DAGMC relied on source
 code for MCNPX v2.x as testbed for capability development.  The focus
 was shifted to MCNP5 and this has been the primary development
 platform and the product, DAG-MCNP5, is used routinely for production
-calculations in fusion neturonics applications.  The geometry
+calculations in fusion neutronics applications.  The geometry
 interface in MCNP5, written in FORTRAN90, is the least abstracted of
 all the current implementations, requiring relatively intrusive source
 code patches.  DAGMC will integrated with MCNP6 when its final source
 code becomes available.
 
 DAGMC has also been integrated with Tripoli4 \cite{tripoli4} from CEA
-Saclay.  Due to prior abstraction of the geoemtry interface to support
+Saclay.  Due to prior abstraction of the geometry interface to support
 the ROOT geometry representation, in addition to the native Tripoli
-represenation, this integration was relatively straightforward.
+representation, this integration was relatively straightforward.
 Tripoli exposes a well defined \C++ interface for determining the
 distance to the next surface, whether or not a point is inside a
 volume, what volume is entered upon crossing a surface, and what the
@@ -304,7 +304,7 @@ G4VSolid \C++ base class to create a DagSolid, with performance that
 compares favorably to the G4TesselatedSolid class that provides a
 similar capability.
 
-The DAGMC toolkit has msot recently been integrated with the Shift
+The DAGMC toolkit has most recently been integrated with the Shift
 physics solver from ORNL.  Similar to other modern \C++ solvers, Shift
 presents a well-defined geometry abstraction that facilitates
 integration, including meta-data handling.  While unit testing has
@@ -313,9 +313,9 @@ still underway.
 
 \section{Conclusions and Future Work}
 
-%%% insert conluding comments here
+%%% insert concluding comments here
 
-Having an indentical geometry representation available across a broad
+Having an identical geometry representation available across a broad
 set of physics solvers will enable a more robust comparison of the
 physics methods and data libraries of each tool.  A future effort will
 devise a suite of test problems that will be used with each of the
