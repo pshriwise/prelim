@@ -117,13 +117,26 @@ The FluDAG development schema followed a similar implementation as FluGG using t
 the vector between the particle direction and the surface normal.}
 \end{itemize}
 \subsection{Testing}
-The testing of the code centered around the comparison between simulations performed using native Fluka geometries and the FluDAG equivalent. The models were built using native MCNP geometries; converted to CAD using mcnp2cad for Fludag and converted to Fluka by importing the MCNP geometry using the Flair [ref] interface. Each problem tests a 
-\subsection*{USRTRACK Test Problems}
-There were several analytic vacuum test problems to prove that results between Fluka and FluDAG are identical. The first test problems demonstrate that USRTRACK scores are producing indentical scores, the model composed of cubes of side 10.0 cm. A plane beam of neutrons start particles at an x coordinate of 0.0 cm. Setting the volume of each scorer to be 1.0 cubic cm, should result in a score of 10.0 for each tally. Both Fluka and FluDAG report a score of 9.999996 for every volume, showing that our implementation 
-is correct.
+The testing of the code centered around the comparison between simulations performed using native Fluka geometries and the FluDAG equivalent. The models were built using native MCNP geometries; converted to CAD using mcnp2cad for Fludag and converted to Fluka by importing the MCNP geometry using the Flair [ref] interface. Each test is validating a specific aspect of FluDAG to ensure correctness. We can broadly classify the testing into analytic tests, where we can derive the expected result from first principles and then code tests.
+\subsubsection{Analytic Tests}
+Analytic testing of MC codes is preferred over code testing since the answer to be compared against is exact and thus any discrepancy is due to the implementation or code errors as opposed to the statistics involed in the calculation. The first set of tests are to show that in vacuum calculations of well defined geometries the FluDAG codes gives the same result as expected by theory and by Fluka.
+\subsubsection*{Track Length based tests}
+
+There were several analytic vacuum test problems to prove that results between Fluka and FluDAG are identical. The first test problems demonstrate that USRTRACK scores are producing indentical scores, the model composed of cubes of side 10.0 cm. A plane beam of neutrons start particles at an x coordinate of 0.0 cm. Setting the volume of each scorer to be 1.0 cubic cm, should result in a score of 10.0 for each tally.
+
+\begin{tabular}{l|c|c|c}
+Cell \# & Expected Score & Fluka  & FluDAG \\
+\hline
+1 & 10.0 & 9.999996 & 9.999996 \\
+... & ... & ... & ... \\
+10 & 10.0 & 9.999996 & 9.999996 \\
+\end{tabular}
+
+Both Fluka and FluDAG report a score of 9.999996 for every volume, showing that our implementation 
+is correct and for this cubic model shows that results are identical. 
 \\
 \\
-Nested Spheres of incremental radius were created with radius 10 cm and were faceted 1.0e-4. This model was a better test 
+In order to show the expected level of deviation when we consider curved surface, a further model was created composed of 3 nested spheres, such that the incremental radius of each sphere is 10.0 cm, such that the first volume is a sphere and subsequent volumes are spherical shells. The particle source was defined to be an isotropically emitting point source at the centre of the model. Normalising each tally such that the volume is set to 1.0 cubic cm, we expect that the score for each tally should be the same as the incrmental radius of the volume, i.e. 10.0 cm. Running the calculation in both Fluka and FluDAG we get the following results.
 \begin{tabular}{l|c|c|c}
 Cell \# & Expected Score & Fluka  & FluDAG \\
 \hline
@@ -131,12 +144,12 @@ Cell \# & Expected Score & Fluka  & FluDAG \\
 2 & 10.0 & 9.999996 & 10.00000 \\
 3 & 10.0 & 9.999996 & 9.999995 \\
 \end{tabular}
+The variation bewteen Fluka and FluDAG results are no larger than the 4th significant figure (SF), this is commensurate with previous studies [ref] shows that faceting to a accuracy of $10^{-n}$ can effect the $n$th SF.
 
+\subsubsection*{Surface Flux and current tests}
+The testing of the Boundary Crossing scoring began with using a model comprising of a 5 cm diameter cylinder, subdivided into 9 regions by placing a plane in 8 separate locations along the length of the cylinder. The model is taken to be composed of vacuum, and a disk source of neutrons producing a parallel beam of particles is placed at 0.0 cm. Each surface that is used to define the boundary between volume is defined to be inclined at an angle of 10 $^{\circ}$ to the last, the first surface is inclined at 10 $^{\circ}$, the second surface at 20 $^{\circ}$ and so on upto 80 $^{\circ}$.
 
-\subsection*{USRBDX Test problems}
-The testing of the Boundary Crossing scoring began with using a model comprising of a 5 cm diameter cylinder, subdivided into 9 regions by placing a plane in 8 separate locations along the length of the cylinder.
-
-\begin{figure}
+\begin{figure}[h!]
 	\begin{center}
 		\epsfig{file=figs/usrbdx_geom.ps,width=.6\columnwidth}
 		\caption{The model used showing the 8 separating surfaces each
@@ -144,18 +157,24 @@ The testing of the Boundary Crossing scoring began with using a model comprising
 	\end{center}
 \end{figure}
 
-
-
-\begin{figure}
+\subsubsection{Code Comparisons}
+\subsubsection*{Surface flux with particle scattering}
+Having performed analytic comparisons there is higher confidence in the implementation of FluDAG and thus code to 
+code comparisons can be performed. In order to prove the USRBDX score between two volumes, a model was created with
+a sphere of radius 50.0 cm composed of heavy water, with particles being killed once they leave the sphere. An isotropic point source was placed at the centre of the sphere. A USRBDX scores was created in both Fluka and FluDAG and scored the neutron flux crossing the sphere in both angle and energy, there were 60 angular and 260 energy bins in the score. 
+\begin{figure}[h!]
 	\begin{center}
 		\epsfig{file=figs/bin_ratio.ps,width=.6\columnwidth,angle=-90}
 		\epsfig{file=figs/bin_ratio_2.ps,width=.6\columnwidth,angle=-90}
 		\caption{The neutron current crossing the surface bewteen volumes, in the 
 		forward direction (upper) and at 80 degrees to the surface (lower)}
 	\end{center}
+\label{mat_usrbdx}
 \end{figure}
+The results shown in Figure \ref{mat_usrbdx} show the ratio of the flux of neutrons crossing the surface between the D$_2$O and vacuum for Fluka and FluDAG. The upper part of Figure \ref{mat_usrbdx} shows the ratio of results for the first angular bin corresponding to 0 $\to$ 0.209 Steradians, and the lower part of Figure \ref{mat_usrbdx} shows the ratio of results for the 20th angular corresponding to 3.979 $\to$ 4.189 steradians. We see that for both figures, the ratio of the results as a function of energy agree to within $\pm 3\sigma$, i.e. we expect 99.7\% of results to lie within the area defined by the two trend lines, when the estimate of the standard deviation is good.
 
-\subsection*{USRBIN Test problems}
+\subsubsection*{USRBIN mesh scoring including materials}
+Having shown that other scoring methods that rely upon 
 \begin{figure}
 	\begin{center}
 		\epsfig{file=figs/mesh_phot.ps,width=.6\columnwidth,angle=-90}
