@@ -307,9 +307,11 @@ similar capability.
 The DAGMC toolkit has most recently been integrated with the Shift
 physics solver from ORNL.  Similar to other modern \C++ solvers, Shift
 presents a well-defined geometry abstraction that facilitates
-integration, including meta-data handling.  While unit testing has
-demonstrated a successful implementation, final integration testing is
-still underway.
+integration, including meta-data handling.  Different geometry
+packages simply need to implement a common geometry interface, which
+is templated on a geometric state that is unique to each package.
+While unit testing has demonstrated a successful implementation,
+final integration testing is still underway.
 
 \section{Conclusions and Future Work}
 
