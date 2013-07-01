@@ -91,33 +91,39 @@ DAGMC with a physics solver.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Fluka and FluGG}
-\subsection{Fluka}
-Fluka [ref] is a MC code provided by the Italian Institute for Nuclear
+\subsection{FLUKA}
+FLUKA [ref] is a MC code provided by the Italian Institute for Nuclear
  Physics (INFN) and the Center for European Nuclear Research (CERN). The
   code is typically used for simulations in support of the facilities at   CERN, ATLAS, LHC etc, however is widely used for detector 
 simulations and solar particle analysis. 
-\subsection{FluGG}
-FluGG [ref] is the Fluka interface for Geant4 Geometry. It is a suite
- of C++ wrapper routines that act as an interface between the exposed 
+\subsection{FLUGG}
+FLUGG [ref] is the FLUKA interface for Geant4 Geometry. It is a suite
+ of C++ wrapper routines that acts as an interface between the exposed 
  parts of FLUKA subroutines and Geant4 libraries. The FLUKA team opened a
  number of interfaces to the FLUKA code around specific routines to allow the Physics routines of FLUKA to be used but with Geant4 geometry and
   therefore Geant4 geometric queries, such as the distance to next surface 
   query, the volume of the other side of the next surface. The user simply 
   takes the C++ routines that represent the geometry, compile these to 
   object files, link against a limited subset of the Geant4 libraries and
-   then link against the Fluka libraries, thus providing a custom executable
+   then link against the FLUKA libraries, thus providing a custom executable
    that contains the users geometry. 
 
-The FluGG compilation has a main() routine that initializes the Geant4 geometry and calls the main FLUKA routine with a switch that signifies that specific geometry calls should execute from the user-provided wrapper functions.
+The FLUGG compilation has a main() routine that initializes the Geant4 geometry and calls the main FLUKA routine with a switch that signifies that specific geometry calls should execute from the user-provided wrapper functions.
+
+FLUGG input files are similar to FLUKA input, with a two-step workflow needed to capture material assignments.
 \section{FluDAG}
 \subsection{Implementation \& Development}
-The FluDAG development schema followed a similar implementation as FluGG using the exposed parts of the Fluka interface. C++ wrapper files were written for the fundamental queries that must be implemented;
+The FluDAG development schema followed a similar implementation as FLUGG using the exposed parts of the FLUKA interface. The wrapper routines were implemented with the aid of DAGMC geometry calls. 
+
+C++ wrapper routines were written for the fundamental queries that must be implemented:
 \begin{itemize}
 \item[g1wr]{Given the current ray volume ($V_i$), position ($x_i$,$y_i$,$z_i$), and direction ($\Omega_x$,$\Omega_y$,$\Omega_z$),return the distance to the next surface intersection.}
 \item[lkwr]{Given the ray position ($x_i$,$y_i$,$z_i$), return the volume that position belong to.}	
 \item[nrmlwr]{When crossing from volume ($V_i$) to volume ($V_j$), return
 the vector between the particle direction and the surface normal.}
 \end{itemize}
+
+As with FLUGG, preparation of the input files is a two step process that involves parsing the geometry input file to create material assinments that are then pasted into the input deck for the main program run.  A difference between Geant4 geometry and DAGMC is that DAGMC does not make use of material information and contains no methods that could be modified to produce the material assignments required by FLUKA input.  A separate preprocessing program has been modified to perform this task.  
 \subsection{Testing}
 The testing of the code centered around the comparison between simulations performed using native Fluka geometries and the FluDAG equivalent. The models were built using native MCNP geometries; converted to CAD using mcnp2cad for Fludag and converted to Fluka by importing the MCNP geometry using the Flair [ref] interface. Each test is validating a specific aspect of FluDAG to ensure correctness. We can broadly classify the testing into analytic tests, where we can derive the expected result from first principles and then code tests.
 \subsubsection{Analytic Tests}
