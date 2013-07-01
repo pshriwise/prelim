@@ -11,6 +11,7 @@
 
 %%%% packages and definitions (optional)
 \usepackage{graphicx} % allows inclusion of graphics
+\usepackage{epsfig}
 \usepackage{booktabs} % nice rules (thick lines) for tables
 \usepackage{microtype} % improves typography for PDF
 
@@ -118,7 +119,7 @@ The FluDAG development schema followed a similar implementation as FluGG using t
 the vector between the particle direction and the surface normal.}
 \end{itemize}
 \subsection{Testing}
-The testing of the code centered around the comparison between simulations performed using native Fluka geometries and the FluDAG equivalent. The models were built using native MCNP geometries; converted to CAD using mcnp2cad for Fludag and converted to Fluka by importing the MCNP geometry using the Flair [ref] interface.
+The testing of the code centered around the comparison between simulations performed using native Fluka geometries and the FluDAG equivalent. The models were built using native MCNP geometries; converted to CAD using mcnp2cad for Fludag and converted to Fluka by importing the MCNP geometry using the Flair [ref] interface. Each problem tests a 
 \subsection*{USRTRACK Test Problems}
 There were several analytic vacuum test problems to prove that results between Fluka and FluDAG are identical. The first test problems demonstrate that USRTRACK scores are producing indentical scores, the model composed of cubes of side 10.0 cm. A plane beam of neutrons start particles at an x coordinate of 0.0 cm. Setting the volume of each scorer to be 1.0 cubic cm, should result in a score of 10.0 for each tally. Both Fluka and FluDAG report a score of 9.999996 for every volume, showing that our implementation 
 is correct.
@@ -133,7 +134,26 @@ Cell \# & Expected Score & Fluka  & FluDAG \\
 3 & 10.0 & 9.999996 & 9.999995 \\
 \end{tabular}
 
+
 \subsection*{USRBDX Test problems}
+\begin{figure}
+	\begin{center}
+		\epsfig{file=figs/bin_ratio.ps,width=.6\columnwidth,angle=-90}
+		\epsfig{file=figs/bin_ratio_2.ps,width=.6\columnwidth,angle=-90}
+		\caption{The neutron current crossing the surface bewteen volumes, in the 
+		forward direction (upper) and at 80 degrees to the surface (lower)}
+	\end{center}
+\end{figure}
+
+\subsection*{USRBIN Test problems}
+\begin{figure}
+	\begin{center}
+		\epsfig{file=figs/mesh_phot.ps,width=.6\columnwidth,angle=-90}
+		\epsfig{file=figs/mesh_phot_zoom.ps,width=.6\columnwidth,angle=-90}
+		\caption{USRBIN mesh scoring photon flux in increments of 3.0e-5 cm, upper figure shows the ratio between Fluka and FluDAG between 0.7 and 1.3, the lower figure concentrates on the }
+	\end{center}
+\end{figure}
+
 
 \section{Other DAGMC Implementations}
 
