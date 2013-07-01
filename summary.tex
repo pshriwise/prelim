@@ -11,6 +11,7 @@
 
 %%%% packages and definitions (optional)
 \usepackage{graphicx} % allows inclusion of graphics
+\usepackage{epsfig}
 \usepackage{booktabs} % nice rules (thick lines) for tables
 \usepackage{microtype} % improves typography for PDF
 
@@ -132,7 +133,14 @@ Cell \# & Expected Score & Fluka  & FluDAG \\
 \end{tabular}
 
 \subsection*{USRBDX Test problems}
-
+\begin{figure}
+	\begin{center}
+		\epsfig{file=figs/bin_ratio.ps,width=.5\columnwidth,angle=-90}
+		\epsfig{file=figs/bin_ratio_2.ps,width=.5\columnwidth,angle=-90}
+		\caption{The neutron current crossing the surface bewteen volumes, in the 
+		forward direction (upper) and at 80 degrees to the surface (lower)}
+	\end{center}
+\end{figure}
 \section{Other DAGMC Implementations}
 
 The DAGMC toolkit has already been integrated with a variety of
