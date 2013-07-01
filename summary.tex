@@ -14,6 +14,10 @@
 \usepackage{booktabs} % nice rules (thick lines) for tables
 \usepackage{microtype} % improves typography for PDF
 
+\def\C++{%
+    C\kern-.1667em\raise.30ex\hbox{\small{+\kern-.1667em+}}%
+\spacefactor1000 }
+
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
@@ -72,8 +76,69 @@ DAGMC has been MCNP5, providing unique computing capability for
 analysis of shielding in fusion systems\cite{fusion3d} and criticality
 deformed space nuclear energy systems\cite{nets}.
 
+Integration of DAGMC with a particular physics solver is generally
+easiest when that solver has already abstracted its geometry
+interface.  There are different levels of sophistication for such
+abstractions, depending on previous efforts to allow alternative
+geometry representations.  In its simplest form, this abstraction is a
+set of function names reserved for use by external geometry
+representations.  In its most advanced form, this abstraction uses
+langauge paradigms to define formal interface that can be implemented
+by any geoemtry representation.  Handling geometry and metadata
+initialization is often the most challenging aspect of integrating
+DAGMC with a physics solver.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Fluka and FluGG}
+
+\section{FluDAG Testing}
+
+\section{Other DAGMC Implementations}
+
+The DAGMC toolkit has already been integrated with a variety of
+physics solvers.  The earliest development of DAGMC relied on source
+code for MCNPX v2.x as testbed for capability development.  The focus
+was shifted to MCNP5 and this has been the primary development
+platform and the product, DAG-MCNP5, is used routinely for production
+calculations in fusion neturonics applications.  The geometry
+interface in MCNP5, written in FORTRAN90, is the least abstracted of
+all the current implementations, requiring relatively intrusive source
+code patches.  DAGMC will integrated with MCNP6 when its final source
+code becomes available.
+
+DAGMC has also been integrated with Tripoli4 \cite{tripoli4} from CEA
+Saclay.  Due to prior abstraction of the geoemtry interface to support
+the ROOT geometry representation, in addition to the native Tripoli
+represenation, this integration was relatively straightforward.
+Tripoli exposes a well defined \C++ interface for determining the
+distance to the next surface, whether or not a point is inside a
+volume, what volume is entered upon crossing a surface, and what the
+normal is on a surface.
+
+A recent effort to integrate DAGMC with GEANT4 has also proven
+successful \cite{dag_geant4}.  GEANT4 has a highly abstracted geometry
+interface, with a number of different implementations included with
+the base GEANT4 package.  This implementation extends the standard
+G4VSolid \C++ base class to create a DagSolid, with performance that
+compares favorably to the G4TesselatedSolid class that provides a
+similar capability.
+
+The DAGMC toolkit has msot recently been integrated with the Shift
+physics solver from ORNL.  Similar to other modern \C++ solvers, Shift
+presents a well-defined geometry abstraction that facilitates
+integration, including meta-data handling.  While unit testing has
+demonstrated a successful implementation, final integration testing is
+still underway.
+
+\section{Conclusions and Future Work}
+
+%%% insert conluding comments here
+
+Having an indentical geometry representation available across a broad
+set of physics solvers will enable a more robust comparison of the
+physics methods and data libraries of each tool.  A future effort will
+devise a suite of test problems that will be used with each of the
+physics solvers and their results compared.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Acknowledgments}
