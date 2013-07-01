@@ -3,7 +3,8 @@
 \title{FluDAG and Other Implementations of the DAGMC Toolkit}
 \author{Paul P.H. Wilson, Andrew Davis, Julie Zachman, Kerry L. Dunn}
 
-\institute{University of Wisconsin-Madison, 1500 Engineering Dr, Madison, WI 53706}
+\institute{University of Wisconsin-Madison, 1500 Engineering Dr,
+  Madison, WI 53706}
 
 \email{wilsonp@engr.wisc.edu}
 
@@ -101,13 +102,13 @@ solar particle analysis.
 
 \subsection{FLUGG}
 FLUGG [ref] is the FLUKA interface for Geant4 Geometry. It is a suite
-of C++ wrapper routines that acts as an interface between the exposed
+of \C++ wrapper routines that acts as an interface between the exposed
 parts of FLUKA subroutines and Geant4 libraries. The FLUKA team opened
 a number of interfaces to the FLUKA code around specific routines to
 allow the Physics routines of FLUKA to be used but with Geant4
 geometry and therefore Geant4 geometric queries, such as the distance
 to next surface query, the volume of the other side of the next
-surface. The user simply takes the C++ routines that represent the
+surface. The user simply takes the \C++ routines that represent the
 geometry, compile these to object files, link against a limited subset
 of the Geant4 libraries and then link against the FLUKA libraries,
 thus providing a custom executable that contains the users geometry.
@@ -125,8 +126,8 @@ The FluDAG development schema followed a similar implementation as
 FLUGG using the exposed parts of the FLUKA interface. The wrapper
 routines were implemented with the aid of DAGMC geometry calls.
 
-C++ wrapper routines were written for the fundamental queries that must be implemented:
-\begin{itemize}
+\C++ wrapper routines were written for the fundamental queries that must be implemented:
+\begin{description}
 \item[g1wr]{Given the current ray volume ($V_i$), position
   ($x_i$,$y_i$,$z_i$), and direction
   ($\Omega_x$,$\Omega_y$,$\Omega_z$),return the distance to the next
@@ -136,7 +137,7 @@ C++ wrapper routines were written for the fundamental queries that must be imple
 \item[nrmlwr]{When crossing from volume ($V_i$) to volume ($V_j$),
   return the vector between the particle direction and the surface
   normal.}
-\end{itemize}
+\end{description}
 
 As with FLUGG, preparation of the input files is a two step process
 that involves parsing the geometry input file to create material
