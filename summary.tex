@@ -90,8 +90,48 @@ DAGMC with a physics solver.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Fluka and FluGG}
+\subsection{Fluka}
+Fluka [ref] is a MC code provided by the Italian Institute for Nuclear
+ Physics (INFN) and the Center for European Nuclear Research (CERN). The
+  code is typically used for simulations in support of the facilities at   CERN, ATLAS, LHC etc, however is widely used for detector 
+simuluations and 
+\subsection{FluGG}
+FluGG [ref] is the Fluka interface for Geant Geometry (FLUGG), it is suite
+ of C++ wrapper routines that act as an interface between the exposed 
+ parts of FLUKA subroutines and Geant4 libraries. The FLUKA team opened a
+ number of interfaces to the FLUKA code around specific routines to allow the Physics routines of FLUKA to be used but with Geant4 geometry and
+  therefore Geant geomeric queries, such as the distance to next surface 
+  query, the volume of the other side of the next surface. The user simply 
+  takes the C++ routines that represent the geometry, compile these to 
+  object files, link against a limited subset of the Geant4 libraries and
+   then link against the Fluka libraries, thus providing a custom executable
+   that contains the users geometry. 
+\section{FluDAG}
+\subsection{Implementation \& Development}
+The FluDAG development schema followed a similar implementation as FluGG using the exposed parts of the Fluka interface. C++ wrapper files were written for the fundamental queries that must be implemented;
+\begin{itemize}
+\item[g1wr]{Given the current ray volume ($V_i$), position ($x_i$,$y_i$,$z_i$), and direction ($\Omega_x$,$\Omega_y$,$\Omega_z$),return the distance to the next surface intersection.}
+\item[lkwr]{Given the ray position ($x_i$,$y_i$,$z_i$), return the volume that position belong to.}	
+\item[nrmlwr]{When crossing from volume ($V_i$) to volume ($V_j$), return
+the vector between the particle direction and the surface normal.}
+\end{itemize}
+\subsection{Testing}
+The testing of the code centered around the comparison between simulations performed using native Fluka geometries and the FluDAG equivalent. The models were built using native MCNP geometries; converted to CAD using mcnp2cad for Fludag and converted to Fluka by importing the MCNP geometry using the Flair [ref] interface.
+\subsection*{USRTRACK Test Problems}
+There were several analytic vacuum test problems to prove that results between Fluka and FluDAG are identical. The first test problems demonstrate that USRTRACK scores are producing indentical scores, the model composed of cubes of side 10.0 cm. A plane beam of neutrons start particles at an x coordinate of 0.0 cm. Setting the volume of each scorer to be 1.0 cubic cm, should result in a score of 10.0 for each tally. Both Fluka and FluDAG report a score of 9.999996 for every volume, showing that our implementation 
+is correct.
+\\
+\\
+Nested Spheres of incremental radius were created with radius 10 cm and were faceted 1.0e-4. This model was a better test 
+\begin{tabular}{l|c|c|c}
+Cell \# & Expected Score & Fluka  & FluDAG \\
+\hline
+1 & 10.0 & 9.999996 & 9.999209 \\
+2 & 10.0 & 9.999996 & 10.00000 \\
+3 & 10.0 & 9.999996 & 9.999995 \\
+\end{tabular}
 
-\section{FluDAG Testing}
+\subsection*{USRBDX Test problems}
 
 \section{Other DAGMC Implementations}
 
