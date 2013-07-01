@@ -94,18 +94,20 @@ DAGMC with a physics solver.
 Fluka [ref] is a MC code provided by the Italian Institute for Nuclear
  Physics (INFN) and the Center for European Nuclear Research (CERN). The
   code is typically used for simulations in support of the facilities at   CERN, ATLAS, LHC etc, however is widely used for detector 
-simuluations and 
+simulations and solar particle analysis. 
 \subsection{FluGG}
-FluGG [ref] is the Fluka interface for Geant Geometry (FLUGG), it is suite
+FluGG [ref] is the Fluka interface for Geant4 Geometry. It is a suite
  of C++ wrapper routines that act as an interface between the exposed 
  parts of FLUKA subroutines and Geant4 libraries. The FLUKA team opened a
  number of interfaces to the FLUKA code around specific routines to allow the Physics routines of FLUKA to be used but with Geant4 geometry and
-  therefore Geant geomeric queries, such as the distance to next surface 
+  therefore Geant4 geometric queries, such as the distance to next surface 
   query, the volume of the other side of the next surface. The user simply 
   takes the C++ routines that represent the geometry, compile these to 
   object files, link against a limited subset of the Geant4 libraries and
    then link against the Fluka libraries, thus providing a custom executable
    that contains the users geometry. 
+
+The FluGG compilation has a main() routine that initializes the Geant4 geometry and calls the main FLUKA routine with a switch that signifies that specific geometry calls should execute from the user-provided wrapper functions.
 \section{FluDAG}
 \subsection{Implementation \& Development}
 The FluDAG development schema followed a similar implementation as FluGG using the exposed parts of the Fluka interface. C++ wrapper files were written for the fundamental queries that must be implemented;
