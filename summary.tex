@@ -105,7 +105,7 @@ DAGMC with a physics solver.
 \section{Fluka, FluGG and FluDAG}
 
 \subsection{FLUKA}
-FLUKA [ref] is a MC code provided by the Italian Institute for Nuclear
+FLUKA is a MC code provided by the Italian Institute for Nuclear
 Physics (INFN) and the Center for European Nuclear Research (CERN). The
 code is typically used for simulations in support of the facilities at   
 CERN, ATLAS, LHC etc, however is widely used for detector simulations and 
@@ -206,12 +206,12 @@ the volume of each scorer to be 1.0 cm$^3$, should result in a score of
 				expected by theory, Fluka and FluDAG. Note, the ``...''
 				is intended to mean the same as above}
 	\end{center}
-	\label{usrtrack_comp}
+	\label{usrtrack}
 \end{table}
 
-Both Fluka and FluDAG report a score of 9.999996 for every volume,
-showing that our implementation is correct and for this cubic model
-shows that results are identical.
+As shown in Table \ref{usrtrack}, both Fluka and FluDAG report a score of 
+9.999996 for every volume,showing that our implementation is correct and for 
+this cubic model shows that results are identical.
 
 In order to show the expected level of deviation when we consider
 curved surfaces, a further model was created composed of 3 nested
@@ -222,7 +222,7 @@ isotropically emitting point source at the centre of the
 model. Normalising each tally such that the volume is set to 1.0 cm $^3$, 
 we expect that the score for each tally should be the same as the
 incremental radius of the volume, i.e. 10.0 cm. Running the calculation
-in both Fluka and FluDAG we get the following results.
+in both Fluka and FluDAG we get the results shown in Table \ref{usrtrack_comp_sphere}.
 \begin{table}[h!]
 	\begin{center}
 		\begin{tabular}{|l|c|c|c|}
@@ -282,8 +282,8 @@ surface at 20 $^{\circ}$ and so on upto 80 $^{\circ}$.
                 \caption{List of surface fluxes as a function of surface
                          angle as expected by theory and as calculated by 
                          Fluka and FluDAG}
+                \label{usrbdx_crossing}
                 \end{center}
-\label{usrbdx_crossing}
 \end{table}
 As shown in Table \ref{usrbdx_crossing} the results are as defined as expected, 
 there are some numerical differences beyond the 4th SF but given that the model
@@ -350,6 +350,24 @@ number as compared to the number of source particles.  The lower part of Figure
 \ref{mesh_phot} shows the ratio between Fluka and FluDAG result, the variation seen is 
 due to rounding in the last SF of the output mesh since the Fluka mesh format is written 
  in the format E11.4. 
+
+\subsubsection{Examples of complex FLuDAG models}
+Due to the early stage of development few large FluDAG calculations have been performed, however
+one of the test geometries provided to us is that shown below in Figure \ref{nasa_mesh}. The case shown
+was to show that in a model composed entirely of vacuum no particles were lost and no oscillations were
+introduced into the particle flux.
+
+\begin{figure}[h!]
+        \begin{center}
+                \epsfig{file=figs/nasa_mesh.ps,width=.6\columnwidth,angle=90}
+                \caption{Neutron flux in a void run of the NASA test problem, 
+                         faceted to $10\times10^{-4}$, point source at centre of model}
+        \end{center}
+    \label{nasa_mesh}
+\end{figure}
+One of the near term development goals is add tetrahedral mesh scoring to FluDAG and thus allow
+FLuka users access to unstructured mesh scoring.
+
 
 \section{Other DAGMC Implementations}
 
