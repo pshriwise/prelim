@@ -29,7 +29,7 @@ an interface to the Mesh-Oriented datABase (MOAB)\cite{MOAB} specialized for the
 geometric operations of Monte Carlo radiation transport directly on
 CAD-based geometries.  By taking full control of the geometric
 operations, including ray tracing, point inclusion, and surface
-determination, DAGMC allows an identical geometry representation to be
+normal determination, DAGMC allows an identical geometry representation to be
 used in a variety of Monte Carlo physics solvers.
 
 This work describes the application of the DAGMC toolkit to
@@ -46,7 +46,7 @@ Tripoli4\cite{tripoli}, GEANT4, and SHIFT\cite{shift}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The DAGMC Toolkit}
 
-The details of DAGMC have been described in other work, but are
+The details of DAGMC have been described in other work\cite{dagmc}, but are
 summarized here for context.  A user generates a geometric description
 of the problem using one of a variety of solid modeling software
 packages and imports that geometry into Cubit\cite{cubit} for
@@ -57,7 +57,7 @@ MOAB format, with precision adequate to guarantee reliable radiation
 transport results\cite{snouffer_ans}.  When loaded into a physics solver
 modified with DAGMC, the material and boundary condition information
 is extracted and an oriented bounding box tree is generated to enable
-accelerated geometry operations on this representation with $O(10^6)$
+accelerated geometry operations on this representation, typically with $O(10^6)$
 facets.  DAGMC allows simulation of complex geometries without
 time-consuming translation to native geometric representations of the
 physics solvers, with modest performance impact.  It also allows the
@@ -67,7 +67,7 @@ native geometric representation.
 The DAGMC toolkit is comprised primarily of a small set of geometric
 operations typical of Monte Carlo radiation transport: ray-tracing,
 point inclusion, and normal determination.  The DAGMC interface also
-includes methods for handling meta-data such as material assignment
+includes methods for handling metadata such as material assignment
 and boundary conditions.  Integration with a physics solver typically
 requires identifying all the geometry queries made by the physics
 solver and replacing them with queries to the DAGMC interface.  In
@@ -76,7 +76,7 @@ initialization phase of the simulation, depending on the physics
 solver's initialization methods.  The primary physics solver used with
 DAGMC has been MCNP5, providing unique computing capability for
 analysis of shielding in fusion systems\cite{fusion3d} and criticality
-deformed space nuclear energy systems\cite{nets}.
+of deformed space nuclear energy systems\cite{nets}.
 
 Integration of DAGMC with a particular physics solver is generally
 easiest when that solver has already abstracted its geometry
@@ -93,14 +93,12 @@ DAGMC with a physics solver.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Fluka, FluGG and FluDAG}
 
-\subsection{FLUKA}
-FLUKA\cite{fluka} is a MC code provided by the Italian Institute for Nuclear
+FLUKA\cite{fluka} is a Monte Carlo code provided by the Italian Institute for Nuclear
 Physics (INFN) and the Center for European Nuclear Research (CERN). The
 code is typically used for simulations in support of the facilities at   
-CERN, ATLAS, LHC etc, however is widely used for detector simulations and 
+CERN, ATLAS, LHC, etc, however is widely used for detector simulations and 
 solar particle analysis. 
 
-\subsection{FLUGG}
 FLUGG\cite{flugg} is the FLUKA interface for Geant4 Geometry. It is a suite
 of \C++ wrapper routines that acts as an interface between the exposed
 parts of FLUKA subroutines and Geant4 libraries. The FLUKA team opened
@@ -157,14 +155,14 @@ detail material description, but does handle the material assignments.}
 The testing of the code centered around the comparison between
 simulations performed using native Fluka geometries and the FluDAG
 equivalent. The models were built using native MCNP geometries;
-converted to CAD using mcnp2cad for Fludag and converted to Fluka by
+converted to CAD using mcnp2cad for FluDAG, and converted to Fluka by
 importing the MCNP geometry using the Flair\cite{flair} interface. Each test
 is validating a specific aspect of FluDAG to ensure correctness. We
 can broadly classify the testing into analytic tests, where we can
 derive the expected result from first principles and then code tests.
 
 \subsection{Analytic Tests}
-Analytic testing of MC codes is preferred over code testing since the
+Analytic testing of Monte Carlo codes is preferred over code testing since the
 answer to be compared against is exact and thus any discrepancy is due
 to the implementation as opposed to the statistics or the nuclear data
 involed in the calculation. The first set of tests are to show that in
@@ -204,11 +202,11 @@ this cubic model shows that results are identical.
 
 In order to show the expected level of deviation when we consider
 curved surfaces, a further model was created composed of 3 nested
-spheres, such that the incremental radius of each sphere is 10.0 cm,
+spheres, such that the incremental radius of each sphere is 10.0\ cm,
 hence the first volume is a sphere and subsequent volumes are
 spherical shells. The particle source was defined to be an
 isotropically emitting point source at the centre of the
-model. Normalising each tally such that the volume is set to 1.0 cm $^3$, 
+model. Normalising each tally such that the volume is set to 1.0 cm$^3$, 
 we expect that the score for each tally should be the same as the
 incremental radius of the volume, i.e. 10.0 cm. Running the calculation
 in both Fluka and FluDAG we get the results shown in Table \ref{usrtrack_comp_sphere}.
@@ -240,9 +238,9 @@ placing a plane in 8 separate locations along the length of the
 cylinder. The model is taken to be composed of vacuum, and a disk
 source of neutrons producing a parallel beam of particles is placed at
 0.0 cm. Each surface that is used to define the boundary between
-volumes is defined to be inclined at an angle of 10 $^{\circ}$ with respect to the
-last, the first surface is inclined at 10 $^{\circ}$, the second
-surface at 20 $^{\circ}$ and so on upto 80 $^{\circ}$.
+volumes is defined to be inclined at an angle of 10$^{\circ}$ with respect to the
+last, the first surface is inclined at 10$^{\circ}$, the second
+surface at 20$^{\circ}$ and so on upto 80$^{\circ}$.
 
 %\begin{figure}[h!]
 %	\begin{center}
@@ -275,9 +273,9 @@ surface at 20 $^{\circ}$ and so on upto 80 $^{\circ}$.
                 \end{center}
 \end{table}
 As shown in Table \ref{usrbdx_crossing} the results are as defined as expected, 
-there are some numerical differences beyond the 4th SF but given that the model
+there are some numerical differences beyond the $4^{th}$ significant figure but given that the model
 was faceted to a tolerance of $1.0\times 10^{-4}$ we can expect no better accuracy 
-than 4 SF.
+than 4 significant figure.
 
 \subsection{Code Comparisons}
 \subsubsection*{Surface flux with particle scattering}
@@ -306,7 +304,7 @@ the ratio of results for the first angular bin corresponding to 0
 $\to$ 0.209 Steradians, and the lower part of Figure \ref{mat_usrbdx}
 shows the ratio of results for the 20th angular corresponding to 3.979
 $\to$ 4.189 steradians. We see that for both figures, the ratio of the
-results as a function of energy agree to within $\pm 3\sigma$, i.e. we
+results as a function of energy agree to within $\pm 3\sigma$. That is, we
 expect 99.7\% of results to lie within the area defined by the two
 trend lines, when the estimate of the standard deviation is appropriate.
 
@@ -315,10 +313,10 @@ Having determined the accuracy and functionality of the most important
 volume based scoring methods, the remaining geometry independent methods
 should also be tested.
 Fluka has the USRBIN score, which allows arbitrary scoring
-of data superimposed on top of the geometry. In order to test this, a geometry
+of data on a mesh superimposed on top of the geometry. In order to test this, a geometry
 was constructed in which the axis of a cylinder of radius 10.0 cm points along the
 +x axis, with planes at 0.0 and 0.1 cm define a vacuum region and 0.1 to 0.3 
-defines a water region. A disk  source located at x=0.001 of radius provides a 
+defines a water region. A disk source located at x=0.001 of radius provides a 
 parallel beam of 1 GeV photons.
 \begin{figure}[h!]
 	\begin{center}
@@ -337,7 +335,7 @@ bounds defined by $\pm 3\sigma$. The large deviation away from the average is du
 the flux behind the source being dominated by scattered photons, and thus are low in 
 number as compared to the number of source particles.  The lower part of Figure 
 \ref{mesh_phot} shows the ratio between Fluka and FluDAG result, the variation seen is 
-due to rounding in the last SF of the output mesh since the Fluka mesh format is written 
+due to rounding in the last significant figure of the output mesh since the Fluka mesh format is written 
  in the format E11.4. 
 
 \subsubsection{Examples of complex FLuDAG models}
@@ -368,10 +366,10 @@ platform and the product, DAG-MCNP5, is used routinely for production
 calculations in fusion neutronics applications.  The geometry
 interface in MCNP5, written in FORTRAN90, is the least abstracted of
 all the current implementations, requiring relatively intrusive source
-code patches.  DAGMC will integrated with MCNP6 when its final source
+code patches.  DAGMC will be integrated with MCNP6 when its final source
 code becomes available.
 
-DAGMC has also been integrated with Tripoli4 \cite{tripoli} from CEA
+DAGMC has also been integrated with Tripoli4\cite{tripoli} from CEA
 Saclay.  Due to prior abstraction of the geometry interface to support
 the ROOT geometry representation, in addition to the native Tripoli
 representation, this integration was relatively straightforward.
@@ -391,7 +389,7 @@ similar capability.
 The DAGMC toolkit has most recently been integrated with the Shift
 physics solver from ORNL.  Similar to other modern \C++ solvers, Shift
 presents a well-defined geometry abstraction that facilitates
-integration, including meta-data handling.  Different geometry
+integration, including metadata handling.  Different geometry
 packages simply need to implement a common geometry interface, which
 is templated on a geometric state that is unique to each package.
 While unit testing has demonstrated a successful implementation,
