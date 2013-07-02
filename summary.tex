@@ -177,7 +177,7 @@ derive the expected result from first principles and then code tests.
 \subsection{Analytic Tests}
 Analytic testing of MC codes is preferred over code testing since the
 answer to be compared against is exact and thus any discrepancy is due
-to the implementation or code errors as opposed to the statistics
+to the implementation as opposed to the statistics or the nuclear data
 involed in the calculation. The first set of tests are to show that in
 vacuum calculations of well defined geometries the FluDAG codes gives
 the same result as expected by theory and by Fluka.
@@ -185,11 +185,12 @@ the same result as expected by theory and by Fluka.
 \subsubsection*{Track Length based tests}
 There were several analytic vacuum test problems to prove that results
 between Fluka and FluDAG are identical. The first test problems
-demonstrate that USRTRACK scores are producing identical scores, the
-model composed of cubes of side 10.0 cm. A plane beam of neutrons
-start particles at an x coordinate of 0.0 cm. Setting the volume of
-each scorer to be 1.0 cubic cm, should result in a score of 10.0 for
-each tally.
+demonstrate that Fluka's track length based esimator, USRTRACK, 
+scores are producing identical scores, the test model composed of 
+10 cubes of side 10.0 cm joined in a line by opposing faces. A plane 
+beam of neutrons start particles at an x coordinate of 0.0 cm. Setting 
+the volume of each scorer to be 1.0 cm$^3$, should result in a score of 
+10.0 for each tally.
 \begin{table}[h!]
 	\begin{center}
 		\begin{tabular}{|l|c|c|c|}
@@ -209,17 +210,17 @@ each tally.
 \end{table}
 
 Both Fluka and FluDAG report a score of 9.999996 for every volume,
-showing that our implementation y is correct and for this cubic model
+showing that our implementation is correct and for this cubic model
 shows that results are identical.
 
 In order to show the expected level of deviation when we consider
-curved surface, a further model was created composed of 3 nested
+curved surfaces, a further model was created composed of 3 nested
 spheres, such that the incremental radius of each sphere is 10.0 cm,
-such that the first volume is a sphere and subsequent volumes are
+hence the first volume is a sphere and subsequent volumes are
 spherical shells. The particle source was defined to be an
 isotropically emitting point source at the centre of the
-model. Normalising each tally such that the volume is set to 1.0 cubic
-cm, we expect that the score for each tally should be the same as the
+model. Normalising each tally such that the volume is set to 1.0 cm $^3$, 
+we expect that the score for each tally should be the same as the
 incremental radius of the volume, i.e. 10.0 cm. Running the calculation
 in both Fluka and FluDAG we get the following results.
 \begin{table}[h!]
@@ -240,8 +241,8 @@ in both Fluka and FluDAG we get the following results.
 \end{table}
 The variation between Fluka and FluDAG results are no larger than the
 $4^{th}$ significant figure (SF), this is commensurate with previous
-studies\cite{snouffer_ans} showing that faceting to a accuracy of $10^{-n}$ can
-effect the $n$th SF.
+studies \cite{snouffer_ans} showing that faceting to a accuracy of $10^{-n}$ can
+effect the $n$th SF. 
 
 \subsubsection*{Surface Flux and current tests}
 The testing of the Boundary Crossing scoring began with using a model
@@ -254,13 +255,40 @@ volumes is defined to be inclined at an angle of 10 $^{\circ}$ with respect to t
 last, the first surface is inclined at 10 $^{\circ}$, the second
 surface at 20 $^{\circ}$ and so on upto 80 $^{\circ}$.
 
-\begin{figure}[h!]
-	\begin{center}
-		\epsfig{file=figs/usrbdx_geom.ps,width=.6\columnwidth}
-		\caption{The model used showing the 8 separating surfaces each
-		incremented at an angle 10 $^{\circ}$ to the last}
-	\end{center}
-\end{figure}
+%\begin{figure}[h!]
+%	\begin{center}
+%		\epsfig{file=figs/usrbdx_geom.ps,width=.6\columnwidth}
+%		\caption{The model used showing the 8 separating surfaces each
+%		incremented at an angle 10 $^{\circ}$ to the last}
+%	\end{center}
+%\end{figure}
+
+\begin{table}[h!]
+        \begin{center}
+                \begin{tabular}{|l|c|c|c|}
+                  \hline
+                        Angle & Expected Score & Fluka  & FluDAG \\
+                        \hline
+                        10$^{\circ}$ & 1.015426 & 1.015426 & 1.015407\\
+                        20$^{\circ}$ & 1.064178 & 1.064177 & 1.064157\\
+                        30$^{\circ}$ & 1.154700 & 1.154700 & 1.154677\\
+                        40$^{\circ}$ & 1.305407 & 1.305407 & 1.305381\\
+                        50$^{\circ}$ & 1.555724 & 1.555723 & 1.555693\\
+                        60$^{\circ}$ & 2.000000 & 1.999999 & 1.999960\\
+                        70$^{\circ}$ & 2.923804 & 2.923803 & 2.923746\\
+                        80$^{\circ}$ & 5.758770 & 5.758769 & 5.758655\\
+                        \hline
+                \end{tabular}
+                \caption{List of surface fluxes as a function of surface
+                         angle as expected by theory and as calculated by 
+                         Fluka and FluDAG}
+                \end{center}
+\label{usrbdx_crossing}
+\end{table}
+As shown in Table \ref{usrbdx_crossing} the results are as defined as expected, 
+there are some numerical differences beyond the 4th SF but given that the model
+was faceted to a tolerance of $1.0\times 10^{-4}$ we can expect no better accuracy 
+than 4 SF.
 
 \subsection{Code Comparisons}
 \subsubsection*{Surface flux with particle scattering}
@@ -270,7 +298,7 @@ performed. In order to prove the USRBDX score between two volumes, a
 model was created with a sphere of radius 50.0 cm composed of heavy
 water, with particles being killed once they leave the sphere. An
 isotropic point source was placed at the centre of the sphere. A
-USRBDX scores was created in both Fluka and FluDAG and scored the
+USRBDX score was created in both Fluka and FluDAG and scored the
 neutron flux crossing the sphere in both angle and energy, there were
 60 angular and 260 energy bins in the score.
 \begin{figure}[h!]
@@ -291,18 +319,19 @@ shows the ratio of results for the 20th angular corresponding to 3.979
 $\to$ 4.189 steradians. We see that for both figures, the ratio of the
 results as a function of energy agree to within $\pm 3\sigma$, i.e. we
 expect 99.7\% of results to lie within the area defined by the two
-trend lines, when the estimate of the standard deviation is good.
+trend lines, when the estimate of the standard deviation is appropriate.
 
 \subsubsection*{USRBIN mesh scoring including materials}
-Having shown that other scoring methods that are tied to the definition of
-the volume in some form, the methods which are geometry independent should
-be tested. Fluka contains the USRBIN score, which allows arbitrary scoring
+Having determined the accuracy and functionality of the most important 
+volume based scoring methods, the remaining geometry independent methods
+should also be tested.
+Fluka has the USRBIN score, which allows arbitrary scoring
 of data superimposed on top of the geometry. In order to test this, a geometry
-was constructed in which the axis of a cylinder of radius 10.0 cm point along the
+was constructed in which the axis of a cylinder of radius 10.0 cm points along the
 +x axis, with planes at 0.0 and 0.1 cm define a vacuum region and 0.1 to 0.3 
-defines a water regio. A disk  source located at x=0.001 of radius provides a parallel beam of 1 GeV 
-photons.
-\begin{figure}
+defines a water region. A disk  source located at x=0.001 of radius provides a 
+parallel beam of 1 GeV photons.
+\begin{figure}[h!]
 	\begin{center}
 		\epsfig{file=figs/mesh_phot.ps,width=.6\columnwidth,angle=-90}
 		\epsfig{file=figs/mesh_phot_zoom.ps,width=.6\columnwidth,angle=-90}
@@ -313,12 +342,14 @@ photons.
 	\end{center}
 	\label{mesh_phot}
 \end{figure}
-As can be seen in the upper part Figure \ref{mesh_phot} the area behind the source (x < 0.01 cm) 
-shows the poorest agreement, however the variation is well within the bounds 
-defined by $\pm 3\sigma$. The large deviation away from the average is due to the flux 
-behind the source being dominated by scattered photons, and thus are low in number as compared
-to the number of source particles.  The lower part of Figure \ref{mesh_phot} shows the ratio 
-between Fluka and FluDAG result, the variation seen is due to rounding in the last SF of the output mesh since the Fluka mesh format is written as E11.4. 
+As can be seen in the upper part Figure \ref{mesh_phot} the area behind the source 
+(x < 0.01 cm) shows the poorest agreement, however the variation is well within the 
+bounds defined by $\pm 3\sigma$. The large deviation away from the average is due to 
+the flux behind the source being dominated by scattered photons, and thus are low in 
+number as compared to the number of source particles.  The lower part of Figure 
+\ref{mesh_phot} shows the ratio between Fluka and FluDAG result, the variation seen is 
+due to rounding in the last SF of the output mesh since the Fluka mesh format is written 
+ in the format E11.4. 
 
 \section{Other DAGMC Implementations}
 
