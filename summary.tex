@@ -1,4 +1,4 @@
-\documentclass{anstrans}[11pt]
+\documentclass{anstrans}[12pt]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{FluDAG and Other Implementations of the DAGMC Toolkit}
 \author{Paul P.H. Wilson, Andrew Davis, Julie Zachman, Kerry L. Dunn}
@@ -122,6 +122,7 @@ The FluDAG development schema followed a similar implementation as
 FLUGG using the exposed parts of the FLUKA interface. The wrapper
 routines were implemented with the aid of DAGMC geometry calls.
 
+\newpage
 \C++ wrapper routines were written for the fundamental queries that 
 must be implemented:
 
@@ -249,7 +250,7 @@ surface at 20$^{\circ}$ and so on upto 80$^{\circ}$.
 %	\end{center}
 %\end{figure}
 
-\begin{table}[h!]
+\begin{table}%[h!]
         \begin{center}
                 \begin{tabular}{|l|c|c|c|}
                   \hline
@@ -342,21 +343,17 @@ due to rounding in the last significant figure of the output mesh since the Fluk
 
 \subsubsection{Examples of complex FLuDAG models}
 Due to the early stage of development few large FluDAG calculations have been performed, however
-one of the test geometries provided to us is that shown below in Figure \ref{nasa_mesh}. The case shown
-was to show that in a model composed entirely of vacuum no particles were lost and no oscillations were
+one of the NASA-provided test geometries is shown below in Figure \ref{nasa_mesh}.  This calculation demonstrated 
+that in a model composed entirely of vacuum no particles were lost and no oscillations were
 introduced into the particle flux.
 
-\begin{figure}[h!]
+\begin{figure}%[h!]
         \begin{center}
                 \epsfig{file=figs/nasa_mesh.ps,width=.6\columnwidth,angle=90}
                 \caption{Neutron flux in a void run of the NASA test problem, 
-                         faceted to $10\times10^{-4}$, point source at centre of model}
+                         faceted to $10\times10^{-4}$, point source at centre of model}\label{nasa_mesh}
         \end{center}
-    \label{nasa_mesh}
 \end{figure}
-One of the near term development goals is add tetrahedral mesh scoring to FluDAG and thus allow
-FLuka users access to unstructured mesh scoring.
-
 
 \section{Other DAGMC Implementations}
 
