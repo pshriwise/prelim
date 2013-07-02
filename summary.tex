@@ -105,14 +105,14 @@ DAGMC with a physics solver.
 \section{Fluka, FluGG and FluDAG}
 
 \subsection{FLUKA}
-FLUKA is a MC code provided by the Italian Institute for Nuclear
+FLUKA\cite{fluka} is a MC code provided by the Italian Institute for Nuclear
 Physics (INFN) and the Center for European Nuclear Research (CERN). The
 code is typically used for simulations in support of the facilities at   
 CERN, ATLAS, LHC etc, however is widely used for detector simulations and 
 solar particle analysis. 
 
 \subsection{FLUGG}
-FLUGG [ref] is the FLUKA interface for Geant4 Geometry. It is a suite
+FLUGG\cite{flugg} is the FLUKA interface for Geant4 Geometry. It is a suite
 of \C++ wrapper routines that acts as an interface between the exposed
 parts of FLUKA subroutines and Geant4 libraries. The FLUKA team opened
 a number of interfaces to the FLUKA code around specific routines to
@@ -169,7 +169,7 @@ The testing of the code centered around the comparison between
 simulations performed using native Fluka geometries and the FluDAG
 equivalent. The models were built using native MCNP geometries;
 converted to CAD using mcnp2cad for Fludag and converted to Fluka by
-importing the MCNP geometry using the Flair [ref] interface. Each test
+importing the MCNP geometry using the Flair\cite{flair} interface. Each test
 is validating a specific aspect of FluDAG to ensure correctness. We
 can broadly classify the testing into analytic tests, where we can
 derive the expected result from first principles and then code tests.
