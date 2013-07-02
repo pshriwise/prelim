@@ -1,0 +1,7 @@
+#!/bin/bash
+
+latex summary.tex
+bibtex summary
+latex summary.tex
+latex summary.tex
+dvipdfm summary.dvi
