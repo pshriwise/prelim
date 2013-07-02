@@ -191,9 +191,9 @@ the volume of each scorer to be 1.0 cm$^3$, should result in a score of
 		\end{tabular}
 	\caption{List of volumewise track length fluxes that are 
 				expected by theory, Fluka and FluDAG. Note, the ``...''
-				is intended to mean the same as above}
+				is intended to mean the same as above.}\label{table:usrtrack_comp}
+
 	\end{center}
-	\label{usrtrack}
 \end{table}
 
 As shown in Table \ref{usrtrack}, both Fluka and FluDAG report a score of 
@@ -223,9 +223,9 @@ in both Fluka and FluDAG we get the results shown in Table \ref{usrtrack_comp_sp
 			\hline
 		\end{tabular}
 		\caption{List of volumewise track length fluxes that are 
-			expected by theory, Fluka and FluDAG}
+			expected by theory, Fluka and FluDAG}\label{table:usrtrack_comp_sphere}
+
 	\end{center}
-\label{table:usrtrack_comp_sphere}
 \end{table}
 
 The variation between Fluka and FluDAG results are no larger than the
@@ -297,9 +297,8 @@ neutron flux crossing the sphere in both angle and energy, there were
 		\epsfig{file=figs/bin_ratio.ps,width=.6\columnwidth,angle=-90}
 		\epsfig{file=figs/bin_ratio_2.ps,width=.6\columnwidth,angle=-90}
 		\caption{The neutron current crossing the surface between volumes, in the 
-		forward direction (upper) and at 80 degrees to the surface (lower)}
+		forward direction (upper) and at 80 degrees to the surface (lower)}\label{fig:mat_usrbdx}
 	\end{center}
-\label{fig:mat_usrbdx}
 \end{figure}
 
 The results shown in Figure \ref{fig:mat_usrbdx} show the ratio of the
@@ -325,14 +324,13 @@ defines a water region. A disk source located at x=0.001 of radius provides a
 parallel beam of 1 GeV photons.
 
 \begin{figure}%[h!]
-	\label{fig:mesh_phot}
 	\begin{center}
 		\epsfig{file=figs/mesh_phot.ps,width=.6\columnwidth,angle=-90}
 		\epsfig{file=figs/mesh_phot_zoom.ps,width=.6\columnwidth,angle=-90}
 		\caption{USRBIN mesh scoring photon flux in increments
                   of $3.0 \times 10^{-5}$ cm, upper figure shows the ratio between
                   Fluka and FluDAG between 0.7 and 1.3, the lower
-                  figure magnifies the range near 1.0. }
+                  figure magnifies the range near 1.0. }\label{fig:mesh_phot}
 	\end{center}
 \end{figure}
 
