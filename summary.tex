@@ -85,7 +85,7 @@ abstractions, depending on previous efforts to allow alternative
 geometry representations.  In its simplest form, this abstraction is a
 set of function names reserved for use by external geometry
 representations.  In its most advanced form, this abstraction uses
-language paradigms to define formal interface that can be implemented
+language paradigms to define a formal interface that can be implemented
 by any geometry representation.  Handling geometry and metadata
 initialization is often the most challenging aspect of integrating
 DAGMC with a physics solver.
@@ -145,7 +145,7 @@ program run.  There are some differences between FLUGG and FluDAG.
 The compiled executable is designed to take arbitrary input geometry meshes 
 and thus there is no additional need for recompilation of the executable.
 FluDAG has no knowledge of material compositions and thus cannot produce
-detail material description, but does handle the material assignments.
+detailed material descriptions, but does handle the material assignments.
 %make use of material information and contains no
 %methods that could be modified to produce the material assignments
 %required by FLUKA input.  A separate preprocessing program has been
@@ -159,7 +159,7 @@ converted to CAD using mcnp2cad for FluDAG, and converted to Fluka by
 importing the MCNP geometry using the Flair\cite{flair} interface. Each test
 is validating a specific aspect of FluDAG to ensure correctness. We
 can broadly classify the testing into analytic tests, where we can
-derive the expected result from first principles and then code tests.
+derive the expected result from first principles, and then code tests.
 
 \subsection{Analytic Tests}
 Analytic testing of Monte Carlo codes is preferred over code testing since the
@@ -172,7 +172,7 @@ the same result as expected by theory and by Fluka.
 \subsubsection*{Track Length based tests}
 There were several analytic vacuum test problems to prove that results
 between Fluka and FluDAG are identical. The first test problems
-demonstrate that Fluka's track length based esimator, USRTRACK, 
+demonstrate that Fluka's track length based estimator, USRTRACK, 
 scores are producing identical scores, the test model composed of 
 10 cubes of side 10.0 cm joined in a line by opposing faces. A plane 
 beam of neutrons start particles at an x coordinate of 0.0 cm. Setting 
@@ -228,7 +228,7 @@ in both Fluka and FluDAG we get the results shown in Table \ref{usrtrack_comp_sp
 
 The variation between Fluka and FluDAG results are no larger than the
 $4^{th}$ significant figure, this is commensurate with previous
-studies \cite{snouffer_ans} showing that faceting to a accuracy of $10^{-n}$ can
+studies \cite{snouffer_ans} showing that faceting to an accuracy of $10^{-n}$ can
 effect the $n^{th}$ significant figure. 
 
 \subsubsection*{Surface Flux and current tests}
@@ -240,7 +240,7 @@ source of neutrons producing a parallel beam of particles is placed at
 0.0 cm. Each surface that is used to define the boundary between
 volumes is defined to be inclined at an angle of 10$^{\circ}$ with respect to the
 last, the first surface is inclined at 10$^{\circ}$, the second
-surface at 20$^{\circ}$ and so on upto 80$^{\circ}$.
+surface at 20$^{\circ}$ and so on up to 80$^{\circ}$.
 
 %\begin{figure}[h!]
 %	\begin{center}
@@ -276,7 +276,7 @@ surface at 20$^{\circ}$ and so on upto 80$^{\circ}$.
 As shown in Table \ref{usrbdx_crossing_a} the results are as defined as expected, 
 there are some numerical differences beyond the $4^{th}$ significant figure but given that the model
 was faceted to a tolerance of $10^{-4}$ we can expect no better accuracy 
-than 4 significant figure.
+than 4 significant figures.
 
 \subsection{Code Comparisons}
 \subsubsection*{Surface flux with particle scattering}
@@ -317,8 +317,8 @@ should also be tested.
 Fluka has the USRBIN score, which allows arbitrary scoring
 of data on a mesh superimposed on top of the geometry. In order to test this, a geometry
 was constructed in which the axis of a cylinder of radius 10.0 cm points along the
-+x axis, with planes at 0.0 and 0.1 cm define a vacuum region and 0.1 to 0.3 
-defines a water region. A disk source located at x=0.001 of radius provides a 
++x axis, with planes at 0.0 and 0.1 cm defining a vacuum region and 0.1 to 0.3 
+defining a water region. A disk source located at x=0.001 of radius provides a 
 parallel beam of 1 GeV photons.
 
 \begin{figure}%[h!]
@@ -359,7 +359,7 @@ introduced into the particle flux.
 
 The DAGMC toolkit has already been integrated with a variety of
 physics solvers.  The earliest development of DAGMC relied on source
-code for MCNPX v2.x as testbed for capability development.  The focus
+code for MCNPX v2.x as a testbed for capability development.  The focus
 was shifted to MCNP5 and this has been the primary development
 platform and the product, DAG-MCNP5, is used routinely for production
 calculations in fusion neutronics applications.  The geometry
@@ -397,13 +397,13 @@ final integration testing is still underway.
 \section{Conclusions and Future Work}
 
 The implementation of FluDAG, the combination of the DAGMC toolkit
-with the FLUKA physics solver has been demonstrated successfully.  CAD
+with the FLUKA physics solver, has been demonstrated successfully.  CAD
 geometries, populated with material assignment metadata, can be
 processed by FluDAG to generate identical tally results to those
 generated with the native Fluka geometry.  Future efforts will improve
 the usability of the FluDAG tool, verify additional features such as
-magnetic fields, and incorporate the ability to tally on unstructure
-tetrahedral mesh.
+magnetic fields, and incorporate the ability to tally on unstructured
+tetrahedral meshes.
 
 Having an identical geometry representation available across a broad
 set of physics solvers will enable a more robust comparison of the
