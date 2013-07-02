@@ -225,7 +225,7 @@ in both Fluka and FluDAG we get the results shown in Table \ref{usrtrack_comp_sp
 		\caption{List of volumewise track length fluxes that are 
 			expected by theory, Fluka and FluDAG}
 	\end{center}
-\label{usrtrack_comp_sphere}
+\label{table:usrtrack_comp_sphere}
 \end{table}
 
 The variation between Fluka and FluDAG results are no larger than the
@@ -275,7 +275,7 @@ surface at 20$^{\circ}$ and so on upto 80$^{\circ}$.
                 \end{center}
 \end{table}
 
-As shown in Table~\ref{usrbdx_crossing} the results are as defined as expected, 
+As shown in Table~\ref{table:usrbdx_crossing} the results are as defined as expected, 
 there are some numerical differences beyond the $4^{th}$ significant figure but given that the model
 was faceted to a tolerance of $10^{-4}$ we can expect no better accuracy 
 than 4 significant figure.
@@ -299,14 +299,14 @@ neutron flux crossing the sphere in both angle and energy, there were
 		\caption{The neutron current crossing the surface between volumes, in the 
 		forward direction (upper) and at 80 degrees to the surface (lower)}
 	\end{center}
-\label{mat_usrbdx}
+\label{fig:mat_usrbdx}
 \end{figure}
 
-The results shown in Figure \ref{mat_usrbdx} show the ratio of the
+The results shown in Figure \ref{fig:mat_usrbdx} show the ratio of the
 flux of neutrons crossing the surface between the D$_2$O and vacuum
-for Fluka and FluDAG. The upper part of Figure \ref{mat_usrbdx} shows
+for Fluka and FluDAG. The upper part of Figure \ref{fig:mat_usrbdx} shows
 the ratio of results for the first angular bin corresponding to $0
-\to 0.209$ Steradians, and the lower part of Figure \ref{mat_usrbdx}
+\to 0.209$ Steradians, and the lower part of Figure \ref{fig:mat_usrbdx}
 shows the ratio of results for the $20^{th}$ angular corresponding to $3.979
 \to 4.189$ steradians. We see that for both figures, the ratio of the
 results as a function of energy agree to within $\pm 3\sigma$. That is, we
@@ -325,7 +325,7 @@ defines a water region. A disk source located at x=0.001 of radius provides a
 parallel beam of 1 GeV photons.
 
 \begin{figure}%[h!]
-	\label{mesh_phot}
+	\label{fig:mesh_phot}
 	\begin{center}
 		\epsfig{file=figs/mesh_phot.ps,width=.6\columnwidth,angle=-90}
 		\epsfig{file=figs/mesh_phot_zoom.ps,width=.6\columnwidth,angle=-90}
@@ -336,12 +336,12 @@ parallel beam of 1 GeV photons.
 	\end{center}
 \end{figure}
 
-As can be seen in the upper part of Figure \ref{mesh_phot} the area behind the source 
+As can be seen in the upper part of Figure \ref{fig:mesh_phot} the area behind the source 
 (x < 0.01 cm) shows the poorest agreement, however the variation is well within the 
 bounds defined by $\pm 3\sigma$. The large deviation away from the average is due to 
 the flux behind the source being dominated by scattered photons, and thus are low in 
 number as compared to the number of source particles.  The lower part of Figure 
-\ref{mesh_phot} shows the ratio between Fluka and FluDAG result, the variation seen is 
+\ref{fig:mesh_phot} shows the ratio between Fluka and FluDAG result, the variation seen is 
 due to rounding in the last significant figure of the output mesh since the Fluka mesh format is written 
  in the format E11.4. 
 
