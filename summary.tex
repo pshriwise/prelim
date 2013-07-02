@@ -103,13 +103,13 @@ FLUGG\cite{flugg} is the FLUKA interface for Geant4 Geometry. It is a suite
 of \C++ wrapper routines that acts as an interface between the exposed
 parts of FLUKA subroutines and Geant4 libraries. The FLUKA team opened
 a number of interfaces to the FLUKA code around specific routines to
-allow the Physics routines of FLUKA to be used but with Geant4
-geometry and therefore Geant4 geometric queries, such as the distance
-to next surface query, the volume of the other side of the next
+allow FLUKA's physics routines to be used with Geant4
+geometry and Geant4 geometric queries, such as the distance
+to next surface and the volume of the other side of the next
 surface. The user simply takes the \C++ routines that represent the
 geometry, compile these to object files, link against a limited subset
 of the Geant4 libraries and then link against the FLUKA libraries,
-thus providing a custom executable that contains the users geometry.
+thus providing a custom executable containing the users geometry.
 
 The FLUGG compilation has a main() routine that initializes the Geant4
 geometry and calls the main FLUKA routine with a switch that signifies
@@ -176,29 +176,26 @@ scores are producing identical scores, the test model composed of
 10 cubes of side 10.0 cm joined in a line by opposing faces. A plane 
 beam of neutrons start particles at an x coordinate of 0.0 cm. Setting 
 the volume of each scorer to be 1.0 cm$^3$, should result in a score of 
-10.0 for each tally.
+10.0 for each tally. Both Fluka and FluDAG report a score of 9.999996 for every volume,
+showing that our implementation is correct and for this cubic model
+shows that results are identical.
+%% \begin{table}%[h!]
+%% 	\begin{center}
+%% 		\begin{tabular}{|l|c|c|c|}
+%% 			\hline
+%% 			Cell \# & Expected Score & Fluka  & FluDAG \\
+%% 			\hline
+%% 			1 & 10.0 & 9.999996 & 9.999996 \\
+%% 			... & ... & ... & ... \\
+%% 			10 & 10.0 & 9.999996 & 9.999996 \\
+%% 			\hline
+%% 		\end{tabular}
+%% 	\caption{List of volumewise track length fluxes that are 
+%% 				expected by theory, Fluka and FluDAG. Note, the ``...''
+%% 				is intended to mean the same as above.}\label{table:usrtrack_comp}
 
-\begin{table}[h!]
-	\begin{center}
-		\begin{tabular}{|l|c|c|c|}
-			\hline
-			Cell \# & Expected Score & Fluka  & FluDAG \\
-			\hline
-			1 & 10.0 & 9.999996 & 9.999996 \\
-			... & ... & ... & ... \\
-			10 & 10.0 & 9.999996 & 9.999996 \\
-			\hline
-		\end{tabular}
-	\caption{List of volumewise track length fluxes that are 
-				expected by theory, Fluka and FluDAG. Note, the ``...''
-				is intended to mean the same as above.}\label{table:usrtrack_comp}
-
-	\end{center}
-\end{table}
-
-As shown in Table \ref{usrtrack}, both Fluka and FluDAG report a score of 
-9.999996 for every volume,showing that our implementation is correct and for 
-this cubic model shows that results are identical.
+%% 	\end{center}
+%% \end{table}
 
 In order to show the expected level of deviation when we consider
 curved surfaces, a further model was created composed of 3 nested
@@ -211,7 +208,7 @@ we expect that the score for each tally should be the same as the
 incremental radius of the volume, i.e. 10.0 cm. Running the calculation
 in both Fluka and FluDAG we get the results shown in Table \ref{usrtrack_comp_sphere}.
 
-\begin{table}[h!]
+\begin{table}%[h!]
 	\begin{center}
 		\begin{tabular}{|l|c|c|c|}
 			\hline
