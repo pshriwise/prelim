@@ -25,7 +25,7 @@
 \section{Introduction}
 
 The Direct Accelerated Geometry Monte Carlo (DAGMC) toolkit provides
-an interface to the Mesh-Oriented datABase (MOAB) specialized for the
+an interface to the Mesh-Oriented datABase (MOAB)\cite{MOAB} specialized for the
 geometric operations of Monte Carlo radiation transport directly on
 CAD-based geometries.  By taking full control of the geometric
 operations, including ray tracing, point inclusion, and surface
@@ -50,9 +50,11 @@ known as FluGG\cite{flugg}.
 % Flugg ref
 
 
+
+
 In addition, we provide updates on efforts to integrate DAGMC with
 other physics solvers including MCNP5\cite{mcnp5},
-Tripoli4\cite{tripolo}, GEANT4, and SHIFT\cite{shift}.
+Tripoli4\cite{tripoli}, GEANT4, and SHIFT\cite{shift}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The DAGMC Toolkit}
@@ -65,7 +67,7 @@ pre-processing steps including assignment of materials and boundary
 condition, and imprinting and merging.  This geometry file is used to
 generate a facetted representation of the geometry that is stored in a
 MOAB format, with precision adequate to guarantee reliable radiation
-transport results\cite{snouffer}.  When loaded into a physics solver
+transport results\cite{snouffer_ans}.  When loaded into a physics solver
 modified with DAGMC, the material and boundary condition information
 is extracted and an oriented bounding box tree is generated to enable
 accelerated geometry operations on this representation with $O(10^6)$
