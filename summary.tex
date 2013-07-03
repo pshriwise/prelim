@@ -96,7 +96,7 @@ DAGMC with a physics solver.
 FLUKA\cite{fluka} is a Monte Carlo code provided by the Italian Institute for Nuclear
 Physics (INFN) and the Center for European Nuclear Research (CERN). The
 code is typically used for simulations in support of the facilities at   
-CERN, ATLAS, LHC, etc, however is widely used for detector simulations and 
+CERN, ATLAS, LHC, etc, however it is widely used for detector simulations and 
 solar particle analysis. 
 
 FLUGG\cite{flugg} is the FLUKA interface for Geant4 Geometry. It is a suite
@@ -107,8 +107,8 @@ allow FLUKA's physics routines to be used with Geant4
 geometry and Geant4 geometric queries, such as the distance
 to next surface and the volume of the other side of the next
 surface. The user simply takes the \C++ routines that represent the
-geometry, compile these to object files, link against a limited subset
-of the Geant4 libraries and then link against the FLUKA libraries,
+geometry, compiles these to object files, links against a limited subset
+of the Geant4 libraries and then links against the FLUKA libraries,
 thus providing a custom executable containing the users geometry.
 
 The FLUGG compilation has a main() routine that initializes the Geant4
@@ -165,20 +165,20 @@ derive the expected result from first principles, and then code tests.
 Analytic testing of Monte Carlo codes is preferred over code testing since the
 answer to be compared against is exact and thus any discrepancy is due
 to the implementation as opposed to the statistics or the nuclear data
-involed in the calculation. The first set of tests are to show that in
-vacuum calculations of well defined geometries the FluDAG codes gives
+involved in the calculation. The first set of tests are to show that in
+vacuum calculations of well defined geometries the FluDAG code gives
 the same result as expected by theory and by Fluka.
 
 \subsubsection*{Track Length based tests}
 There were several analytic vacuum test problems to prove that results
 between Fluka and FluDAG are identical. The first test problems
 demonstrate that Fluka's track length based estimator, USRTRACK, 
-scores are producing identical scores, the test model composed of 
+is producing identical scores for a test model composed of 
 10 cubes of side 10.0 cm joined in a line by opposing faces. A plane 
 beam of neutrons start particles at an x coordinate of 0.0 cm. Setting 
-the volume of each scorer to be 1.0 cm$^3$, should result in a score of 
+the volume of each scorer to be 1.0 cm$^3$ should result in a score of 
 10.0 for each tally. Both Fluka and FluDAG report a score of 9.999996 for every volume,
-showing that our implementation is correct and for this cubic model
+showing that our implementation is correct, and for this cubic model
 shows that results are identical.
 %% \begin{table}%[h!]
 %% 	\begin{center}
@@ -227,9 +227,9 @@ in both Fluka and FluDAG we get the results shown in Table \ref{usrtrack_comp_sp
 \end{table}
 
 The variation between Fluka and FluDAG results are no larger than the
-$4^{th}$ significant figure, this is commensurate with previous
+$4^{th}$ significant figure; this is commensurate with previous
 studies \cite{snouffer_ans} showing that faceting to an accuracy of $10^{-n}$ can
-effect the $n^{th}$ significant figure. 
+affect the $n^{th}$ significant figure. 
 
 \subsubsection*{Surface Flux and current tests}
 The testing of the Boundary Crossing scoring began with using a model
@@ -239,7 +239,7 @@ cylinder. The model is taken to be composed of vacuum, and a disk
 source of neutrons producing a parallel beam of particles is placed at
 0.0 cm. Each surface that is used to define the boundary between
 volumes is defined to be inclined at an angle of 10$^{\circ}$ with respect to the
-last, the first surface is inclined at 10$^{\circ}$, the second
+last: the first surface is inclined at 10$^{\circ}$, the second
 surface at 20$^{\circ}$ and so on up to 80$^{\circ}$.
 
 %\begin{figure}[h!]
@@ -273,8 +273,8 @@ surface at 20$^{\circ}$ and so on up to 80$^{\circ}$.
                 \end{center}
 \end{table}
 
-As shown in Table \ref{usrbdx_crossing_a} the results are as defined as expected, 
-there are some numerical differences beyond the $4^{th}$ significant figure but given that the model
+As shown in Table \ref{usrbdx_crossing_a} the results are as defined as expected. 
+There are some numerical differences beyond the $4^{th}$ significant figure but given that the model
 was faceted to a tolerance of $10^{-4}$ we can expect no better accuracy 
 than 4 significant figures.
 
@@ -287,14 +287,14 @@ model was created with a sphere of radius 50.0 cm composed of heavy
 water, with particles being killed once they leave the sphere. An
 isotropic point source was placed at the centre of the sphere. A
 USRBDX score was created in both Fluka and FluDAG and scored the
-neutron flux crossing the sphere in both angle and energy, there were
+neutron flux crossing the sphere in both angle and energy. There were
 60 angular and 260 energy bins in the score.
 
 \begin{figure}%[h!]
 	\begin{center}
 		\epsfig{file=figs/bin_ratio.ps,width=.6\columnwidth,angle=-90}
 		\epsfig{file=figs/bin_ratio_2.ps,width=.6\columnwidth,angle=-90}
-		\caption{The neutron current crossing the surface between volumes, in the 
+		\caption{The neutron current crossing the surface between volumes in the 
 		forward direction (upper) and at 80 degrees to the surface (lower)}\label{fig:mat_usrbdx}
 	\end{center}
 \end{figure}
@@ -304,7 +304,7 @@ flux of neutrons crossing the surface between the D$_2$O and vacuum
 for Fluka and FluDAG. The upper part of Figure \ref{fig:mat_usrbdx} shows
 the ratio of results for the first angular bin corresponding to $0
 \to 0.209$ Steradians, and the lower part of Figure \ref{fig:mat_usrbdx}
-shows the ratio of results for the $20^{th}$ angular corresponding to $3.979
+shows the ratio of results for the $20^{th}$ angular bin corresponding to $3.979
 \to 4.189$ steradians. We see that for both figures, the ratio of the
 results as a function of energy agree to within $\pm 3\sigma$. That is, we
 expect 99.7\% of results to lie within the area defined by the two
@@ -326,7 +326,7 @@ parallel beam of 1 GeV photons.
 		\epsfig{file=figs/mesh_phot.ps,width=.6\columnwidth,angle=-90}
 		\epsfig{file=figs/mesh_phot_zoom.ps,width=.6\columnwidth,angle=-90}
 		\caption{USRBIN mesh scoring photon flux in increments
-                  of $3.0 \times 10^{-5}$ cm, upper figure shows the ratio between
+                  of $3.0 \times 10^{-5}$ cm. The upper figure shows the ratio between
                   Fluka and FluDAG between 0.7 and 1.3, the lower
                   figure magnifies the range near 1.0. }\label{fig:mesh_phot}
 	\end{center}
@@ -337,13 +337,13 @@ As can be seen in the upper part of Figure \ref{fig:mesh_phot} the area behind t
 bounds defined by $\pm 3\sigma$. The large deviation away from the average is due to 
 the flux behind the source being dominated by scattered photons, and thus are low in 
 number as compared to the number of source particles.  The lower part of Figure 
-\ref{fig:mesh_phot} shows the ratio between Fluka and FluDAG result, the variation seen is 
+\ref{fig:mesh_phot} shows the ratio between Fluka and FluDAG result. The variation seen is 
 due to rounding in the last significant figure of the output mesh since the Fluka mesh format is written 
  in the format E11.4. 
 
 \subsubsection{Examples of complex FLuDAG models}
 Due to the early stage of development few large FluDAG calculations have been performed, however
-one of the NASA-provided test geometries is shown below in Figure \ref{nasa_mesh}.  This calculation demonstrated 
+one of the NASA-provided test geometries is shown in Figure \ref{nasa_mesh}.  This calculation demonstrated 
 that in a model composed entirely of vacuum no particles were lost and no oscillations were
 introduced into the particle flux.
 
