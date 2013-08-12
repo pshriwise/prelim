@@ -401,7 +401,7 @@ FUNCTION {format.names}
         {
           nameptr #3
           #1 + =
-          numnames #5
+          numnames #3
           > and
             { "others" 't :=
               #1 'namesleft := }
@@ -420,7 +420,7 @@ FUNCTION {format.names}
               if$
               t "others" =
                 {
-                  " " * bbl.etal bib.name.font *
+                  " " * bbl.etal emphasize *
                 }
                 {
                   bbl.and
