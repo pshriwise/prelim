@@ -1,12 +1,10 @@
-\documentclass{anstrans}[12pt]
+\documentclass{anstrans}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{FluDAG and Other Implementations of the DAGMC Toolkit}
 \author{Paul P.H. Wilson, Andrew Davis, Julie Zachman, Kerry L. Dunn}
 
 \institute{University of Wisconsin-Madison, 1500 Engineering Dr,
-  Madison, WI 53706}
-
-\email{wilsonp@engr.wisc.edu}
+  Madison, WI 53706, wilsonp@engr.wisc.edu}
 
 % Optional disclaimer: remove this command to hide
 
@@ -24,8 +22,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
-The Direct Accelerated Geometry Monte Carlo (DAGMC)\cite{dagmc} toolkit provides
-an interface to the Mesh-Oriented datABase (MOAB)\cite{MOAB} specialized for the
+The Direct Accelerated Geometry Monte Carlo (DAGMC) \cite{dagmc} toolkit provides
+an interface to the Mesh-Oriented datABase (MOAB) \cite{MOAB} specialized for the
 geometric operations of Monte Carlo radiation transport directly on
 CAD-based geometries.  By taking full control of the geometric
 operations, including ray tracing, point inclusion, and surface
@@ -33,33 +31,33 @@ normal determination, DAGMC allows an identical geometry representation to be
 used in a variety of Monte Carlo physics solvers.
 
 This work describes the application of the DAGMC toolkit to
-Fluka\cite{fluka}, a Monte Carlo physics solver from CERN with support
+Fluka \cite{fluka}, a Monte Carlo physics solver from CERN with support
 for a wide array of particles at a broad range of energies.  The Fluka
 implementation of DAGMC relies on previous work to integrate
-GEANT4\cite{GEANT4} geometry capability with the Fluka physics solver,
-known as FluGG\cite{flugg}.
+GEANT4 \cite{GEANT4} geometry capability with the Fluka physics solver,
+known as FluGG \cite{flugg}.
 
 In addition, we provide updates on efforts to integrate DAGMC with
-other physics solvers including MCNP5\cite{mcnp5},
-Tripoli4\cite{tripoli}, GEANT4, and Shift\cite{shift}.
+other physics solvers including MCNP5 \cite{mcnp5},
+Tripoli4 \cite{tripoli}, GEANT4, and Shift \cite{shift}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The DAGMC Toolkit}
 
-The details of DAGMC have been described in other work\cite{dagmc}, but are
-summarized here for context.  A user generates a geometric description
-of the problem using one of a variety of solid modeling software
-packages and imports that geometry into Cubit\cite{cubit} for
+The details of DAGMC have been described in other work \cite{dagmc}, but are
+summarized here for context.  A user imports a geometric description
+generated with a solid modeling software
+packages and into Cubit \cite{cubit} for
 pre-processing steps including assignment of materials and boundary
-condition, and imprinting and merging.  This geometry file is used to
+conditions, and imprinting and merging.  This geometry file is used to
 generate a facetted representation of the geometry that is stored in a
 MOAB format, with precision adequate to guarantee reliable radiation
-transport results\cite{snouffer_ans}.  When loaded into a physics solver
+transport results \cite{snouffer_ans}.  When loaded into a physics solver
 modified with DAGMC, the material and boundary condition information
 is extracted and an oriented bounding box tree is generated to enable
 accelerated geometry operations on this representation, typically with $O(10^6)$
 facets.  DAGMC allows simulation of complex geometries without
-time-consuming translation to native geometric representations of the
+time-consuming translation \cite{fusion3d} to native geometric representations of the
 physics solvers, with modest performance impact.  It also allows the
 simulation of high-order surfaces that may not be supported by the
 native geometric representation.
@@ -75,8 +73,8 @@ addition, various approaches are necessary to manage the
 initialization phase of the simulation, depending on the physics
 solver's initialization methods.  The primary physics solver used with
 DAGMC has been MCNP5, providing unique computing capability for
-analysis of shielding in fusion systems\cite{fusion3d} and criticality
-of deformed space nuclear energy systems\cite{nets}.
+analysis of shielding in fusion systems \cite{fusion3d} and criticality
+of deformed space nuclear energy systems \cite{nets}.
 
 Integration of DAGMC with a particular physics solver is generally
 easiest when that solver has already abstracted its geometry
@@ -93,19 +91,19 @@ DAGMC with a physics solver.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Fluka, FluGG and FluDAG}
 
-FLUKA\cite{fluka} is a Monte Carlo code provided by the Italian Institute for Nuclear
+FLUKA \cite{fluka} is a Monte Carlo code provided by the Italian Institute for Nuclear
 Physics (INFN) and the Center for European Nuclear Research (CERN). The
 code is typically used for simulations in support of the facilities at   
 CERN, ATLAS, LHC, etc, however it is widely used for detector simulations and 
 solar particle analysis. 
 
-FLUGG\cite{flugg} is the FLUKA interface for Geant4 Geometry. It is a suite
+FLUGG \cite{flugg} is the FLUKA interface for Geant4 Geometry. It is a suite
 of \C++ wrapper routines that acts as an interface between the exposed
 parts of FLUKA subroutines and Geant4 libraries. The FLUKA team opened
 a number of interfaces to the FLUKA code around specific routines to
 allow FLUKA's physics routines to be used with Geant4
 geometry and Geant4 geometric queries, such as the distance
-to next surface and the volume of the other side of the next
+to next surface and the volume on the other side of the next
 surface. The user simply takes the \C++ routines that represent the
 geometry, compiles these to object files, links against a limited subset
 of the Geant4 libraries and then links against the FLUKA libraries,
@@ -132,7 +130,7 @@ must be implemented:
   ($\Omega_x$,$\Omega_y$,$\Omega_z$),return the distance to the next
   surface intersection.}
 	\item[lkwr]{Given the ray position ($x_i$,$y_i$,$z_i$), return the
-  volume that position belong to.}
+  volume that position belongs to.}
 	\item[nrmlwr]{When crossing from volume ($V_i$) to volume ($V_j$),
   return the vector between the particle direction and the surface
   normal.}
@@ -154,9 +152,11 @@ detailed material descriptions, but does handle the material assignments.
 \section{FluDAG Testing}
 The testing of the code centered around the comparison between
 simulations performed using native Fluka geometries and the FluDAG
-equivalent. The models were built using native MCNP geometries;
-converted to CAD using mcnp2cad for FluDAG, and converted to Fluka by
-importing the MCNP geometry using the Flair\cite{flair} interface. Each test
+equivalent. 
+%% The models were built using native MCNP geometries,
+%% converted to CAD using mcnp2cad for FluDAG, and converted to Fluka by
+%% importing the MCNP geometry using the Flair \cite{flair} interface. 
+Each test
 is validating a specific aspect of FluDAG to ensure correctness. We
 can broadly classify the testing into analytic tests, where we can
 derive the expected result from first principles, and then code tests.
@@ -175,8 +175,8 @@ between Fluka and FluDAG are identical. The first test problems
 demonstrate that Fluka's track length based estimator, USRTRACK, 
 is producing identical scores for a test model composed of 
 10 cubes of side 10.0 cm joined in a line by opposing faces. A plane 
-beam of neutrons start particles at an x coordinate of 0.0 cm. Setting 
-the volume of each scorer to be 1.0 cm$^3$ should result in a score of 
+beam of neutrons start particles at an x coordinate of 0.0 cm. Overriding 
+the volume of each scoring region to be 1.0 cm$^3$ should result in a track length score of 
 10.0 for each tally. Both Fluka and FluDAG report a score of 9.999996 for every volume,
 showing that our implementation is correct, and for this cubic model
 shows that results are identical.
@@ -209,8 +209,10 @@ we expect that the score for each tally should be the same as the
 incremental radius of the volume, i.e. 10.0 cm. Running the calculation
 in both Fluka and FluDAG we get the results shown in Table \ref{usrtrack_comp_sphere}.
 
-\begin{table}%[h!]
+\begin{table}[h!]
 	\begin{center}
+		\caption{List of volumewise track length fluxes that are 
+			expected by theory, Fluka and FluDAG}\label{usrtrack_comp_sphere}
 		\begin{tabular}{|l|c|c|c|}
 			\hline
 			Cell \# & Expected Score & Fluka  & FluDAG \\
@@ -220,9 +222,6 @@ in both Fluka and FluDAG we get the results shown in Table \ref{usrtrack_comp_sp
 			3 & 10.0 & 9.999996 & 9.999995 \\
 			\hline
 		\end{tabular}
-		\caption{List of volumewise track length fluxes that are 
-			expected by theory, Fluka and FluDAG}\label{usrtrack_comp_sphere}
-
 	\end{center}
 \end{table}
 
@@ -250,8 +249,12 @@ surface at 20$^{\circ}$ and so on up to 80$^{\circ}$.
 %	\end{center}
 %\end{figure}
 
-\begin{table}%[h!]
+\begin{table}[h!]
         \begin{center}
+                \caption{List of surface fluxes as a function of surface
+                         angle as expected by theory and as calculated by 
+                         Fluka and FluDAG}
+                \label{usrbdx_crossing_a}
                 \begin{tabular}{|l|c|c|c|}
                   \hline
                         Angle & Expected Score & Fluka  & FluDAG \\
@@ -266,14 +269,10 @@ surface at 20$^{\circ}$ and so on up to 80$^{\circ}$.
                         80$^{\circ}$ & 5.758770 & 5.758769 & 5.758655\\
                         \hline
                 \end{tabular}
-                \caption{List of surface fluxes as a function of surface
-                         angle as expected by theory and as calculated by 
-                         Fluka and FluDAG}
-                \label{usrbdx_crossing_a}
                 \end{center}
 \end{table}
 
-As shown in Table \ref{usrbdx_crossing_a} the results are as defined as expected. 
+As shown in Table \ref{usrbdx_crossing_a} the results are as expected. 
 There are some numerical differences beyond the $4^{th}$ significant figure but given that the model
 was faceted to a tolerance of $10^{-4}$ we can expect no better accuracy 
 than 4 significant figures.
@@ -282,30 +281,30 @@ than 4 significant figures.
 \subsubsection*{Surface flux with particle scattering}
 Having performed analytic comparisons there is higher confidence in
 the implementation of FluDAG and thus code to code comparisons can be
-performed. In order to prove the USRBDX score between two volumes, a
-model was created with a sphere of radius 50.0 cm composed of heavy
-water, with particles being killed once they leave the sphere. An
+performed. In order to demonstrate the USRBDX score (directed particle current) 
+between two volumes, a
+model was created with a heavy water sphere of radius 50.0 cm, 
+with particles being killed once they leave the sphere. An
 isotropic point source was placed at the centre of the sphere. A
 USRBDX score was created in both Fluka and FluDAG and scored the
-neutron flux crossing the sphere in both angle and energy. There were
-60 angular and 260 energy bins in the score.
+neutron flux crossing the sphere in both angle (60 bins) and energy (260 bins).
 
 \begin{figure}%[h!]
 	\begin{center}
-		\epsfig{file=figs/bin_ratio.ps,width=.6\columnwidth,angle=-90}
-		\epsfig{file=figs/bin_ratio_2.ps,width=.6\columnwidth,angle=-90}
+		\epsfig{file=figs/bin_ratio.ps,width=.5\columnwidth,angle=-90}
+		\epsfig{file=figs/bin_ratio_2.ps,width=.5\columnwidth,angle=-90}
 		\caption{The neutron current crossing the surface between volumes in the 
 		forward direction (upper) and at 80 degrees to the surface (lower)}\label{fig:mat_usrbdx}
 	\end{center}
 \end{figure}
 
-The results shown in Figure \ref{fig:mat_usrbdx} show the ratio of the
+Figure \ref{fig:mat_usrbdx} shows the ratio of the
 flux of neutrons crossing the surface between the D$_2$O and vacuum
 for Fluka and FluDAG. The upper part of Figure \ref{fig:mat_usrbdx} shows
-the ratio of results for the first angular bin corresponding to $0
-\to 0.209$ steradians, and the lower part of Figure \ref{fig:mat_usrbdx}
-shows the ratio of results for the $20^{th}$ angular bin corresponding to $3.979
-\to 4.189$ steradians. We see that for both figures, the ratio of the
+the ratio of results for the first angular bin corresponding to $(0,0.209)$ 
+steradians, and the lower part of Figure \ref{fig:mat_usrbdx}
+shows the ratio of results for the $20^{th}$ angular bin corresponding to 
+$(3.979, 4.189)$ steradians. We see that for both figures, the ratio of the
 results as a function of energy agree to within $\pm 3\sigma$. That is, we
 expect 99.7\% of results to lie within the area defined by the two
 trend lines, when the estimate of the standard deviation is appropriate.
@@ -318,13 +317,13 @@ Fluka has the USRBIN score, which allows arbitrary scoring
 of data on a mesh superimposed on top of the geometry. In order to test this, a geometry
 was constructed in which the axis of a cylinder of radius 10.0 cm points along the
 +x axis, with planes at 0.0 and 0.1 cm defining a vacuum region and 0.1 to 0.3 
-defining a water region. A disk source located at x=0.001 of radius provides a 
+defining a water region. A disk source located at x=0.001 of radius XX cm provides a 
 parallel beam of 1 GeV photons.
 
 \begin{figure}%[h!]
 	\begin{center}
-		\epsfig{file=figs/mesh_phot.ps,width=.6\columnwidth,angle=-90}
-		\epsfig{file=figs/mesh_phot_zoom.ps,width=.6\columnwidth,angle=-90}
+		\epsfig{file=figs/mesh_phot.ps,width=.5\columnwidth,angle=-90}
+		\epsfig{file=figs/mesh_phot_zoom.ps,width=.5\columnwidth,angle=-90}
 		\caption{USRBIN mesh scoring photon flux in increments
                   of $3.0 \times 10^{-5}$ cm. The upper figure shows the ratio between
                   Fluka and FluDAG between 0.7 and 1.3, the lower
@@ -334,7 +333,8 @@ parallel beam of 1 GeV photons.
 
 As can be seen in the upper part of Figure \ref{fig:mesh_phot} the area behind the source 
 (x < 0.01 cm) shows the poorest agreement, however the variation is well within the 
-bounds defined by $\pm 3\sigma$. The large deviation away from the average is due to 
+bounds defined by $\pm 3\sigma$. The large deviation away from the average 
+(as well as the large error bounds at this location) is due to 
 the flux behind the source being dominated by scattered photons, and thus are low in 
 number as compared to the number of source particles.  The lower part of Figure 
 \ref{fig:mesh_phot} shows the ratio between Fluka and FluDAG result. The variation seen is 
@@ -344,8 +344,7 @@ due to rounding in the last significant figure of the output mesh since the Fluk
 \subsubsection{Examples of complex FLuDAG models}
 Due to the early stage of development few large FluDAG calculations have been performed, however
 one of the NASA-provided test geometries is shown in Figure \ref{nasa_mesh}.  This calculation demonstrated 
-that in a model composed entirely of vacuum no particles were lost and no oscillations were
-introduced into the particle flux.
+that in a model composed entirely of vacuum no particles were lost and the flux was well-behaved.
 
 \begin{figure}%[h!]
         \begin{center}
@@ -368,7 +367,7 @@ all the current implementations, requiring relatively intrusive source
 code patches.  DAGMC will be integrated with MCNP6 when its final source
 code becomes available.
 
-DAGMC has also been integrated with Tripoli4\cite{tripoli} from CEA
+DAGMC has also been integrated with Tripoli4 \cite{tripoli} from CEA
 Saclay.  Due to prior abstraction of the geometry interface to support
 the ROOT geometry representation, in addition to the native Tripoli
 representation, this integration was relatively straightforward.
@@ -379,7 +378,7 @@ normal is on a surface.
 
 A recent effort to integrate DAGMC with GEANT4 has also proven
 successful \cite{dag_geant4}.  GEANT4 has a highly abstracted geometry
-interface, with a different implementations included with the base
+interface, with different implementations included with the base
 GEANT4 package.  This implementation extends the standard G4VSolid
 \C++ base class to create a DagSolid, with performance that compares
 favorably to the G4TesselatedSolid class that provides a similar
