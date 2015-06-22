@@ -1,4 +1,6 @@
 
+all: pdf
+
 pdf:
 	cd paper && pdflatex summary.tex
 
