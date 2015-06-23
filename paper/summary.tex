@@ -22,12 +22,12 @@ This paper contains the preliminary results for an implementation of Intel's CPU
 
 \section{Spatial Partitioning Trees}
 
-Spatial partitioning trees recursively subdivide the space bounded by a given set of data in order to quickly eliminate regions of the problem space irrelevant to the given query for the tree. These subdivisions come in many forms depending on the tree hierarchy being used. 
+Spatial partitioning trees recursively subdivide the space bounded by a given set of data in order to quickly eliminate regions of the problem space irrelevant to the given query for the tree. These subdivisions come in many forms depending on the tree hierarchy being used. These are usually, but not always, binary trees.
 
 
 \subsection{Bounding Volume Hierarchies}
 
-Bounding volume hierarchies (BVHs) are a subset of a more general solution to the problem of a computational search for a point in 3D space known as spatial partitioning trees. In the case of BVHs, some closed volume is used to enclose these regions of 3D space, eventually leading to the enclosure of some number of primitive elements (in our case, triangles) to be queried for the desired geometric information. The most common BVHs use either oriented bounding boxes (OBBs) or axis-aligned bounding boxes (AABBs). AABBs will not conform as tightly to a generic set of data as OBBs. This lack of conformity can lead to increase inefficienty in the tree due to the overlapping of empty space for sibling bounding boxes. There is an additional cost, however, in using OBBs as bounding volumes as the translation of the ray coordinates to the local OBB coordinates for the intersection check is costly considering the number of times this is done for a given ray query. 
+Bounding volume hierarchies (BVHs) are a subset of a more general solution to the problem of a computational search for a point in 3D space known as spatial partitioning trees. In the case of BVHs, some closed volume is used to enclose these regions of 3D space, eventually leading to the enclosure of some number of primitive elements (in our case, triangles) to be queried for the desired geometric information. The most common BVHs use either oriented bounding boxes (OBBs) or axis-aligned bounding boxes (AABBs). AABBs will not conform as tightly to a generic set of data as OBBs. This lack of conformity can lead to increase inefficienty in the tree due to the overlapping of empty space for sibling bounding boxes. There is an additional cost, however, in using OBBs as bounding volumes. The transformation cost of the ray coordinates from the global proglem coordinates to the local OBB coordinates for the intersection check is considerable given the number of times this is done for even a single ray query. 
 
 \subsection{Other Tree Hierarchies} 
 
@@ -36,8 +36,30 @@ Other bounding volumes and splitting conventions are also used in the are of spa
 
 \section{Intel's Embree}
 
-Talk for a bit about what Intel does to make things especially fast...
+Many existing ray tracing kernels use fine-grained, data dependent branching and irregular memory access which rules out other, more powerful optimiztaions like auto-vectorization. Embree's aim is to provide a CPU-based ray tracing kernel which combines the most efficient algorithms, data structures, and parallelization strategies for a given target architecture. Embree aims do do this for modern x86 architectures to access their full compute capability. In order to achieve this goal, Embree uses data structures and spatial splitting heuristics that allow for vectorization of spatial data structure traversals. \cite{embree} 
 
+\subsection{Quad-branching Mixed BVH}
+
+As mentioned above, most BVHs are binary trees, meaning each tree node has exactly 2 children with the exception of the leaf nodes. Embree uses a quad-branching tree (BVH4) in which each tree node has 4 children. While this increases the number of total nodes to traverse in the tree, Embree paralellizes the checking of these nodes, allowing for more exact exclusion of space in roughly the same time it would take for a check of 2 nodes in serial. 
+
+Embree also employs what is referred to as a mixed BVH tree. Mixed BVH trees use a multitude of bounding volumes for construction. In particular, Embree uses the OBB and AABB mentioned in the bounding volume hierarchies section. In tree construction, AABBs are used to bound primitives only when deemed appropriate by deteriming if the local orientation of the triangles are closely algined with the global axes of the problem space. 
+
+\subsection{Surface Area Heuristic}
+
+There are many heuristics to be used when partitioning the the space contained by a bounding volume. In the past, most BVHs using bounding boxes have used median planar splitting. This planar splitting is usually done such that the ratio of surface area to volume is maximized (i.e. the volumes are kept more cubid) and the number of contained primitives is being split roughly in half to keep the expectation of performance like that of a standard binary tree search in the number of total primitives being contained. 
+
+Recently there has been a new heuristic for partitioning bounding volumes and contained geometric primitives called the surface area heuristic (SAH) \cite{sah}. This heuristic is designed to minimize the cost $C$ of a split based on the number of primitives to be checked in each child, $P_{R}$ and $P_{L}$, at the cost, $C_{i}$, of a single primitive intersection check weighted by the size of the child boxes, $B_{r}$ and $B_{L}$, compared to the size of the parent box, $B$. There is an additional cost of the extra bounding volume intersection check implied by adding the cost of one traversal step down the tree, $C_{t}$.
+Its formulation for a binary tree is as follows: 
+
+\begin{equation} 
+C = C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i}
+\end{equation}
+
+One can imagine this hueristic expanded to accomodate the quad-tree in Embree by adding two additional child terms idential to those of the left and right children represented in the binary tree case. This is what Embree does in the building of its mixed BVH4 hierarchy. 
+
+\subsection{Floating Point}
+
+One aspect of Embree's speed is due to the use of float-precision rather than double-precision in its calculations. Currently, this is not typical of ray tracing systems used for Monte Carlo analysis, but for the sample cases tested for the purpose of this paper, the difference in precision does not manifest itself in the results. In the future, it is very possible that a double-precision version of Embree will exist \cite{gpu_mic_ray_tracing_rpi}, thus aleviating any concern of differences in results due to ray tracing calculations.
 
 \bibliographystyle{ans}
 \bibliography{bibliography}
