@@ -1,7 +1,7 @@
 \documentclass{anstrans}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{Use of Embree for ray tracing in the DAGMC toolkit}
-\author{Patrick C. Shriwise, Andrew Davis, Paul Wilson}
+\author{Patrick C. Shriwise, Andrew Davis, Paul P.H. Wilson}
 
 \institute{University of Wisconsin-Madison, 1500 Engineering Dr, Madison, WI 53706, shriwise@wisc.edu}
 
@@ -14,7 +14,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
-This is the introduction \cite{dagmc_2009}.
+The Direct Accelerated Geometry Monte Carlo (DAGMC) \cite{dagmc_2009} toolkit leverages the Mesh-Oriented datABase (MOAB) \cite{moab} to perform the geometric operations of Monte Carlo transport on CAD-based geometries. Ray-based operations such as point inclusion, next surface intersection, and surface normal determination are performed on nearly identical geometries with all the advantages of the design tools available in CAD software packages.
+
+In the past, analysis using CAD-based geometry has saved man-hours in dealing with tedious and time-consuming geometric design methods, such as text-based geometries, at the cost of additional computational time. Efforts from developers at Intel are opening a pathway to a substantial decrease in this computational cost, leaving only the benefit of reduced human time and effort in the use of CAD-based geometries for analysis. 
+
+This paper contains the preliminary results for an implementation of Intel's CPU-based ray tracing engine, Embree \cite{embree}, with DagMC for analysis with MCNP5 \cite{mcnp5} on several simple models, some specifically chosen for their complexity in the context of a ray tracing problem.
 
 \bibliographystyle{ans}
 \bibliography{bibliography}
