@@ -20,6 +20,25 @@ In the past, analysis using CAD-based geometry has saved man-hours in dealing wi
 
 This paper contains the preliminary results for an implementation of Intel's CPU-based ray tracing engine, Embree \cite{embree}, with DagMC for analysis with MCNP5 \cite{mcnp5} on several simple models, some specifically chosen for their complexity in the context of a ray tracing problem.
 
+\section{Spatial Partitioning Trees}
+
+Spatial partitioning trees recursively subdivide the space bounded by a given set of data in order to quickly eliminate regions of the problem space irrelevant to the given query for the tree. These subdivisions come in many forms depending on the tree hierarchy being used. 
+
+
+\subsection{Bounding Volume Hierarchies}
+
+Bounding volume hierarchies (BVHs) are a subset of a more general solution to the problem of a computational search for a point in 3D space known as spatial partitioning trees. In the case of BVHs, some closed volume is used to enclose these regions of 3D space, eventually leading to the enclosure of some number of primitive elements (in our case, triangles) to be queried for the desired geometric information. The most common BVHs use either oriented bounding boxes (OBBs) or axis-aligned bounding boxes (AABBs). AABBs will not conform as tightly to a generic set of data as OBBs. This lack of conformity can lead to increase inefficienty in the tree due to the overlapping of empty space for sibling bounding boxes. There is an additional cost, however, in using OBBs as bounding volumes as the translation of the ray coordinates to the local OBB coordinates for the intersection check is costly considering the number of times this is done for a given ray query. 
+
+\subsection{Other Tree Hierarchies} 
+
+Other bounding volumes and splitting conventions are also used in the are of spatial partitioning trees. For example, bounding spheres are sometimes used rather than boxes due to the simple and fast intersection check needed for ray queries. Hyperplane and hyperplane intervals are also used along each axis to subdivide data into a hierarchical structure. MOAB and Embree both use a BVH with bounding boxes so a detailed discussion of other spatial tree hierarchies will be neglected.
+
+
+\section{Intel's Embree}
+
+Talk for a bit about what Intel does to make things especially fast...
+
+
 \bibliographystyle{ans}
 \bibliography{bibliography}
 
