@@ -2,7 +2,7 @@
 all: pdf
 
 pdf:
-	cd paper && pdflatex summary.tex && bibtex summary && pdflatex summary && pdflatex summary
+	cd paper && latex summary.tex && bibtex summary && latex summary && latex summary && dvipdfm summary.dvi 
 
 preview: pdf
 	cd paper && evince summary.pdf
