@@ -9,6 +9,7 @@
 
 %%%%% packages and defs
 \usepackage{graphicx}
+\usepackage{epsfig}
 
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -74,6 +75,20 @@ Some spatial search operations needed by applications other than MCNP to be full
 \subsection{Ray Fire Timing: MOAB vs. Embree}
 
 Several single-volume models have become the standard for testing ray fire timing of DagMC. These models include a single sphere, a sphere with notches cut into it, and a high-aspect ratio cylinder. Each of these models are meshed using increasingly smaller faceting tolerances to vary the number of triangles in the problem. The faceting tolerance is defined as the maximum distance between the faceted (meshed) curve or surface and the geometric curve or surface it resolves. 600,000 rays are fired from the origin of the geometry with an isotropic distribution in direction using the same random number seed to ensure amortization of the ray fire times.
+
+\begin{figure}
+
+  \begin{center}
+
+    \epsfig{file=figs/sphere.ps,width=.3\columnwidth}
+    \epsfig{file=figs/ds.ps,width=.3\columnwidth}
+    \epsfig{file=figs/larcyl.ps,width=0.3\columnwidth,clip=}
+    %\includegraphics{figs/sphere.ps}
+
+  \end{center}
+
+\end{figure}
+
 
 Each model presents its own challenge with increating faceting tolerance. In the case of the sphere, the number of triangles in the generated mesh will always increase with decreasing faceting tolerance. This is not true of some geometries such as cubes or other rectuangular parallelpipeds. In the case of the notched sphere regions referred to as high-valance are generated as a result of faceting algorithms for planar surfaces meeting curved surfaces resulting in a single vertex connected to a high number of triangles. This is a difficult problem for BHVs to handle as the high triangle density usually results in large overlaps in the bounding volumes of the tree leading to inefficient tree traversals upon query. This problem tends to become exponentially worse as the faceting tolerance is decreased. The high aspect ratio cylinder will contain many small, skiny triangles running along the barrel of the cylinder. The particular shape of these triangles can cause problems in the calculations of tightly fiting OBBs used in MOAB to create spatial trees. This test model is used to determine the overall effectiveness of Embree's ability to use both OBBs and AABBs as well as the robustness of their OBBs algorithms for fitting to geometric objects with surface meshes of this nature.
 
