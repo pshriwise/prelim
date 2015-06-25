@@ -271,21 +271,12 @@ The multiple volume test results showed similar trends to the single volume case
 
 \end{table}
 
+It is worth noting that no particles were lost in any of the test runs presented here. The full robustness of DagMC's topologically watertight meshes \cite{make_watertight_smith_2010} is available to the Embree instance in combintation with Embree's own floating point based watertight triangle instersection algorithm. \cite{watertight_tri_intersection_woop_2013}
+
 \section{Conclusions and Future Work}
 
 The implementation of arguably the most efficient CPU-based ray tracing system today, Intel's Embree, in DagMC has been demonstrated in this paper. A small, and likely systematic, discrepancy between the MOAB ray tracing system and Embree has yet to be resolved, but the possibility of run times on CAD-based geometries on the order of run times using native MCNP geometry has been shown.
-In the future, test cases on more complex geometric models will be attempted using the EmDagMC system for proof of robustness. Pending the success of these tests, the DagMC build system will temporarily be redesigned to support Embree as the underlying ray tracing system if specified by the user. A longer term goal of this work will be to develop an equally efficient but more flexible ray tracing system in MOAB using it's direct access capabilities to take advantage of some of the same optimizations as Embree with design for a more diverse set of spatial tree types in mind. 
-
-
-\begin{itemize}
-
-\item determine cause of discrepancy
-\item test EmDagMC on more complex models
-\item Update DagMC build system to accept either MOAB or Embree as the ray tracer
-\item Begin the update of MOAB's spatial trees
-
-\end{itemize}
-
+In the future, test cases on more complex geometric models will be attempted using the EmDagMC system for proof of robustness. Pending the success of these tests, the DagMC build system will temporarily be redesigned to support Embree as the underlying ray tracing system if specified by the user. A longer term goal of this work will be to develop an equally efficient but more flexible ray tracing system in MOAB using it's direct access capabilities \cite{moab} to take advantage of some of the same optimizations as Embree with design for a more diverse set of spatial tree types in mind. 
 
 \bibliographystyle{ans}
 \bibliography{bibliography}
