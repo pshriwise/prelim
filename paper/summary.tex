@@ -12,7 +12,6 @@
 \usepackage{epsfig}
 \usepackage{float}
 \usepackage{booktabs}
-\usepackage{pbox}
 
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -125,9 +124,38 @@ DagMC ray fire tests were performed for faceting tolerances ranging from 1e-6 to
 
 \subsection{Full Implementation w/ MCNP}
 
-In order to verify that native MCNP, DAGMCNP, and DAGMCNP using Embree all agree. Several simple models were tested for verification of the current implementation of Embree in DagMC. These models included a sphere, cube, set of nested spheres and a set of nested cubes all filled with a dense hydrogen material for high collisionality in the problem. A 5MeV neutron source was placed at the origin of each problem and 1E6 particles were run. 
+In order to verify that native MCNP, DAGMCNP, and DAGMCNP using Embree all agree. Several simple models were tested for verification of the current implementation of Embree in DagMC. These models included a sphere, cube, set of nested spheres and a set of nested cubes (3 cells in each nested case) all filled with a dense hydrogen material for high collisionality in the problem. A 5MeV neutron source was placed at the origin and one million particles were run for each problem.
 
-\begin{table}
+As expected, the native MCNP runs were generally the fasest with the exception of the nested spheres case in which EmDagMCNP outperformed MCNP by 8 percent (see Table \ref{timings}). This is likely due to the fact that there are very few triangles in the faceted represenation of a cube, but there are many surfaces. MCNP searches linearly through a cell's surfaces to find the next surface intersection wereas Embree and MOAB both search spatially. The number of surfaces relative to the number of triangles in this problem must be high enough to allow EmDagMCNP to overtake MCNP. 
+
+\begin{table}[H]
+
+  \begin{center}
+
+      \caption{Computational Time Comparison}
+      \label{timings}
+    \begin{tabular}{lccc}
+
+
+
+      \toprule
+      Test Model & MCNP & DagMCNP & w/ Embree \\
+      \hline
+      &  \multicolumn{3}{c}{ctime (min)} \\
+      \hline
+      Sphere & 2.93 & 25.13 & 4.73  \\
+      Cube & 5.03 & 10.56  & 5.80 \\
+      Nested Spheres & 4.35 & 50.82 & 7.94 \\
+      Nested Cubes & 4.73 & 9.26 & 4.35 \\
+      \bottomrule
+      
+    \end{tabular}
+  \end{center}
+  \end{table}
+
+In the single volume test cases, the flux and energy tallies for both DagMC-based implementations slightly from MCNP in some cases but agree with each other exactly, and the tally errors are identical. The figure of merit (FOM) varies significantly between MCNP, EmDagMCNP, and DagMCNP. This is largely due to the fact that the FOM calculation is proportional to the number of histories run per minute. This is indicative of why DagMCNP's FOM values are lower than the MCNP or EmDagMCNP.
+
+\begin{table}[H]
 
   \begin{center}
     \caption{Single Sphere Timing and Tally Results}
@@ -152,9 +180,7 @@ In order to verify that native MCNP, DAGMCNP, and DAGMCNP using Embree all agree
 
 \end{table}
 
-{watertightness schpiel here}
-
-\begin{table}
+\begin{table}[H]
 
   \begin{center}
     \caption{Single Cube Timing and Tally Results}
@@ -179,7 +205,9 @@ In order to verify that native MCNP, DAGMCNP, and DAGMCNP using Embree all agree
 
 \end{table}
 
-\begin{table}
+The multiple volume test results showed similar trends to the single volume cases with the exception of a discrepancy between DagMC and EmDagMC in the flux tally of the outermost cell, cell 3, in the nested spheres case. Based on the number of tracks entering each cell, this appears to be caused by a single particle history ending in EmDagMCNP before ending near the surface in cell 2 while it crosses into cell 3 and then dies in DagMC. It has not been determined that this is caused by the floating point precision used in Embree, but it is possible.
+
+\begin{table}[H]
 
   \begin{center}
     \caption{Nested Spheres Timing and Tally Results}
@@ -211,7 +239,7 @@ In order to verify that native MCNP, DAGMCNP, and DAGMCNP using Embree all agree
 \end{table}
 
 
-\begin{table}
+\begin{table}[H]
 
   \begin{center}
     \caption{Nested Cubes Timing and Tally Results}
@@ -243,31 +271,22 @@ In order to verify that native MCNP, DAGMCNP, and DAGMCNP using Embree all agree
 
 \end{table}
 
-\begin{table}
+\section{Conclusions and Future Work}
 
-  \begin{center}
-
-      \caption{Computational Time Comparison}
-
-    \begin{tabular}{lccc}
+The implementation of arguably the most efficient CPU-based ray tracing system today, Intel's Embree, in DagMC has been demonstrated in this paper. A small, and likely systematic, discrepancy between the MOAB ray tracing system and Embree has yet to be resolved, but the possibility of run times on CAD-based geometries on the order of run times using native MCNP geometry has been shown.
+In the future, test cases on more complex geometric models will be attempted using the EmDagMC system for proof of robustness. Pending the success of these tests, the DagMC build system will temporarily be redesigned to support Embree as the underlying ray tracing system if specified by the user. A longer term goal of this work will be to develop an equally efficient but more flexible ray tracing system in MOAB using it's direct access capabilities to take advantage of some of the same optimizations as Embree with design for a more diverse set of spatial tree types in mind. 
 
 
+\begin{itemize}
 
-      \toprule
-      Test Model & MCNP & DagMCNP & w/ Embree \\
-      \hline
-      &  \multicolumn{3}{c}{ctime (min)} \\
-      \hline
-      Sphere & 2.93 & 25.13 & 4.73  \\
-      Cube & 5.03 & 10.56  & 5.80 \\
-      Nested Spheres & 4.35 & 50.82 & 7.94 \\
-      Nested Cubes & 4.73 & 9.26 & 4.35 \\
-      \bottomrule
-      
-    \end{tabular}
-  \end{center}
-  \end{table}
-      
+\item determine cause of discrepancy
+\item test EmDagMC on more complex models
+\item Update DagMC build system to accept either MOAB or Embree as the ray tracer
+\item Begin the update of MOAB's spatial trees
+
+\end{itemize}
+
+
 \bibliographystyle{ans}
 \bibliography{bibliography}
 
