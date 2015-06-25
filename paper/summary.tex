@@ -10,6 +10,9 @@
 %%%%% packages and defs
 \usepackage{graphicx}
 \usepackage{epsfig}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{pbox}
 
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -106,9 +109,165 @@ Each model presents its own challenge with increating faceting tolerance. In the
 
 \end{figure}
 
+DagMC ray fire tests were performed for faceting tolerances ranging from 1e-6 to 1e-1 on each model. It should be noted that this will affect the faceting of some models more than others, but the upward trend in the pure number of triangles with decreasing faceting tolerance will be consistent among them all due to the consistent presence of curved surfaces. A model to model comparison of the same faceting tolerance indicates that Embree's amoritized ray fire times are roughly 100 times faster than MOAB's. Comparing the best amoritized ray fire time of MOAB to the worst of Embree still leaves MOAB 10 times slower than Embree.
+
+\begin{figure}[H]
+
+  \begin{center}
+    
+    \epsfig{file=figs/moab_rf.ps,width=0.48\columnwidth}
+    \epsfig{file=figs/embree_rf.ps,width=0.48\columnwidth}
+    \caption{Comparison of the amortized ray fire times for MOAB to Embree in all test models. Please note the value of the exponent on the y-axis in each graph.}
+    
+  \end{center}
+
+\end{figure}
+
+\subsection{Full Implementation w/ MCNP}
+
+In order to verify that native MCNP, DAGMCNP, and DAGMCNP using Embree all agree. Several simple models were tested for verification of the current implementation of Embree in DagMC. These models included a sphere, cube, set of nested spheres and a set of nested cubes all filled with a dense hydrogen material for high collisionality in the problem. A 5MeV neutron source was placed at the origin of each problem and 1E6 particles were run. 
+
+\begin{table}
+
+  \begin{center}
+    \caption{Single Sphere Timing and Tally Results}
+
+    \begin{tabular}{lccc}
+      \toprule
+      Value & MCNP & DagMCNP & w/ Embree \\
+      \toprule
+      Histories/min & 3.4104E+05  & 3.9944E+04  & 2.1810E+05  \\
+      Flux Tally & 4.98083E-03 & 4.98090E-03 & 4.98090E-03 \\
+      Flux Tally Err & 4E-4 & 4E-4 & 4E-4  \\
+      Flux Tally FOM & 2.47231E+06 & 2.89558E+05 & 1.58107E+06 \\
+      Energy Tally & 3.17819E-03 & 3.17824E-03 & 3.17824E-03 \\
+      Energy Tally Err & 5E-4 & 5E-4 & 5E-4 \\
+      Energy Tally FOM & 1.16162E+06 & 1.36051E+05 & 7.42879E+05 \\      
+      \bottomrule
+                        
+    \end{tabular}
+
+
+  \end{center}
+
+\end{table}
+
+{watertightness schpiel here}
+
+\begin{table}
+
+  \begin{center}
+    \caption{Single Cube Timing and Tally Results}
+
+    \begin{tabular}{lccc}
+     \toprule
+      Value & MCNP & DagMCNP & w/ Embree \\
+     \toprule
+      Histories/min & 1.9879E+05 & 9.4738E+04 & 1.7260E+05  \\
+      Flux Tally & 5.61374E-03 & 5.61374E-03 & 5.61374E-03 \\
+      Flux Tally Err & 3E-4 & 3E-4 & 3E-4  \\
+      Flux Tally FOM & 2.47008E+06 & 1.17719E+06 & 2.14469E+06 \\
+      Energy Tally & 2.98933E-03 & 2.98933E-03 & 2.98933E-03 \\
+      Energy Tally Err & 7E-4 & 7E-4 & 7E-4 \\
+      Energy Tally FOM & 3.99526E+05 & 1.90406E+05 & 3.46895E+05 \\
+      \bottomrule
+      
+    \end{tabular}
+
+
+  \end{center}
+
+\end{table}
+
+\begin{table}
+
+  \begin{center}
+    \caption{Nested Spheres Timing and Tally Results}
+    
+    \begin{tabular}{lccc}
+      \toprule
+      Value & MCNP & DagMCNP & w/ Embree \\
+      \toprule
+      Histories/min & 2.2991E+05 & 1.9877E+04 & 1.3947E+05 \\
+      \hline
+      Cell 1 & & & \\
+      Flux Tally & 5.25725E-03 & 5.25734E-03 & 5.25734E-03 \\
+      Energy Tally & 3.17869E-03 &  3.17873E-03 &  3.17873E-03 \\
+      \hline
+      Cell 2 & & & \\
+      Flux Tally & 1.91645E-04 & 1.91644E-04 & 1.91644E-04 \\
+      Energy Tally & 5.22131E-05 & 5.22137E-05 & 5.22137E-05 \\
+      \hline
+      Cell 3 & & & \\
+      Flux Tally & 1.18371E-05 & 1.18376E-05 & 1.18410E-05 \\
+      Energy Tally & 4.96282E-06 & 4.96285E-06 & 4.96285E-06 \\
+      \bottomrule
+                        
+    \end{tabular}
+
+
+  \end{center}
+
+\end{table}
+
+
+\begin{table}
+
+  \begin{center}
+    \caption{Nested Cubes Timing and Tally Results}
+    
+    \begin{tabular}{lccc}
+      \toprule
+      Value & MCNP & DagMCNP & w/ Embree \\
+      \toprule
+      Histories/min & 2.1170E+05 & 1.0806E+05 & 2.3026E+05 \\
+      \hline
+      Cell 1 & & & \\
+      Flux Tally & 1.38556E-02 & 1.38556E-02 & 1.38556E-02 \\
+      Energy Tally & 1.05974E-02 & 1.05974E-02 & 1.05974E-02 \\
+      \hline
+      Cell 2 & & & \\
+      Flux Tally & 1.41609E-03 & 1.41609E-03 & 1.41609E-03 \\
+      Energy Tally & 4.81169E-04 & 4.81169E-04 & 4.81169E-04 \\
+      \hline
+      Cell 3 & & & \\
+      Flux Tally & 1.92847E-04 & 1.92847E-04 & 1.92847E-04 \\
+      Energy Tally & 1.10361E-04 & 1.10361E-04 & 1.10361E-04 \\
+      \bottomrule
+      
+                        
+    \end{tabular}
+
+
+  \end{center}
+
+\end{table}
+
+\begin{table}
+
+  \begin{center}
+
+      \caption{Computational Time Comparison}
+
+    \begin{tabular}{lccc}
 
 
 
+      \toprule
+      Test Model & MCNP & DagMCNP & w/ Embree \\
+      \hline
+      &  \multicolumn{3}{c}{ctime (min)} \\
+      \hline
+      Sphere & 2.93 & 25.13 & 4.73  \\
+      Cube & 5.03 & 10.56  & 5.80 \\
+      Nested Spheres & 4.35 & 50.82 & 7.94 \\
+      Nested Cubes & 4.73 & 9.26 & 4.35 \\
+      \bottomrule
+      
+    \end{tabular}
+  \end{center}
+  \end{table}
+      
 \bibliographystyle{ans}
 \bibliography{bibliography}
 
