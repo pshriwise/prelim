@@ -21,6 +21,7 @@ In the past, analysis using CAD-based geometry has saved man-hours in dealing wi
 
 This paper contains the preliminary results for an implementation of Intel's CPU-based ray tracing engine, Embree \cite{embree}, with DagMC for analysis with MCNP5 \cite{mcnp5} on several simple models, some specifically chosen for their complexity in the context of a ray tracing problem.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Spatial Partitioning Trees}
 
 Spatial partitioning trees recursively subdivide the space bounded by a given set of data in order to quickly eliminate regions of the problem space irrelevant to the given query for the tree. These subdivisions come in many forms depending on the tree hierarchy being used. These are usually, but not always, binary trees.
@@ -34,7 +35,7 @@ Bounding volume hierarchies (BVHs) are a subset of a more general solution to th
 
 Other bounding volumes and splitting conventions are also used in the are of spatial partitioning trees. For example, bounding spheres are sometimes used rather than boxes due to the simple and fast intersection check needed for ray queries. Hyperplane and hyperplane intervals are also used along each axis to subdivide data into a hierarchical structure. MOAB and Embree both use a BVH with bounding boxes so a detailed discussion of other spatial tree hierarchies will be neglected.
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Intel's Embree}
 
 Many existing ray tracing kernels use fine-grained, data dependent branching and irregular memory access which rules out other, more powerful optimiztaions like auto-vectorization. Embree's aim is to provide a CPU-based ray tracing kernel which combines the most efficient algorithms, data structures, and parallelization strategies for a given target architecture. Embree aims do do this for modern x86 architectures to access their full compute capability. In order to achieve this goal, Embree uses data structures and spatial splitting heuristics that allow for vectorization of spatial data structure traversals. \cite{embree} 
@@ -62,6 +63,7 @@ One can imagine this hueristic expanded to accomodate the quad-tree in Embree by
 
 One aspect of Embree's speed is due to the use of float-precision rather than double-precision in its calculations. Currently, this is not typical of ray tracing systems used for Monte Carlo analysis, but for the sample cases tested for the purpose of this paper, the difference in precision does not manifest itself in the results. In the future, it is very possible that a double-precision version of Embree will exist \cite{gpu_mic_ray_tracing_rpi}, thus aleviating any concern of differences in results due to ray tracing calculations.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementation of Embree in DagMC}
 
 Embree has been used in DagMC to replace the next surface, and point inclussion calculations for use in calculations using DAG-MCNP. This involves translating the mesh representation of the geometry in MOAB to an Embree instance. In Embree's native form, the ability to represent the underlying topological structure of a geometry-based mesh is limited. The ray tracing kernel is based on 'scenes' each scene being allowed to contain multiple 'geometries'. Even this relatively simple system allows for a one-to-one mapping of Embree geometries to MOAB surfaces and Embree scenes to MOAB volumes. Scenes cannot share mesh data, so surfaces are reproduced in this system for each volume they belong to. This duplication of surface mesh actually has its advantages as triangle normals in MOAB are adjusted on the fly based on which volume a current ray is in while the triangle normals can be pre-adjusted when creating the Embree geometries. This saves several computational steps when doing point inclusion calculations. Fortunately, Embree's mesh representation does not increase the memory footprint of DagMC greatly. Even if that were the case, once the Embree mesh representation has been properly established, the MOAB mesh could then be removed from memory.
