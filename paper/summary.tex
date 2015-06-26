@@ -72,9 +72,9 @@ Embree has been used in DagMC to replace the next surface, and point inclussion 
 
 In DagMC, particles on the surface of a volume are handled by ignoring the near-surface intersection upon entering a new volume. Under the convention that tirangle normals point outward from the center of the volume, this is done by ignoring triangles with normals opposing the current ray direction via a dot product calculation. In Embree, filter functions are used to emulate this process. Filter functions in Embree allow for a user-defined callback function for ray intersections. Embree will return its most recent valid intersection with all associated ray data (the hit triangle's unnormalized normal vector included) and allow a user to determine whether or not to accept the hit or instruct Embree to contiue the ray based on the outcome of the said filter function. Thus this calculation is actually contained within the ray query process in EmDagMC as is in DagMC.
 
-\subsection{Support for other applications}
+%% \subsection{Support for other applications}
 
-Some spatial search operations needed by applications other than MCNP to be fully supported in DagMC are not natively supported by Embree, but due to Embree's allowance of direct access to their spatial tree structures, these functions can easily be implemented in a similar way to current ray intersection functions in Embree. In particular, this involves the implementation of a function for returning the closest point on a volume mesh to a given point in space.
+%% Some spatial search operations needed by applications other than MCNP to be fully supported in DagMC are not natively supported by Embree, but due to Embree's allowance of direct access to their spatial tree structures, these functions can easily be implemented in a similar way to current ray intersection functions in Embree. In particular, this involves the implementation of a function for returning the closest point on a volume mesh to a given point in space.
 
 \subsection{Ray Fire Timing: DagMC vs. EmDagMC}
 
@@ -127,7 +127,7 @@ Several simple models were used to verify that MCNP, DagMCNP and EmDagMCNP provi
 
 As expected, the native MCNP runs were generally the fasest with the exception of the nested spheres case in which EmDagMCNP outperformed MCNP by 8 percent (see Table \ref{timings}). This is likely due to the fact that there are very few triangles in the faceted represenation of a cube, but there are many surfaces. MCNP searches linearly through a cell's surfaces to find the next surface intersection whereas DagMCNP and EmDagMCNP both search spatially. In the case of the nested cubes, it is likely that the number of surfaces relative to the number of triangles in this problem was high enough to allow EmDagMCNP to overtake MCNP.
 
-\begin{table}[H]
+\begin{table}[h]
 
   \begin{center}
 
@@ -154,7 +154,7 @@ As expected, the native MCNP runs were generally the fasest with the exception o
 
 In the single volume test cases, the flux and energy tallies for both DagMC-based implementations slightly from MCNP in some cases but agree with each other exactly, and the tally errors are identical. MCNP's calculated figure of merit (FOM) for each tally varies significantly between MCNP, EmDagMCNP, and DagMCNP. Generally, the FOM values for native MCNP and EmDagMCNP were an order of magnitude higher than DagMC. This is largely due to the fact that the FOM calculation is proportional to the number of histories run per minute. This is indicative of why DagMCNP's FOM values are lower than the MCNP or EmDagMCNP.
 
-\begin{table}[H]
+\begin{table}[h]
 
   \begin{center}
     \caption{Single Sphere Timing and Tally Results}
@@ -163,13 +163,19 @@ In the single volume test cases, the flux and energy tallies for both DagMC-base
       \toprule
       Value & MCNP & DagMCNP & w/ Embree \\
       \toprule
-      Histories/min & 3.4104E+05  & 3.9944E+04  & 2.1810E+05  \\
-      Flux Tally & 4.98083E-03 & 4.98090E-03 & 4.98090E-03 \\
-      Flux Tally Err & 4E-4 & 4E-4 & 4E-4  \\
-      Flux Tally FOM & 2.47231E+06 & 2.89558E+05 & 1.58107E+06 \\
-      Energy Tally & 3.17819E-03 & 3.17824E-03 & 3.17824E-03 \\
-      Energy Tally Err & 5E-4 & 5E-4 & 5E-4 \\
-      Energy Tally FOM & 1.16162E+06 & 1.36051E+05 & 7.42879E+05 \\      
+      Hist/min & 3.4104E+05  & 3.9944E+04  & 2.1810E+05  \\
+      \hline
+      \textbf{Flux} & & & \\
+      \hline
+      Tally & 4.98083E-03 & 4.98090E-03 & 4.98090E-03 \\
+      Err & 4E-4 & 4E-4 & 4E-4  \\
+      FOM & 2.47231E+06 & 2.89558E+05 & 1.58107E+06 \\
+      \hline
+      \textbf{Energy} & & & \\
+      \hline
+      Tally & 3.17819E-03 & 3.17824E-03 & 3.17824E-03 \\
+      Err & 5E-4 & 5E-4 & 5E-4 \\
+      FOM & 1.16162E+06 & 1.36051E+05 & 7.42879E+05 \\      
       \bottomrule
                         
     \end{tabular}
@@ -179,7 +185,8 @@ In the single volume test cases, the flux and energy tallies for both DagMC-base
 
 \end{table}
 
-\begin{table}[H]
+
+\begin{table}[h]
 
   \begin{center}
     \caption{Single Cube Timing and Tally Results}
@@ -188,15 +195,21 @@ In the single volume test cases, the flux and energy tallies for both DagMC-base
      \toprule
       Value & MCNP & DagMCNP & w/ Embree \\
      \toprule
-      Histories/min & 1.9879E+05 & 9.4738E+04 & 1.7260E+05  \\
-      Flux Tally & 5.61374E-03 & 5.61374E-03 & 5.61374E-03 \\
-      Flux Tally Err & 3E-4 & 3E-4 & 3E-4  \\
-      Flux Tally FOM & 2.47008E+06 & 1.17719E+06 & 2.14469E+06 \\
-      Energy Tally & 2.98933E-03 & 2.98933E-03 & 2.98933E-03 \\
-      Energy Tally Err & 7E-4 & 7E-4 & 7E-4 \\
-      Energy Tally FOM & 3.99526E+05 & 1.90406E+05 & 3.46895E+05 \\
-      \bottomrule
-      
+     Hist/min & 1.9879E+05 & 9.4738E+04 & 1.7260E+05  \\
+     \hline
+     \textbf{Flux} & & & \\
+     \hline
+     Tally & 5.61374E-03 & 5.61374E-03 & 5.61374E-03 \\
+     Err & 3E-4 & 3E-4 & 3E-4  \\
+     FOM & 2.47008E+06 & 1.17719E+06 & 2.14469E+06 \\
+     \hline
+     \textbf{Energy} & & & \\
+     \hline
+     Tally & 2.98933E-03 & 2.98933E-03 & 2.98933E-03 \\
+     Err & 7E-4 & 7E-4 & 7E-4 \\
+     FOM & 3.99526E+05 & 1.90406E+05 & 3.46895E+05 \\
+     \bottomrule
+     
     \end{tabular}
 
 
@@ -206,7 +219,7 @@ In the single volume test cases, the flux and energy tallies for both DagMC-base
 
 The multiple volume test results showed similar trends to the single volume tests with the exception of a discrepancy between DagMC and EmDagMC in the flux tally of the outermost cell, cell 3, in the nested spheres model. Based on the number of tracks entering each cell, this appears to be caused by a single particle history in EmDagMCNP ending before near a surface in cell 2 while in DagMCNP it crosses into cell 3 before dying. It is believed that the discrepancy is the result of a systematic difference between Embree and MOAB's ray fire convenctionality rather than the result of Embree's use of floating point precision used in Embree, but the later possibility has not yet been ruled out.
 
-\begin{table}[H]
+\begin{table}[h]
 
   \begin{center}
     \caption{Nested Spheres Timing and Tally Results}
@@ -215,7 +228,7 @@ The multiple volume test results showed similar trends to the single volume test
       \toprule
       Value & MCNP & DagMCNP & w/ Embree \\
       \toprule
-      Histories/min & 2.2991E+05 & 1.9877E+04 & 1.3947E+05 \\
+      Hist/min & 2.2991E+05 & 1.9877E+04 & 1.3947E+05 \\
       \hline
       Cell 1 & & & \\
       Flux Tally & 5.25725E-03 & 5.25734E-03 & 5.25734E-03 \\
@@ -238,7 +251,7 @@ The multiple volume test results showed similar trends to the single volume test
 \end{table}
 
 
-\begin{table}[H]
+\begin{table}[h]
 
   \begin{center}
     \caption{Nested Cubes Timing and Tally Results}
@@ -247,7 +260,7 @@ The multiple volume test results showed similar trends to the single volume test
       \toprule
       Value & MCNP & DagMCNP & w/ Embree \\
       \toprule
-      Histories/min & 2.1170E+05 & 1.0806E+05 & 2.3026E+05 \\
+      Hist/min & 2.1170E+05 & 1.0806E+05 & 2.3026E+05 \\
       \hline
       Cell 1 & & & \\
       Flux Tally & 1.38556E-02 & 1.38556E-02 & 1.38556E-02 \\
