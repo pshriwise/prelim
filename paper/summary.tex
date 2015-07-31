@@ -52,7 +52,7 @@ Embree also employs what is referred to as a mixed tree. A mixed tree indicates 
 
 There are many heuristics to be used when partitioning the the space contained by a bounding volume. In the past, most BVHs using bounding boxes have used median planar splitting or splitting boxes in half along one of its axes. Planar splitting is usually done such that the ratio of surface area to volume is maximized (i.e. the volumes are kept as cubic as possible) and the number of contained primitives is being split roughly in half to maintain performance like that of a standard binary tree search in the number of total primitives being contained. 
 
-Recently there has been a new heuristic for partitioning bounding volumes and contained geometric primitives called the surface area heuristic (SAH) \cite{sah}. Given the estimated cost of a single primitive intersection check, this heuristic is designed to minimize the cost of a split based on the number of primitives to be checked in each resulting child weighted by the ratio of the child's box area to the parent box area. This ratio of these areas acting as an esitmate of the probability of intersection for a given traversal of the BVH.
+Recently there has been a new heuristic for partitioning bounding volumes and contained geometric primitives called the surface area heuristic (SAH) \cite{sah}. Given the estimated cost of a single primitive intersection check, this heuristic is designed to minimize the cost of a split based on the number of primitives to be checked in each resulting child weighted by the ratio of the child's box area to the parent box area. The ratio of these areas acting as an esitmate of the probability of intersection for a given traversal of the BVH.
 
 %% This heuristic is designed to minimize the cost $C$ of a split based on the number of primitives to be checked in each child, $P_{R}$ and $P_{L}$, at the cost, $C_{i}$, of a single primitive intersection check weighted by the size of the child boxes, $B_{r}$ and $B_{L}$, compared to the size of the parent box, $B$. There is an additional cost of the extra bounding volume intersection check implied by adding the cost of one traversal step down the tree, $C_{t}$.
 %% Its formulation for a binary tree is as follows: 
@@ -232,7 +232,7 @@ As expected, the native MCNP runs were generally the fastest with the exception 
 In the single volume test cases, the flux and energy tallies for both DagMC-based implementations differed slightly from MCNP in some cases but agree with each other exactly. The tally errors were identical across all three systems for the single volume test cases. The multiple volume test results showed similar trends to the single volume tests with the exception of a discrepancy between DagMC and EmDagMC in the flux tally of the outermost cell, cell 3, in the nested spheres model. Based on the number of tracks entering each cell, this appears to be caused by a single particle history in EmDagMCNP ending before near a surface in cell 2 while in DagMCNP it crosses into cell 3 before dying. It is believed that the discrepancy is the result of a systematic difference between Embree and MOAB's ray fire conventionality rather than the result of Embree's use of floating point precision used in Embree, but the later possibility has not yet been ruled out.
 
 \begin{table}
-
+  \small
   \begin{center}
     \caption{Nested Spheres Timing and Tally Results. Flux tally units are $cm^{-2}$. Energy tally units are MeV/g.}
     
@@ -267,7 +267,7 @@ In the single volume test cases, the flux and energy tallies for both DagMC-base
 
 
 \begin{table}
-
+  \small
   \begin{center}
     \caption{Nested Cubes Timing and Tally Results. Flux tally units are $cm^{-2}$. Energy tally units are MeV/g.  }
     
