@@ -111,11 +111,11 @@ Several single-volume models have become the standard for testing ray fire timin
 
 Each model presents its own challenge with increasing faceting tolerance. The spere is a brute force test case. The number of triangles in the generated spherical mesh will always increase with decreasing faceting tolerance. This is not true of some geometries such as cubes or other rectuangular parallelpipeds. In the case of the notched sphere, regions referred to as high-valance are generated as a result of faceting algorithms for planar surfaces meeting curved surfaces. High-valance regions are defined as a single vertex connected to a high number of triangles (Figure \ref{hv}). High-valency is a difficult problem for BHVs to handle. The high triangle density at low faceting tolerances usually results in large overlaps in the bounding volumes of the tree leading to inefficient tree traversals upon query. The faceting of the high aspect ratio cylinder will contain many small, skinny triangles running along the barrel of the cylinder. In similar fashion to the spherical model, the number of these triangles will continually increase with decreasing faceting tolerance resulting in an increasing triangle density as well. The particular shape of these triangles can cause problems in the calculations of tightly fiting OBBs used in DagMC to create spatial trees. This test model is used to determine the overall effectiveness of Embree's ability to use both OBBs and AABBs as well as the robustness of their OBB generation algorithms for fitting to geometric objects with surface meshes of this nature.
 
-DagMC ray fire tests were performed for faceting tolerances ranging from 1e-6 cm to 1e-1 cm on each model resulting in the number of triangles in each problem ranging from thousands to tens of millions of triangles. It should be noted that this will affect the faceting of some models more than others, but the upward trend in the pure number of triangles with decreasing faceting tolerance will be consistent among them all due to the consistent presence of curved surfaces. A direct model to model comparison indicates that EmDagMC's average ray fire times are roughly 100 times faster than DagMC's. Comparing the best amoritized ray fire time of DagMC to the worst of EmDagMC  still leaves DagMC 10 times slower than EmDagMC.
+DagMC ray fire tests were performed for faceting tolerances ranging from 1e-6 cm to 1e-1 cm on each model. The number of triangles in each problem ranges from thousands to tens of millions of triangles. It should be noted that this will affect the faceting of some models more than others, but the upward trend in the pure number of triangles with decreasing faceting tolerance will be consistent among them all due to the presence of curved surfaces in all test models. Figure \ref{rftiming} shows the reults of these tests. A direct model to model comparison indicates that EmDagMC's average ray fire times are roughly 100 times faster than DagMC's. Comparing the best amoritized ray fire time of DagMC to the worst of EmDagMC still leaves DagMC 10 times slower than EmDagMC. There are many operations in DagMC which lie outside the realm of the ray tracing, but these results indicate that the limitation of DagMC's speed due to ray tracing may easily removed through the use of Embree.
 
 \subsection{Application of EmDagMC with MCNP5}
 
-Several simple models were used to verify that MCNP, DagMCNP and EmDagMCNP provide answers within reason of each other. These models included a sphere, cube, set of nested spheres and a set of nested cubes (3 volumes in each nested case) all filled with a dense hydrogen material for high collisionality in the problem. All models were faceted using a tolerance of 1e-04 cm, and a 5 MeV neutron source was placed at the origin and one million particles were run in each test.
+Several simple models were used to verify that MCNP, DagMCNP and EmDagMCNP provide answers within reason of each other. These models included a sphere, a cube, a set of nested spheres and a set of nested cubes (3 volumes in each nested case) all filled with a dense hydrogen material for high collisionality in the problem. All models were faceted using a tolerance of 1e-04 cm. A 5 MeV neutron source was placed at the origin, and one million particles were run in each test.
 
 
 \begin{figure}[H]
@@ -124,13 +124,13 @@ Several simple models were used to verify that MCNP, DagMCNP and EmDagMCNP provi
     
     \epsfig{file=figs/moab_rf.ps,width=0.9\columnwidth}
     \epsfig{file=figs/embree_rf.ps,width=0.9\columnwidth}
-    \caption{Comparison of the average ray fire times for MOAB to Embree in all test models. Note the value of the exponent on the y-axis in each graph.}
+    \caption{Comparison of the average ray fire times for MOAB to Embree in all test models. Note the value of the exponent on the y-axis in each graph. \label{rftiming}}
     
   \end{center}
 
 \end{figure}
 
-As expected, the native MCNP runs were generally the fastest with the exception of the nested cubes case in which EmDagMCNP outperformed MCNP by 8 percent (see Table \ref{timings}). This is likely due to the fact that there are very few triangles in the faceted represenation of a cube, but there are many surfaces. MCNP searches linearly through a cell's surfaces to find the next surface intersection whereas DagMCNP and EmDagMCNP both search spatially. In the case of the nested cubes, it is likely that the number of surfaces relative to the number of triangles in this problem was high enough to allow EmDagMCNP to overtake MCNP.
+As expected, the native MCNP runs were generally the fastest with the exception of the nested cubes case in which EmDagMCNP outperformed MCNP by 8 percent (see Table \ref{timings}). This is likely due to the fact that there are very few triangles in the faceted represenation of a cube, but there are many surfaces. MCNP searches linearly through a cell's surfaces to find the next surface intersection whereas DagMCNP and EmDagMCNP both search spatially. In the case of the nested cubes, it is likely that the number of surfaces relative to the number of triangles in this problem was high enough to allow EmDagMCNP ray tracing kernel to overtake MCNP's geometric calculations.
 
 \begin{table}
   \small
@@ -164,7 +164,7 @@ As expected, the native MCNP runs were generally the fastest with the exception 
   \end{center}
 \end{table}
 
-In the single volume test cases, the flux and energy tallies for both DagMC-based implementations differ slightly from MCNP in some cases but agree with each other exactly, and the tally errors are identical. MCNP's calculated figure of merit (FOM) for each tally varies significantly between MCNP, EmDagMCNP, and DagMCNP. Generally, the FOM values for native MCNP and EmDagMCNP were an order of magnitude higher than DagMC. This is largely due to the fact that the FOM calculation is proportional to the number of histories run per minute. This is indicative of why DagMCNP's FOM values are lower than the MCNP or EmDagMCNP.
+%% MCNP's calculated figure of merit (FOM) for each tally varies significantly between MCNP, EmDagMCNP, and DagMCNP. Generally, the FOM values for native MCNP and EmDagMCNP were an order of magnitude higher than DagMC. This is largely due to the fact that the FOM calculation is proportional to the number of histories run per minute. This is indicative of why DagMCNP's FOM values are lower than the MCNP or EmDagMCNP.
 
 %% \begin{table}[h]
 
@@ -229,7 +229,7 @@ In the single volume test cases, the flux and energy tallies for both DagMC-base
 %% \vspace{-0.4cm}
 %% \end{table}
 
-The multiple volume test results showed similar trends to the single volume tests with the exception of a discrepancy between DagMC and EmDagMC in the flux tally of the outermost cell, cell 3, in the nested spheres model. Based on the number of tracks entering each cell, this appears to be caused by a single particle history in EmDagMCNP ending before near a surface in cell 2 while in DagMCNP it crosses into cell 3 before dying. It is believed that the discrepancy is the result of a systematic difference between Embree and MOAB's ray fire conventionality rather than the result of Embree's use of floating point precision used in Embree, but the later possibility has not yet been ruled out.
+In the single volume test cases, the flux and energy tallies for both DagMC-based implementations differed slightly from MCNP in some cases but agree with each other exactly. The tally errors were identical across all three systems for the single volume test cases. The multiple volume test results showed similar trends to the single volume tests with the exception of a discrepancy between DagMC and EmDagMC in the flux tally of the outermost cell, cell 3, in the nested spheres model. Based on the number of tracks entering each cell, this appears to be caused by a single particle history in EmDagMCNP ending before near a surface in cell 2 while in DagMCNP it crosses into cell 3 before dying. It is believed that the discrepancy is the result of a systematic difference between Embree and MOAB's ray fire conventionality rather than the result of Embree's use of floating point precision used in Embree, but the later possibility has not yet been ruled out.
 
 \begin{table}
 
@@ -238,7 +238,7 @@ The multiple volume test results showed similar trends to the single volume test
     
     \begin{tabular}{lccc}
       \toprule
-      Value & MCNP & DagMCNP & w/ EmDagMCNP \\
+      Value & MCNP & DagMCNP & EmDagMCNP \\
       \toprule
       %%Hist/min & 2.2991E+05 & 1.9877E+04 & 1.3947E+05 \\
       %%\hline
@@ -273,7 +273,7 @@ The multiple volume test results showed similar trends to the single volume test
     
     \begin{tabular}{lccc}
       \toprule
-      Value & MCNP & DagMCNP & w/ EmDagMCNP \\
+      Value & MCNP & DagMCNP & EmDagMCNP \\
       \toprule
       %%Hist/min & 2.1170E+05 & 1.0806E+05 & 2.3026E+05 \\
       %%\hline
@@ -301,11 +301,11 @@ The multiple volume test results showed similar trends to the single volume test
 %%\vspace{-0.2 cm}
 \end{table}
 
-It is worth noting that no particles were lost in any of the test runs presented here. The full robustness of DagMC's topologically watertight meshes \cite{make_watertight_smith_2010} is available to the Embree instance in combintation with Embree's own floating point based watertight triangle instersection algorithm. \cite{watertight_tri_intersection_woop_2013}
+It is worth noting that no particles were lost in any of the test runs presented here. The full robustness of DagMC's topologically watertight meshes \cite{make_watertight_smith_2010} is available to the Embree instance in combintation with Embree's own floating point based watertight triangle instersection algorithm. \cite{watertight_tri_intersection_woop_2013} As a result, we expect the lost particle rate to match that of DagMC for any watertight model. 
 
 \section{Conclusions and Future Work}
 
-The implementation of a highly efficient CPU-based ray tracing system, Intel's Embree, in DagMC has been demonstrated in this paper. A small, and likely systematic, discrepancy between the MOAB ray tracing system and Embree has yet to be resolved, but the possibility of run times on CAD-based geometries on the order of run times using native MCNP geometry has been shown.
+The implementation of a highly efficient CPU-based ray tracing system, Intel's Embree, in DagMC has been demonstrated in this paper. A small, and likely systematic, discrepancy between the MOAB ray tracing system and Embree has yet to be resolved, but the possibility of CAD-based MCNP simulations being able to run on the order of simulations using native MCNP geometry has been shown.
 In the future, test cases on more complex CAD models will be attempted using the EmDagMC system for proof of application to real world problem scenarios. Pending the success of these tests, the DagMC build system will temporarily be redesigned to support Embree as the underlying ray tracing system if specified by the user. In the long term, the goal of this work will be to develop an equally efficient but more flexible ray tracing system in MOAB using it's direct access capabilities to take advantage of some of the same optimizations as Embree, but with design considerations for a more diverse set of spatial tree structures in mind. 
 
 \vspace{-0.2cm}
