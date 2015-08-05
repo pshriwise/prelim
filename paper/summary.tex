@@ -229,13 +229,13 @@ As expected, the native MCNP runs were generally the fastest with the exception 
 %% \vspace{-0.4cm}
 %% \end{table}
 
-In the single volume test cases, the flux and energy tallies for both DagMC-based implementations differed slightly from MCNP in some cases but agree with each other exactly. The tally errors were identical across all three systems for the single volume test cases. The multiple volume test results showed similar trends to the single volume tests with the exception of a discrepancy between DagMC and EmDagMC in the flux tally of the outermost cell, cell 3, in the nested spheres model. Based on the number of tracks entering each cell, this appears to be caused by a single particle history in EmDagMCNP ending before near a surface in cell 2 while in DagMCNP it crosses into cell 3 before dying. It is believed that the discrepancy is the result of a systematic difference between Embree and MOAB's ray fire conventionality rather than the result of Embree's use of floating point precision used in Embree, but the later possibility has not yet been ruled out.
+In the single volume test cases, the flux and energy tallies for both DagMC-based implementations differed slightly from MCNP in some cases but agree with each other exactly. The tally errors were identical across all three systems for the single volume test cases. The multiple volume test results (see Tables \ref{nestedspheres} and \ref{nestedcubes}) showed similar trends to the single volume tests with the exception of a discrepancy between DagMC and EmDagMC in the flux tally of the outermost cell, cell 3, in the nested spheres model. Based on the number of tracks entering each cell, this appears to be caused by a single particle history in EmDagMCNP ending before near a surface in cell 2 while in DagMCNP it crosses into cell 3 before dying. It is believed that the discrepancy is the result of a systematic difference between Embree and MOAB's ray fire conventionality rather than the result of Embree's use of floating point precision used in Embree, but the later possibility has not yet been ruled out.
 
 \begin{table}
   \small
   \begin{center}
     \caption{Nested Spheres Timing and Tally Results. Flux tally units are $cm^{-2}$. Energy tally units are MeV/g.}
-    
+    \label{nestedspheres}
     \begin{tabular}{lccc}
       \toprule
       Value & MCNP & DagMCNP & EmDagMCNP \\
@@ -270,7 +270,7 @@ In the single volume test cases, the flux and energy tallies for both DagMC-base
   \small
   \begin{center}
     \caption{Nested Cubes Timing and Tally Results. Flux tally units are $cm^{-2}$. Energy tally units are MeV/g.  }
-    
+    \label{nestedcubes}
     \begin{tabular}{lccc}
       \toprule
       Value & MCNP & DagMCNP & EmDagMCNP \\
