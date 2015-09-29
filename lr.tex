@@ -18,9 +18,35 @@
 
 \maketitle
 
+\tableofcontents 
 
 \section{Introduction}
 
-The purpose of this document is to outline the current state of the art in spatial partioning hierarchies for the purpose of improving performance in DagMC. This paper will take into account as much of the existing literature as possible and will analyze this literature w/ the conext of Monte Carlo specific ray tracing in mind. 
+The purpose of this document is to outline the current state of the art in spatial partioning hierarchies for the purpose of improving performance in DagMC. It will take into account as much of the existing literature as possible. An analysis of the literature will also be conatined, identifying areas for improvement within the context of ray tracing for the specific application of Monte Carlo ray tracing. 
+
+\section{Types of Spatial Hierarchies (Trees)}
+
+The area of computational spatial searching using partioning hierarchies (heretofore referred to as spatial trees) has been around for some time. As a result, many concepts for partitioning the space contained by a set of data have been developed and applied. In order to establish a successful spatial partitioning tree, one needs to have: 
+
+\begin{enumerate}
+  \item A tree structure.
+  \item A partitioning construct.
+  \item A division heuristic.
+  \item Leaf conditions.
+\end{enumerate}
+
+The tree structure refers almost entirely to the number of children each non-leaf node in the tree should have. The majority of spatial trees are binary trees (two children), but other structures do exist such as quad trees (four children) and oct trees (eight children). The partitioning construct refers to the mechanism by which you are creating partitions out of space. There is a large variety of these which are chosen based on a couple of counteracting criterion 1) number of operations required for an intersection check and 2) their ability to effectively eliminate subsets of the problem space from a given query.
+ 
+\subsection{Bounding Volume Hierarchies}
+
+\subsubsection{Axis Aligned Bounding Box Trees}
+
+\subsubsection{Oriented Bounding Box Trees}
+
+\subsubsection{K-D Trees}
+
+\subsection{Bounding Interval Trees}
+
+\subsection{Oct-Trees}
 
 \end{document}
