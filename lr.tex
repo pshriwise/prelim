@@ -41,6 +41,8 @@ The tree structure refers almost entirely to the number of children each non-lea
 
 The initial concept of using primitive bounding volumes as a pre-check for ray-intersection with objects was introduced by Weghorst in 1984 \cite{Weghorst:1984:ICM}. Weghorst explored the possibility of using spheres and rectangular parallell pipeds to contain objects at a high level. This work also went so far as to create a hierarchy of those bounding volumes, noting the importance of joining boxes which are near each other in space so as not to have volumes containing large amounts of empty space between the objects to be joined. Another important conclusion of this work was that while spherical bounding volumes are less computationally expensive to check for ray intersections than bounding boxes, the latter generally provide a tighter fit to the objects they contain. This tighter fitting becomes important as it decreases the chance of wasted intersections further down in the spatial hierarchy.
 
+
+
 \subsubsection{Axis Aligned Bounding Box Trees}
 
 \subsubsection{Oriented Bounding Box Trees}
@@ -50,5 +52,8 @@ The initial concept of using primitive bounding volumes as a pre-check for ray-i
 \subsection{Bounding Interval Trees}
 
 \subsection{Oct-Trees}
+
+\bibliographystyle{acm}
+\bibliography{refs}
 
 \end{document}
