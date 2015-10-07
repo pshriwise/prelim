@@ -22,7 +22,7 @@
 
 \section{Introduction}
 
-The purpose of this document is to outline the current state of the art in spatial partioning hierarchies for the purpose of improving performance in DagMC. It will take into account as much of the existing literature as possible. An analysis of the literature will also be conatined, identifying areas for improvement within the context of ray tracing for the specific application of Monte Carlo ray tracing. 
+The purpose of this document is to outline the current state of the art in spatial partioning hierarchies for the purpose of improving performance in DagMC. It will take into account as much of the existing literature as possible. An analysis of the literature will also be conatined, identifying areas for improvement within the context of ray tracing for the specific application of Monte Carlo ray tracing.
 
 \section{Types of Spatial Hierarchies (Trees)}
 
@@ -39,11 +39,13 @@ The tree structure refers almost entirely to the number of children each non-lea
  
 \subsection{Bounding Volume Hierarchies}
 
+The initial concept of using primitive bounding volumes as a pre-check for ray-intersection with objects was introduced by Weghorst in 1984 \cite{Weghorst:1984:ICM}. Weghorst explored the possibility of using spheres and rectangular parallell pipeds to contain objects at a high level. This work also went so far as to create a hierarchy of those bounding volumes, noting the importance of joining boxes which are near each other in space so as not to have volumes containing large amounts of empty space between the objects to be joined. Another important conclusion of this work was that while spherical bounding volumes are less computationally expensive to check for ray intersections than bounding boxes, the latter generally provide a tighter fit to the objects they contain. This tighter fitting becomes important as it decreases the chance of wasted intersections further down in the spatial hierarchy.
+
 \subsubsection{Axis Aligned Bounding Box Trees}
 
 \subsubsection{Oriented Bounding Box Trees}
 
-\subsubsection{K-D Trees}
+\subsection{K-D Trees}
 
 \subsection{Bounding Interval Trees}
 
