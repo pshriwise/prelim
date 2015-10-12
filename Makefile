@@ -1,11 +1,18 @@
 
 all: pdf
 
-pdf:
+paper:
 	cd paper && latex summary.tex && bibtex summary && latex summary && latex summary && dvipdfm summary.dvi 
 
-preview: pdf
+paper-preview: paper
 	cd paper && evince summary.pdf
+
+presentation:
+	cd presentation && pdflatex presentation.tex
+
+preview-presentation: presentation
+
+.PHONY: paper presentation
 
 clean:
 	git clean -df

@@ -1,0 +1,3 @@
+[submodule "presentation/uw-beamer-template"]
+	path = presentation/uw-beamer-template
+	url = https://github.com/travitch/uw-beamer-template.git
