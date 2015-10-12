@@ -8,7 +8,7 @@ paper-preview: paper
 	cd paper && evince summary.pdf
 
 presentation:
-	cd presentation && pdflatex presentation.tex
+	cd presentation && pdflatex presentation.tex && pdflatex presentation.tex
 
 preview-presentation: presentation
 	cd presentation && evince presentation.pdf
