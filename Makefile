@@ -11,6 +11,7 @@ presentation:
 	cd presentation && pdflatex presentation.tex
 
 preview-presentation: presentation
+	cd presentation && evince presentation.pdf
 
 .PHONY: paper presentation
 
