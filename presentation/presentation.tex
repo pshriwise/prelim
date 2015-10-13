@@ -22,20 +22,40 @@
 \end{frame}
 
 %% Introduction %%
-\section{CAD-Based Monte Carlo Transport}
-
-\section{Ray Tracing Accelerations}
-
-\section{Implementation of Embree in DAGMC}
-
-\section{Results}
-
-\section{Drawbacks}
-
-\section{Future Work}
+\section{CAD-Based Monte Carlo Transport} % 1-2 slides
+% We use it for our geometric queries:
+   % point-inclusion
+   % dist to next surf
+% Replaces analytic intersections in native MonteCarlo packages
+% Images of typical production models?
+\section{Ray Tracing Accelerations} % 2-3 slides
+% BVH explanation in 1 slide
+% Embree's tricks
+% Extra: SAH
+\section{Triangle Mesh Transfer} % 1-2 slides
+% Maintaining watertightness
+   % explain and refer to make_watertight
+% Importance of the filter functions
+   % allowed compliance with DAGMC conventions
+\section{Results} % 2-3 slides
+% Pure ray fire comparison (no transport)
+% Single volume tests
+% Multiple volume tests
+\section{Drawbacks} % 2-3 slides
+% Floating precision 
+% Robustness needs work, triangle intersector not quite there
+% Lost particles in highly complex geometries, most likely due to forced conversion
+% back and forth from double to float
+% Extra: slide with graphic of our specific problem
+\section{Future Work} % 2 slides
+% Proof of principle
+% Likely to see improvements in our native system using variations of these techniques
+% Point them to pyembree for a simple example of a 1-D Monte Carlo calculation in 3 regions
 
 \begin{frame}
 
 \end{frame}
+
+%QUESTIONS - 1 slide
 
 \end{document}
