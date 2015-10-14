@@ -8,6 +8,8 @@
 \institute{University of Wisconsin - Madison}
 \date{ANS Winter Meeting 2015}
 
+\usepackage{biblatex}
+\bibliographystyle{ans}
 \AtBeginSection[]{
   \begin{frame}
   \vfill
@@ -34,7 +36,12 @@
 
 %% Introduction %%
 \section{CAD-Based Monte Carlo Transport} % 1-2 slides
-
+% We use it for our geometric queries:
+   % point-inclusion
+   % dist to next surf
+% Replaces analytic intersections in native MonteCarlo packages
+% Motivation: takes too long!
+% Images of typical production models?
 \begin{frame}
 
 \frametitle{Robust CAD-Based Monte Carlo Transport}
@@ -46,13 +53,11 @@ DAGMC can robustly do transport calculations on models like these:
 \begin{tabular}{c c}
 
 \includegraphics[height=0.4\textheight]{./images/atr_both.png} &
-
-
 \includegraphics[height=0.4\textheight]{./images/bllite_both.png} \\
 
 Advanced Test Reactor &
-
 ITER \\
+
 \end{tabular}
 \end{center}
 
@@ -74,13 +79,16 @@ But it takes a long time... (2-10x slower than native codes)
 
 
 \end{frame}
-% We use it for our geometric queries:
-   % point-inclusion
-   % dist to next surf
-% Replaces analytic intersections in native MonteCarlo packages
-% Motivation: takes too long!
-% Images of typical production models?
+
 \section{Ray Tracing Accelerations} % 2-3 slides
+
+\begin{frame}
+\frametitle{Bounding Volume Hierarchies}
+
+\includegraphics[width=0.4\textwidth]{./images/bvh_2d_ex.png}
+\cite{gottschalk1996obbtree}
+
+\end{frame}
 % BVH explanation in 1 slide
 % Embree's tricks
 % Extra: SAH
@@ -104,6 +112,8 @@ But it takes a long time... (2-10x slower than native codes)
 % Likely to see improvements in our native system using variations of these techniques
 % Point them to pyembree for a simple example of a 1-D Monte Carlo calculation in 3 regions
 
+
+%Citations
 \begin{frame}
 
 \end{frame}
