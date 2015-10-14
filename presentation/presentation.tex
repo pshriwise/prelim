@@ -8,6 +8,17 @@
 \institute{University of Wisconsin - Madison}
 \date{ANS Winter Meeting 2015}
 
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
 \begin{document}
 
 
@@ -23,10 +34,51 @@
 
 %% Introduction %%
 \section{CAD-Based Monte Carlo Transport} % 1-2 slides
+
+\begin{frame}
+
+\frametitle{Robust CAD-Based Monte Carlo Transport}
+
+DAGMC can robustly do transport calculations on models like these:
+
+
+\begin{center}
+\begin{tabular}{c c}
+
+\includegraphics[height=0.4\textheight]{./images/atr_both.png} &
+
+
+\includegraphics[height=0.4\textheight]{./images/bllite_both.png} \\
+
+Advanced Test Reactor &
+
+ITER \\
+\end{tabular}
+\end{center}
+
+But it takes a long time... (2-10x slower than native codes)
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Ray Tracing in DAGMC}
+
+\begin{itemize}
+  \item Used for our geometric queries:
+    \begin{itemize}
+      \item point-inclusion tests
+      \item next surface distance determination
+    \end{itemize}
+\end{itemize}
+
+
+\end{frame}
 % We use it for our geometric queries:
    % point-inclusion
    % dist to next surf
 % Replaces analytic intersections in native MonteCarlo packages
+% Motivation: takes too long!
 % Images of typical production models?
 \section{Ray Tracing Accelerations} % 2-3 slides
 % BVH explanation in 1 slide
