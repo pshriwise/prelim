@@ -1,1 +1,1 @@
-../paper/ans.bst
+../ans.bst

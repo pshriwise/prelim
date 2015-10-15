@@ -1,15 +1,17 @@
 
 \documentclass[12pt]{beamer}
 
-\usetheme[white]{Wisconsin}
+\usepackage[white]{beamerthemeWisconsin}
+%\usetheme[white]{Wisconsin}
 \graphicspath{{./}{./uw-beamer-template/}}
 \title{Leveraging Intel's Embree Ray Tracing in the DAGMC Toolkit}
 \author{Patrick C Shriwise}
 \institute{University of Wisconsin - Madison}
 \date{ANS Winter Meeting 2015}
 
-\usepackage{biblatex}
-\bibliographystyle{ans}
+
+
+
 \AtBeginSection[]{
   \begin{frame}
   \vfill
@@ -115,7 +117,8 @@ But it takes a long time... (2-10x slower than native codes)
 
 %Citations
 \begin{frame}
-
+  \bibliographystyle{ans}
+  \bibliography{bibliography}
 \end{frame}
 
 %QUESTIONS - 1 slide
