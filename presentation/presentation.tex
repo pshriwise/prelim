@@ -84,40 +84,83 @@ But it takes a long time... (2-10x slower than native codes)
 \end{frame}
 
 \section{Ray Tracing Accelerations} % 2-3 slides
+% BVH explanation in 1 slide
+% Embree's tricks
+% Extra: SAH
+
 
 \begin{frame}[allowpagebreak,T]
 \frametitle{Bounding Volume Hierarchies}
 
 \begin{itemize}
-  \item By partitioning the geometry-based mesh, we gain significant accelerations over a linear search of the discrete elements.
+  \item By partitioning the geometry-based mesh using bounding volumes, we gain significant accelerations over a linear search of the discrete elements.
 \end{itemize}
 
-
 \begin{columns}
-  
-  \column{0.45\textwidth}
+  \column{0.5\textwidth}
   \begin{figure}
     \centering
-    \includegraphics[width=1\textwidth]{./images/bvh_2d_ex_w_labels.png} 
+    \includegraphics[width=1.1\textwidth]{./images/bvh_2d_ex_w_labels.png} 
     \cite{gottschalk1996obbtree}
   \end{figure}
   
-  \column{0.45\textwidth}
+  \column{0.4\textwidth}
   \begin{figure}
-    \includegraphics[width=0.6\textwidth]{./images/binary_graph.png}
+    \centering
+    \includegraphics[width=0.5\textwidth]{./images/binary_graph.png}
   \end{figure}
-  
 \end{columns}
 
+\vfill
 
 \begin{itemize}
   \item How we create these hierarchies matters \textbf{a lot} in terms of the performance improvements we see.
 \end{itemize}
 
 \end{frame}
-% BVH explanation in 1 slide
-% Embree's tricks
-% Extra: SAH
+
+\begin{frame}
+\frametitle{DAGMC's BVH}
+
+DAGMC uses the BVH hierarchy found in it's Mesh Oriented dAtaBase, MOAB.
+
+\begin{itemize}
+\item oriented bounding boxes are the bounding volume of choice
+\end{itemize}
+
+
+
+
+\end{frame}
+
+
+
+\begin{frame}
+
+\frametitle{Embree's BVH}
+
+Embree uses an OBB quad-tree structure:
+
+\begin{center}
+\includegraphics[width=0.5\textwidth]{./images/quad_tree.png}
+\end{center}
+
+\begin{itemize}
+\item this discretizes the geometric primitives and space more finely per level in the tree
+\item but it also makes for more tree nodes to check when doing a query
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Embree's BVH}
+
+
+\end{frame}
+
+
+
 \section{Triangle Mesh Transfer} % 1-2 slides
 % Maintaining watertightness
    % explain and refer to make_watertight
