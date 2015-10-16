@@ -2,6 +2,7 @@
 \documentclass[12pt]{beamer}
 
 \usepackage[white]{beamerthemeWisconsin}
+\usepackage{framed}
 %\usetheme[white]{Wisconsin}
 \graphicspath{{./}{./uw-beamer-template/}}
 \title{Leveraging Intel's Embree Ray Tracing in the DAGMC Toolkit}
@@ -84,11 +85,34 @@ But it takes a long time... (2-10x slower than native codes)
 
 \section{Ray Tracing Accelerations} % 2-3 slides
 
-\begin{frame}
+\begin{frame}[allowpagebreak,T]
 \frametitle{Bounding Volume Hierarchies}
 
-\includegraphics[width=0.4\textwidth]{./images/bvh_2d_ex.png}
-\cite{gottschalk1996obbtree}
+\begin{itemize}
+  \item By partitioning the geometry-based mesh, we gain significant accelerations over a linear search of the discrete elements.
+\end{itemize}
+
+
+\begin{columns}
+  
+  \column{0.45\textwidth}
+  \begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{./images/bvh_2d_ex_w_labels.png} 
+    \cite{gottschalk1996obbtree}
+  \end{figure}
+  
+  \column{0.45\textwidth}
+  \begin{figure}
+    \includegraphics[width=0.6\textwidth]{./images/binary_graph.png}
+  \end{figure}
+  
+\end{columns}
+
+
+\begin{itemize}
+  \item How we create these hierarchies matters \textbf{a lot} in terms of the performance improvements we see.
+\end{itemize}
 
 \end{frame}
 % BVH explanation in 1 slide
