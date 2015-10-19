@@ -190,27 +190,21 @@ But it takes a long time... (2-10x slower than native codes)
 \frametitle{DAGMC's BVH}
 
 DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB.
+\begin{center}
+  \begin{tikzpicture}
 
-\begin{columns}
-  \column{0.45\textwidth}
-  \begin{figure}
-      \includegraphics[width=0.4\textwidth]{./images/sphere_obbs_shallow.png}
-  \end{figure}
+    \node (SHALLOW) [auto, outer sep=10pt, label=below:{\small shallow}] {\includegraphics[width=0.3\textwidth]{./images/sphere_obbs_shallow.png}};
+    
+    \node (DEEP) [auto, outer sep=10pt, xshift=7cm, label=below:{\small deep}] {\includegraphics[width=0.3\textwidth]{./images/sphere_obbs_deep.png}};
 
-  \column{0.1\textwidth}
-  \begin{figure}
-    \arrowright
-  \end{figure}
-  
-  \column{0.45\textwidth}
-  \begin{figure}
-    \includegraphics[width=0.4\textwidth]{./images/sphere_obbs_deep.png}
-  \end{figure}
-\end{columns}
+    \draw [arrow] (SHALLOW) -- (DEEP);
+  \end{tikzpicture}
+\end{center}
 
 \begin{itemize}
-\item oriented bounding boxes (OBBs) are the bounding volume of choice
+\item oriented bounding boxes (OBBs)
 \item uses binary trees
+\item median splitting (longest to shortest axis)
 \end{itemize}
 
 \end{frame}
@@ -221,16 +215,17 @@ DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB.
 
 \frametitle{Embree's BVH}
 
-Embree uses an OBB quad-tree structure:
+Embree also uses OBB but with a quad-tree structure:
 
 \begin{center}
 \includegraphics[width=0.5\textwidth]{./images/quad_tree.png}
 \end{center}
 
 \begin{itemize}
-\item this discretizes the geometric primitives and space more finely per level in the tree
-\item but it also makes for more tree nodes to check when doing a query
-\item Embree makes up for this by checking many nodes at once using SIMD commands
+\item uses median splitting w/ Surface Area Heuristic criterion
+\item discretizes the geometric primitives and space more finely per level in the tree
+\item makes for more tree nodes to check per query
+\item uses SIMD to check many nodes at once
 \end{itemize}
 
 \end{frame}
@@ -238,6 +233,7 @@ Embree uses an OBB quad-tree structure:
 
 \begin{frame}
 \frametitle{Embree's BVH}
+
 
 \end{frame}
 
