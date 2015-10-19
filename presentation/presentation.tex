@@ -31,6 +31,11 @@
 \usetikzlibrary{positioning}
 \usetikzlibrary{decorations.pathreplacing}
 
+
+\tikzstyle{uwstep} = [rectangle, rounded corners, minimum width=2.5cm, minimum height=1cm,text centered, text width=2.5cm, draw=black, fill=UWRed, text=white]
+\tikzset{every node/.style={inner sep=0pt, outer sep=1pt}}
+
+
 \tikzstyle{arrow} = [thick,->,>=stealth]
 
 \tikzset{
@@ -100,6 +105,33 @@ ITER \\
 \end{center}
 
 But it takes a long time... (2-10x slower than native codes)
+
+\end{frame}
+
+\begin{frame}
+\frametitle{DAGMC Workflow}
+\begin{center}
+\begin{tikzpicture}
+  \node (CAD) [uwstep] {\small CAD \\ Geometry};
+
+  \node (CUBIT) [uwstep, xshift=3cm, label=below:{\small imprint \& merge}] {\small CUBIT};
+  
+  \node (PREPROC) [uwstep, xshift=6cm, label=below:{\small surface faceting}] {\small dagmc \\preproc};
+
+  \node (MW) [uwstep, xshift=9cm, label={\small facet sealing}] {\small make \\watertight};
+
+  \node (MC) [uwstep, xshift=9cm, yshift=-2cm, label=below:{\small analysis}] {\small Monte Carlo};
+
+  \draw [arrow] (CAD) -- (CUBIT);
+
+  \draw [arrow] (CUBIT) -- (PREPROC);
+
+  \draw [arrow] (PREPROC) -- (MW);
+
+  \draw [arrow] (MW) -- (MC);
+
+\end{tikzpicture}
+\end{center}
 
 \end{frame}
 
@@ -177,7 +209,7 @@ DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB.
 \end{columns}
 
 \begin{itemize}
-\item oriented bounding boxes are the bounding volume of choice
+\item oriented bounding boxes (OBBs) are the bounding volume of choice
 \item uses binary trees
 \end{itemize}
 
