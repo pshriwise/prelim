@@ -3,6 +3,7 @@
 
 \usepackage[white]{beamerthemeWisconsin}
 \usepackage{framed}
+\usepackage{tikz}
 %\usetheme[white]{Wisconsin}
 \graphicspath{{./}{./uw-beamer-template/}}
 \title{Leveraging Intel's Embree Ray Tracing in the DAGMC Toolkit}
@@ -24,6 +25,40 @@
   \end{frame}
 }
 
+
+%%%% TIKZ OBJECTS %%%%
+\usetikzlibrary{shapes.arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.pathreplacing}
+
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\tikzset{
+    myarrow/.style={
+        draw,
+        fill=UWRed,
+        single arrow,
+        minimum height=4ex,
+        single arrow head extend=1ex
+    }
+}
+
+\newcommand{\arrowup}{%
+\tikz [baseline=-0.5ex]{\node [myarrow,rotate=90] {};}
+}
+\newcommand{\arrowdown}{%
+\tikz [baseline=-1ex]{\node [myarrow,rotate=-90] {};}
+}
+\newcommand{\arrowright}{%
+\tikz [baseline=-0.5ex]{\node [myarrow,rotate=0] {};}
+}
+\newcommand{\doublearrow}{%
+\tikz [baseline=-1ex]{\node [mydoublearrow,rotate=0] {};}
+}
+
+
+
+%%%% START DOCUMENT %%%%
 \begin{document}
 
 
@@ -124,9 +159,22 @@ But it takes a long time... (2-10x slower than native codes)
 
 DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB.
 
-\begin{center}
-\includegraphics[width=0.4\textwidth]{./images/sphere_obbs_shallow.png}
-\end{center}
+\begin{columns}
+  \column{0.45\textwidth}
+  \begin{figure}
+      \includegraphics[width=0.4\textwidth]{./images/sphere_obbs_shallow.png}
+  \end{figure}
+
+  \column{0.1\textwidth}
+  \begin{figure}
+    \arrowright
+  \end{figure}
+  
+  \column{0.45\textwidth}
+  \begin{figure}
+    \includegraphics[width=0.4\textwidth]{./images/sphere_obbs_deep.png}
+  \end{figure}
+\end{columns}
 
 \begin{itemize}
 \item oriented bounding boxes are the bounding volume of choice
@@ -165,7 +213,7 @@ Embree uses an OBB quad-tree structure:
 
 \section{Implementation of Embree in DAGMC} % 1-2 slides
 \begin{frame}
-  make\_watertight \cite{make_watertight_smith_2010} is an algorithm we use to ensure the capability of robust ray tracing
+  make\_watertight \cite{make_watertight_smith_2010} is an algorithm used to ensure the capability of robust ray tracing
 
 
   we must take care to ensure our mesh is represented in the same way in an Embree instance. 
