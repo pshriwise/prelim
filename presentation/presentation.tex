@@ -89,7 +89,7 @@ But it takes a long time... (2-10x slower than native codes)
 % Extra: SAH
 
 
-\begin{frame}[allowpagebreak,T]
+\begin{frame}
 \frametitle{Bounding Volume Hierarchies}
 
 \begin{itemize}
@@ -122,14 +122,16 @@ But it takes a long time... (2-10x slower than native codes)
 \begin{frame}
 \frametitle{DAGMC's BVH}
 
-DAGMC uses the BVH hierarchy found in it's Mesh Oriented dAtaBase, MOAB.
+DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB.
+
+\begin{center}
+\includegraphics[width=0.4\textwidth]{./images/sphere_obbs_shallow.png}
+\end{center}
 
 \begin{itemize}
 \item oriented bounding boxes are the bounding volume of choice
+\item uses binary trees
 \end{itemize}
-
-
-
 
 \end{frame}
 
@@ -148,6 +150,7 @@ Embree uses an OBB quad-tree structure:
 \begin{itemize}
 \item this discretizes the geometric primitives and space more finely per level in the tree
 \item but it also makes for more tree nodes to check when doing a query
+\item Embree makes up for this by checking many nodes at once using SIMD commands
 \end{itemize}
 
 \end{frame}
@@ -156,12 +159,20 @@ Embree uses an OBB quad-tree structure:
 \begin{frame}
 \frametitle{Embree's BVH}
 
-
 \end{frame}
 
 
 
-\section{Triangle Mesh Transfer} % 1-2 slides
+\section{Implementation of Embree in DAGMC} % 1-2 slides
+\begin{frame}
+  make\_watertight \cite{make_watertight_smith_2010} is an algorithm we use to ensure the capability of robust ray tracing
+
+
+  we must take care to ensure our mesh is represented in the same way in an Embree instance. 
+  
+
+\end{frame}
+
 % Maintaining watertightness
    % explain and refer to make_watertight
 % Importance of the filter functions
