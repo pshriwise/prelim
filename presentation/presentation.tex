@@ -27,14 +27,14 @@
 
 
 %%%% TIKZ OBJECTS %%%%
-\usetikzlibrary{shapes.arrows}
+\usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{decorations.pathreplacing}
 
-
-\tikzstyle{uwstep} = [rectangle, rounded corners, minimum width=2.5cm, minimum height=1cm,text centered, text width=2.5cm, draw=black, fill=UWRed, text=white]
 \tikzset{every node/.style={inner sep=0pt, outer sep=1pt}}
+\tikzstyle{uwstep} = [minimum width=2.5cm, minimum height=1cm,text centered, text width=2.5cm, draw=black, fill=UWRed, text=white]
 
+\tikzstyle{embreestep} = [ellipse, minimum width=2.5cm, minimum height=1cm,text centered, text width=2cm, draw=black, fill=blue, text=white]
 
 \tikzstyle{arrow} = [thick,->,>=stealth]
 
@@ -194,10 +194,10 @@ DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB.
   \begin{tikzpicture}
 
     \node (SHALLOW) [auto, outer sep=10pt, label=below:{\small shallow}] {\includegraphics[width=0.3\textwidth]{./images/sphere_obbs_shallow.png}};
-    
+    \node [myarrow,rotate=0,xshift=3.5cm] {};
     \node (DEEP) [auto, outer sep=10pt, xshift=7cm, label=below:{\small deep}] {\includegraphics[width=0.3\textwidth]{./images/sphere_obbs_deep.png}};
 
-    \draw [arrow] (SHALLOW) -- (DEEP);
+   % \draw [arrow] (SHALLOW) -- (DEEP);
   \end{tikzpicture}
 \end{center}
 
@@ -231,20 +231,65 @@ Embree also uses OBB but with a quad-tree structure:
 \end{frame}
 
 
+\section{Implementation of Embree in DAGMC} % 1-2 slides
+
 \begin{frame}
-\frametitle{Embree's BVH}
+  \frametitle{DAGMC entities in Embree}
 
+  Embree has a limited capability for representing geometric topology, but enough construct a mappable representation of DAGMC models.
 
+\begin{center}
+  \begin{tikzpicture}
+
+    \node (VolA) [uwstep,text width=2cm] {\small DAGMC Volume};
+    \node (SceneA) [embreestep, xshift=-3cm] {\small Embree Scene};
+
+    \node (SurfA)[uwstep,xshift=3.5cm] {\small DAGMC Surface};
+    \node (GeomA)[embreestep,xshift=6.5cm] {\small Embree Geometry};
+    
+    \node (SurfB) [uwstep,xshift=3.5cm,yshift=2cm,label={\small EntityHandle}] {\small DAGMC Surface};
+    \node (GeomB) [embreestep,xshift=6.5cm,yshift=2cm,label={\small int id}] {\small Embree Geometry};
+
+    \node (SurfC) [uwstep,xshift=3.5cm,yshift=-2cm] {\small DAGMC Surface};
+    \node (GeomC) [embreestep,xshift=6.5cm,yshift=-2cm] {\small Embree Geometry};
+
+    \draw[<->] (VolA) -- (SceneA);
+    \draw[<->] (SurfA) -- (GeomA);
+    \draw[<->] (SurfB) -- (GeomB);
+    \draw[<->] (SurfC) -- (GeomC);
+    \draw[->] (VolA) -- (SurfA);
+    \draw[->] (VolA) -- (SurfB);
+    \draw[->] (VolA) -- (SurfC);
+  \end{tikzpicture}
+  \end{center}
+
+  
 \end{frame}
 
-
-
-\section{Implementation of Embree in DAGMC} % 1-2 slides
 \begin{frame}
+  \frametitle{Maintaining watertightness}
   make\_watertight \cite{make_watertight_smith_2010} is an algorithm used to ensure the capability of robust ray tracing
 
+  \begin{center}
+    \begin{tikzpicture}
+      
+    \node[circle,fill=none,minimum width=1cm,text width=6cm,draw=black,label={Global Vertex Buffer}] {};
+    \draw plot [only marks, mark=*, mark size=0.5, domain=0:2.9, samples=250] (\x,{rand*sqrt(2.9^2-\x^2)});
+    \begin{scope}[yscale=1,xscale=-1]
+    \draw plot [only marks, mark=*, mark size=0.5, domain=0:2.9, samples=250] (\x,{rand*sqrt(2.9^2-\x^2)});
+    \end{scope}
 
-  we must take care to ensure our mesh is represented in the same way in an Embree instance. 
+    \node[circle,outer sep=1pt,fill=none,minimum width=1cm,text width=3cm,draw=blue,xshift=1.5cm] (Surf1Circle) {};
+    \node[auto,above=-0.6cm of Surf1Circle,fill=white] (Surf1) {\small \color{blue} Surface1};
+
+    \node[circle,outer sep=1pt,fill=none,minimum width=1cm,text width=2cm,draw=red,yshift=-1cm] (Surf2Circle) {};
+    \node[auto,above=-0.7cm of Surf2Circle,fill=white] (Surf2) {\small \color{red} Surface2};
+
+    \node[circle,outer sep=1pt,fill=none,minimum width=3cm,text width=2cm,draw=green,xshift=-1cm,yshift=1cm] (Surf3Circle) {};
+    \node[auto,above=-0.6cm of Surf3Circle,fill=white] (Surf3) {\small \color{green} Surface3};
+    
+    \end{tikzpicture}
+  \end{center}
   
 
 \end{frame}
