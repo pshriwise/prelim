@@ -5,7 +5,7 @@
 \usepackage{framed}
 \usepackage{tikz}
 %\usetheme[white]{Wisconsin}
-\graphicspath{{./}{./uw-beamer-template/}}
+\graphicspath{{./}{./uw-beamer-template/}{../images/}}
 \title{Leveraging Intel's Embree Ray Tracing in the DAGMC Toolkit}
 \author{Patrick C Shriwise}
 \institute{University of Wisconsin - Madison}
@@ -95,8 +95,8 @@ DAGMC can robustly do transport calculations on highly detailed CAD models like 
 \begin{center}
 \begin{tabular}{c c}
 
-\includegraphics[height=0.4\textheight]{./images/atr_both.png} &
-\includegraphics[height=0.4\textheight]{./images/bllite_both.png} \\
+\includegraphics[height=0.4\textheight]{atr_both.png} &
+\includegraphics[height=0.4\textheight]{bllite_both.png} \\
 
 \small Advanced Test Reactor &
 \small ITER \\
@@ -181,14 +181,14 @@ By partitioning the geometry-based meshes using bounding volumes, we gain signif
   \column{0.5\textwidth}
   \begin{figure}
     \centering
-    \includegraphics[width=1.1\textwidth]{./images/bvh_2d_ex_w_labels.png} 
+    \includegraphics[width=1.1\textwidth]{bvh_2d_ex_w_labels.png} 
     \cite{gottschalk1996obbtree}
   \end{figure}
   
   \column{0.4\textwidth}
   \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{./images/binary_graph.png}
+    \includegraphics[width=0.5\textwidth]{binary_graph.png}
   \end{figure}
 \end{columns}
 
@@ -204,9 +204,9 @@ DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB.
 \begin{center}
   \begin{tikzpicture}
 
-    \node (SHALLOW) [auto, outer sep=10pt, label=below:{\small shallow}] {\includegraphics[width=0.3\textwidth]{./images/sphere_obbs_shallow.png}};
+    \node (SHALLOW) [auto, outer sep=10pt, label=below:{\small shallow}] {\includegraphics[width=0.3\textwidth]{sphere_obbs_shallow.png}};
     \node [myarrow,rotate=0,xshift=3.5cm] {};
-    \node (DEEP) [auto, outer sep=10pt, xshift=7cm, label=below:{\small deep}] {\includegraphics[width=0.3\textwidth]{./images/sphere_obbs_deep.png}};
+    \node (DEEP) [auto, outer sep=10pt, xshift=7cm, label=below:{\small deep}] {\includegraphics[width=0.3\textwidth]{sphere_obbs_deep.png}};
 
    % \draw [arrow] (SHALLOW) -- (DEEP);
   \end{tikzpicture}
@@ -229,7 +229,7 @@ DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB.
 Embree also uses OBBs but with a different tree structure:
 
 \begin{center}
-\includegraphics[width=0.5\textwidth]{./images/quad_tree.png}
+\includegraphics[width=0.5\textwidth]{quad_tree.png}
 \end{center}
 
 \begin{itemize}
@@ -285,7 +285,7 @@ Embree also uses OBBs but with a different tree structure:
 \begin{itemize}
 \item Applies faceted geometric information from CGM to remove topological ambiguity from the model
 \end{itemize}
-\includegraphics[scale=0.4, trim = 20 50 0 0]{./images/sealing_ex.png}
+\includegraphics[scale=0.4, trim = 20 50 0 0]{sealing_ex.png}
 \end{frame}
 
 
@@ -332,15 +332,15 @@ An isotropic point source of rays was placed in each of the following models:
 \vfill
 
 \begin{tikzpicture}
-  \node (sphere) {\includegraphics[scale=0.2]{../paper/figs/sphere.png}};
-  \node (ds) [right =  of sphere] {\includegraphics[scale=0.2]{../paper/figs/ds.png}};
-  \node (larcyl) [right =  of ds] {\includegraphics[scale=0.2]{../paper/figs/larcyl.png}};
+  \node (sphere) {\includegraphics[scale=0.2]{sphere.png}};
+  \node (ds) [right =  of sphere] {\includegraphics[scale=0.2]{ds.png}};
+  \node (larcyl) [right =  of ds] {\includegraphics[scale=0.2]{larcyl.png}};
   \pause 
-  \node (sphere mesh) at (sphere.south east) [rotate=180,xshift=0.5cm] {\includegraphics[scale=0.08]{./images/sphere_mesh.png}};
+  \node (sphere mesh) at (sphere.south east) [rotate=180,xshift=0.5cm] {\includegraphics[scale=0.08]{sphere_mesh.png}};
   \pause
-  \node (ds mesh) at (ds.north east) {\includegraphics[scale=0.1,xshift=0.5cm]{../paper/figs/hv.png}};
+  \node (ds mesh) at (ds.north east) {\includegraphics[scale=0.1,xshift=0.5cm]{hv.png}};
   \pause
-  \node (lar cyl mesh) at (larcyl.south west) {\includegraphics[scale=0.08,crop = 100 0 0 0 ]{./images/lar_cyl_mesh.png}};
+  \node (lar cyl mesh) at (larcyl.south west) {\includegraphics[scale=0.08,crop = 100 0 0 0 ]{lar_cyl_mesh.png}};
 
 \end{tikzpicture}
 
@@ -354,12 +354,12 @@ An isotropic point source of rays was placed in each of the following models:
   \column{0.45\textwidth}
   \begin{figure}
     \centering
-    \includegraphics[scale=0.3]{../paper/figs/moab_rf.png}
+    \includegraphics[scale=0.3]{moab_rf.png}
   \end{figure}
   \column{0.45\textwidth}
   \begin{figure}
     \centering
-    \includegraphics[scale=0.3]{../paper/figs/embree_rf.png}
+    \includegraphics[scale=0.3]{embree_rf.png}
   \end{figure}
 \end{columns}
 \end{center}

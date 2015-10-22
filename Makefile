@@ -15,7 +15,7 @@ preview-paper: paper
 
 
 ps2png:
-	cd paper/figs/ && \
+	cd images/ && \
 	for file in *.ps ; do \
 	convert $$file "`basename $$file .ps`.png" ; \
 	done
@@ -34,5 +34,13 @@ preview-presentation: presentation
 
 .PHONY: paper presentation
 
-clean:
-	git clean -df
+clean-presentation:
+	git clean -f ./presentation
+
+clean-paper:
+	git clean -f ./paper/
+
+clean-images:
+	git clean -f ./images/
+
+clean: clean-presentation clean-paper clean-images

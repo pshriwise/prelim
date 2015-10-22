@@ -13,7 +13,7 @@
 \usepackage{float}
 \usepackage{booktabs}
 \usepackage[font={small,it}]{caption}
-
+\graphicspath{{./}{../images/}}
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
@@ -79,9 +79,9 @@ The implementation began by translating the mesh representation of the geometry 
 
   \begin{center}
 
-    \epsfig{file=figs/sphere.ps,width=.3\columnwidth}
-    \epsfig{file=figs/ds.ps,width=.3\columnwidth}
-    \epsfig{file=figs/larcyl.ps,width=.3\columnwidth}
+    \epsfig{file=sphere.ps,width=.3\columnwidth}
+    \epsfig{file=ds.ps,width=.3\columnwidth}
+    \epsfig{file=larcyl.ps,width=.3\columnwidth}
     \caption{CAD representations of the sphere, slotted sphere, and high aspect ratio cylinder test models used for ray fire timings of DagMC and EmDagMC. (left to right) \label{models}}
 
   \end{center}
@@ -103,7 +103,7 @@ Several single-volume models have become the standard for testing ray fire timin
 
   \begin{center}
 
-    \epsfig{file=figs/hv.ps,width=.5\columnwidth}
+    \epsfig{file=hv.ps,width=.5\columnwidth}
     \caption{Example of the high-valence regions found in the slotted sphere at a high faceting tolerance (1e-04 cm) \label{hv}}
 
   \end{center}
@@ -123,8 +123,8 @@ Several simple models were used to verify that MCNP, DagMCNP and EmDagMCNP provi
 
   \begin{center}
     
-    \epsfig{file=figs/moab_rf.ps,width=0.9\columnwidth}
-    \epsfig{file=figs/embree_rf.ps,width=0.9\columnwidth}
+    \epsfig{file=moab_rf.ps,width=0.9\columnwidth}
+    \epsfig{file=embree_rf.ps,width=0.9\columnwidth}
     \caption{Comparison of the average ray fire times for MOAB to Embree in all test models. Note the value of the exponent on the y-axis in each graph. \label{rftiming}}
     
   \end{center}
