@@ -10,7 +10,7 @@ paper:
 	latex summary && \
 	dvipdfm summary.dvi 
 
-paper-preview: paper
+preview-paper: paper
 	cd paper && evince summary.pdf
 
 presentation:
