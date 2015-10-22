@@ -3,6 +3,8 @@
 
 \usepackage[white]{beamerthemeWisconsin}
 \usepackage{framed}
+\usepackage{float}
+\usepackage{booktabs}
 \usepackage{tikz}
 %\usetheme[white]{Wisconsin}
 \graphicspath{{./}{./uw-beamer-template/}{../images/}}
@@ -332,13 +334,13 @@ An isotropic point source of rays was placed in each of the following models:
 \vfill
 
 \begin{tikzpicture}
-  \node (sphere) {\includegraphics[scale=0.2]{sphere.png}};
-  \node (ds) [right =  of sphere] {\includegraphics[scale=0.2]{ds.png}};
-  \node (larcyl) [right =  of ds] {\includegraphics[scale=0.2]{larcyl.png}};
+  \node (sphere) {\includegraphics[scale=0.1]{sphere.png}};
+  \node (ds) [right =  of sphere] {\includegraphics[scale=0.1]{ds.png}};
+  \node (larcyl) [right =  of ds] {\includegraphics[scale=0.1]{larcyl.png}};
   \pause 
   \node (sphere mesh) at (sphere.south east) [rotate=180,xshift=0.5cm] {\includegraphics[scale=0.08]{sphere_mesh.png}};
   \pause
-  \node (ds mesh) at (ds.north east) {\includegraphics[scale=0.1,xshift=0.5cm]{hv.png}};
+  \node (ds mesh) at (ds.north east) {\includegraphics[scale=0.05,xshift=0.5cm]{hv.png}};
   \pause
   \node (lar cyl mesh) at (larcyl.south west) {\includegraphics[scale=0.08,crop = 100 0 0 0 ]{lar_cyl_mesh.png}};
 
@@ -347,23 +349,103 @@ An isotropic point source of rays was placed in each of the following models:
 
 \end{frame}
 
-\begin{frame}
+\begin{frame}[c]
 \frametitle{Ray Fire Timings}
-\begin{center}
+
 \begin{columns}
-  \column{0.45\textwidth}
+  \column{0.5\textwidth}
   \begin{figure}
     \centering
-    \includegraphics[scale=0.3]{moab_rf.png}
+    \includegraphics[scale=0.15]{moab_rf.png}
   \end{figure}
-  \column{0.45\textwidth}
+  \column{0.5\textwidth}
   \begin{figure}
     \centering
-    \includegraphics[scale=0.3]{embree_rf.png}
+    \includegraphics[scale=0.15]{embree_rf.png}
   \end{figure}
 \end{columns}
-\end{center}
+\vfill
 \end{frame}
+
+\begin{frame}
+\frametitle{Nested Volume Results}
+
+\begin{table}
+  \small
+  \begin{center}
+    \label{nestedspheres}
+    \begin{tabular}{lcccc}
+      \toprule
+      Value & MCNP & DagMCNP & EmDagMCNP \\
+      \toprule
+      %%Hist/min & 2.2991E+05 & 1.9877E+04 & 1.3947E+05 \\
+      %%\hline
+      \multicolumn{4}{l}{\textbf{Cell 1 Tallies}} \\
+      \hline
+      Flux  & 5.25725E-03 & 5.25734E-03 & 5.25734E-03 & ($cm^{-2}$) \\
+      Energy  & 3.17869E-03 &  3.17873E-03 &  3.17873E-03 & (MeV/g) \\
+      \hline
+      \multicolumn{4}{l}{\textbf{Cell 2 Tallies}} \\
+      \hline
+      Flux  & 1.91645E-04 & 1.91644E-04 & 1.91644E-04 \\
+      Energy  & 5.22131E-05 & 5.22137E-05 & 5.22137E-05 \\
+      \hline
+      \multicolumn{4}{l}{\textbf{Cell 3 Tallies}} \\
+      \hline
+      Flux  & 1.18371E-05 & {\color{red} 1.18376E-05} & {\color{red} 1.18410E-05} \\
+      Energy  & 4.96282E-06 & 4.96285E-06 & 4.96285E-06 \\
+      \bottomrule
+                        
+    \end{tabular}
+
+
+  \end{center}
+%%\vspace{-0.2cm}
+\end{table}
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Run Time Results}
+
+\begin{table}
+  \small
+  \begin{center}
+
+
+      \label{timings}
+    \begin{tabular}{lccc}
+
+
+
+      \toprule
+      Test Model & MCNP & DagMCNP & EmDagMCNP \\
+      %%\hline
+      & \multicolumn{3}{c}{\textbf{time (min)}} \\
+      \hline
+      Sphere & 2.93 & 25.13 & 4.73  \\
+      Cube & 5.03 & 10.56  & 5.80 \\
+      Nested Spheres & 4.35 & 50.82 & 7.94 \\
+      Nested Cubes & 4.73 & 9.26 & 4.35 \\
+      %%\hline
+      &  \multicolumn{3}{c}{\textbf{histories/min}} \\
+      \hline
+      Sphere & 3.4104E+05  & 3.9944E+04  & 2.1810E+05   \\
+      Cube & 1.9879E+05 & 9.4738E+04 & 1.7260E+05 \\
+      Nested Spheres & 2.2991E+05 & 1.9877E+04 & 1.3947E+05 \\
+      Nested Cubes & 2.1170E+05 & 1.0806E+05 & 2.3026E+05 \\
+      \bottomrule
+      
+    \end{tabular}
+  \end{center}
+\end{table}
+
+
+
+\end{frame}
+
 % Pure ray fire comparison (no transport)
 % Single volume tests
 % Multiple volume tests
@@ -379,12 +461,59 @@ An isotropic point source of rays was placed in each of the following models:
 % Point them to pyembree for a simple example of a 1-D Monte Carlo calculation in 3 regions
 
 
+%QUESTIONS - 1 slide
+\begin{frame}
+
+\begin{center}
+\huge Questions?
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Single Volume Results}
+
+\begin{table}[h]
+
+  \begin{center}
+
+    \begin{tabular}{lccc}
+     \toprule
+      Value & MCNP & DagMCNP & w/ EmDagMCNP \\
+     \toprule
+     %%Hist/min & 1.9879E+05 & 9.4738E+04 & 1.7260E+05  \\
+     %%\hline
+     \multicolumn{4}{l}{\textbf{Flux} ($cm^{-2}$)} \\
+     \hline
+     Tally & 5.61374E-03 & 5.61374E-03 & 5.61374E-03 \\
+     Err & 3E-4 & 3E-4 & 3E-4  \\
+     FOM & 2.47008E+06 & 1.17719E+06 & 2.14469E+06 \\
+     \hline
+     \multicolumn{4}{l}{\textbf{Energy} (MeV/g)} \\
+     \hline
+     Tally & 2.98933E-03 & 2.98933E-03 & 2.98933E-03 \\
+     Err & 7E-4 & 7E-4 & 7E-4 \\
+     FOM & 3.99526E+05 & 1.90406E+05 & 3.46895E+05 \\
+     \bottomrule
+     
+    \end{tabular}
+
+
+  \end{center}
+\vspace{-0.4cm}
+\end{table}
+
+\end{frame}
+
+
+
 %Citations
 \begin{frame}
   \bibliographystyle{ans}
   \bibliography{bibliography}
 \end{frame}
 
-%QUESTIONS - 1 slide
-
 \end{document}
+
+
