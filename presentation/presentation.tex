@@ -108,44 +108,60 @@ But it takes a long time... (2-10x slower than native codes)
 
 \end{frame}
 
-\begin{frame}
-\frametitle{DAGMC Workflow}
-\begin{center}
-\begin{tikzpicture}
-  \node (CAD) [uwstep] {\small CAD \\ Geometry};
+%% \begin{frame}
+%% \frametitle{DAGMC Workflow}
+%% \begin{center}
+%% \begin{tikzpicture}
+%%   \node (CAD) [uwstep] {\small CAD \\ Geometry};
 
-  \node (CUBIT) [uwstep, xshift=3cm, label=below:{\small imprint \& merge}] {\small CUBIT};
+%%   \node (CUBIT) [uwstep, xshift=3cm, label=below:{\small imprint \& merge}] {\small CUBIT};
   
-  \node (PREPROC) [uwstep, xshift=6cm, label=below:{\small surface faceting}] {\small dagmc \\preproc};
+%%   \node (PREPROC) [uwstep, xshift=6cm, label=below:{\small surface faceting}] {\small dagmc \\preproc};
 
-  \node (MW) [uwstep, xshift=9cm, label={\small facet sealing}] {\small make \\watertight};
+%%   \node (MW) [uwstep, xshift=9cm, label={\small facet sealing}] {\small make \\watertight};
 
-  \node (MC) [uwstep, xshift=9cm, yshift=-2cm, label=below:{\small analysis}] {\small Monte Carlo};
+%%   \node (MC) [uwstep, xshift=9cm, yshift=-2cm, label=below:{\small analysis}] {\small Monte Carlo};
 
-  \draw [arrow] (CAD) -- (CUBIT);
+%%   \draw [arrow] (CAD) -- (CUBIT);
 
-  \draw [arrow] (CUBIT) -- (PREPROC);
+%%   \draw [arrow] (CUBIT) -- (PREPROC);
 
-  \draw [arrow] (PREPROC) -- (MW);
+%%   \draw [arrow] (PREPROC) -- (MW);
 
-  \draw [arrow] (MW) -- (MC);
+%%   \draw [arrow] (MW) -- (MC);
 
-\end{tikzpicture}
-\end{center}
+%% \end{tikzpicture}
+%% \end{center}
 
+%% \end{frame}
+
+\begin{frame}
+
+  \frametitle{DAGMC \& Ray Tracing}
+  
+  The typical statment is that we save much of our human time typically spent defining the model using outdated geometry systems at the expense of this extra computing time. \\
+
+  A great deal of human time is saved in dealing with outdated geometric representations at the cost of extra computing time
+ \vfill
+ 
+ What if we could drastically reduce this extra computing time?
+
+ \vfill
+
+  
 \end{frame}
 
 \begin{frame}
 
 \frametitle{Ray Tracing in DAGMC}
-
+\vfill
+ Currently, 85\% of the time spent in DAGMC runs is in the ray tracing of the discretized (faceted) model.
+\vfill 
 \begin{itemize}
-  \item Used for our geometric queries:
-    \begin{itemize}
-      \item point-inclusion tests
-      \item next surface distance determination
-    \end{itemize}
+\item point-inclusion tests
+\item next surface distance determination
 \end{itemize}
+
 
 
 \end{frame}
@@ -160,7 +176,7 @@ But it takes a long time... (2-10x slower than native codes)
 \frametitle{Bounding Volume Hierarchies}
 
 \begin{itemize}
-  \item By partitioning the geometry-based mesh using bounding volumes, we gain significant accelerations over a linear search of the discrete elements.
+  \item By partitioning the geometry-based meshes using bounding volumes, we gain significant accelerations over a linear search of the discrete elements.
 \end{itemize}
 
 \begin{columns}
@@ -222,10 +238,13 @@ Embree also uses OBB but with a quad-tree structure:
 \end{center}
 
 \begin{itemize}
-\item uses median splitting w/ Surface Area Heuristic criterion
-\item discretizes the geometric primitives and space more finely per level in the tree
-\item makes for more tree nodes to check per query
-\item uses SIMD to check many nodes at once
+\item median splitting w/ Surface Area Heuristic\cite{sah} criterion 
+\item Quad-tree
+  \begin{itemize}
+  \item discretizes the geometric primitives and space more finely per level in the tree
+  \item makes for more tree nodes to check per query
+  \end{itemize}
+\item uses SIMD commands to check many nodes at once
 \end{itemize}
 
 \end{frame}
@@ -265,6 +284,17 @@ Embree also uses OBB but with a quad-tree structure:
 
   
 \end{frame}
+
+\begin{frame}
+\frametitle{make\_watertight}
+\begin{itemize}
+\item Applies faceted geometric information from CGM to remove topological ambiguity from the model
+\end{itemize}
+\includegraphics[scale=0.4, trim = 20 50 0 0]{./images/sealing_ex.png}
+\end{frame}
+
+
+
 
 \begin{frame}
   \frametitle{Maintaining watertightness}
