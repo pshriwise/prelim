@@ -17,7 +17,7 @@ preview-paper: paper
 ps2png:
 	cd images/ && \
 	for file in *.ps ; do \
-	convert $$file "`basename $$file .ps`.png" ; \
+	convert -density 150 $$file "`basename $$file .ps`.png" ; \
 	done
 
 presentation: ps2png

@@ -6,6 +6,8 @@
 \usepackage{float}
 \usepackage{booktabs}
 \usepackage{tikz}
+\usepackage{hyperref}
+
 %\usetheme[white]{Wisconsin}
 \graphicspath{{./}{./uw-beamer-template/}{../images/}}
 \title{Leveraging Intel's Embree Ray Tracing in the DAGMC Toolkit}
@@ -458,10 +460,30 @@ An isotropic point source of rays was placed in each of the following models:
 % Extra: slide with graphic of our specific problem
 
 \section{Future Work} % 2 slides
+
+\begin{frame}
+
+\frametitle{Future Work}
+
+This was a nice proof of principle project for faster CAD-based analysis. \\
+\vfill
+Moving forward:
+\begin{itemize}
+\item our system would clearly benefit from certain parts of Embree
+\item need to think about how Monte Carlo analysis differs from rendering, the intended application for most ray tracing systems
+  \begin{itemize}
+    \item coherent vs incoherent rays
+    \item number of ray queries to achieve desired result
+  \end{itemize}
+\end{itemize}
+
+\vfill
+If you'd like to check it out, a couple colleagues of mine have made this package available via \href{https://github.com/scopatz/pyembree}{{\color{blue}pyembree}}.
+
 % Proof of principle
 % Likely to see improvements in our native system using variations of these techniques
 % Point them to pyembree for a simple example of a 1-D Monte Carlo calculation in 3 regions
-
+\end{frame}
 
 %QUESTIONS - 1 slide
 \begin{frame}
