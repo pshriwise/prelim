@@ -13,13 +13,20 @@ paper:
 preview-paper: paper
 	cd paper && evince summary.pdf
 
-presentation:
+
+ps2png:
+	cd paper/figs/ && \
+	for file in *.ps ; do \
+	convert $$file "`basename $$file .ps`.png" ; \
+	done
+
+presentation: ps2png
 	cd presentation && \
 	ln -fs ../ans* ./ && \
 	cp ./uw-beamer-template/*.sty . && \
-	pdflatex presentation.tex && \
+	pdflatex -shell-escape presentation.tex && \
 	bibtex presentation.aux && \
-	pdflatex presentation.tex && \
+	pdflatex -shell-escape presentation.tex && \
 	rm *.sty
 
 preview-presentation: presentation
