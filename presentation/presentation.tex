@@ -194,7 +194,7 @@ By partitioning the geometry-based meshes using bounding volumes, we gain signif
   \end{figure}
 \end{columns}
 
-How we create these bounding volume hierarchies (BVHs) matters \textbf{a lot} in terms of the performance.
+How we create and traverse these bounding volume hierarchies (BVHs) matters \textbf{a lot} in terms of the performance.
 
 
 \end{frame}
@@ -228,7 +228,7 @@ DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB.
 
 \frametitle{Embree's BVH}
 
-Embree also uses OBBs but with a different tree structure:
+Embree \cite{embree} also uses OBBs but with a different tree structure:
 
 \begin{center}
 \includegraphics[width=0.5\textwidth]{quad_tree.png}
@@ -248,6 +248,10 @@ Embree also uses OBBs but with a different tree structure:
 
 
 \section{Implementation of Embree in DAGMC} % 1-2 slides
+% Maintaining watertightness
+   % explain and refer to make_watertight
+% Importance of the filter functions
+   % allowed compliance with DAGMC conventions
 
 \begin{frame}
   \frametitle{DAGMC entities in Embree}
@@ -321,11 +325,10 @@ Embree also uses OBBs but with a different tree structure:
 
 \end{frame}
 
-% Maintaining watertightness
-   % explain and refer to make_watertight
-% Importance of the filter functions
-   % allowed compliance with DAGMC conventions
 \section{Results} % 2-3 slides
+% Pure ray fire comparison (no transport)
+% Single volume tests
+% Multiple volume tests
 
 \begin{frame}
 \frametitle{Ray Fire Test Models}
@@ -403,8 +406,6 @@ An isotropic point source of rays was placed in each of the following models:
 %%\vspace{-0.2cm}
 \end{table}
 
-
-
 \end{frame}
 
 \begin{frame}
@@ -446,15 +447,16 @@ An isotropic point source of rays was placed in each of the following models:
 
 \end{frame}
 
-% Pure ray fire comparison (no transport)
-% Single volume tests
-% Multiple volume tests
-\section{Drawbacks} % 2-3 slides
-% Floating precision 
-% Robustness needs work, triangle intersector not quite there
-% Lost particles in highly complex geometries, most likely due to forced conversion
-% back and forth from double to float
+\begin{frame}
+\frametitle{Limitations}
+\begin{itemize}
+\item Floating precision 
+\item Robustness needs work, triangle intersector not quite there
+\item Lost particles in highly complex geometries, most likely due to conversions double to float
+\end{itemize}
+\end{frame}
 % Extra: slide with graphic of our specific problem
+
 \section{Future Work} % 2 slides
 % Proof of principle
 % Likely to see improvements in our native system using variations of these techniques
