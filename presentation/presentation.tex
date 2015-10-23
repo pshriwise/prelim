@@ -143,12 +143,10 @@ But it takes a long time... (2-10x slower than native codes)
 
   \frametitle{DAGMC \& Ray Tracing}
   
-  The typical statment is that we save much of our human time typically spent defining the model using outdated geometry systems at the expense of this extra computing time. \\
-
-  A great deal of human time is saved in dealing with outdated geometric representations at the cost of extra computing time
+  A great deal of \textbf{human time} is saved in dealing with outdated geometric representations, but it comes at the cost of extra \textbf{computing time}.
  \vfill
  
- What if we could drastically reduce this extra computing time?
+ What if we can drastically reduce this extra computing time?
 
  \vfill
 
@@ -195,7 +193,7 @@ By partitioning the geometry-based meshes using bounding volumes, we gain signif
     \includegraphics[width=0.5\textwidth]{binary_graph.png}
   \end{figure}
 \end{columns}
-
+\vfill
 How we create and traverse these bounding volume hierarchies (BVHs) matters \textbf{a lot} in terms of the performance.
 
 
@@ -204,7 +202,7 @@ How we create and traverse these bounding volume hierarchies (BVHs) matters \tex
 \begin{frame}
 \frametitle{DAGMC's BVH}
 
-DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB.
+DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB \cite{moab}.
 \begin{center}
   \begin{tikzpicture}
 
