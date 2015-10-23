@@ -38,7 +38,9 @@
 \tikzset{every node/.style={inner sep=0pt, outer sep=1pt}}
 \tikzstyle{uwstep} = [minimum width=2.5cm, minimum height=1cm,text centered, text width=2.5cm, draw=black, fill=UWRed, text=white]
 
-\tikzstyle{embreestep} = [ellipse, minimum width=2.5cm, minimum height=1cm,text centered, text width=2cm, draw=black, fill=blue, text=white]
+\tikzstyle{mbelement} = [rectangle, minimum width=0.5cm, text centered, text width=0.5cm, draw=black, fill=blue, text=white, inner sep=1pt, outer sep=0pt]
+
+\tikzstyle{embreestep} = [ellipse, minimum width=2.5cm, minimum height=1cm,text centered, text width=2cm, draw=black, fill=blue, text=white, outer sep=0pt]
 
 \tikzstyle{arrow} = [thick,->,>=stealth]
 
@@ -303,21 +305,48 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
 
   \begin{center}
     \begin{tikzpicture}
-      
-    \node[circle,fill=none,minimum width=1cm,text width=6cm,draw=black,label={Global Vertex Buffer}] {};
-    \draw plot [only marks, mark=*, mark size=0.5, domain=0:2.9, samples=250] (\x,{rand*sqrt(2.9^2-\x^2)});
-    \begin{scope}[yscale=1,xscale=-1]
-    \draw plot [only marks, mark=*, mark size=0.5, domain=0:2.9, samples=250] (\x,{rand*sqrt(2.9^2-\x^2)});
-    \end{scope}
 
-    \node[circle,outer sep=1pt,fill=none,minimum width=1cm,text width=3cm,draw=blue,xshift=1.5cm] (Surf1Circle) {};
-    \node[auto,above=-0.6cm of Surf1Circle,fill=white] (Surf1) {\small \color{blue} Surface1};
+      \node (v0) [mbelement] {\small v0};
+      \node (v1) [mbelement, right = 0cm of v0] {\small v1};
+      \node (v2) [mbelement, right = 0cm of v1] {\small v2}; 
+      \node (v3) [mbelement, right = 0cm of v2] {\small v3}; 
+      \node (v4) [mbelement, right = 0cm of v3] {\small v4}; 
+      \node (v5) [mbelement, right = 0cm of v4] {\small v5}; 
 
-    \node[circle,outer sep=1pt,fill=none,minimum width=1cm,text width=2cm,draw=red,yshift=-1cm] (Surf2Circle) {};
-    \node[auto,above=-0.7cm of Surf2Circle,fill=white] (Surf2) {\small \color{red} Surface2};
+      \node (t0) [mbelement, fill=red, above = of v0] {\small t0};
+      \node (t1) [mbelement, fill=red, above = of v1] {\small t1};
+      \node (t2) [mbelement, fill=red, above = of v2] {\small t2};
+      \node (t3) [mbelement, fill=red, above = of v3] {\small t3};
+      \node (t4) [mbelement, fill=red, above = of v4] {\small t4};
+      \node (t5) [mbelement, fill=red, above = of v5] {\small t5};
 
-    \node[circle,outer sep=1pt,fill=none,minimum width=3cm,text width=2cm,draw=green,xshift=-1cm,yshift=1cm] (Surf3Circle) {};
-    \node[auto,above=-0.6cm of Surf3Circle,fill=white] (Surf3) {\small \color{green} Surface3};
+
+      \draw [-] (t1) -- (v1);
+      \draw [-] (t1) -- (v2);
+      \draw [-] (t1) -- (v3);
+      \draw [-] (t2) -- (v2);
+      \draw [-] (t2) -- (v3);
+      \draw [-] (t2) -- (v4);
+
+
+
+
+
+
+    %% \nod2[circle,fill=none,minimum width=1cm,text width=6cm,draw=black,label={Global Vertex Buffer}] {};
+    %% \draw plot [only marks, mark=*, mark size=0.5, domain=0:2.9, samples=250] (\x,{rand*sqrt(2.9^2-\x^2)});
+    %% \begin{scope}[yscale=1,xscale=-1]
+    %% \draw plot [only marks, mark=*, mark size=0.5, domain=0:2.9, samples=250] (\x,{rand*sqrt(2.9^2-\x^2)});
+    %% \end{scope}
+
+    %% \node[circle,outer sep=1pt,fill=none,minimum width=1cm,text width=3cm,draw=blue,xshift=1.5cm] (Surf1Circle) {};
+    %% \node[auto,above=-0.6cm of Surf1Circle,fill=white] (Surf1) {\small \color{blue} Surface1};
+
+    %% \node[circle,outer sep=1pt,fill=none,minimum width=1cm,text width=2cm,draw=red,yshift=-1cm] (Surf2Circle) {};
+    %% \node[auto,above=-0.7cm of Surf2Circle,fill=white] (Surf2) {\small \color{red} Surface2};
+
+    %% \node[circle,outer sep=1pt,fill=none,minimum width=3cm,text width=2cm,draw=green,xshift=-1cm,yshift=1cm] (Surf3Circle) {};
+    %% \node[auto,above=-0.6cm of Surf3Circle,fill=white] (Surf3) {\small \color{green} Surface3};
     
     \end{tikzpicture}
   \end{center}
