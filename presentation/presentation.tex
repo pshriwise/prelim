@@ -317,50 +317,92 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
       \node (global vert buff) [auto, below = 0.25cm of v3] {Global Vertex Buffer};
 
       %Surface A
-      \node (t0) [mbelement, fill=red, above = 2cm of v0, xshift=-2cm] {\small t0};
-      \node (t1) [mbelement, fill=red, above = 2cm of v1, right = 0cm of t0] {\small t1};
-      \node (t2) [mbelement, fill=red, above = 2cm of v2, right = 0cm of t1] {\small t2};
-      \node (t3) [mbelement, fill=red, above = 2cm of v3, right = 0cm of t2] {\small t3};
+      \node (t0) [mbelement, fill=orange, above = 2cm of v0, xshift=-2cm] {\small t0};
+      \node (t1) [mbelement, fill=orange, above = 2cm of v1, right = 0cm of t0] {\small t1};
+      \node (t2) [mbelement, fill=orange, above = 2cm of v2, right = 0cm of t1] {\small t2};
+      \node (t3) [mbelement, fill=orange, above = 2cm of v3, right = 0cm of t2] {\small t3};
 %      \node (t4) [mbelement, fill=red, above = 2cm of v4, xshift=-3cm] {\small t4};
 %      \node (t5) [mbelement, fill=red, above = 2cm of v5, xshift=-3cm] {\small t5};
       \node (ellipses) [auto,right = 0cm of t3] {...};
-      \node (surfA) [auto,above = 0.25cm of t1] {Surface A};
+      \node (sceneA) [auto,above = 0.25cm of t1] {Scene A};
 
 
       %Surface B
-      \node (t4) [mbelement, fill=red, above = 2cm of v0, right = 3cm of ellipses] {\small t4};
-      \node (t5) [mbelement, fill=red, above = 2cm of v1, right = 0cm of t4] {\small t5};
-      \node (t6) [mbelement, fill=red, above = 2cm of v2, right = 0cm of t5] {\small t6};
-      \node (t6) [mbelement, fill=red, above = 2cm of v3, right = 0cm of t6] {\small t7};
+      \node (t4) [mbelement, fill=black!60!green, above = 2cm of v0, right = 3cm of ellipses] {\small t4};
+      \node (t5) [mbelement, fill=black!60!green, above = 2cm of v1, right = 0cm of t4] {\small t5};
+      \node (t6) [mbelement, fill=black!60!green, above = 2cm of v2, right = 0cm of t5] {\small t6};
+      \node (t6) [mbelement, fill=black!60!green, above = 2cm of v3, right = 0cm of t6] {\small t7};
 %      \node (t4) [mbelement, fill=red, above = 2cm of v4, xshift=-3cm] {\small t4};
 %      \node (t5) [mbelement, fill=red, above = 2cm of v5, xshift=-3cm] {\small t5};
       \node (ellipses) [auto,right = 0cm of t6] {...};
-      \node (surfB) [auto,above = 0.25cm of t5] {Surface B};
+      \node (sceneB) [auto,above = 0.25cm of t5] {Scene B};
+      
+      \pause
 
-      %Connectivity
-      \draw [-] (t0) -- (v0);
-      \draw [-] (t0) -- (v1);
-      \draw [-] (t0) -- (v2);
+      %ConnectivityTriangles
+      \draw [-,color=orange] (t0) -- (v0);
+      \draw [-,color=orange] (t0) -- (v1);
+      \draw [-,color=orange] (t0) -- (v2);
+
+      \node (dot0) [circle, fill=blue,xshift=5cm,draw=black,minimum width=0.1cm] {};
+      \node (dot1) [circle, fill=blue,xshift=6cm,yshift=0.5cm,draw=black,minimum width=0.1cm] {};
+      \node (dot2) [circle, fill=blue,xshift=6cm,yshift=-0.5cm,draw=black,minimum width=0.1cm] {};
+      \draw[-,color=orange] (dot0) -- (dot1);
+      \draw[-,color=orange] (dot0) -- (dot2);
+      \draw[-,color=orange] (dot2) -- (dot1);
+
+      \pause
 
       \draw [-,color=orange] (t1) -- (v1);
       \draw [-,color=orange] (t1) -- (v2);
       \draw [-,color=orange] (t1) -- (v3);
 
-      \draw [-] (t4) -- (v2);
-      \draw [-] (t4) -- (v3);
-      \draw [-] (t4) -- (v4);
+      \node (dot3) [circle, fill=blue,xshift=5cm,yshift=1cm,draw=black,minimum width=0.1cm] {};
+      \draw [-,color=orange] (dot0) -- (dot3);
+      \draw [-,color=orange] (dot1) -- (dot3);
+ 
 
-      \draw [-,color=orange] (t5) -- (v3);
-      \draw [-,color=orange] (t5) -- (v4);
-      \draw [-,color=orange] (t5) -- (v5);
+      %%End surf A conn
+      \pause
 
+      \draw [-,color=black!60!green] (t4) -- (v2);
+      \draw [-,color=black!60!green] (t4) -- (v3);
+      \draw [-,color=black!60!green] (t4) -- (v4);
+
+      \node (dot4) [circle, fill=blue,xshift=6cm,yshift=1.5cm,draw=black,minimum width=0.1cm] {};
+      \draw [-,color=black!60!green] (dot4) -- (dot3);
+      \draw [-,color=black!60!green] (dot4) -- (dot1);
+      
       \pause
       
-      \draw[rounded corners, color=red] 
+      \draw [-,color=black!60!green] (t5) -- (v0);
+      \draw [-,color=black!60!green] (t5) -- (v2);
+      \draw [-,color=black!60!green] (t5) -- (v5);
+
+      \node (dot5) [circle, fill=blue,xshift=7cm,yshift=0.5cm,draw=black,minimum width=0.1cm] {};
+      \draw [-,color=black!60!green] (dot5) -- (dot1);
+      \draw [-,color=black!60!green] (dot2) -- (dot5);
+
+      \pause
+
+      \draw [-,color=black!60!green] (dot4) -- (dot5);
+
+      \pause
+      \draw [-,color=red] (dot1) -- (dot3);
+      \draw [-,color=red] (dot1) -- (dot2);
+      
+      \draw[rounded corners, color=red ]
       ([xshift=-3pt,yshift=3pt]v2.north west) -- 
       ([xshift=3pt,yshift=3pt]v3.north east) -- 
       ([xshift=3pt,yshift=-3pt]v3.south east) -- 
       ([xshift=-3pt,yshift=-3pt]v2.south west) -- cycle;
+
+      \draw[rounded corners, color=red ]
+      ([xshift=-3pt,yshift=3pt]v0.north west) -- 
+      ([xshift=3pt,yshift=3pt]v0.north east) -- 
+      ([xshift=3pt,yshift=-3pt]v0.south east) -- 
+      ([xshift=-3pt,yshift=-3pt]v0.south west) -- cycle;
+
 
     %% \nod2[circle,fill=none,minimum width=1cm,text width=6cm,draw=black,label={Global Vertex Buffer}] {};
     %% \draw plot [only marks, mark=*, mark size=0.5, domain=0:2.9, samples=250] (\x,{rand*sqrt(2.9^2-\x^2)});
@@ -473,7 +515,6 @@ Rays were fired isotropically from the center of each of the following models:
   \small
   \begin{center}
 
-
       \label{timings}
     \begin{tabular}{lccc}
 
@@ -501,6 +542,7 @@ Rays were fired isotropically from the center of each of the following models:
   \end{center}
 \end{table}
 
+    Zero lost particles
 
 
 \end{frame}
@@ -509,7 +551,7 @@ Rays were fired isotropically from the center of each of the following models:
 \frametitle{Limitations}
 \begin{itemize}
 \item Single floating point precision 
-\item Robustness needs work, triangle intersector not quite there
+\item Robustness of triangle intersectors may need work
 \item Lost particles in highly complex geometries, most likely due to conversions double to float
 \end{itemize}
 \end{frame}
@@ -525,16 +567,15 @@ This was a nice proof of principle project for faster CAD-based analysis. \\
 \vfill
 Moving forward:
 \begin{itemize}
-\item our system would clearly benefit from certain parts of Embree
-\item need to think about how Monte Carlo analysis differs from rendering, the intended application for most ray tracing systems
+\item ray tracing specific to Monte Carlo analysis differs from rendering
   \begin{itemize}
-    \item coherent vs incoherent rays
+    \item entirelys incoherent rays
     \item number of ray queries to achieve desired result
   \end{itemize}
 \end{itemize}
 
 \vfill
-If you'd like to check it out, a couple colleagues of mine have made this package available via \href{https://github.com/scopatz/pyembree}{{\color{blue}pyembree}}.
+If you'd like to try out Embree, a good place to start is with \href{https://github.com/scopatz/pyembree}{{\color{blue}pyembree}}.
 
 % Proof of principle
 % Likely to see improvements in our native system using variations of these techniques
