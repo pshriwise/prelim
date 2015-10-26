@@ -79,7 +79,7 @@
 
 %%Outline%%
 \begin{frame}
-\frametitle{\null}
+\frametitle{Content}
 \tableofcontents
 \end{frame}
 
@@ -145,9 +145,8 @@ But it takes a long time... (2-10x slower than native codes)
 
   \frametitle{DAGMC \& Ray Tracing}
   
-  A great deal of \textbf{human time} is saved in dealing with outdated geometric representations, but it comes at the cost of extra \textbf{computing time}.
+  A great deal of \textbf{human time} is saved in dealing with tedious text-based geometric representations, but it comes at the cost of extra \textbf{computing time}.
  \vfill
- 
  What if we can drastically reduce this extra computing time?
 
  \vfill
@@ -158,9 +157,8 @@ But it takes a long time... (2-10x slower than native codes)
 \begin{frame}
 
 \frametitle{Ray Tracing in DAGMC}
-\vfill
  85\% of the time spent in DAGMC runs is in the ray tracing of the discretized (faceted) model.
-\vfill 
+
 \begin{itemize}
 \item point-inclusion tests
 \item next surface distance determination
@@ -180,7 +178,7 @@ But it takes a long time... (2-10x slower than native codes)
 \frametitle{Bounding Volume Hierarchies}
 
 
-By partitioning the geometry-based meshes using bounding volumes, we gain significant improvements over a linear search of the discrete elements.
+By partitioning the geometry-based meshes using bounding entities, we gain significant improvements over a linear search of the discrete elements.
 \begin{columns}
   \column{0.5\textwidth}
   \begin{figure}
@@ -196,7 +194,7 @@ By partitioning the geometry-based meshes using bounding volumes, we gain signif
   \end{figure}
 \end{columns}
 \vfill
-How we create and traverse these bounding volume hierarchies (BVHs) matters \textbf{a lot} in terms of the performance.
+How we create and traverse bounding volume hierarchies (BVHs) matters \textbf{a lot} in terms of the performance.
 
 
 \end{frame}
@@ -240,10 +238,10 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
 \item median splitting w/ Surface Area Heuristic \cite{sah} criterion 
 \item Quad-tree
   \begin{itemize}
-  \item discretizes the geometric primitives and space more finely per level in the tree
-  \item makes for more tree nodes to check per query
+  \item pro: discretizes the geometric primitives and space more finely per level in the tree
+  \item con: makes for more tree nodes to check per query
   \end{itemize}
-\item uses SIMD commands to check many nodes at once
+\item compensates by using SIMD commands to check many nodes at once
 \end{itemize}
 
 \end{frame}
@@ -291,7 +289,7 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
 \begin{frame}
 \frametitle{make\_watertight \cite{make_watertight_smith_2010}}
 \begin{itemize}
-\item Applies faceted geometric information from CGM to remove topological ambiguity from the model
+\item Applies faceted geometric information from CAD to remove topological ambiguity from the model
 \end{itemize}
 \includegraphics[scale=0.4, trim = 20 50 0 0]{sealing_ex.png}
 \end{frame}
@@ -383,11 +381,9 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
       \draw [-,color=black!60!green] (dot5) -- (dot1);
       \draw [-,color=black!60!green] (dot2) -- (dot5);
 
-      \pause
 
+      \pause
       \draw [-,color=black!60!green] (dot4) -- (dot5);
-
-      \pause
       \draw [-,color=red] (dot1) -- (dot3);
       \draw [-,color=red] (dot1) -- (dot2);
       
@@ -544,10 +540,13 @@ Rays were fired isotropically from the center of each of the following models:
 
 \begin{frame}
 \frametitle{Limitations}
+
+This was a nice proof of principle project for faster CAD-based analysis, but... \\
+\vfill
 \begin{itemize}
-\item Single floating point precision 
+\item Embree usses single floating point precision 
 \item Robustness of triangle intersectors may need work
-\item Lost particles in highly complex geometries, most likely due to conversions double to float
+\item Lost particles in complex geometries, most likely due to conversions double to float
 \end{itemize}
 \end{frame}
 % Extra: slide with graphic of our specific problem
@@ -558,23 +557,15 @@ Rays were fired isotropically from the center of each of the following models:
 
 \frametitle{Future Work}
 
-This was a nice proof of principle project for faster CAD-based analysis. \\
 \vfill
-Moving forward:
-\begin{itemize}
-\item ray tracing specific to Monte Carlo analysis differs from rendering
+The application of ray tracing in Monte Carlo differs from that of rendering
   \begin{itemize}
     \item entirelys incoherent rays
     \item number of ray queries to achieve desired result
+    \item etc.
   \end{itemize}
-\end{itemize}
-
 \vfill
-Some useful links:
-\begin{itemize}
-\item \href{https://embree.github.io/}{{\color{blue}embree}}
-\item \href{https://github.com/scopatz/pyembree}{{\color{blue}pyembree}}
-\end{itemize}
+How should our ray tracing kernels be different? Should they be different at all?
 
 % Proof of principle
 % Likely to see improvements in our native system using variations of these techniques
@@ -585,8 +576,16 @@ Some useful links:
 \begin{frame}
 
 \begin{center}
-\huge Questions?
+\vfill
+\huge {Questions?}
+\vfill
 \end{center}
+\normalsize
+Some useful links:
+\begin{itemize}
+\item \href{https://embree.github.io/}{{\color{blue}embree}}
+\item \href{https://github.com/scopatz/pyembree}{{\color{blue}pyembree}}
+\end{itemize}
 
 \end{frame}
 
