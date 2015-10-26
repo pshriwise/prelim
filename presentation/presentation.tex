@@ -317,10 +317,10 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
       \node (global vert buff) [auto, below = 0.25cm of v3] {Global Vertex Buffer};
 
       %Surface A
-      \node (t0) [mbelement, fill=red, above = 2cm of v0, xshift=-3cm] {\small t0};
-      \node (t1) [mbelement, fill=red, above = 2cm of v1, xshift=-3cm] {\small t1};
-      \node (t2) [mbelement, fill=red, above = 2cm of v2, xshift=-3cm] {\small t2};
-      \node (t3) [mbelement, fill=red, above = 2cm of v3, xshift=-3cm] {\small t3};
+      \node (t0) [mbelement, fill=red, above = 2cm of v0, xshift=-2cm] {\small t0};
+      \node (t1) [mbelement, fill=red, above = 2cm of v1, right = 0cm of t0] {\small t1};
+      \node (t2) [mbelement, fill=red, above = 2cm of v2, right = 0cm of t1] {\small t2};
+      \node (t3) [mbelement, fill=red, above = 2cm of v3, right = 0cm of t2] {\small t3};
 %      \node (t4) [mbelement, fill=red, above = 2cm of v4, xshift=-3cm] {\small t4};
 %      \node (t5) [mbelement, fill=red, above = 2cm of v5, xshift=-3cm] {\small t5};
       \node (ellipses) [auto,right = 0cm of t3] {...};
@@ -328,7 +328,7 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
 
 
       %Surface B
-      \node (t4) [mbelement, fill=red, above = 2cm of v0, right = 4cm of ellipses] {\small t4};
+      \node (t4) [mbelement, fill=red, above = 2cm of v0, right = 3cm of ellipses] {\small t4};
       \node (t5) [mbelement, fill=red, above = 2cm of v1, right = 0cm of t4] {\small t5};
       \node (t6) [mbelement, fill=red, above = 2cm of v2, right = 0cm of t5] {\small t6};
       \node (t6) [mbelement, fill=red, above = 2cm of v3, right = 0cm of t6] {\small t7};
@@ -354,6 +354,13 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
       \draw [-,color=orange] (t5) -- (v4);
       \draw [-,color=orange] (t5) -- (v5);
 
+      \pause
+      
+      \draw[rounded corners, color=red] 
+      ([xshift=-3pt,yshift=3pt]v2.north west) -- 
+      ([xshift=3pt,yshift=3pt]v3.north east) -- 
+      ([xshift=3pt,yshift=-3pt]v3.south east) -- 
+      ([xshift=-3pt,yshift=-3pt]v2.south west) -- cycle;
 
     %% \nod2[circle,fill=none,minimum width=1cm,text width=6cm,draw=black,label={Global Vertex Buffer}] {};
     %% \draw plot [only marks, mark=*, mark size=0.5, domain=0:2.9, samples=250] (\x,{rand*sqrt(2.9^2-\x^2)});
@@ -384,7 +391,7 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
 \begin{frame}
 \frametitle{Ray Fire Test Models}
 
-An isotropic point source of rays was placed in each of the following models:
+Rays were fired isotropically from the center of each of the following models:
 \vfill
 
 \begin{tikzpicture}
@@ -446,7 +453,7 @@ An isotropic point source of rays was placed in each of the following models:
       \hline
       \multicolumn{4}{l}{\textbf{Cell 3 Tallies}} \\
       \hline
-      Flux  & 1.18371E-05 & {\color{red} 1.18376E-05} & {\color{red} 1.18410E-05} \\
+      Flux  & 1.18371E-05 & {\color{blue} 1.18376E-05} & {\color{blue} 1.18410E-05} \\
       Energy  & 4.96282E-06 & 4.96285E-06 & 4.96285E-06 \\
       \bottomrule
                         
@@ -501,7 +508,7 @@ An isotropic point source of rays was placed in each of the following models:
 \begin{frame}
 \frametitle{Limitations}
 \begin{itemize}
-\item Floating precision 
+\item Single floating point precision 
 \item Robustness needs work, triangle intersector not quite there
 \item Lost particles in highly complex geometries, most likely due to conversions double to float
 \end{itemize}
