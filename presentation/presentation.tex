@@ -454,20 +454,15 @@ Rays were fired isotropically from the center of each of the following models:
 
 \begin{frame}[c]
 \frametitle{Ray Fire Timings}
+\begin{tikzpicture}
+  \node (moab rf)  [auto] {\includegraphics[scale=0.15]{moab_rf.png}};
+  \node (emdag rf) [auto,xshift=6cm] {\includegraphics[scale=0.15]{embree_rf.png}};
+  \pause
+  \node at (moab rf.north) [ellipse,draw=red,yshift=-0.45cm,xshift=-2.2cm,minimum width=0.7cm,minimum height=0.4cm] {};
+  \node at (emdag rf.north) [ellipse,draw=red,yshift=-0.45cm,xshift=-2.2cm,minimum width=0.7cm,minimum height=0.4cm] {};
 
-\begin{columns}
-  \column{0.5\textwidth}
-  \begin{figure}
-    \centering
-    \includegraphics[scale=0.15]{moab_rf.png}
-  \end{figure}
-  \column{0.5\textwidth}
-  \begin{figure}
-    \centering
-    \includegraphics[scale=0.15]{embree_rf.png}
-  \end{figure}
-\end{columns}
-\vfill
+\end{tikzpicture}
+
 \end{frame}
 
 \begin{frame}
@@ -575,7 +570,11 @@ Moving forward:
 \end{itemize}
 
 \vfill
-If you'd like to try out Embree, a good place to start is with \href{https://github.com/scopatz/pyembree}{{\color{blue}pyembree}}.
+Some useful links:
+\begin{itemize}
+\item \href{https://embree.github.io/}{{\color{blue}embree}}
+\item \href{https://github.com/scopatz/pyembree}{{\color{blue}pyembree}}
+\end{itemize}
 
 % Proof of principle
 % Likely to see improvements in our native system using variations of these techniques
