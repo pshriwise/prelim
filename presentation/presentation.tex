@@ -289,7 +289,7 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
 \end{frame}
 
 \begin{frame}
-\frametitle{make\_watertight}
+\frametitle{make\_watertight \cite{make_watertight_smith_2010}}
 \begin{itemize}
 \item Applies faceted geometric information from CGM to remove topological ambiguity from the model
 \end{itemize}
@@ -301,36 +301,58 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
 
 \begin{frame}
   \frametitle{Maintaining watertightness}
-  make\_watertight \cite{make_watertight_smith_2010} is an algorithm used to ensure the capability of robust ray tracing
+  Fortunately, we can maintain this watertightness in our Embree representation of the mesh.
 
   \begin{center}
     \begin{tikzpicture}
 
+      %Vertices
       \node (v0) [mbelement] {\small v0};
       \node (v1) [mbelement, right = 0cm of v0] {\small v1};
       \node (v2) [mbelement, right = 0cm of v1] {\small v2}; 
       \node (v3) [mbelement, right = 0cm of v2] {\small v3}; 
       \node (v4) [mbelement, right = 0cm of v3] {\small v4}; 
       \node (v5) [mbelement, right = 0cm of v4] {\small v5}; 
+      \node (ellipses) [auto,right = 0cm of v5] {...};
+      \node (global vert buff) [auto, below = 0.25cm of v3] {Global Vertex Buffer};
 
-      \node (t0) [mbelement, fill=red, above = of v0] {\small t0};
-      \node (t1) [mbelement, fill=red, above = of v1] {\small t1};
-      \node (t2) [mbelement, fill=red, above = of v2] {\small t2};
-      \node (t3) [mbelement, fill=red, above = of v3] {\small t3};
-      \node (t4) [mbelement, fill=red, above = of v4] {\small t4};
-      \node (t5) [mbelement, fill=red, above = of v5] {\small t5};
-
-
-      \draw [-] (t1) -- (v1);
-      \draw [-] (t1) -- (v2);
-      \draw [-] (t1) -- (v3);
-      \draw [-] (t2) -- (v2);
-      \draw [-] (t2) -- (v3);
-      \draw [-] (t2) -- (v4);
+      %Surface A
+      \node (t0) [mbelement, fill=red, above = 2cm of v0, xshift=-3cm] {\small t0};
+      \node (t1) [mbelement, fill=red, above = 2cm of v1, xshift=-3cm] {\small t1};
+      \node (t2) [mbelement, fill=red, above = 2cm of v2, xshift=-3cm] {\small t2};
+      \node (t3) [mbelement, fill=red, above = 2cm of v3, xshift=-3cm] {\small t3};
+%      \node (t4) [mbelement, fill=red, above = 2cm of v4, xshift=-3cm] {\small t4};
+%      \node (t5) [mbelement, fill=red, above = 2cm of v5, xshift=-3cm] {\small t5};
+      \node (ellipses) [auto,right = 0cm of t3] {...};
+      \node (surfA) [auto,above = 0.25cm of t1] {Surface A};
 
 
+      %Surface B
+      \node (t4) [mbelement, fill=red, above = 2cm of v0, right = 4cm of ellipses] {\small t4};
+      \node (t5) [mbelement, fill=red, above = 2cm of v1, right = 0cm of t4] {\small t5};
+      \node (t6) [mbelement, fill=red, above = 2cm of v2, right = 0cm of t5] {\small t6};
+      \node (t6) [mbelement, fill=red, above = 2cm of v3, right = 0cm of t6] {\small t7};
+%      \node (t4) [mbelement, fill=red, above = 2cm of v4, xshift=-3cm] {\small t4};
+%      \node (t5) [mbelement, fill=red, above = 2cm of v5, xshift=-3cm] {\small t5};
+      \node (ellipses) [auto,right = 0cm of t6] {...};
+      \node (surfB) [auto,above = 0.25cm of t5] {Surface B};
 
+      %Connectivity
+      \draw [-] (t0) -- (v0);
+      \draw [-] (t0) -- (v1);
+      \draw [-] (t0) -- (v2);
 
+      \draw [-,color=orange] (t1) -- (v1);
+      \draw [-,color=orange] (t1) -- (v2);
+      \draw [-,color=orange] (t1) -- (v3);
+
+      \draw [-] (t4) -- (v2);
+      \draw [-] (t4) -- (v3);
+      \draw [-] (t4) -- (v4);
+
+      \draw [-,color=orange] (t5) -- (v3);
+      \draw [-,color=orange] (t5) -- (v4);
+      \draw [-,color=orange] (t5) -- (v5);
 
 
     %% \nod2[circle,fill=none,minimum width=1cm,text width=6cm,draw=black,label={Global Vertex Buffer}] {};
