@@ -95,7 +95,7 @@
 
 \frametitle{Robust CAD-Based Monte Carlo Transport}
 
-DAGMC can robustly do transport calculations on highly detailed CAD models like these:
+DagMC can robustly do transport calculations on highly detailed CAD models like these:
 
 
 \begin{center}
@@ -298,8 +298,8 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
 
 
 \begin{frame}
-  \frametitle{Maintaining watertightness}
-  Fortunately, we can maintain this watertightness in our Embree representation of the mesh.
+  \frametitle{Watertightness in EmDag}
+  Fortunately, we can maintain this \textit{topological} watertightness in our Embree representation of the mesh.
 
   \begin{center}
     \begin{tikzpicture}
@@ -322,7 +322,7 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
 %      \node (t4) [mbelement, fill=red, above = 2cm of v4, xshift=-3cm] {\small t4};
 %      \node (t5) [mbelement, fill=red, above = 2cm of v5, xshift=-3cm] {\small t5};
       \node (ellipses) [auto,right = 0cm of t3] {...};
-      \node (sceneA) [auto,above = 0.25cm of t1] {Scene A};
+      \node (surfaceA) [auto,above = 0.25cm of t1] {Surface A};
 
 
       %Surface B
@@ -333,7 +333,7 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
 %      \node (t4) [mbelement, fill=red, above = 2cm of v4, xshift=-3cm] {\small t4};
 %      \node (t5) [mbelement, fill=red, above = 2cm of v5, xshift=-3cm] {\small t5};
       \node (ellipses) [auto,right = 0cm of t6] {...};
-      \node (sceneB) [auto,above = 0.25cm of t5] {Scene B};
+      \node (surfaceB) [auto,above = 0.25cm of t5] {Surface B};
       
       \pause
 
@@ -342,9 +342,9 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
       \draw [-,color=orange] (t0) -- (v1);
       \draw [-,color=orange] (t0) -- (v2);
 
-      \node (dot0) [circle, fill=blue,xshift=5cm,draw=black,minimum width=0.1cm] {};
-      \node (dot1) [circle, fill=blue,xshift=6cm,yshift=0.5cm,draw=black,minimum width=0.1cm] {};
-      \node (dot2) [circle, fill=blue,xshift=6cm,yshift=-0.5cm,draw=black,minimum width=0.1cm] {};
+      \node (dot0) [circle, fill=blue,xshift=5.5cm,yshift=-0.5cm,draw=black,minimum width=0.1cm] {};
+      \node (dot1) at (dot0) [circle, fill=blue,xshift=1.3cm,yshift=0.6cm,draw=black,minimum width=0.1cm] {};
+      \node (dot2) at (dot0) [circle, fill=blue,xshift=1.5cm,yshift=-0.75cm,draw=black,minimum width=0.1cm] {};
       \draw[-,color=orange] (dot0) -- (dot1);
       \draw[-,color=orange] (dot0) -- (dot2);
       \draw[-,color=orange] (dot2) -- (dot1);
@@ -355,7 +355,7 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
       \draw [-,color=orange] (t1) -- (v2);
       \draw [-,color=orange] (t1) -- (v3);
 
-      \node (dot3) [circle, fill=blue,xshift=5cm,yshift=1cm,draw=black,minimum width=0.1cm] {};
+      \node (dot3) at (dot0) [circle, fill=blue,xshift=0cm,yshift=1cm,draw=black,minimum width=0.1cm] {};
       \draw [-,color=orange] (dot0) -- (dot3);
       \draw [-,color=orange] (dot1) -- (dot3);
  
@@ -367,7 +367,7 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
       \draw [-,color=black!60!green] (t4) -- (v3);
       \draw [-,color=black!60!green] (t4) -- (v4);
 
-      \node (dot4) [circle, fill=blue,xshift=6cm,yshift=1.5cm,draw=black,minimum width=0.1cm] {};
+      \node (dot4) at (dot0) [circle, fill=blue,xshift=1.5cm,yshift=1.75cm,draw=black,minimum width=0.1cm] {};
       \draw [-,color=black!60!green] (dot4) -- (dot3);
       \draw [-,color=black!60!green] (dot4) -- (dot1);
       
@@ -377,7 +377,7 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
       \draw [-,color=black!60!green] (t5) -- (v2);
       \draw [-,color=black!60!green] (t5) -- (v5);
 
-      \node (dot5) [circle, fill=blue,xshift=7cm,yshift=0.5cm,draw=black,minimum width=0.1cm] {};
+      \node (dot5) at (dot0) [circle, fill=blue,xshift=2.75cm,yshift=0.7cm,draw=black,minimum width=0.1cm] {};
       \draw [-,color=black!60!green] (dot5) -- (dot1);
       \draw [-,color=black!60!green] (dot2) -- (dot5);
 
