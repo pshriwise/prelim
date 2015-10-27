@@ -451,11 +451,11 @@ Rays were fired isotropically from the center of each of the following models:
 \begin{frame}[c]
 \frametitle{Ray Fire Timings}
 \begin{tikzpicture}
-  \node (moab rf)  [auto] {\includegraphics[scale=0.15]{moab_rf.png}};
-  \node (emdag rf) [auto,xshift=6cm] {\includegraphics[scale=0.15]{embree_rf.png}};
+  \node (emdag rf) [auto,xshift=7.3cm,inner sep=0pt,outer sep=0pt] {\includegraphics[trim={600 0 200 0},scale=0.166]{embree_rf.png}};
+  \node (moab rf)  [auto,inner sep=0pt,outer sep=0pt] {\includegraphics[trim={150 0 0 0},scale=0.166]{moab_rf.png}};
   \pause
-  \node at (moab rf.north) [ellipse,draw=red,yshift=-0.45cm,xshift=-2.2cm,minimum width=0.7cm,minimum height=0.4cm] {};
-  \node at (emdag rf.north) [ellipse,draw=red,yshift=-0.45cm,xshift=-2.2cm,minimum width=0.7cm,minimum height=0.4cm] {};
+  \node at (moab rf.north) [ellipse,draw=red,yshift=-0.45cm,xshift=-2.9cm,minimum width=0.5cm,minimum height=0.3cm] {};
+  \node at (emdag rf.north) [ellipse,draw=red,yshift=-0.45cm,xshift=-3.63cm,minimum width=0.5cm,minimum height=0.3cm] {};
 
 \end{tikzpicture}
 
