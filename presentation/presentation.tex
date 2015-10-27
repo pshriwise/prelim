@@ -462,6 +462,27 @@ Rays were fired isotropically from the center of each of the following models:
 \end{frame}
 
 \begin{frame}
+\frametitle{Nested Volume Models}
+\begin{itemize}
+\item All were filled with non-physically dense hydrogen for a highly scattering medium. 
+\item Isotropic point source of 5 MeV neutrons at the center.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+
+  \node (ns) [auto] {\includegraphics[scale=0.2]{nested_spheres.png}};
+  \node (nc) [auto,right = of ns] {\includegraphics[scale=0.2]{nested_cubes.png}};
+  \node (nsl) [auto,below = of ns] {Nested Spheres};
+  \node [auto,right = of nsl,xshift=2cm] {Nested Cubes};
+
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}
 \frametitle{Nested Volume Results}
 
 \begin{table}
