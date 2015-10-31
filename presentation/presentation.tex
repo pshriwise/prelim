@@ -472,9 +472,9 @@ Rays were fired isotropically from the center of each of the following models:
 \begin{tikzpicture}
 
   \node (ns) [auto] {\includegraphics[scale=0.2]{nested_spheres.png}};
-  \node (nc) [auto,right = of ns] {\includegraphics[scale=0.2]{nested_cubes.png}};
+  \node (nc) [auto,right = of ns,xshift=0.25cm] {\includegraphics[scale=0.2]{nested_cubes.png}};
   \node (nsl) [auto,below = of ns] {Nested Spheres};
-  \node [auto,right = of nsl,xshift=2cm] {Nested Cubes};
+  \node [auto,right = of nsl,xshift=1.75cm] {Nested Cubes};
 
 \end{tikzpicture}
 \end{center}
@@ -586,7 +586,7 @@ Rays were fired isotropically from the center of each of the following models:
 This was a nice proof of principle project for faster CAD-based analysis, but... \\
 \vfill
 \begin{itemize}
-\item Embree usses single floating point precision 
+\item Embree uses single floating point precision 
 \item Robustness of triangle intersectors may need work
 \item Lost particles in complex geometries, most likely due to conversions double to float
 \end{itemize}
@@ -602,7 +602,7 @@ This was a nice proof of principle project for faster CAD-based analysis, but...
 \vfill
 The application of ray tracing in Monte Carlo differs from that of rendering
   \begin{itemize}
-    \item entirelys incoherent rays
+    \item almost entirely incoherent rays
     \item number of ray queries to achieve desired result
     \item etc.
   \end{itemize}
