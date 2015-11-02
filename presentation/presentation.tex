@@ -12,7 +12,7 @@
 %\usetheme[white]{Wisconsin}
 \graphicspath{{./}{./uw-beamer-template/}{../images/}}
 \title{Leveraging Intel's Embree Ray Tracing in the DAGMC Toolkit}
-\author{Patrick C Shriwise}
+\author{Patrick C. Shriwise}
 \institute{University of Wisconsin - Madison}
 \date{ANS Winter Meeting 2015}
 
@@ -289,18 +289,18 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
 \end{frame}
 
 \begin{frame}
-\frametitle{make\_watertight \cite{make_watertight_smith_2010}}
+\frametitle{make\_watertight}
 \begin{itemize}
-\item Applies faceted geometric information from CAD to remove topological ambiguity from the model
+\item Applies faceted geometric information from CAD to remove topological ambiguity from the model \cite{make_watertight_smith_2010}
 \end{itemize}
-\vspace{-0.8cm}
+%%\vspace{-0.8cm}
 \begin{center}
   \begin{tikzpicture}[scale=0.6, transform shape]
-    \node (image) [yshift=-4cm] {\includegraphics[scale=0.65,trim = 20 50 0 0]{sealing_ex.png}};
-
+    \node (image) [yshift=-4cm] {\adjincludegraphics[scale=0.65,trim={ 20 80 0 90},clip]{sealing_ex.png}};
+    \clip (current bounding box.south west) rectangle (current bounding box.north east);
     \pause
     %%%COPY1%%%
-    \node (dot0) [below= -1.9cm of image,circle,xshift=-8cm,fill=blue,draw=black,minimum width=0.1cm] {};
+    \node (dot0) [yshift = -8cm,circle,xshift=-8cm,fill=blue,draw=black,minimum width=0.1cm] {};
     \node (dot1) at (dot0) [circle, fill=blue,xshift=1.3cm,yshift=0.6cm,draw=black,minimum width=0.1cm] {};
     \node (dot2) at (dot0) [circle, fill=blue,xshift=1.5cm,yshift=-0.75cm,draw=black,minimum width=0.1cm] {};
     \draw[-,color=orange] (dot0) -- (dot1);
