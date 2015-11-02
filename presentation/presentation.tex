@@ -79,10 +79,10 @@
 
 
 %%Outline%%
-\begin{frame}
-\frametitle{Content}
-\tableofcontents
-\end{frame}
+%% \begin{frame}
+%% \frametitle{Content}
+%% \tableofcontents
+%% \end{frame}
 
 %% Introduction %%
 \section{CAD-Based Monte Carlo Transport} % 1-2 slides
@@ -96,7 +96,7 @@
 
 \frametitle{Robust CAD-Based Monte Carlo Transport}
 
-DagMC can robustly do transport calculations on highly detailed CAD models like these:
+DagMC can robustly do transport calculations on detailed CAD models like these:
 
 
 \begin{center}
@@ -146,7 +146,7 @@ But it takes a long time... (2-10x slower than native codes)
 
   \frametitle{DAGMC \& Ray Tracing}
   
-  A great deal of \textbf{human time} is saved in dealing with tedious text-based geometric representations, but it comes at the cost of extra \textbf{computing time}.
+  A great deal of \textbf{human time} is saved in dealing with text-based geometric representations, but it comes at the cost of additional \textbf{computing time}.
  \vfill
  What if we can drastically reduce this extra computing time?
 
@@ -158,18 +158,19 @@ But it takes a long time... (2-10x slower than native codes)
 \begin{frame}
 
 \frametitle{Ray Tracing in DAGMC}
- 85\% of the time spent in DAGMC runs is in the ray tracing of the discretized (faceted) model.
+ 85\% of the time spent in DAGMC runs is in ray tracing of the discretized (faceted) model.
 
 \begin{itemize}
 \item point-inclusion tests
 \item next surface distance determination
+\item nearest surface to location
 \end{itemize}
 
 
 
 \end{frame}
 
-\section{Ray Tracing Accelerations} % 2-3 slides
+\section{Accelerating Ray Tracing} % 2-3 slides
 % BVH explanation in 1 slide
 % Embree's tricks
 % Extra: SAH
@@ -195,7 +196,7 @@ By partitioning the geometry-based meshes using bounding entities, we gain signi
   \end{figure}
 \end{columns}
 \vfill
-How we create and traverse bounding volume hierarchies (BVHs) matters \textbf{a lot} in terms of the performance.
+How these bounding volume hierarchies (BVHs) are created and traversed affects the performance \textbf{greatly}.
 
 
 \end{frame}
@@ -242,7 +243,7 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
   \item pro: discretizes the geometric primitives and space more finely per level in the tree
   \item con: makes for more tree nodes to check per query
   \end{itemize}
-\item compensates by using SIMD commands to check many nodes at once
+\item compensates by using advanced vector extensions (AVX) instruction sets to check many nodes at once.
 \end{itemize}
 
 \end{frame}
@@ -292,11 +293,12 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
 \begin{itemize}
 \item Applies faceted geometric information from CAD to remove topological ambiguity from the model
 \end{itemize}
-
+\vspace{-0.8cm}
 \begin{center}
   \begin{tikzpicture}[scale=0.6, transform shape]
-    \node (image) [yshift=4cm] {\includegraphics[scale=0.65,trim = 20 50 0 0]{sealing_ex.png}};
-    
+    \node (image) [yshift=-4cm] {\includegraphics[scale=0.65,trim = 20 50 0 0]{sealing_ex.png}};
+
+    \pause
     %%%COPY1%%%
     \node (dot0) [below= -1.9cm of image,circle,xshift=-8cm,fill=blue,draw=black,minimum width=0.1cm] {};
     \node (dot1) at (dot0) [circle, fill=blue,xshift=1.3cm,yshift=0.6cm,draw=black,minimum width=0.1cm] {};
@@ -305,30 +307,30 @@ Embree \cite{embree} also uses OBBs but with a different tree structure:
     \draw[-,color=orange] (dot0) -- (dot2);
     \draw[-,color=orange] (dot2) -- (dot1);
 
-    \node (cdot1) at (dot0) [circle, fill=blue,xshift=1.8cm,yshift=0.6cm,draw=black,minimum width=0.1cm] {};
-    \node (cdot2) at (dot0) [circle, fill=blue,xshift=2cm,yshift=-0.75cm,draw=black,minimum width=0.1cm] {};
+    \node (cdot1) at (dot0) [circle, fill=blue,xshift=1.55cm,yshift=0.8cm,draw=black,minimum width=0.1cm] {};
+    \node (cdot2) at (dot0) [circle, fill=blue,xshift=1.75cm,yshift=-0.55cm,draw=black,minimum width=0.1cm] {};
     
       \node (dot3) at (dot0) [circle, fill=blue,xshift=0cm,yshift=1cm,draw=black,minimum width=0.1cm] {};
       \draw [-,color=orange] (dot0) -- (dot3);
       \draw [-,color=orange] (dot1) -- (dot3);
       
-      \node (cdot3) at (dot0) [circle, fill=blue,xshift=0.5cm,yshift=1cm,draw=black,minimum width=0.1cm] {};
+      \node (cdot3) at (dot0) [circle, fill=blue,xshift=0.25cm,yshift=1.2cm,draw=black,minimum width=0.1cm] {};
       
       %%End surf A conn
       
-      \node (dot4) at (dot0) [circle, fill=blue,xshift=2cm,yshift=1.75cm,draw=black,minimum width=0.1cm] {};
+      \node (dot4) at (dot0) [circle, fill=blue,xshift=1.75cm,yshift=1.95cm,draw=black,minimum width=0.1cm] {};
       \draw [-,color=black!60!green] (dot4) -- (cdot3);
       \draw [-,color=black!60!green] (dot4) -- (cdot1);
       \draw [-,color=black!60!green] (cdot3) -- (cdot1);
       
       
-      \node (dot5) at (dot0) [circle, fill=blue,xshift=3.25cm,yshift=0.7cm,draw=black,minimum width=0.1cm] {};
+      \node (dot5) at (dot0) [circle, fill=blue,xshift=3cm,yshift=0.9cm,draw=black,minimum width=0.1cm] {};
       \draw [-,color=black!60!green] (dot5) -- (cdot1);
       \draw [-,color=black!60!green] (cdot2) -- (dot5);
       \draw [-,color=black!60!green] (cdot2) -- (cdot1);
       \draw [-,color=black!60!green] (dot4) -- (dot5);
 
-
+      \pause
       %%%COPY2%%%
       \node (dot0) [below = -1.9cm of image,circle,right = of dot0, fill=blue,xshift=11cm,draw=black,minimum width=0.1cm] {};
       \node (dot1) at (dot0) [circle, fill=blue,xshift=1.3cm,yshift=0.6cm,draw=black,minimum width=0.1cm] {};
@@ -519,6 +521,7 @@ Rays were fired isotropically from the center of each of the following models:
 
 \end{frame}
 
+
 \begin{frame}[c]
 \frametitle{Ray Fire Timings}
 \begin{tikzpicture}
@@ -527,10 +530,18 @@ Rays were fired isotropically from the center of each of the following models:
   \pause
   \node at (moab rf.north) [ellipse,draw=red,yshift=-0.45cm,xshift=-2.9cm,minimum width=0.5cm,minimum height=0.3cm] {};
   \node at (emdag rf.north) [ellipse,draw=red,yshift=-0.45cm,xshift=-3.63cm,minimum width=0.5cm,minimum height=0.3cm] {};
-
+  
 \end{tikzpicture}
 
+\begin{center}
+  Embree was built using the AVX2 instruction set (not AVX) which allows more tree nodes to be visited in one command.
+\end{center}
+
 \end{frame}
+
+
+
+
 
 \begin{frame}
 \frametitle{Nested Volume Models}
@@ -562,7 +573,7 @@ Rays were fired isotropically from the center of each of the following models:
     \label{nestedspheres}
     \begin{tabular}{lcccc}
       \toprule
-      Value & MCNP & DagMCNP & EmDagMCNP \\
+      Value & MCNP5 & DagMCNP & EmDagMCNP \\
       \toprule
       %%Hist/min & 2.2991E+05 & 1.9877E+04 & 1.3947E+05 \\
       %%\hline
@@ -583,8 +594,11 @@ Rays were fired isotropically from the center of each of the following models:
       \bottomrule
                         
     \end{tabular}
+    \vfill
+    Zero lost particles \\
+    Discrepancy caused by a single particle \\
 
-
+    
   \end{center}
 %%\vspace{-0.2cm}
 \end{table}
@@ -646,8 +660,6 @@ Rays were fired isotropically from the center of each of the following models:
   \end{center}
 \end{table}
 
-    Zero lost particles
-
 
 \end{frame}
 
@@ -657,14 +669,13 @@ Rays were fired isotropically from the center of each of the following models:
 This was a nice proof of principle project for faster CAD-based analysis, but... \\
 \vfill
 \begin{itemize}
-\item Embree uses single floating point precision 
-\item Robustness of triangle intersectors may need work
+\item Embree uses single floating point precision
 \item Lost particles in complex geometries, most likely due to conversions double to float
 \end{itemize}
 \end{frame}
 % Extra: slide with graphic of our specific problem
 
-\section{Future Work} % 2 slides
+\section{Looking Forward} % 2 slides
 
 \begin{frame}
 
@@ -743,7 +754,7 @@ Some useful links:
 %Citations
 \begin{frame}
   \bibliographystyle{ans}
-  \bibliography{bibliography}
+  \footnotesize{\bibliography{bibliography}}
 \end{frame}
 
 \end{document}
