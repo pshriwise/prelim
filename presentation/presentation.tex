@@ -35,6 +35,7 @@
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{calc}
 
 \tikzset{every node/.style={inner sep=0pt, outer sep=1pt}}
 \tikzstyle{uwstep} = [minimum width=2.5cm, minimum height=1cm,text centered, text width=2.5cm, draw=black, fill=UWRed, text=white]
@@ -115,32 +116,65 @@ But it takes a long time... (2-10x slower than native codes)
 
 \end{frame}
 
-%% \begin{frame}
-%% \frametitle{DAGMC Workflow}
-%% \begin{center}
-%% \begin{tikzpicture}
-%%   \node (CAD) [uwstep] {\small CAD \\ Geometry};
+\begin{frame}
+\frametitle{DAGMC Workflow}
+\begin{center}
+  \begin{tikzpicture}
+    \node (CAD) [uwstep] {\small CAD};
+    
+    \pause %%%%
+    \visible<2>{\node (CAD L) [auto,outer sep=0pt,below = 0.1 cm of CAD] {\small geometric design};}
+    
+    \pause %%%%
+    \node (PREPROC) [uwstep, right = 0.5cm of CAD] {\small preprocessing};
+    \draw [arrow] (CAD) -- (PREPROC);
+    
+    \pause %%%%
+    \visible<4-5>{\node (PREPROC LA) [auto,outer sep=0pt,above = 0.1cm of PREPROC] {\small surface faceting};}
+    
+    \pause %%%%
+    \visible<5>{\node (PREPROC LB) [auto,outer sep=0pt,below = 0.1cm of PREPROC] {\small facet sealing};}
+    
+    \pause %%%%
+    \node (DAGMC) [uwstep, right = 0.5 cm of PREPROC] {\small DAGMC};
+    \draw [arrow] (PREPROC) -- (DAGMC);
+    
+    \pause %%%%
+    \node (MC) [uwstep, right = 0.5cm of DAGMC] {\small Monte Carlo};
+    \draw[-latex] (DAGMC) to[bend right=10] node[above,rotate=60] {} (MC);
+    \draw[-latex] (MC) to[bend right=10] node[above,rotate=60] {} (DAGMC);
 
-%%   \node (CUBIT) [uwstep, xshift=3cm, label=below:{\small imprint \& merge}] {\small CUBIT};
-  
-%%   \node (PREPROC) [uwstep, xshift=6cm, label=below:{\small surface faceting}] {\small dagmc \\preproc};
+    \pause %%%%
+    \visible<8->{\node [auto,above = 0.6cm of MC,xshift=-1.5cm,outer sep=0pt] {Analysis Toolkit};}
+    \draw [black,dotted] ($(DAGMC.north west)+(-0.15,0.5)$) rectangle ($(MC.south east)+(0.15,-0.5)$); 
+    \pause %%%%
+    \visible<9->{\node (MC LB) [auto,below = 0.1cm of MC, outer sep=0pt] {\small physics};}
 
-%%   \node (MW) [uwstep, xshift=9cm, label={\small facet sealing}] {\small make \\watertight};
+    \pause %%%%
+    \visible<10->{\node (DAGMC LA) [auto, above = 0.1cm of DAGMC, outer sep=0pt] {\small geometric queries};
+    \node (DAGMC LB) [auto, below = 0.1cm of DAGMC, outer sep=0pt] {\small ray tracing};}
 
-%%   \node (MC) [uwstep, xshift=9cm, yshift=-2cm, label=below:{\small analysis}] {\small Monte Carlo};
+    \pause %%%%
+    \visible<11>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small Fluka};}
 
-%%   \draw [arrow] (CAD) -- (CUBIT);
+    \pause %%%%
+    \visible<12>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small Geant4};}
 
-%%   \draw [arrow] (CUBIT) -- (PREPROC);
+    \pause %%%%
+    \visible<13>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small ...};}
 
-%%   \draw [arrow] (PREPROC) -- (MW);
+    \pause %%%%
+    \visible<14>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small MCNP5};}
 
-%%   \draw [arrow] (MW) -- (MC);
+    \pause %%%%
+    \node [auto,below = 0.6cm of MC,xshift=-1.5cm,outer sep=0pt] {DAGMCNP};
+    
+    \onslide<1->
+  \end{tikzpicture}
+\end{center}
 
-%% \end{tikzpicture}
-%% \end{center}
+\end{frame}
 
-%% \end{frame}
 \begin{frame}
 
 \frametitle{Ray Tracing in DAGMC}
