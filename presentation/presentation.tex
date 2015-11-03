@@ -543,15 +543,17 @@ Rays were fired isotropically from the center of each of the following models:
 
 
 \begin{frame}[c]
-\frametitle{Ray Fire Timings}
+  \frametitle{Ray Fire Timings}
+  \begin{center}
 \begin{tikzpicture}
-  \node (emdag rf) [auto,xshift=7.3cm,inner sep=0pt,outer sep=0pt] {\includegraphics[trim={600 0 200 0},scale=0.166]{embree_rf.png}};
-  \node (moab rf)  [auto,inner sep=0pt,outer sep=0pt] {\includegraphics[trim={150 0 0 0},scale=0.166]{Eig_fix_rf.png}};
-  \node at (moab rf.north) [ellipse,draw=red,yshift=-0.45cm,xshift=-2.9cm,minimum width=0.5cm,minimum height=0.3cm] {};
-  \node at (emdag rf.north) [ellipse,draw=red,yshift=-0.45cm,xshift=-3.63cm,minimum width=0.5cm,minimum height=0.3cm] {};
+  \node (moab rf)  [auto,inner sep=0pt,inner sep=0pt,outer sep=0pt] {\includegraphics[trim={200 0 0 0 },scale=0.16]{Eig_fix_rf.png}};
+  \node (emdag rf) [auto,right = -0.6cm of moab rf,inner sep=0pt,outer sep=0pt] {\includegraphics[scale=0.16]{embree_rf.png}};
+
+  \node at (moab rf.north) [ellipse,draw=red,yshift=-0.5cm,xshift=-3.25cm,minimum width=0.5cm,minimum height=0.3cm] {};
+  \node at (emdag rf.north) [ellipse,draw=red,yshift=-0.5cm,xshift=-2.6cm,minimum width=0.5cm,minimum height=0.3cm] {};
   \onslide<1->
 \end{tikzpicture}
-
+\end{center}
 \begin{center}
   Embree was built using the AVX2 instruction set (not AVX) which allows more tree nodes to be visited in one command.
 \end{center}
