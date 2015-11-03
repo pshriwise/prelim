@@ -141,6 +141,20 @@ But it takes a long time... (2-10x slower than native codes)
 %% \end{center}
 
 %% \end{frame}
+\begin{frame}
+
+\frametitle{Ray Tracing in DAGMC}
+ 85\% of the time spent in DAGMC runs is in ray tracing of the discretized (faceted) model.
+
+\begin{itemize}
+\item point-inclusion tests
+\item next surface distance determination
+\item nearest surface to location
+\end{itemize}
+
+
+
+\end{frame}
 
 \begin{frame}
 
@@ -156,19 +170,25 @@ But it takes a long time... (2-10x slower than native codes)
 \end{frame}
 
 \begin{frame}
+  \frametitle{Embree}
+  \begin{center}
+    \begin{tikzpicture}
+    \node (room) [auto] {\includegraphics[width=0.28\textwidth]{2014-Siggraph-Embree-000.png}};
+    \node (crown) [auto,right = 0.1cm of room] {\includegraphics[width=0.3\textwidth]{2014-Siggraph-Embree-003.png}};
+    \node (wayback) [auto,right = 0.1cm of crown] {\includegraphics[width=0.31\textwidth]{2014-Siggraph-Embree-002.png}};
+  \end{tikzpicture}
+  \end{center}
+  A high performance ray tracing kernel. \cite{embree}
+  \vfill
+  \begin{itemize}
+  \item open source CPU-based project developed by Intel
+  \item intended application is rendering
+  \item successfully used in several commercial rendering packages
+  \end{itemize}
 
-\frametitle{Ray Tracing in DAGMC}
- 85\% of the time spent in DAGMC runs is in ray tracing of the discretized (faceted) model.
-
-\begin{itemize}
-\item point-inclusion tests
-\item next surface distance determination
-\item nearest surface to location
-\end{itemize}
-
-
-
+  
 \end{frame}
+
 
 \section{Accelerating Ray Tracing} % 2-3 slides
 % BVH explanation in 1 slide
@@ -185,8 +205,8 @@ By partitioning the geometry-based meshes using bounding entities, we gain signi
   \column{0.5\textwidth}
   \begin{figure}
     \centering
+    \begin{flushleft}\cite{gottschalk1996obbtree}\end{flushleft}
     \includegraphics[width=1.1\textwidth]{bvh_2d_ex_w_labels.png} 
-    \cite{gottschalk1996obbtree}
   \end{figure}
   
   \column{0.4\textwidth}
@@ -230,7 +250,7 @@ DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB \cite{moa
 
 \frametitle{Embree's BVH}
 
-Embree \cite{embree} also uses OBBs but with a different tree structure:
+Embree also uses OBBs but with a different tree structure:
 
 \begin{center}
 \includegraphics[width=0.5\textwidth]{quad_tree.png}
@@ -526,8 +546,7 @@ Rays were fired isotropically from the center of each of the following models:
 \frametitle{Ray Fire Timings}
 \begin{tikzpicture}
   \node (emdag rf) [auto,xshift=7.3cm,inner sep=0pt,outer sep=0pt] {\includegraphics[trim={600 0 200 0},scale=0.166]{embree_rf.png}};
-  \node (moab rf)  [auto,inner sep=0pt,outer sep=0pt] {\includegraphics[trim={150 0 0 0},scale=0.166]{moab_rf.png}};
-  \pause
+  \node (moab rf)  [auto,inner sep=0pt,outer sep=0pt] {\includegraphics[trim={150 0 0 0},scale=0.166]{Eig_fix_rf.png}};
   \node at (moab rf.north) [ellipse,draw=red,yshift=-0.45cm,xshift=-2.9cm,minimum width=0.5cm,minimum height=0.3cm] {};
   \node at (emdag rf.north) [ellipse,draw=red,yshift=-0.45cm,xshift=-3.63cm,minimum width=0.5cm,minimum height=0.3cm] {};
   \onslide<1->
@@ -701,14 +720,16 @@ How should our ray tracing kernels be different? Should they be different at all
 
 \begin{center}
 \vfill
-\huge {Questions?}
+\huge {Questions?} \\
+\vfill
+\normalsize email: shriwise@wisc.edu
 \vfill
 \end{center}
 \normalsize
 Some useful links:
 \begin{itemize}
-\item \href{https://embree.github.io/}{{\color{blue}embree}}
-\item \href{https://github.com/scopatz/pyembree}{{\color{blue}pyembree}}
+\item \href{https://embree.github.io/}{{\color{blue}embree}} (https://embree.github.io/)
+\item \href{https://github.com/scopatz/pyembree}{{\color{blue}pyembree}} (https://github.com/scopatz/pyembree)
 \end{itemize}
 
 \end{frame}
