@@ -123,17 +123,18 @@ But it takes a long time... (2-10x slower than native codes)
     \node (CAD) [uwstep] {\small CAD};
     
     \pause %%%%
-    \visible<2>{\node (CAD L) [auto,outer sep=0pt,below = 0.1 cm of CAD] {\small geometric design};}
+    \visible<2>{\node (CAD L) [auto,outer sep=0pt,below = 0.1 cm of CAD] {\small geometric design};
+      \node [auto,below = 0.1cm of CAD L,outer sep=0pt] {\includegraphics[scale=0.07]{fng_cad.png}};}
     
     \pause %%%%
     \node (PREPROC) [uwstep, right = 0.5cm of CAD] {\small preprocessing};
     \draw [arrow] (CAD) -- (PREPROC);
     
     \pause %%%%
-    \visible<4-5>{\node (PREPROC LA) [auto,outer sep=0pt,above = 0.1cm of PREPROC] {\small surface faceting};}
-    
-    \pause %%%%
-    \visible<5>{\node (PREPROC LB) [auto,outer sep=0pt,below = 0.1cm of PREPROC] {\small facet sealing};}
+    \visible<4>{\node (PREPROC LA) [auto,outer sep=0pt,above = 0.1cm of PREPROC] {\small surface faceting};
+      \node (PREPROC LB) [auto,outer sep=0pt,below = 0.1cm of PREPROC] {\small facet sealing};
+      \node [auto,below = 0.1cm of PREPROC LB,outer sep=0pt] {\includegraphics[scale=0.07]{fng_facets.png}};
+    \node[auto,above= 0.3cm of PREPROC LA,outer sep=0pt] {\includegraphics[scale=0.1]{facet_tol_zoomed.png}};}
     
     \pause %%%%
     \node (DAGMC) [uwstep, right = 0.5 cm of PREPROC] {\small DAGMC};
@@ -145,29 +146,32 @@ But it takes a long time... (2-10x slower than native codes)
     \draw[-latex] (MC) to[bend right=10] node[above,rotate=60] {} (DAGMC);
 
     \pause %%%%
-    \visible<8->{\node [auto,above = 0.6cm of MC,xshift=-1.5cm,outer sep=0pt] {Analysis Toolkit};}
+    \visible<7->{\node [auto,above = 0.6cm of MC,xshift=-1.5cm,outer sep=0pt] {Analysis Toolkit};}
     \draw [black,dotted] ($(DAGMC.north west)+(-0.15,0.5)$) rectangle ($(MC.south east)+(0.15,-0.5)$); 
     \pause %%%%
-    \visible<9->{\node (MC LB) [auto,below = 0.1cm of MC, outer sep=0pt] {\small physics};}
+    \visible<8->{\node (MC LB) [auto,below = 0.1cm of MC, outer sep=0pt] {\small physics};}
 
     \pause %%%%
-    \visible<10->{\node (DAGMC LA) [auto, above = 0.1cm of DAGMC, outer sep=0pt] {\small geometric queries};
+    \visible<9->{\node (DAGMC LA) [auto, above = 0.1cm of DAGMC, outer sep=0pt] {\small geometric queries};
     \node (DAGMC LB) [auto, below = 0.1cm of DAGMC, outer sep=0pt] {\small ray tracing};}
 
     \pause %%%%
-    \visible<11>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small Fluka};}
+    \visible<10>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small Fluka};}
 
     \pause %%%%
-    \visible<12>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small Geant4};}
+    \visible<11>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small Geant4};}
 
     \pause %%%%
-    \visible<13>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small ...};}
+    \visible<12>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small ...};}
 
     \pause %%%%
-    \visible<14>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small MCNP5};}
+    \visible<13>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small MCNP5};}
 
     \pause %%%%
-    \node [auto,below = 0.6cm of MC,xshift=-1.5cm,outer sep=0pt] {DAGMCNP};
+    \node (TOOLKIT L) [auto,below = 0.6cm of MC,xshift=-1.5cm,outer sep=0pt] {DAGMCNP};
+
+    \pause %%%%
+    \node [auto,below = 0.1cm of TOOLKIT L,outer sep=0pt] {\includegraphics[scale=0.07]{fng_usrbin22_Slice_z_TALLY_TAG.png}};
     
     \onslide<1->
   \end{tikzpicture}

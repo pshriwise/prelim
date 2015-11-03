@@ -18,6 +18,7 @@ ps2png:
 	cd images/ && \
 	for file in *.ps ; do \
 	convert -density 150 $$file "`basename $$file .ps`.png" ; \
+	convert -density 300 facet_tol_zoomed.ps facet_tol_zoomed.png; \
 	done
 
 presentation: ps2png
