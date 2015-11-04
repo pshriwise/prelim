@@ -28,6 +28,7 @@ presentation: ps2png
 	pdflatex -shell-escape presentation.tex && \
 	bibtex presentation.aux && \
 	pdflatex -shell-escape presentation.tex && \
+	pdflatex -shell-escape presentation.tex && \
 	rm *.sty
 
 preview-presentation: presentation
