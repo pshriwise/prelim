@@ -245,8 +245,8 @@ By partitioning the geometry-based meshes using bounding entities, we gain signi
   \column{0.5\textwidth}
   \begin{figure}
     \centering
+    \includegraphics[width=1.1\textwidth]{bvh_2d_ex_w_labels.png}
     \begin{flushleft}\cite{gottschalk1996obbtree}\end{flushleft}
-    \includegraphics[width=1.1\textwidth]{bvh_2d_ex_w_labels.png} 
   \end{figure}
   
   \column{0.4\textwidth}
@@ -303,7 +303,7 @@ Embree also uses OBBs but with a different tree structure:
   \item pro: discretizes the geometric primitives and space more finely per level in the tree
   \item con: makes for more tree nodes to check per query
   \end{itemize}
-\item compensates by using advanced vector extensions (AVX) instruction sets to check many nodes at once.
+\item compensates by using advanced vector extentions (AVX) and single instruction multiple data (SIMD) instruction sets to check many nodes at once.
 \end{itemize}
 
 \end{frame}
@@ -347,87 +347,6 @@ Embree also uses OBBs but with a different tree structure:
 
   
 \end{frame}
-
-\begin{frame}
-\frametitle{make\_watertight}
-\begin{itemize}
-\item Applies faceted geometric information from CAD to remove topological ambiguity from the model \cite{make_watertight_smith_2010}
-\end{itemize}
-%%\vspace{-0.8cm}
-\begin{center}
-  \begin{tikzpicture}[scale=0.6, transform shape]
-    \node (image) [yshift=-4cm] {\adjincludegraphics[scale=0.65,trim={ 20 80 0 90},clip]{sealing_ex.png}};
-    \clip (current bounding box.south west) rectangle (current bounding box.north east);
-    \pause
-    %%%COPY1%%%
-    \node (dot0) [yshift = -8cm,circle,xshift=-8cm,fill=blue,draw=black,minimum width=0.1cm] {};
-    \node (dot1) at (dot0) [circle, fill=blue,xshift=1.3cm,yshift=0.6cm,draw=black,minimum width=0.1cm] {};
-    \node (dot2) at (dot0) [circle, fill=blue,xshift=1.5cm,yshift=-0.75cm,draw=black,minimum width=0.1cm] {};
-    \draw[-,color=orange] (dot0) -- (dot1);
-    \draw[-,color=orange] (dot0) -- (dot2);
-    \draw[-,color=orange] (dot2) -- (dot1);
-
-    \node (cdot1) at (dot0) [circle, fill=blue,xshift=1.55cm,yshift=0.8cm,draw=black,minimum width=0.1cm] {};
-    \node (cdot2) at (dot0) [circle, fill=blue,xshift=1.75cm,yshift=-0.55cm,draw=black,minimum width=0.1cm] {};
-    
-      \node (dot3) at (dot0) [circle, fill=blue,xshift=0cm,yshift=1cm,draw=black,minimum width=0.1cm] {};
-      \draw [-,color=orange] (dot0) -- (dot3);
-      \draw [-,color=orange] (dot1) -- (dot3);
-      
-      \node (cdot3) at (dot0) [circle, fill=blue,xshift=0.25cm,yshift=1.2cm,draw=black,minimum width=0.1cm] {};
-      
-      %%End surf A conn
-      
-      \node (dot4) at (dot0) [circle, fill=blue,xshift=1.75cm,yshift=1.95cm,draw=black,minimum width=0.1cm] {};
-      \draw [-,color=black!60!green] (dot4) -- (cdot3);
-      \draw [-,color=black!60!green] (dot4) -- (cdot1);
-      \draw [-,color=black!60!green] (cdot3) -- (cdot1);
-      
-      
-      \node (dot5) at (dot0) [circle, fill=blue,xshift=3cm,yshift=0.9cm,draw=black,minimum width=0.1cm] {};
-      \draw [-,color=black!60!green] (dot5) -- (cdot1);
-      \draw [-,color=black!60!green] (cdot2) -- (dot5);
-      \draw [-,color=black!60!green] (cdot2) -- (cdot1);
-      \draw [-,color=black!60!green] (dot4) -- (dot5);
-
-      \pause
-      %%%COPY2%%%
-      \node (dot0) [below = -1.9cm of image,circle,right = of dot0, fill=blue,xshift=11cm,draw=black,minimum width=0.1cm] {};
-      \node (dot1) at (dot0) [circle, fill=blue,xshift=1.3cm,yshift=0.6cm,draw=black,minimum width=0.1cm] {};
-      \node (dot2) at (dot0) [circle, fill=blue,xshift=1.5cm,yshift=-0.75cm,draw=black,minimum width=0.1cm] {};
-      \draw[-,color=orange] (dot0) -- (dot1);
-      \draw[-,color=orange] (dot0) -- (dot2);
-      \draw[-,color=orange] (dot2) -- (dot1);
-
-     
-      \node (dot3) at (dot0) [circle, fill=blue,xshift=0cm,yshift=1cm,draw=black,minimum width=0.1cm] {};
-      \draw [-,color=orange] (dot0) -- (dot3);
-      \draw [-,color=orange] (dot1) -- (dot3);
- 
-
-      %%End surf A conn
-     
-      \node (dot4) at (dot0) [circle, fill=blue,xshift=1.5cm,yshift=1.75cm,draw=black,minimum width=0.1cm] {};
-      \draw [-,color=black!60!green] (dot4) -- (dot3);
-      \draw [-,color=black!60!green] (dot4) -- (dot1);
-      
-      
-      \node (dot5) at (dot0) [circle, fill=blue,xshift=2.75cm,yshift=0.7cm,draw=black,minimum width=0.1cm] {};
-      \draw [-,color=black!60!green] (dot5) -- (dot1);
-      \draw [-,color=black!60!green] (dot2) -- (dot5);
-
-      \draw [-,color=black!60!green] (dot4) -- (dot5);
-      \draw [-,color=red] (dot1) -- (dot3);
-      \draw [-,color=red] (dot1) -- (dot2);
-      \onslide<1->
-      
-    \end{tikzpicture}
-\end{center}
-
-
-\end{frame}
-
-
 
 
 \begin{frame}
@@ -731,8 +650,10 @@ Rays were fired isotropically from the center of each of the following models:
 This was a nice proof of principle project for faster CAD-based analysis, but... \\
 \vfill
 \begin{itemize}
-\item Embree uses single floating point precision
-\item Lost particles in complex geometries, most likely due to conversions double to float
+\item Limited topological representation
+\item Natively supports only one type of geometric primitive
+\item Single floating point precision
+\item Lost particles in complex geometries, most likely due to conversions from double to float
 \end{itemize}
 \end{frame}
 % Extra: slide with graphic of our specific problem
@@ -823,7 +744,82 @@ Some useful links:
 
 \end{frame}
 
+\begin{frame}
+\frametitle{make\_watertight}
+\begin{itemize}
+\item Applies faceted geometric information from CAD to remove topological ambiguity from the model \cite{make_watertight_smith_2010}
+\end{itemize}
+%%\vspace{-0.8cm}
+\begin{center}
+  \begin{tikzpicture}[scale=0.6, transform shape]
+    \node (image) [yshift=-4cm] {\adjincludegraphics[scale=0.65,trim={ 20 80 0 90},clip]{sealing_ex.png}};
+    \clip (current bounding box.south west) rectangle (current bounding box.north east);
+    \pause
+    %%%COPY1%%%
+    \node (dot0) [yshift = -8cm,circle,xshift=-8cm,fill=blue,draw=black,minimum width=0.1cm] {};
+    \node (dot1) at (dot0) [circle, fill=blue,xshift=1.3cm,yshift=0.6cm,draw=black,minimum width=0.1cm] {};
+    \node (dot2) at (dot0) [circle, fill=blue,xshift=1.5cm,yshift=-0.75cm,draw=black,minimum width=0.1cm] {};
+    \draw[-,color=orange] (dot0) -- (dot1);
+    \draw[-,color=orange] (dot0) -- (dot2);
+    \draw[-,color=orange] (dot2) -- (dot1);
 
+    \node (cdot1) at (dot0) [circle, fill=blue,xshift=1.55cm,yshift=0.8cm,draw=black,minimum width=0.1cm] {};
+    \node (cdot2) at (dot0) [circle, fill=blue,xshift=1.75cm,yshift=-0.55cm,draw=black,minimum width=0.1cm] {};
+    
+      \node (dot3) at (dot0) [circle, fill=blue,xshift=0cm,yshift=1cm,draw=black,minimum width=0.1cm] {};
+      \draw [-,color=orange] (dot0) -- (dot3);
+      \draw [-,color=orange] (dot1) -- (dot3);
+      
+      \node (cdot3) at (dot0) [circle, fill=blue,xshift=0.25cm,yshift=1.2cm,draw=black,minimum width=0.1cm] {};
+      
+      %%End surf A conn
+      
+      \node (dot4) at (dot0) [circle, fill=blue,xshift=1.75cm,yshift=1.95cm,draw=black,minimum width=0.1cm] {};
+      \draw [-,color=black!60!green] (dot4) -- (cdot3);
+      \draw [-,color=black!60!green] (dot4) -- (cdot1);
+      \draw [-,color=black!60!green] (cdot3) -- (cdot1);
+      
+      
+      \node (dot5) at (dot0) [circle, fill=blue,xshift=3cm,yshift=0.9cm,draw=black,minimum width=0.1cm] {};
+      \draw [-,color=black!60!green] (dot5) -- (cdot1);
+      \draw [-,color=black!60!green] (cdot2) -- (dot5);
+      \draw [-,color=black!60!green] (cdot2) -- (cdot1);
+      \draw [-,color=black!60!green] (dot4) -- (dot5);
+
+      \pause
+      %%%COPY2%%%
+      \node (dot0) [below = -1.9cm of image,circle,right = of dot0, fill=blue,xshift=11cm,draw=black,minimum width=0.1cm] {};
+      \node (dot1) at (dot0) [circle, fill=blue,xshift=1.3cm,yshift=0.6cm,draw=black,minimum width=0.1cm] {};
+      \node (dot2) at (dot0) [circle, fill=blue,xshift=1.5cm,yshift=-0.75cm,draw=black,minimum width=0.1cm] {};
+      \draw[-,color=orange] (dot0) -- (dot1);
+      \draw[-,color=orange] (dot0) -- (dot2);
+      \draw[-,color=orange] (dot2) -- (dot1);
+
+     
+      \node (dot3) at (dot0) [circle, fill=blue,xshift=0cm,yshift=1cm,draw=black,minimum width=0.1cm] {};
+      \draw [-,color=orange] (dot0) -- (dot3);
+      \draw [-,color=orange] (dot1) -- (dot3);
+ 
+
+      %%End surf A conn
+     
+      \node (dot4) at (dot0) [circle, fill=blue,xshift=1.5cm,yshift=1.75cm,draw=black,minimum width=0.1cm] {};
+      \draw [-,color=black!60!green] (dot4) -- (dot3);
+      \draw [-,color=black!60!green] (dot4) -- (dot1);
+      
+      
+      \node (dot5) at (dot0) [circle, fill=blue,xshift=2.75cm,yshift=0.7cm,draw=black,minimum width=0.1cm] {};
+      \draw [-,color=black!60!green] (dot5) -- (dot1);
+      \draw [-,color=black!60!green] (dot2) -- (dot5);
+
+      \draw [-,color=black!60!green] (dot4) -- (dot5);
+      \draw [-,color=red] (dot1) -- (dot3);
+      \draw [-,color=red] (dot1) -- (dot2);
+      \onslide<1->
+      
+    \end{tikzpicture}
+\end{center}
+\end{frame}
 
 %Citations
 \begin{frame}
