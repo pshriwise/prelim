@@ -136,6 +136,47 @@ But it takes a long time... (2-10x slower than native codes)
       \node [auto,below = 0.45cm of PREPROC LB,outer sep=0pt] {\includegraphics[scale=0.065]{fng_facets.png}};
     \node[auto,above= 0.3cm of PREPROC LA,outer sep=0pt] {\includegraphics[scale=0.1]{facet_tol_zoomed.png}};}
     
+    \visible<4>{\node (dot0) [circle,right = of PREPROC,fill=blue,draw=black,minimum width=0.1cm] {};
+     \node (dot1) at (dot0) [circle, fill=blue,xshift=1.3cm,yshift=0.6cm,draw=black,minimum width=0.1cm] {};
+    \node (dot2) at (dot0) [circle, fill=blue,xshift=1.5cm,yshift=-0.75cm,draw=black,minimum width=0.1cm] {};
+    \draw[-,color=orange] (dot0) -- (dot1);
+    \draw[-,color=orange] (dot0) -- (dot2);
+    \draw[-,color=orange] (dot2) -- (dot1);
+    \node (cdot1) at (dot0) [circle, fill=blue,xshift=1.55cm,yshift=0.8cm,draw=black,minimum width=0.1cm] {};
+    \node (cdot2) at (dot0) [circle, fill=blue,xshift=1.75cm,yshift=-0.55cm,draw=black,minimum width=0.1cm] {};
+    \node (dot3) at (dot0) [circle, fill=blue,xshift=0cm,yshift=1cm,draw=black,minimum width=0.1cm] {};
+    \draw [-,color=orange] (dot0) -- (dot3);
+    \draw [-,color=orange] (dot1) -- (dot3);
+    \node (cdot3) at (dot0) [circle, fill=blue,xshift=0.25cm,yshift=1.2cm,draw=black,minimum width=0.1cm] {};
+    \node (dot4) at (dot0) [circle, fill=blue,xshift=1.75cm,yshift=1.95cm,draw=black,minimum width=0.1cm] {};
+    \draw [-,color=black!60!green] (dot4) -- (cdot3);
+    \draw [-,color=black!60!green] (dot4) -- (cdot1);
+    \draw [-,color=black!60!green] (cdot3) -- (cdot1);
+    \node (dot5) at (dot0) [circle, fill=blue,xshift=3cm,yshift=0.9cm,draw=black,minimum width=0.1cm] {};
+    \draw [-,color=black!60!green] (dot5) -- (cdot1);
+    \draw [-,color=black!60!green] (cdot2) -- (dot5);
+    \draw [-,color=black!60!green] (cdot2) -- (cdot1);
+    \draw [-,color=black!60!green] (dot4) -- (dot5);
+    \node (dot0) [right = of PREPROC,circle,fill=blue,xshift=5cm,draw=black,minimum width=0.1cm] {};
+    \node (dot1) at (dot0) [circle, fill=blue,xshift=1.3cm,yshift=0.6cm,draw=black,minimum width=0.1cm] {};
+    \node (dot2) at (dot0) [circle, fill=blue,xshift=1.5cm,yshift=-0.75cm,draw=black,minimum width=0.1cm] {};
+    \draw[-,color=orange] (dot0) -- (dot1);
+    \draw[-,color=orange] (dot0) -- (dot2);
+    \draw[-,color=orange] (dot2) -- (dot1);
+    \node (dot3) at (dot0) [circle, fill=blue,xshift=0cm,yshift=1cm,draw=black,minimum width=0.1cm] {};
+    \draw [-,color=orange] (dot0) -- (dot3);
+    \draw [-,color=orange] (dot1) -- (dot3);
+    %%End surf A conn
+    \node (dot4) at (dot0) [circle, fill=blue,xshift=1.5cm,yshift=1.75cm,draw=black,minimum width=0.1cm] {};
+    \draw [-,color=black!60!green] (dot4) -- (dot3);
+    \draw [-,color=black!60!green] (dot4) -- (dot1);
+    \node (dot5) at (dot0) [circle, fill=blue,xshift=2.75cm,yshift=0.7cm,draw=black,minimum width=0.1cm] {};
+    \draw [-,color=black!60!green] (dot5) -- (dot1);
+    \draw [-,color=black!60!green] (dot2) -- (dot5);
+    \draw [-,color=black!60!green] (dot4) -- (dot5);
+    \draw [-,color=red] (dot1) -- (dot3);
+    \draw [-,color=red] (dot1) -- (dot2);}
+
     \pause %%%%
     \node (DAGMC) [uwstep, right = 0.5 cm of PREPROC] {\small DAGMC};
     \draw [arrow] (PREPROC) -- (DAGMC);
