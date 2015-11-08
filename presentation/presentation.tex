@@ -200,7 +200,7 @@ But it takes a long time... (2-10x slower than native codes)
   
   A great deal of \textbf{human time} is saved in dealing with text-based geometric representations, but it comes at the cost of additional \textbf{computing time}.
  \vfill
- What if we can drastically reduce this extra computing time?
+ How can we reduce this extra computing time?
 
  \vfill
 
@@ -222,6 +222,7 @@ But it takes a long time... (2-10x slower than native codes)
   \item open source CPU-based project developed by Intel
   \item intended application is rendering
   \item successfully used in several commercial rendering packages
+  \item exploits vector extensions (AVX/AVX2) 
   \end{itemize}
 
   
@@ -283,7 +284,6 @@ DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB \cite{moa
 \end{frame}
 
 
-
 \begin{frame}
 
 \frametitle{Embree's BVH}
@@ -301,9 +301,9 @@ Embree also uses OBBs but with a different tree structure:
   \item pro: discretizes the geometric primitives and space more finely per level in the tree
   \item con: makes for more tree nodes to check per query
   \end{itemize}
-\item compensates by using advanced vector extentions (AVX) and single instruction multiple data (SIMD) instruction sets to check many nodes at once.
+\item specific number of primitives in each leaf node
 \end{itemize}
-
+Use of single instruction multiple data (SIMD) more than compensates for the restrictions/drawbacks.
 \end{frame}
 
 
@@ -670,7 +670,7 @@ The application of ray tracing in Monte Carlo differs from that of rendering
     \item etc.
   \end{itemize}
 \vfill
-How should our ray tracing kernels be different? Should they be different at all?
+Given this context, how should our ray tracing kernels be designed differently?
 
 % Proof of principle
 % Likely to see improvements in our native system using variations of these techniques
