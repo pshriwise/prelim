@@ -716,7 +716,11 @@ The application of ray tracing in Monte Carlo differs from that of rendering
     \item number of ray queries to achieve desired result
     \item etc.
   \end{itemize}
-\vfill
+\begin{center}
+$T = T_b + T_q(Q,...)$ ; $Q(T_b,...)$\\
+$T$ - time to render, $T_b$ - time to build \\
+$T_q$ - time to query, $Q$- quality
+\end{center}
 Given this context, how should our ray tracing kernels be designed differently?
 
 % Proof of principle
