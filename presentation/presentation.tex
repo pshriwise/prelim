@@ -121,7 +121,7 @@ But it takes a long time... (2-10x slower than native codes)
     \node (CAD) [uwstep] {\small CAD};
     
     \pause %%%%
-    \visible<2,16>{\node (CAD L) [auto,outer sep=0pt,below = 0.1 cm of CAD] {\small geometric design};
+    \visible<2,17>{\node (CAD L) [auto,outer sep=0pt,below = 0.1 cm of CAD] {\small geometric design};
       \node (fng cad)[auto,below = 0.45cm of CAD L,outer sep=0pt] {\includegraphics[scale=0.07]{fng_cad.png}};
       \node [auto,xshift= 1.2cm, below = 0.3cm of fng cad, outer sep = 0 pt] {FNG};
     }
@@ -131,7 +131,7 @@ But it takes a long time... (2-10x slower than native codes)
     \draw [arrow] (CAD) -- (PREPROC);
     
     \pause %%%%
-    \visible<4,5,16>{\node (PREPROC LA) [auto,outer sep=0pt,above = 0.1cm of PREPROC] {\small surface faceting};
+    \visible<4,5,17>{\node (PREPROC LA) [auto,outer sep=0pt,above = 0.1cm of PREPROC] {\small surface faceting};
       \node (PREPROC LB) [auto,outer sep=0pt,below = 0.1cm of PREPROC] {\small facet sealing};
       \node [auto,below = 0.45cm of PREPROC LB,outer sep=0pt] {\includegraphics[scale=0.065]{fng_facets.png}};}
 
@@ -193,26 +193,26 @@ But it takes a long time... (2-10x slower than native codes)
     \draw[-latex] (MC) to[bend right=10] node[above,rotate=60] {} (DAGMC);
 
     \pause %%%%
-    \visible<7-,16>{\node [auto,above = 0.6cm of MC,xshift=-1.5cm,outer sep=0pt] {Analysis Toolkit};}
+    \visible<8-,17>{\node [auto,above = 0.6cm of MC,xshift=-1.5cm,outer sep=0pt] {Analysis Toolkit};}
     \draw [black,dotted] ($(DAGMC.north west)+(-0.15,0.5)$) rectangle ($(MC.south east)+(0.15,-0.5)$); 
     \pause %%%%
-    \visible<8-,16>{\node (MC LB) [auto,below = 0.1cm of MC, outer sep=0pt] {\small physics};}
+    \visible<9-,17>{\node (MC LB) [auto,below = 0.1cm of MC, outer sep=0pt] {\small physics};}
 
     \pause %%%%
-    \visible<9-,16>{\node (DAGMC LA) [auto, above = 0.1cm of DAGMC, outer sep=0pt] {\small geometric queries};
+    \visible<10-,17>{\node (DAGMC LA) [auto, above = 0.1cm of DAGMC, outer sep=0pt] {\small geometric queries};
     \node (DAGMC LB) [auto, below = 0.1cm of DAGMC, outer sep=0pt] {\small ray tracing};}
 
     \pause %%%%
-    \visible<10>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small Fluka};}
+    \visible<11>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small Fluka};}
 
     \pause %%%%
-    \visible<11>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small Geant4};}
+    \visible<12>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small Geant4};}
 
     \pause %%%%
-    \visible<12>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small ...};}
+    \visible<13>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small ...};}
 
     \pause %%%%
-    \visible<13,16>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small MCNP5};}
+    \visible<14,17>{\node (MC LA) [auto, above = 0.1cm of MC, outer sep=0pt] {\small MCNP5};}
 
     \pause %%%%
     \node (TOOLKIT L) [auto,below = 0.6cm of MC,xshift=-1.5cm,outer sep=0pt] {DAGMCNP};
@@ -709,7 +709,6 @@ This was a nice proof of principle project for faster CAD-based analysis, but...
 
 \frametitle{Future Work}
 
-\vfill
 The application of ray tracing in Monte Carlo differs from that of rendering
   \begin{itemize}
     \item almost entirely incoherent rays
@@ -717,9 +716,11 @@ The application of ray tracing in Monte Carlo differs from that of rendering
     \item etc.
   \end{itemize}
 \begin{center}
-$T = T_b + T_q(Q,...)$ ; $Q(T_b,...)$\\
+$T = T_b + T_q(q,...)$ ; $q(T_b,...)$\\
+\vfill
+\small{
 $T$ - time to render, $T_b$ - time to build \\
-$T_q$ - time to query, $Q$- quality
+  $T_q$ - time to query, $q$- data structure quality}
 \end{center}
 Given this context, how should our ray tracing kernels be designed differently?
 
