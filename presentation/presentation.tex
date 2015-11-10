@@ -519,7 +519,7 @@ Use of single instruction multiple data (SIMD) in traversal  more than compensat
 
 \end{frame}
 
-\section{Results} % 2-3 slides
+\section{Testing} % 2-3 slides
 % Pure ray fire comparison (no transport)
 % Single volume tests
 % Multiple volume tests
@@ -696,10 +696,10 @@ Rays were fired isotropically from the center of each of the following models:
 This was a nice proof of principle project for faster CAD-based analysis, but... \\
 \vfill
 \begin{itemize}
-\item Limited topological representation
+\item Limited topological representation of geometry
 \item Natively supports only one type of geometric primitive
 \item Single floating point precision
-\item Lost particles in complex geometries, most likely due to conversions from double to float
+\item Lost particles in more complex geometries, most likely due to conversions from double to float
 \end{itemize}
 \end{frame}
 % Extra: slide with graphic of our specific problem
@@ -717,10 +717,10 @@ The application of ray tracing in Monte Carlo differs from that of rendering
     \item etc.
   \end{itemize}
 \begin{center}
-$T = T_b + \Sigma_{n=0}^{N} T_q(q,...)$ ; $q(T_b,...)$\\
+$T_s = T_b + \Sigma_{n=0}^{N} T_q(q,...)$ ; $q(T_b,...)$\\
 \vfill
 \small{
-$T$ - time to render, $T_b$ - time to build \\
+$T_s$ - time to solution, $T_b$ - time to build \\
   $T_q$ - time to query, $q$- data structure quality}
 \end{center}
 Given this context, how should our ray tracing kernels be designed differently?
