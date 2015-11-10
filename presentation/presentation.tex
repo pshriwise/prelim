@@ -335,20 +335,21 @@ DAGMC uses the BVH found in the Mesh Oriented dAtaBase, MOAB \cite{moab}.
 
 \frametitle{Embree's BVH}
 
-Embree also uses OBBs but with a different tree structure:
+Embree's BVH differs in several ways:
 
 \begin{center}
 \includegraphics[width=0.5\textwidth]{quad_tree.png}
 \end{center}
 
 \begin{itemize}
+\item mixed tree of axis aligned bounding boxes (AABBs) and OBBs
 \item median splitting w/ Surface Area Heuristic \cite{sah} criterion 
 \item Quad-tree
   \begin{itemize}
   \item pro: discretizes the geometric primitives and space more finely per level in the tree
   \item con: makes for more tree nodes to check per query
   \end{itemize}
-\item specific number of primitives in each leaf node
+%\item specific number of primitives in each leaf node
 \end{itemize}
 Use of single instruction multiple data (SIMD) in traversal  more than compensates for the restrictions/drawbacks.
 \end{frame}
