@@ -84,7 +84,7 @@
 %% \end{frame}
 
 %% Introduction %%
-\section{CAD-Based Monte Carlo Transport} % 1-2 slides
+\section{DAGMC: CAD-Based Monte Carlo Transport} % 1-2 slides
 % We use it for our geometric queries:
    % point-inclusion
    % dist to next surf
@@ -123,7 +123,7 @@ But it takes a long time... (2-10x slower than native codes)
     \pause %%%%
     \visible<2,17>{\node (CAD L) [auto,outer sep=0pt,below = 0.1 cm of CAD] {\small geometric design};
       \node (fng cad)[auto,below = 0.45cm of CAD L,outer sep=0pt] {\includegraphics[scale=0.07]{fng_cad.png}};
-      \node [auto,xshift= 1.2cm, below = 0.3cm of fng cad, outer sep = 0 pt] {FNG};
+      \node [auto,xshift= 1.2cm, below = 0.25cm of fng cad, outer sep = 0 pt] {FNG};
     }
     
     \pause %%%%
@@ -135,7 +135,7 @@ But it takes a long time... (2-10x slower than native codes)
       \node (PREPROC LB) [auto,outer sep=0pt,below = 0.1cm of PREPROC] {\small facet sealing};
       \node [auto,below = 0.45cm of PREPROC LB,outer sep=0pt] {\includegraphics[scale=0.065]{fng_facets.png}};}
 
-    \visible<4>{\node[auto,above= 0.3cm of PREPROC LA,outer sep=0pt] {\includegraphics[scale=0.1]{facet_tol_zoomed.png}};}
+    \visible<4,17>{\node[auto,above= 0.3cm of PREPROC LA,outer sep=0pt] {\includegraphics[scale=0.1]{facet_tol_zoomed.png}};}
     
     \pause
     \visible<5>{
@@ -269,7 +269,7 @@ But it takes a long time... (2-10x slower than native codes)
   \item open source CPU-based project developed by Intel
   \item intended application is rendering
   \item successfully used in several commercial rendering packages
-  \item exploits vector extensions (AVX/AVX2) 
+  \item exploits SIMD using vector extensions (AVX/AVX2) 
   \end{itemize}
 
   
@@ -310,7 +310,7 @@ How these bounding volume hierarchies (BVHs) are created and traversed affects t
 \begin{frame}
 \frametitle{DAGMC's BVH}
 
-DAGMC uses the BVH hierarchy found in the Mesh Oriented dAtaBase, MOAB \cite{moab}.
+DAGMC uses the BVH found in the Mesh Oriented dAtaBase, MOAB \cite{moab}.
 \begin{center}
   \begin{tikzpicture}
 
@@ -350,7 +350,7 @@ Embree also uses OBBs but with a different tree structure:
   \end{itemize}
 \item specific number of primitives in each leaf node
 \end{itemize}
-Use of single instruction multiple data (SIMD) more than compensates for the restrictions/drawbacks.
+Use of single instruction multiple data (SIMD) in traversal  more than compensates for the restrictions/drawbacks.
 \end{frame}
 
 
@@ -396,8 +396,8 @@ Use of single instruction multiple data (SIMD) more than compensates for the res
 
 \begin{frame}
   \frametitle{Watertightness in EMDAG}
-  Fortunately, we can maintain this topological watertightness in our Embree representation of the mesh.
-
+  By using a shared vertex buffer, we can maintain topological watertightness in our Embree representation of the mesh.
+  \vfill
   \begin{center}
     \begin{tikzpicture}
 
