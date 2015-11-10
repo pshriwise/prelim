@@ -263,7 +263,7 @@ But it takes a long time... (2-10x slower than native codes)
     \node (wayback) [auto,right = 0.1cm of crown] {\includegraphics[width=0.31\textwidth]{2014-Siggraph-Embree-002.png}};
   \end{tikzpicture}
   \end{center}
-  A high performance ray tracing kernel. \cite{embree}
+  A high performance ray tracing kernel. {\scriptsize \cite{embree}}
   \vfill
   \begin{itemize}
   \item open source CPU-based project developed by Intel
@@ -292,7 +292,7 @@ By partitioning the geometry-based meshes using bounding entities, we gain signi
   \begin{figure}
     \centering
     \includegraphics[width=1.1\textwidth]{bvh_2d_ex_w_labels.png}
-    \begin{flushleft}\cite{gottschalk1996obbtree}\end{flushleft}
+    \begin{flushleft}{\scriptsize \cite{gottschalk1996obbtree}}\end{flushleft}
   \end{figure}
   
   \column{0.4\textwidth}
@@ -310,7 +310,7 @@ How these bounding volume hierarchies (BVHs) are created and traversed affects t
 \begin{frame}
 \frametitle{DAGMC's BVH}
 
-DAGMC uses the BVH found in the Mesh Oriented dAtaBase, MOAB \cite{moab}.
+DAGMC uses the BVH found in the Mesh Oriented dAtaBase, MOAB {\scriptsize \cite{moab}}.
 \begin{center}
   \begin{tikzpicture}
 
@@ -343,7 +343,7 @@ Embree's BVH differs in several ways:
 
 \begin{itemize}
 \item mixed tree of axis aligned bounding boxes (AABBs) and OBBs
-\item median splitting w/ Surface Area Heuristic \cite{sah} criterion 
+\item median splitting w/ Surface Area Heuristic {\scriptsize \cite{sah}} criterion 
 \item Quad-tree
   \begin{itemize}
   \item pro: discretizes the geometric primitives and space more finely per level in the tree
@@ -805,7 +805,7 @@ Some useful links:
 \begin{frame}
 \frametitle{make\_watertight}
 \begin{itemize}
-\item Applies faceted geometric information from CAD to remove topological ambiguity from the model \cite{make_watertight_smith_2010}
+\item Applies faceted geometric information from CAD to remove topological ambiguity from the model {\scriptsize \cite{make_watertight_smith_2010}}
 \end{itemize}
 \begin{center}
   \begin{tikzpicture}[scale=0.6, transform shape]
