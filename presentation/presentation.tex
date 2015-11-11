@@ -583,7 +583,7 @@ Rays were fired isotropically from the center of each of the following models:
   \node (ns) [auto] {\includegraphics[scale=0.2]{nested_spheres.png}};
   \node (nc) [auto,right = of ns,xshift=0.25cm] {\includegraphics[scale=0.2]{nested_cubes.png}};
   \node (nsl) [auto,below = of ns] {Nested Spheres};
-  \node (nst) [auto,below = 0.1cm of nsl] {(5M Triangles)};
+  \node (nst) [auto,below = 0.1cm of nsl] {(~5M Triangles)};
   \node (ncl) [auto,right = of nsl,xshift=1.75cm] {Nested Cubes};
   \node (nct) [auto,below = 0.1cm of ncl]{(36 triangles)};
 
@@ -706,6 +706,7 @@ The application of ray tracing in Monte Carlo differs from that of rendering
     \item number of ray queries to achieve desired result
     \item etc.
   \end{itemize}
+\vfill
 Given this context, how should our ray tracing kernels be designed differently?
 
 % Proof of principle
@@ -721,7 +722,7 @@ Given this context, how should our ray tracing kernels be designed differently?
 
 Embree's advanced ray tracing techniques improved the performance of DAGMC significantly on existing models. 
 \vfill
-As single node implementation becomes more important in performance, it may be time to start thinking about how ray traing for the purpose of Monte Carlo differs from the application of rendering.
+To improve single node performance, it may be time to start thinking about how ray traing for the purpose of Monte Carlo differs from the application of rendering.
 \vfill
 
 \end{frame}
