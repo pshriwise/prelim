@@ -704,14 +704,6 @@ The application of ray tracing in Monte Carlo differs from that of rendering
     \item number of ray queries to achieve desired result
     \item etc.
   \end{itemize}
-\begin{center}
-$T_s = T_b + \Sigma_{n=0}^{N} T_q(q,...)$ ; $q(T_b,...)$\\
-\vfill
-\small{
-$T_s$ - time to solution, $T_b$ - time to build \\
-  $T_q$ - time to query, $q$- data structure quality\\
-$N$ - number of queries req. for solution}
-\end{center}
 Given this context, how should our ray tracing kernels be designed differently?
 
 % Proof of principle
@@ -766,6 +758,18 @@ Some useful links:
 
 \section{Appendix}
 
+\begin{frame}
+\frametitle{Monte Carlo vs. Rendering}
+\begin{center}
+$T_s = T_b + \Sigma_{n=0}^{N} T_q(q,...)$ ; $q(T_b,...)$\\
+\vfill
+\small{
+$T_s$ - time to solution, $T_b$ - time to build \\
+  $T_q$ - time to query, $q$- data structure quality\\
+$N$ - number of queries req. for solution}
+\end{center}
+
+\end{frame}
 \begin{frame}
 \frametitle{Single Volume Results}
 
