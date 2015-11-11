@@ -245,7 +245,7 @@ But it takes a long time... (2-10x slower than native codes)
 
   \frametitle{DAGMC \& Ray Tracing}
   
-  A great deal of \textbf{human time} is saved in dealing with text-based geometric representations, but it comes at the cost of additional \textbf{computing time}.
+  A great deal of \textbf{human time} is saved by avoiding text-based geometric representations, but it comes at the cost of additional \textbf{computing time}.
  \vfill
  How can we reduce this extra computing time?
 
@@ -572,9 +572,9 @@ Rays were fired isotropically from the center of each of the following models:
 \begin{frame}
 \frametitle{Nested Volume Models}
 \begin{itemize}
-\item All were filled with non-physically dense hydrogen for a highly scattering medium. 
-\item Isotropic point source of 5 MeV neutrons at the center.
-\item 1M particle histories in each run.
+\item All were filled with non-physically dense hydrogen for a highly scattering medium 
+\item Isotropic point source of 5 MeV neutrons at the center
+\item 1M particle histories in each run
 \end{itemize}
 
 \begin{center}
@@ -721,7 +721,8 @@ $T_s = T_b + \Sigma_{n=0}^{N} T_q(q,...)$ ; $q(T_b,...)$\\
 \vfill
 \small{
 $T_s$ - time to solution, $T_b$ - time to build \\
-  $T_q$ - time to query, $q$- data structure quality}
+  $T_q$ - time to query, $q$- data structure quality\\
+$N$ - number of queries req. for solution}
 \end{center}
 Given this context, how should our ray tracing kernels be designed differently?
 
