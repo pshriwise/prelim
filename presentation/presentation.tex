@@ -583,7 +583,9 @@ Rays were fired isotropically from the center of each of the following models:
   \node (ns) [auto] {\includegraphics[scale=0.2]{nested_spheres.png}};
   \node (nc) [auto,right = of ns,xshift=0.25cm] {\includegraphics[scale=0.2]{nested_cubes.png}};
   \node (nsl) [auto,below = of ns] {Nested Spheres};
-  \node [auto,right = of nsl,xshift=1.75cm] {Nested Cubes};
+  \node (nst) [auto,below = 0.1cm of nsl] {(5M Triangles)};
+  \node (ncl) [auto,right = of nsl,xshift=1.75cm] {Nested Cubes};
+  \node (nct) [auto,below = 0.1cm of ncl]{(36 triangles)};
 
 \end{tikzpicture}
 \end{center}
