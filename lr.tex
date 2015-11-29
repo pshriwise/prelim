@@ -39,7 +39,14 @@ The purpose of most applications involving ray tracing is rendering. Techiques u
 * also, SIMD could be a big win (espeically for history-based threading)
 * we know what volume we're in
 
-\section{Types of Spatial Hierarchies (Trees)}
+\section{Ray Tracing's Role in Monte Carlo}
+
+At large, ray tracing is used to generate 2D images by simulating light ray interactions with virtual 3D objects. These light rays (photons) are typically cast from the perspective of the image to be generated, and pixel colors are determined by the reflections, refractions, etc. of the photons on their course to the light source (if they reach it at all). This process is analagous to Monte Carlo analysis. Particles are born at the source and go through a series of interactions with 3D objects until they reach an area of interest, or detector, at which point data related to the particle is collected and stored. In both cases, when particles obtain new orientations in virtual 3D space, it is necessary to understand what object this particle will interact with next if it continues on its current trajectory. As such, the problem of ray tracing in either application can be abstracted to a spatial search of a virtual 3D object for the next interaction location given a particle loaction and trajectory. 
+
+In realistic renderings, it is sometimes possible that light rays may scatter before reaching the next object on their path and in Monte Carlo simulations this is the more probable case. In order to determine if this will occur before reaching the next object, the distance to interaction (scattering or otherwise) must be compared to the distance to the next object. In analytic geometric representations this is a straightforward task, but as the complexity of 3D objects increase, the cost of ray-object intersections becomes very computationally expensive. Mesh/CAD-based models, in which the surfaces of objects are discretized into sets of geometric primitives (usually triangles), face the challenge of then finding the correct primitive for which the ray intersects (if it intersects one at all). For the highly complex models, a linear search of the primitives is out of the question in terms of how long these intersections would take to find. As a result, extensive research has been done in the area of acceleration data structures for this ray tracing problem.
+
+\section{Spatial Partitioning Schemes}
+
 
 The area of computational spatial searching using partioning hierarchies (heretofore referred to as spatial trees) has been around for some time. As a result, many concepts for partitioning the space contained by a set of data have been developed and applied. In order to establish a successful spatial partitioning tree, one needs to have: 
 
