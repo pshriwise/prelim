@@ -1,11 +1,9 @@
 \documentclass{article}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{The Current State of Spatial Paritioning Trees: A Literature Review}
+\title{\textbf{The Current State of Spatial Paritioning Trees: A Literature Review}}
 \author{Patrick C. Shriwise}
 \date{\today}
-%\institute{Department of Engineering Physics, University of Wisconsin-Madison, 1500 Engineering Dr, Madison, WI 53706, shriwise@wisc.edu}
-
-
+%\institute{Department of Engineering Physics, University of Wisconsin-Madison, 1500 Engineering Dr, Madison, WI 53706, shriwise\@wisc.edu}
 
 %%%%% packages and defs
 \usepackage{graphicx}
@@ -16,8 +14,21 @@
 
 \begin{document}
 
-\maketitle
+\begin{center}
+  \textbf{A Monte Carlo Oriented Ray Tracing Kernel} \\
+  \bigskip
+  by \\
+  \bigskip
+  Patrick C. Shriwise \\
+  \bigskip 
+  at the \\
+  \bigskip
+  UNIVERSITY OF WISCONSIN - MADISON \\
+  \bigskip
+  2016
+\end{center}
 
+\newpage
 \tableofcontents 
 
 \section{Abstract}
@@ -41,7 +52,7 @@ The purpose of most applications involving ray tracing is rendering. Techiques u
 
 \section{Ray Tracing's Role in Monte Carlo}
 
-At large, ray tracing is used to generate 2D images by simulating light ray interactions with virtual 3D objects. These light rays (photons) are typically cast from the perspective of the image to be generated, and pixel colors are determined by the reflections, refractions, etc. of the photons on their course to the light source (if they reach it at all). This process is analagous to Monte Carlo analysis. Particles are born at the source and go through a series of interactions with 3D objects until they reach an area of interest, or detector, at which point data related to the particle is collected and stored. In both cases, when particles obtain new orientations from their interactions in this virtual 3D space, it is necessary to understand what object this particle will interact with next if it continues on its current trajectory. As such, the problem of ray tracing in either application can be abstracted to a spatial search of a virtual 3D object for the next interaction location given a particle loaction and trajectory. 
+Ray tracing is most commonly used to generate 2D images by simulating light ray interactions with virtual 3D objects in a process known as rendering. These light rays (photons) are typically cast from the perspective of the image to be generated, and pixel colors are determined by the reflections, refractions, etc. of the photons on their course to the light source (if they reach it at all). This process is analagous to Monte Carlo analysis. Particles are born at the source and go through a series of interactions with 3D objects until they reach an area of interest, or detector, at which point data related to the particle is collected and stored. In both cases, when particles obtain new orientations from their interactions in this virtual 3D space, it is necessary to understand what object this particle will interact with next if it continues on its current trajectory. As such, the problem of ray tracing in either application can be abstracted to a spatial search of a virtual 3D object for the next interaction location given a particle loaction and trajectory. 
 
 In realistic renderings, it is sometimes possible that light rays may scatter before reaching the next object on their path and in Monte Carlo simulations this is the more probable case. In order to determine if this will occur before reaching the next object, the distance to interaction (scattering or otherwise) must be compared to the distance to the next object. In analytic geometric representations this is a straightforward task, but as the complexity of 3D objects increase, the cost of ray-object intersections becomes very computationally expensive. Mesh/CAD-based models, in which the surfaces of objects are discretized into sets of geometric primitives (usually triangles), face the challenge of then finding the correct primitive for which the ray intersects (if it intersects one at all). For the highly complex models, a linear search of the primitives is out of the question in terms of how long these intersections would take to find. As a result, extensive research has been done in the area of acceleration data structures for ray tracing which section the problem space in order to establish a binary tree-like search over the geometric primitives of the model.
 
@@ -55,12 +66,15 @@ The above describes a top-down approach to construction of these data structures
  
 \subsection{Bounding Volume Hierarchies}
 
-The initial concept of using the bounding volume partitioning construct as a pre-check for ray-intersection with objects was introduced by Weghorst in 1984 \cite{Weghorst:1984:ICM}. Weghorst explored the possibility of using spheres and rectangular parallell pipeds (boxes) to contain geometric objects. This work also went so far as to create a hierarchy of those object-based bounding volumes, noting the importance of hierarchicaly joining bounding volumes which are near each other in space so as not to have parent volumes containing large amounts of empty space between the objects to be joined. Another important conclusion of this work was that while spherical bounding volumes are less computationally expensive to check for ray intersections than bounding boxes, the latter generally provide a tighter fit to the objects they contain. This tighter fitting is important as it decreases the chance of wasted intersection checks. This affect was reflected in the results of his work strongly enough to show that bounding boxes were more effective in accelerating the ray intersection process.
+The initial concept of using the bounding volume partitioning construct as a pre-check for ray-intersection with objects was introduced by Weghorst in 1984 \cite{Weghorst:1984:ICM}. Weghorst explored the possibility of using spheres and rectangular parallell pipeds (boxes) to contain geometric objects. This work also went so far as to create a hierarchy of those object-based bounding volumes, noting the importance of hierarchicaly joining bounding volumes which are near each other in space so as not to have parent volumes containing large amounts of empty space between the objects to be joined.
 
-Over time it was found that complex geometric objects become difficult to render as the analytic calculation of ray intersections became more costly. As a result, representations of geometric objects were then discretized for rendering purposes. The ray interactions with these more simple geometric primitives (usually triangles) are much less costly to compute in comparison to the previous analytic representation. This also allowed for the rendering of arbitrarily complex geometric objects provided that they can be discretized into a triangle mesh. As the models were discretized, the sptial data structures designed for ray queries followed. Hierarchies of bounding volumes could then be created on subsets of the primitives, making for deepter and even more effective accelerations of ray tracing.
+Over time it was found that complex geometric objects become difficult to render as the analytic calculation of ray intersections became more costly. As a result, representations of geometric objects were then discretized for rendering purposes. The ray interactions with these more simple geometric primitives (usually triangles) are much less costly to compute in comparison to the previous analytic representation. Given that the geometric object can be discretized accurately, this also allows for the rendering of arbitrarily complex geometric objects without the need for continuous development of efficient analytic intersection techniques for all classes of complex parametric surfaces. Hierarchies of bounding volumes could then be created on subsets of the primitives, making for deepter and even more effective accelerations of ray tracing.
 
+Bounding volume hierarchies are effective in partitioning problem space while bounding sets of primitives tightly enough to avoid erroneous ray-box intersections. As a result of this tight bounding, bounding volume hierarchies are also used in the area of object interference detection. The same concept as ray tracing is used to do a pre-check of several box-to-box intersections before committing to a more computationally expensive intersection check on the geometric objects themselves.
 
 \subsubsection{Axis Aligned Bounding Box Trees}
+
+In addition to the previously mentioned contributions of Weghosrt above, another important conclusion was made regarding the types of boundng volumes used to construct these hierarchies. In his exploration of sphere and box bounding volumes it was found that while spherical bounding volumes are less compuationally expensive to check for ray intersections than bounding boxes, the latter generally provide a tighter fit to the objects they contain. This tighter fitting is important as it decreases the chance of wasted intersection checks. This affect was reflected in the results of his work strongly enough to show that bounding boxes were more effective in accelerating the ray intersection process. Tightly fitting axis aligned boxes are straightforward to construct given a set of points to contain. Overlaps between the children of a box are minimal as well. 
 
 \subsubsection{Oriented Bounding Box Trees}
 
