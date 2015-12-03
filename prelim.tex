@@ -64,19 +64,35 @@ The above describes a top-down approach to construction of these data structures
 
 %% The tree structure refers almost entirely to the number of children each non-leaf node in the tree should have. The majority of spatial trees are binary trees (two children), but other structures do exist such as quad trees (four children) and oct trees (eight children). The partitioning construct refers to the mechanism by which you are creating partitions out of space. There is a large variety of these which are chosen based on a couple of counteracting criterion 1) number of operations required for an intersection check and 2) their ability to effectively eliminate subsets of the problem space from a given query.
  
-\subsection{Bounding Volume Hierarchies}
+\subsection{Bounding Volume Hierarchy (BVH)}
 
 The initial concept of using the bounding volume partitioning construct as a pre-check for ray-intersection with objects was introduced by Weghorst in 1984 \cite{Weghorst:1984:ICM}. Weghorst explored the possibility of using spheres and rectangular parallell pipeds (boxes) to contain geometric objects. This work also went so far as to create a hierarchy of those object-based bounding volumes, noting the importance of hierarchicaly joining bounding volumes which are near each other in space so as not to have parent volumes containing large amounts of empty space between the objects to be joined.
 
 Over time it was found that complex geometric objects become difficult to render as the analytic calculation of ray intersections became more costly. As a result, representations of geometric objects were then discretized for rendering purposes. The ray interactions with these more simple geometric primitives (usually triangles) are much less costly to compute in comparison to the previous analytic representation. Given that the geometric object can be discretized accurately, this also allows for the rendering of arbitrarily complex geometric objects without the need for continuous development of efficient analytic intersection techniques for all classes of complex parametric surfaces. Hierarchies of bounding volumes could then be created on subsets of the primitives, making for deepter and even more effective accelerations of ray tracing.
 
-Bounding volume hierarchies are effective in partitioning problem space while bounding sets of primitives tightly enough to avoid erroneous ray-box intersections. As a result of this tight bounding, bounding volume hierarchies are also used in the area of object interference detection. The same concept as ray tracing is used to do a pre-check of several box-to-box intersections before committing to a more computationally expensive intersection check on the geometric objects themselves.
+One difficulty bounding volume hierarchies face is the overlapping bounding volumes. Overlapping sibling volumes can cause additional box intersection checks in the same way that losely fitting boxes can. If a ray enters a region of overlapping sibling volumes, this causes the children of both boxes to be checked despite the fact that the ray will eventually only intersect with the desendants of one box or the other. Overlaps will almost always occur as boxes are required to contain discrete elements for robustness, not just a section of the virtual space. This inefficiency can be exacerbated by the types of triangles or regions of the discretized geometry the data structures are being formed around.
 
-\subsubsection{Axis Aligned Bounding Box Trees}
 
-In addition to the previously mentioned contributions of Weghosrt above, another important conclusion was made regarding the types of boundng volumes used to construct these hierarchies. In his exploration of sphere and box bounding volumes it was found that while spherical bounding volumes are less compuationally expensive to check for ray intersections than bounding boxes, the latter generally provide a tighter fit to the objects they contain. This tighter fitting is important as it decreases the chance of wasted intersection checks. This affect was reflected in the results of his work strongly enough to show that bounding boxes were more effective in accelerating the ray intersection process. Tightly fitting axis aligned boxes are straightforward to construct given a set of points to contain. Overlaps between the children of a box are minimal as well. 
+\subsubsection{Axis Aligned Bounding Box Hierarchies}
 
-\subsubsection{Oriented Bounding Box Trees}
+Axis aligned bounding boxes are boxes whose faces are parallel to the global planes of the problem space as defined by the global axes of the problem. In practice, tightly fitting axis aligned boxes are straightforward to construct given a set of points to contain, and overlaps between the children of a parent box are minimal. The overlaps found in axis aligned bounding boxes are typically limited to the size of perhaps one or two geometric primitives. Axis aligned boxes are commonly used in BVH's for their simplicity of implementation and fast ray intersection check algorithms.
+
+In addition to the previously mentioned contributions of Weghosrt above, another important conclusion was made regarding the types of boundng volumes used to construct these hierarchies. In his exploration of sphere and box bounding volumes it was found that while spherical bounding volumes are less compuationally expensive to check for ray intersections than bounding boxes, the latter generally provide a tighter fit to the objects they contain. This tighter fitting is important as it decreases the chance of wasted intersection checks. This affect was reflected in the results of Weghorts's work strongly enough to show that bounding boxes were more effective in accelerating the ray intersection process than bounding spheres.
+
+
+\subsubsection{Oriented Bounding Box Hierarchies}
+
+Unlike axis aligned bounding boxes, the faces of oriented bounding boxes are allowed take any orientation whey like to enclose their set of primitives as tightly as possible.As a result, oriented bounding boxes are very good for avoiding erroneous ray-box intersections that would otherwise occur for an axis aligned box, and they more quickly conform to the full set of enclosed primitives as the boxes are subdivided. This conformity indicates that oriented bounding box hierarchies will have fewer levels making the worst case number of intersection tests lower than for an axis aligned box hierachy on average.
+
+One disadvantage of oriented boxes is the intersection check requires an extra step in transformation of the ray to the oriented axes of the box in question. The information needed for this basis transformation of the ray must be constructed and applied to the ray before the box intersection can continue as it would for an axis aligned box. So while the oriented box hierarchy may have fewer intersection checks to do for a given ray query than an axis aligned box, they intersection checks do take some extra time.
+
+An additional complication of oriented bounding boxes is the potential for large overlaps in the child boxes of a parent box. 
+
+
+As a result of this tight bounding, bounding volume hierarchies are also used in the area of object interference detection. The same concept as ray tracing is used to do a pre-check of several box-to-box intersections before committing to a more computationally expensive intersection check on the geometric objects themselves.
+
+Oriented bounding boxes have been found to be extremely effective in 
+
 
 \subsection{Planar Splitting Schemes}
 
