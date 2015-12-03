@@ -2,10 +2,10 @@
 all: pdf
 
 pdf:
-	latex lr.tex && bibtex lr && latex lr && latex lr && dvipdfm lr.dvi 
+	latex prelim.tex && bibtex prelim && latex prelim && latex prelim && dvipdfm prelim.dvi 
 
 preview: pdf
-	evince lr.pdf
+	evince prelim.pdf
 
 clean:
 	git clean -df
