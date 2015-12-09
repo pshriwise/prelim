@@ -77,32 +77,41 @@ One difficulty bounding volume hierarchies face is the overlapping bounding volu
 
 Axis aligned bounding boxes are boxes whose faces are parallel to the global planes of the problem space as defined by the global axes of the problem. In practice, tightly fitting axis aligned boxes are straightforward to construct given a set of points to contain, and overlaps between the children of a parent box are minimal. The overlaps found in axis aligned bounding boxes are typically limited to the size of perhaps one or two geometric primitives. Axis aligned boxes are commonly used in BVH's for their simplicity of implementation and fast ray intersection check algorithms.
 
-In addition to the previously mentioned contributions of Weghosrt above, another important conclusion was made regarding the types of boundng volumes used to construct these hierarchies. In his exploration of sphere and box bounding volumes it was found that while spherical bounding volumes are less compuationally expensive to check for ray intersections than bounding boxes, the latter generally provide a tighter fit to the objects they contain. This tighter fitting is important as it decreases the chance of wasted intersection checks. This affect was reflected in the results of Weghorts's work strongly enough to show that bounding boxes were more effective in accelerating the ray intersection process than bounding spheres.
+In addition to the previously mentioned contributions of Weghosrt above, another important conclusion was made regarding the types of boundng volumes used to construct these hierarchies. In his exploration of sphere and box bounding volumes it was found that while spherical bounding volumes are less compuationally expensive to check for ray intersections than bounding boxes, the latter generally provide a tighter fit to the objects they contain. This tighter fitting is important as it decreases the chance of wasted intersection checks. This affect was reflected in the results of Weghorts's work strongly enough to show that bounding boxes were more effective in accelerating the ray intersection process than bounding spheres. 
 
 
 \subsubsection{Oriented Bounding Box Hierarchies}
 
-Unlike axis aligned bounding boxes, the faces of oriented bounding boxes are allowed take any orientation whey like to enclose their set of primitives as tightly as possible.As a result, oriented bounding boxes are very good for avoiding erroneous ray-box intersections that would otherwise occur for an axis aligned box, and they more quickly conform to the full set of enclosed primitives as the boxes are subdivided. This conformity indicates that oriented bounding box hierarchies will have fewer levels making the worst case number of intersection tests lower than for an axis aligned box hierachy on average.
+Unlike axis aligned bounding boxes, the faces of oriented bounding boxes are allowed take any orientation whey like to enclose their set of primitives as tightly as possible. There are several existing methods for determining the orientation of a box for best fit to a set of primitives.\cite{gottschalk1996obbtree} As a result, oriented bounding boxes are very good for avoiding erroneous ray-box intersections that would otherwise occur for an axis aligned box, and they more quickly conform to the full set of enclosed primitives as the boxes are subdivided. This conformity indicates that oriented bounding box hierarchies will have fewer levels making the worst case number of intersection tests lower than for an axis aligned box hierachy on average.
 
 One disadvantage of oriented boxes is the intersection check requires an extra step in transformation of the ray to the oriented axes of the box in question. The information needed for this basis transformation of the ray must be constructed and applied to the ray before the box intersection can continue as it would for an axis aligned box. So while the oriented box hierarchy may have fewer intersection checks to do for a given ray query than an axis aligned box, they intersection checks do take some extra time.
 
 An additional complication of oriented bounding boxes is the potential for large overlaps in the child boxes of a parent box. 
 
-
-As a result of this tight bounding, bounding volume hierarchies are also used in the area of object interference detection. The same concept as ray tracing is used to do a pre-check of several box-to-box intersections before committing to a more computationally expensive intersection check on the geometric objects themselves.
+As a result of this tight fit to primitives, bounding volume hierarchies are also used in the area of object interference detection. The same concept as ray tracing is used to do a pre-check of several box-to-box intersections before committing to a more computationally expensive intersection check on the geometric objects themselves.
 
 Oriented bounding boxes have been found to be extremely effective in 
 
 
-\subsection{Planar Splitting Schemes}
+\subsection{Spatial Splitting Schemes}
+
+Bounding Volume Heirarchies provide a means of recursively narrowing the focus of the ray query to more promising candidates for intersection. This is a natural divide-and-conquer approach for examining a set of primitives for the closest intersection. Spatial subdivision takes a different approach. \cite{Intro2RT} While it is still a divide-and-conquer approach to the problem, the focus is generalized to the problem space instead of on the object themselves. Beginning with the entire model, one partitions the volume bounding the primitives into pieces recursively, creating smaller partitions in each level of the tree until a subset of primitives is left bounded at the leaf node of the hierarchy. This method can arguably be viewed as a top-down approach to bounding volumes but with an emphasis on division of space rather than division of objects.
+
+Spatial splitting schemes covers a wide breadth of data structures. This section will only cover a few of these of recent interest in ray tracing.
 
 \subsubsection{K-D Trees}
 
+
+
 \subsubsection{Bounding Interval Trees}
 
-\subsection{Other Schemes}
-
 \subsubsection{Oct-Trees}
+
+% INCLUDE A GRAPH-BASED COMPARISON OF DIFFERENT HIERARCHIES
+
+\section{Ray Coherence in Radiation Transport}
+
+
 
 \bibliographystyle{acm}
 \bibliography{refs}
