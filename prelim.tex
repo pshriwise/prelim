@@ -60,7 +60,7 @@ In realistic renderings, it is sometimes possible that light rays may scatter be
 
 Spatial partioning structures are designed to rapidly narrow the search for a location in virtual space given a location and orientation. This is accomplished by sectioning the space using a partitioning construct. The paritions are determined by a division heuristic which establishes the partitions given a set of primitives. After partitioning, the primitives are then associated with the partition which contains them. This process is recursively repeated until leaf conditions are met. Leaf conditions determine when the partioning process will stop. This can be based on the remaining number of primitives, the current size of the partition, etc. The end result is a hierarchy which can be used to terverse the problem space efficiently for ray intersections or closest intersection queries. 
 
-The above describes a top-down approach to construction of these data structures, however, bottom-up construction does exist in which leaf partitionsare created in accordance leaf conditions. These partitions are then joined recursively to create progressively larger partitions until all the primitives of interest are in a single partition. While most hierarchies are binary, having two children per interior node, the number of partitions per level in the hierarchy can change to better fit division heuristics or partitioning constructs. A variety of well established spatial partitioniong hierarchies exist with different structure hierarchies, partitioning constructs, division heuristics, and leaf conditions.
+The above describes a top-down approach to construction of these data structures, however, bottom-up construction does exist in which leaf partitions are created in accordance leaf conditions. These partitions are then joined recursively to create progressively larger partitions until all the primitives of interest are in a single partition. While most hierarchies are binary, having two children per interior node, the number of partitions per level in the hierarchy can change to better fit division heuristics or partitioning constructs. A variety of well established spatial partitioniong hierarchies exist with different structure hierarchies, partitioning constructs, division heuristics, and leaf conditions.
 
 %% The tree structure refers almost entirely to the number of children each non-leaf node in the tree should have. The majority of spatial trees are binary trees (two children), but other structures do exist such as quad trees (four children) and oct trees (eight children). The partitioning construct refers to the mechanism by which you are creating partitions out of space. There is a large variety of these which are chosen based on a couple of counteracting criterion 1) number of operations required for an intersection check and 2) their ability to effectively eliminate subsets of the problem space from a given query.
  
@@ -93,26 +93,65 @@ As a result of this tight fit to primitives, bounding volume hierarchies are als
 Oriented bounding boxes have been found to be extremely effective in 
 
 
-\subsection{Spatial Splitting Schemes}
+\subsection{Splitting Schemes}
 
 Bounding Volume Heirarchies provide a means of recursively narrowing the focus of the ray query to more promising candidates for intersection. This is a natural divide-and-conquer approach for examining a set of primitives for the closest intersection. Spatial subdivision takes a different approach. \cite{Intro2RT} While it is still a divide-and-conquer approach to the problem, the focus is generalized to the problem space instead of on the object themselves. Beginning with the entire model, one partitions the volume bounding the primitives into pieces recursively, creating smaller partitions in each level of the tree until a subset of primitives is left bounded at the leaf node of the hierarchy. This method can arguably be viewed as a top-down approach to bounding volumes but with an emphasis on division of space rather than division of objects.
 
-Spatial splitting schemes covers a wide breadth of data structures. This section will only cover a few of these of recent interest in ray tracing.
 
-\subsubsection{K-D Trees}
+Many data structures have been created using this philosophy. Some methods use grids built from voxels to discretize space, while others use different constructs like hyperplanes. Uniforn and non-uniform grid methods both track which primitives intersect a given voxel and as a ray passes through the grid, only primitives within the current voxel (if any) are checked for intersection. Methods of recent interest divide space recursively using a hierarchy in the same way BVH's do, but using voxels or hyperplanes focused on dividing problem space rather than object bounding volumes.
+
+% INCLUDE A GRAPH-BASED COMPARISON OF DIFFERENT HIERARCHIES HERE %
+
+\subsubsection{KD-Trees}
+
+The KD-Tree or multidimensional binary search tree was originally developed as a method for querying records in databases and has since found use in other applications including speech recognition, global information systems, and ray tracing. \cite{Bentley1975} KD-Trees operate by recursively dividing the dimensions of the problem set. Initally the entirety of a problem dimension is divided in half (if one is using median splitting). The resulting subsets of the dimension are labeled as children of the initial set. The two resultant sets are the partitioned as well, but in a different dimension than the original partition. This process is then repeated until the leaf conditions of the hierarchy are met. Entities are listed as contained by a partition only if they are contained by all parents of the partition as well, meaning that all entities lie within some subset in each dimension of the problem.
+
+This process is easily applied to the virtual 3D space of CAD models for ray intersection queries. The problem space is divided evenly in the x dimension. The two child partitions are then divided along the y axis and the resulting children of this division are subdivided along the z axis. Divisions are typically done s.t. the space of the current candidate is separated in half, however it is possible that by doing this primitive entities are divided by the hyperplane as well. There two ways that this is typically handled. The first is to simply reference any primitives in both of the subdivisions. This has the effect of creating a small overlap between the partitions, but requires no changes to the original model. The other solution is to divide the primitive entities in two using the division plane. While in terms of data structure traversal, this solution requires alterations to the model which may be undesirable under certain conditions and violates the description of the KD-Tree as a query acceleration structure.
+
+KD-Treees work very well for nearest neighbor searches in which the query
+
+%Talk about subdivision methods here
+
+%% 2-D Example from Bentley1975 here %%
 
 
+\subsubsection{Bounding Interval Hierarchy}
 
-\subsubsection{Bounding Interval Trees}
+The bounding interval hierarchy is an extension of the KD-Tree in which two planes are used to define an interval of one of the problem dimensions as a node in the hierarchy rather than dividing the dimension into two parts. While the intersection check for an interval is twice as long as a plane's intersection check, the interval excludes more of the problem space for negative intersection checks than a plane can. The interval partioning construct also allows for different tree designs as each dimension can be broken up into an arbitrary number of intervals. Bounding intervals face the same problem that KD-Trees face with planar partitions intersecting primitive entities. The option to split primitive entities along the intersecting planes still exists in this scenario and comes with the same consequences as before. Sharing entity references can actually cause overlaps on either side of the interval making this problem somewhat worse in that case.
 
-\subsubsection{Oct-Trees}
+%% Interval Overlap Figure Here %%
 
-% INCLUDE A GRAPH-BASED COMPARISON OF DIFFERENT HIERARCHIES
+\subsubsection{Octrees}
+
+Octrees are a recursive form of the grid-based methods mentioned above. In this partitioning scheme, cubic voxels are used to partition the problem space into the 8 quadrants defined by the axes of the parent voxel. These 8 voxels are then labeled as children of the original voxel. This process is repeated recursively until leaf conditions are met for the voxel. This typically means that the voxel references a set number of primitives.
+
+Octrees consume a large amount of memory relative to the other data structures in this section and  it is often possible that voxels may be completely devoid of underlying entities. One advantage of octrees is the cubis nature of the partitioning voxels. The value of a voxel (or bounding volume for that matter) lies in its ability to remove candidate space from the query, yet this voxel can only be effective in this way if rays actually strike the voxel. The result is that a voxel's effectiveness is described by the ratio of its probability of an intersection check to the space it will exclude from the query search or its volume. In a problem with a uniform ray distribution, the probablity of a ray to intersect a given voxel is described by its surface area. Thus cubic voxels have the most favorable ratio possible.
 
 \section{Ray Coherence in Radiation Transport}
 
 
 
+\section{Partioning Methods and Leaf Conditions}
+
+This section will go over several of the partitioning hueristics and leaf conditions involved in creating these hierarchies.
+
+\subsection{Median Splitting}
+
+This method splits the current partition in half for a given dimension. In the case of bounding boxes this is typically done by splitting using the axis (oriented or axis-aligned) with the largest extent to matain bounding boxes which are as cubic as possible for reasons described in the section above on octrees.
+
+\subsection{Median Snap Splitting}
+
+\subsection{Subdivision Sample Splitting}
+
+This methos is similar to the median splitting method, but samples serveral candidate locations along the dimension to be divided. This can provide for better splitting over the entities contained by the parent node. The idea here is that even space is being split evenly the entities may not be, resulting is unbalanced trees with more bounding volumes than necessary for good taversal performance. This conecpt is typically a concern of bounding volume hierarchies as opposed to KDTrees or Bounding Interval Hierarchies. 
+
+
+\subsection{Vertex Median}
+
+\subsection{Vertex Sample}
+
+\subsection{Surface Area Heuristic}
+  
 \bibliographystyle{acm}
 \bibliography{refs}
 
