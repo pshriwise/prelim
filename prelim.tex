@@ -203,7 +203,13 @@ All of the following tests vary the valence of the corner vertices from 2 to 50,
     \caption{Side-on view of the modified cube mesh used to study the high-valence vertex problem.}
 \end{figure}
 
-Using a visitor pattern in the BVH, each oriented bounding box was converted into a MOAB hex element and saved on an entirely different mesh. Each hex element was additionally tagged with it's depth in the tree. This program then outputs a mesh which can be used to visualize the BVH level by level on top of the geometric mesh. At lower depths in the BVH, only bounding boxes in the high valence region are present. This is expected in that it will take more bounding boxes and therefore a deeper tree in that region in order to resolve the larger number of triangles. What was intereseting to note in this region was that the bounding boxes of the high valence surface would often contain some portion of the high valence region's triangles as well as other triangles in the high valence surface. Often bounding boxes like these would be leaf nodes of the tree (see below). Not only is this a problem in the sense that it implies a large number of triangle checks will be necessary if this leaf node is hit, but if this leaf node also contains triangles outside the high valence region with large area (as we tend to see in this model) the leaf becomes much more likely to be traversed, even though the chances that the ray is going to hit a triangle in the high valence region is relatively small. In this way the splitting algorithm not only deals with the high valence region poorly, but it may also create an artificially high probability of checking the high valence region's triangles if it contains other triangles in that retion.
+Using a visitor pattern in the BVH, each oriented bounding box was converted into a MOAB hex element and saved on an different mesh instance. Each hex element was additionally tagged with it's depth in the tree as well as the triangle entities that it contains. This program then outputs a mesh which can be used to visualize the BVH level by level on top of the geometric mesh. At lower depths in the BVH, only bounding boxes in the high valence region are present. This is expected in that it will take more bounding boxes and therefore a deeper tree in that region in order to resolve the larger number of triangles. What was intereseting to note in this region was that the bounding boxes of the high valence surface would often contain some portion of the high valence region's triangles as well as other triangles in the high valence surface. Often bounding boxes like these would be leaf nodes of the tree (see below). Not only is this a problem in the sense that it implies a large number of triangle checks will be necessary if this leaf node is hit, but if this leaf node also contains triangles outside the high valence region with large area (as we tend to see in this model) the leaf becomes much more likely to be traversed, even though the chances that the ray is going to hit a triangle in the high valence region is relatively small. In this way the splitting algorithm not only deals with the high valence region poorly, but it may also create an artificially high probability of checking the high valence region's triangles if it contains other triangles in that retion.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=0.3]{{obbs_wsr_0.95}.png}
+    \caption{View of culprit bounding box containing many high valence region triangle as well as other surface triangles.}
+\end{figure}
 
 MOAB's BVH building algorithm employs the median splitting method governed by a set of parameters use to determine if a node split is considered worthwhile by the building algorithm. One metric heavily favored by the algorithm is the splitting ratio of the resulting child boxes for a given splitting plane. The splitting ratio of a given node is defined by the absoulte difference in the entities between the child nodes divided by the total number of entities in the parent node. When building a BVH, MOAB sets a best and worst case value for this splitting ratio. If the splitting ratio for a given splitting plane is found to be better (smaller) than the best case splitting ratio then the node is split and the recursive top-down build continues. If the splitting ratio for a given splitting plane is worse than the worst case splitting ratio, then the node is not split. This is to avoid overly large/deep trees and large overlaps in sibling bounding boxes. If the splitting ratio is found to be between these two values, the ratio is tracked as further candidate split planes are tested. When all three median splitting planes have been checked, the child entity lists with the best splitting ratio is then used to perform the split.
 
@@ -214,14 +220,22 @@ In this case, the parameter of interest is the worst case splitting ratio. This 
   splitting\;ratio  = \dfrac{|left\; child\; primitives\; -\; right\; child\; primitives|}{parent\; entities}
   \end{align*}
 
-
-(define splitting ration above, first equation!!! omgomgomg)
 (mention triangle density shock in here maybe?)
 
-Fortunately MOAB allows one to have control over the parameters used to govern the BVH building algorithm. By allowing for splits 
+  Fortunately MOAB allows one to have control over the parameters used to govern the BVH building algorithm. By altering this parameter, we can study its effect on the quality of the BVH and its adaptability to the high valence region. In addition to the valence and area fraction of the high valence region, the worst case split ratio was explored as well for values ranging between 0.95 and 1. The hypothesis here being that forcing the algorithm to continue splitting regardless of a poor splitting ratio on the number of entities would break up these prematurely ended branches in the BVH and eventually split up the high valence region as well.
 
 
+  The test results for changes in this parameter show little change until the worst case splitting ratio reaches 1. This demonstrates the magnitude of the  perturbation the high valence region causes in the BVH building algorithm. However, when this parameter reaches t, the maxiumum value possible for the splitting ratio, the BVH builder is effectively forced to continue splitting until a new stopping criterion is met. This new stopping criterion is the minimum number of entities allowed in a single leaf. This value is based on an estimation of the number of ray-triangle intersection checks that can be done in the amount of time it takes to do a ray-box intersection check. Any more triangles than this in the leaf node and it would be more efficient to split the node. MOAB's BVH builder uses a default value of 8 for the minimum number of triangles allowed in a leaf node. The results of the same ray fire tests on the hv model using a worst case splitting ratio of 1 and an effective leaf criterion of a minimum number of entities are below.
 
+  
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=0.35]{hv_study_MOAB_wsr1.png}
+    \caption{Rerun of the high valence characterization study with a worst case splitting ration set to 1.'}
+\end{figure}
+
+
+With this small change to the BVH builder's parameters, the timing of the high valence region becomes significantly better. This change is likely unsuitable for the general case of a tesselated surface however. A worst case splitting ratio of 1 would lead to much deeper trees which on average will take longer to traverse as well as consume much more memory for larger, more complicated models.
 
 
 \bibliographystyle{acm}
