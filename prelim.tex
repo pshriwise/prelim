@@ -165,6 +165,17 @@ This methos is similar to the median splitting method, but samples serveral cand
 
 \subsection{Surface Area Heuristic}
 
+\section{DAMC Performance Benchmarking and Profiling}
+
+In order to assess the current performance of DAGMC, a number of analysis models were tested and profiled using the full workflow. Each of these models was converted from a native MCNP input geometry into a solid CAD model using the mcnp2cad tool ( createed at the University of Wisconsin - Madison to perform improvements and or updates to original models intended for use with MCNP. As a result of this direct conversion, a set of analysis runs using DAGMC coupled with MCNP (DAG-MCNP) is compared to runs of the same models using native MCNP geometry.
+
+Four different models were selected for this set of tests: the Frastcati Neutron Generator (FNG), Advanced Test Reactor (ATR), the Spallation Neutron Source (SNS), and the University of Wisconsin Nuclear Reactor (UWNR). The original purpose of these models are in large part irelevant as the intent of these tests is to measure the difference in geometric query performance between the navie and CAD-based models. The FNG source was modified to be a uniform volumetric source of 14.1 MeV neutrons covering the entire model. Both the ATR and UWNR model's kcode sources were kept intact for this test. The SNS source used its original source and energy distribution of spalled neutrons from the problem's target material.
+
+\section{Linking DAGMC with Intel's Embree}
+
+\subsection{Transferring Watertight DAGMC Model's to Ebree Scenes}
+
+\subsection{EmDAG Performance}
 
 \section{High Valence Vertex Study}
 
