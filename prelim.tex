@@ -188,7 +188,7 @@ Three different models were selected for this set of tests: the Frastcati Neutro
 
 Across the board, these models lag behind native MCNP models by a factor of anywhere between 4 and 10. For smaller problems with simple geometries and relatively low numbers of histories required to reach an acceptably low level of statisitcal uncertainty, this might not pose as much of a problem to users. However, as problem geometries become more complicated and the number of histories larger the discrepancy in computing time becomes of high importance when run times are taking days or weeks longer than they would using a native MCNP geometry representation.
 
-As a part of this study, these runs were repeating using the profiling tool, Callgrind, to determine where this additional time is being spent. Because the geometry representation and geometry query system is the only difference between the two models, it is expected that the time is being spent there, but it is useful to know more specifically where in the query system this is occuring. From this inference, all callgraphs are displayed with the MCNP history\_ subroutine at the top. It is inside this subroutine that MCNP calls upon DAGMC to fulfill geometric queries about the model.
+As a part of this study, these runs were repeating using the profiling tool, Callgrind, to determine where this additional time is being spent. Because the geometry representation and geometry query system is the only difference between the two models, it is expected that the time is being spent there, but it is useful to know more specifically where in the query system this is occuring. From this inference, all callgraphs are displayed with the MCNP history\_ subroutine at the top. It is inside this subroutine that MCNP calls upon DAGMC to fulfill geometric queries about the model. Below a callgraph for a profiling run of FNG for 1e7 histories is provided. In this callgraph we can see that the time spent is dominated by MOAB's ray tracing process used by DAGMC to track particles as they move through the geometry totaling about 70\% of the runtime. Andrew Glassner predicts in his book An Introduction to Ray Tracing that ``Insert exact quote from text here''. A prediction which is still true in the case of DAGMC.
 
 
 
@@ -237,7 +237,7 @@ The standard DAGMC ray fire test program (included in appendix A) was used to ev
 
 The results of these tests validate the suspicion that the MOAB database contains a considerable amount of overhead for the implementation of a ray tracing kernel. This is indicated in the way that the ray tracing times scale for each model in both kernels. From a faceting tolerance scaling point of view, both systems scale relatively well for the HAR cylinder. This indicates that both systems are capable of building bounding volumes robustly for a model with long, skinny triangles. The scaling of the spherical case is slightly worse off than the HAR cylinder most likely because the BVH tree is going to becomce gradually deeper as more and more triangles exist in the model needing to be resolved by the BVH. Finally, the slotted sphere contains many high valence regions and as expected it scales the worst with decreasing faceting tolerance as the valency of these regions increases. It is very apparent that there is nearly an order of magnitude difference in the ray fire timings MOAB and Embree. Due to the very similary scaling of each test model, it can be stated that the majority of the descrepancy in the ray fire timings between the two systems occurs in the traversal methods employed by both systems and isn't likely due to a large advantage in the structure of the BVH being built by either system. Changes in the way the BVH is built typically accounts for anywhere from 30-40\% difference in ray fire timings whereas the descrepancy seen here between MOAB and Embree is on average \textbf{an order of magnitude better} using Embree. In large part, this has to do with Embree's freedom of design without the restriction of a ray tracing implementation inside the context of another application. It should be addressed that the vectorization of Embree's traversal also contributes greatly to its speed relative to MOAB. This can be also considered a part of the design freedom allowed when designing an independent ray tracing system that could not be afforded using MOAB's database practices as well. However, a property unique to MOAB in the world of mesh tools may allow for an implementation such as this as will be discussed near the end of this work.
 
-As an extension of these pure ray fire tests, the effect of an improved ray tracing system on particle transport was studied as well. These tests begin with several simple models and end with the application of EmDAG to one of the performance benchmark modles - the Frascati Neutron Generator model. The first transport models to be tested were a single cube and single sphere filled with a dense hydrogen material for high collisionality in the problem. Each of these models' principal dimension is 10 cm. The source for these models is a 5 MeV neutron isotropic point source at the center of the volume and 1 million particles were run in each test. All of the test models were preproccessed using a faceting tolerance of 1e-04.
+As an extension of these pure ray fire tests, the effect of an improved ray tracing system on particle transport was studied as well. These tests begin with several simple models and end with the application of EmDAG to one of the performance benchmark modles - the Frascati Neutron Generator model. The first transport models to be tested were a single cube and single sphere filled with a dense hydrogen material for high collisionality in the problem. Each of these models' principal dimension is 10 cm. The source for these models is a 5 MeV neutron isotropic point source at the center of the volume and 1 million particles were run in each test. All of the test models were preproccessed using a faceting tolerance of 1e-04. Moving upward in complexity, another set of tests were run using a set of nested cubes and nested spheres. Each of the nested volume models contained three cells: the inner volume, a shell volume, and the graveyard volume. The purpose of these tests was to ensure that particles could in fact be tracked through multiple volumes. The nested cubes model contains an extra volume which consists of the original single cube subtracted from a cube 1cm larger in each dimension. The nested sphere model contains an extra volume consisting of the original sphere from the single volume model subtracted from a sphere 1cm larger in radius. As the purpose of these tests was to test EmDAG's particle tracking between non-zero importance cells, the dimensions of the offset between the nested volumes is largely irrelevant so long as particles are in fact reaching all of the cells.
 
 \begin{table}[H]
   \small
@@ -245,8 +245,6 @@ As an extension of these pure ray fire tests, the effect of an improved ray trac
 
       \label{timings}
     \begin{tabular}{lccc}
-
-
 
       \toprule
       Test Model & MCNP & DagMCNP & EmDagMCNP \\
@@ -280,7 +278,7 @@ The native MCNP runs were generally the fastest among the test problems with the
 \begin{table}[H]
   \small
   \begin{center}
-    \caption{Nested Spheres Timing and Tally Results. Flux tally units are $cm^{-2}$. Energy tally units are MeV/g.}
+    \caption{Nested Spheres Tally Results. Flux tally units are $cm^{-2}$. Energy tally units are MeV/g.}
     \label{nestedspheres}
     \begin{tabular}{lccc}
       \toprule
@@ -312,8 +310,15 @@ The native MCNP runs were generally the fastest among the test problems with the
 
 Note: result comparisons of the other test cases can be found in Appendix B.
 
+The results of the single-volume test cases for native MCNP differ slightly from the agreeing tally results from the DAGMC-based systems. This is not surprising as DAGMC is known to report slightly different results from native MCNP and this was not necessarily the concern of this study. However, differences in the tally results between DAG-MCNP and EmDAG-MCNP are 
+
 
 \subsection{Limitations of the EmDAG system}
+
+\begin{itemize}
+\item Large Models
+\item Lost particles due to single to double conversion
+\end{itemize}
 
 \section{High Valence Vertex Study}
 
@@ -399,6 +404,7 @@ With this small change to the BVH builder's parameters, the timing of the high v
 \section{Appendix B: Additional Results}
 \begin{itemize}
 \item EmDAG test results
+\item HV WSR Scan Results
 \end{itemize}
 
 \end{document}
