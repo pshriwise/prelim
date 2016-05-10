@@ -173,6 +173,9 @@ In order to assess the current performance of DAGMC, a number of analysis models
 
 Three different models were selected for this set of tests: the Frastcati Neutron Generator (FNG), Advanced Test Reactor (ATR), and the University of Wisconsin Nuclear Reactor (UWNR). The original purpose of these models are in large part irelevant as the intent of these tests is to measure the difference in geometric query performance between the navie and CAD-based models. The FNG source was modified to be a uniform volumetric source of 14.1 MeV neutrons covering the entire model. Both the ATR and UWNR model's kcode sources were kept intact for this test. All of these problems were run using the high performance computing cluster at the University of Wisconsin - Madison supported by the Advanced Computing Initiative (ACI). It should also be noted that all of these models were successfully made watertight, meaning that no lost particles are expected.
 
+
+\subsection{Performance Results}
+
 \begin{figure}[H]
   \centering
   \begin{tabular}{l c c c}
@@ -188,13 +191,9 @@ Three different models were selected for this set of tests: the Frastcati Neutro
 
 Across the board, these models lag behind native MCNP models by a factor of anywhere between 4 and 10. For smaller problems with simple geometries and relatively low numbers of histories required to reach an acceptably low level of statisitcal uncertainty, this might not pose as much of a problem to users. However, as problem geometries become more complicated and the number of histories larger the discrepancy in computing time becomes of high importance when run times are taking days or weeks longer than they would using a native MCNP geometry representation.
 
+\subsection{Profiling}
+
 As a part of this study, these runs were repeating using the profiling tool, Callgrind, to determine where this additional time is being spent. Because the geometry representation and geometry query system is the only difference between the two models, it is expected that the time is being spent there, but it is useful to know more specifically where in the query system this is occuring. From this inference, all callgraphs are displayed with the MCNP history\_ subroutine at the top. It is inside this subroutine that MCNP calls upon DAGMC to fulfill geometric queries about the model. Below a callgraph for a profiling run of FNG for 1e7 histories is provided. In this callgraph we can see that the time spent is dominated by MOAB's ray tracing process used by DAGMC to track particles as they move through the geometry totaling about 70\% of the runtime. Andrew Glassner predicts in his book An Introduction to Ray Tracing that ``Insert exact quote from text here''. A prediction which is still true in the case of DAGMC.
-
-
-
-
-
-
 
 
 \section{Linking DAGMC with Intel's Embree}
@@ -270,7 +269,7 @@ As an extension of these pure ray fire tests, the effect of an improved ray trac
   
 \end{table}
 
-The native MCNP runs were generally the fastest among the test problems with the exception of the nested cubes case in which EmDAG-MCNP marginally outperformed the native code by ~8\%. This is likely due to the fact that very few triangles are needed to exactly represent the surfaces of cubic volumes. This creates a very simple problem in the area of BVH building and results in a very shallow tree. The fact that these volumes have many surfaces is also of importance here. MCNP searches linearly through a given cell's (volume's) surfaces to determine the intersection of a particle with the nearest surface whereas both DAG-MCNP and EmDAG-MCNP perform this search spatially. In the nested cubes model, it is likely that the number of surfaces relative to the number of triangles in their representation is high enough to allow EmDAG-MCNP to overtake MCNP's CSG calculations.
+The native MCNP runs were generally the fastest among the test problems with the exception of the nested cubes case in which EmDAG-MCNP marginally outperformed the native code by ~8\%. This is likely due to the fact that very few triangles are needed to exactly represent the surfaces of cubic volumes. This creates a very simple problem in the area of BVH building and results in a very shallow tree. The fact that these volumes have many surfaces is also of importance here. MCNP searches linearly through a given cell's (volume's) surfaces to determine the intersection of a particle with the nearest surface whereas both DAG-MCNP and EmDAG-MCNP perform this search spatially. In the nested cubes model, it is likely that the number of surfaces relative to the number of triangles in their representation is high enough to allow EmDAG-MCNP to overtake MCNP's CSG calculations. 
 
 
 
@@ -310,7 +309,59 @@ The native MCNP runs were generally the fastest among the test problems with the
 
 Note: result comparisons of the other test cases can be found in Appendix B.
 
-The results of the single-volume test cases for native MCNP differ slightly from the agreeing tally results from the DAGMC-based systems. This is not surprising as DAGMC is known to report slightly different results from native MCNP and this was not necessarily the concern of this study. However, differences in the tally results between DAG-MCNP and EmDAG-MCNP are 
+The results of the single-volume test cases for native MCNP differ slightly from the agreeing tally results from the DAGMC-based systems. This is not surprising as DAGMC is known to report slightly different results from native MCNP and this was not necessarily the concern of this study. However, differences in the tally results between DAG-MCNP and EmDAG-MCNP are present in the nested spheres model. This results in a small difference in the flux tally for cell 3 as can be seen in Table \ref{nestedspheres}. By examining the number of particle tracks in each cell, it can be determined that this discrepancy is caused by a single particle ending in EmDAG-MCNP near a surface of cell 2 while in DAG-MCNP the particle crosses into cell 3 before abruptly dying though it still contributes slightly to the tally in that cell. It is believed that this difference in tally result is the result of a systematic difference between Embree and MOAB's ray fire conventionality rather than Embree's a result of the double to single floating point conversion of the model that occurs when using EmDAG.
+
+Finally, a full-scale test of EmDAG was conducted on the FNG model using the same volumetric source as in the performance benchmarking tests described earlier. Initially this model failed quickly due to lost particles. This was surprising as the model is expected to have the same watertight fidelity that it does when using DAGMC. In order to allow the run to complete, the number of allowed lost particles was increased to the number of the sources particles being run (1e8). The justification for this allowance being that if the lost particle rate is small enough, overall performace and results of the run would still provide a viable comparison of the two systems. In the end, the model lost 255 particles in 1e8 histories. This rate isn't expected to change the perfomance or result of the overall run in a significant way. A comparison of the FNG  using EmDAG-MCNP to the native MCNP model as well as DAG-MCNP is found in Table \ref{fngemdag}.
+
+
+\begin{table}[H]
+  \small
+  \begin{center}
+    \caption{Nested Spheres Tally Results. Flux tally units are $cm^{-2}$. Energy tally units are MeV/g.}
+    \label{fngemdag}
+        \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      \textbf{Implementation} & \textbf{ctme (min)} & \textbf{wall time (min)} & \textbf{lost} & \textbf{ratio} \\
+      \hline
+      MCNP5 & 209.92 & 205.99 & 0 & 1.00 \\
+      \hline
+      DAG-MCNP5 & 1023.04 & 1023.05 & 0 & 4.99 \\
+      \hline
+      EmDAG-MCNP5 & 303.49 & 303.63 & 255 & 1.44 \\
+      \hline
+      EmDAG-MCNP5 (lt) & 257.49 & 257.60 & 247 & 1.25 \\
+      \hline
+    \end{tabular} 
+
+  \end{center}
+%%\vspace{-0.2cm}
+\end{table}
+
+\textbf{NEED TO SAY SOMETHING ABOUT TALLY RESULTS HERE}
+
+While the performance of EmDAG greatly surpases that of DAGMC, it does not come as close to the performance of native MCNP as it did in the case of the test models. Upon visually inspecting the faceted FNG model, it was seen to contain many high valence regions. As an artifact of the variance reduction used in the intended analysis of this model, many planes were inserted in the model in order to break up large cells with highly varying particle intensities. Where these planes intersect the cylindrical volumes of the model, many high valence regions result as can be seen in figure \ref{fng-faceted-models}. As a result it became a curiousity as to whether or not the high valence regions were being handled better by EmDAG than they were by DAGMC. In order to test this, the same programs used to do the high valence vertex study were built using EmDAG and the parameter sweep of the relative high valence area and valency were run. The results in figure \ref{emdaghvstudy} show that EmDAG does in fact struggle these high valence regions. In the worst scenario we see a degradation by two orders of magnitude compared to the best case scenario which is similar to what was seen in the unmodified MOAB ray tracer. Additionally, it shows degraded performance in the same way that DAGMC was initally expected to falter - with increasing high valence area and valency. This is likely due to the nature of the heuristics used by Embree to construct its acceleration datastuctures. Embree employs the surface area heuristic in building its BVH which may have something to do with this performance issue. Unlike MOAB, however, the option of altering the BVH building parameters is not availble to us. There is, however, an option to reduce the size of the high valence regions in the mode within the faceting algorithm by definig a length tolerance. The length tolerance is a maximum length for any faceting edge returned by the faceting algorithm. Defining this value comes at the cost of many more triangles than needed to define a model within some faceting tolerance which gives a more clear definition of the model's fidelity relative to the analytical underlying representation of the geometry. The difference in facet structure between these models can also be seen in figure \ref{fng-faceted-models}. By generating a faceted model using the combination of the length and faceting tolerances it was hoped that there would be a marked increase in performance using the EmDAG system and the performance did indeed improve by ~15\%. Due to the increased number of overall triangles on these planar surfaces, there may be competing forces at play. As the length tolerance is reduced, the high valence areas will also be reduced, but the overall number of triangles will increase resulting in inherently deeper BVH and longer traversals. Conversely as the length tolerance is increased, the high valence areas are increased as a result, but the number of redundant triangles is reduced perhaps improving the average BVH traversal time enough compensate for a few more rays entering high valence regions as a result of their incresed area. The length tolerance of the FNG model could then be optimized. This optimization study, while interesting, will vary model to model and the results will be complex in nature, depending on the underlying geometry and geometry adjacent to those regions, etc. In light of the high valence study results showing that BVH building parameters can be altered to improve performance and accomodate these high valence regions, it seems a better, and simpler answer over alteration of the mesh globally in the model. Nonetheless, while it may be possible to alter the building parameters of Embree as was done wit MOAB, but an interface for this does not currently exist within the Embree API and would likely require large alterations to code to allow access such as that. Given these truths, in order to determine how close the current EmDAG system could come to native MCNP performance on the FNG model with the tools available a number of length tolerances were tried when faceting the FNG model.  
+
+
+\begin{figure}[H]
+  \label{emdaghvstudy}
+  \begin{center}
+    \includegraphics[scale=0.35]{hv_emdag.png}
+    \caption{High valance study results using EmDAG. Please note the alterations to colorbar limits made to use color scale effectively.} 
+  \end{center}
+\end{figure}
+
+
+
+\begin{figure}[H]
+  \label{fng-faceted-models}
+  \small
+  \begin{center}
+    \includegraphics[scale=0.15]{fng_facet_tol.png}
+    \includegraphics[scale=0.15]{fng_len_tol.png}
+  \end{center}
+
+\end{figure}
+
 
 
 \subsection{Limitations of the EmDAG system}
@@ -318,6 +369,7 @@ The results of the single-volume test cases for native MCNP differ slightly from
 \begin{itemize}
 \item Large Models
 \item Lost particles due to single to double conversion
+\item Limited control over BVH building relative to MOAB
 \end{itemize}
 
 \section{High Valence Vertex Study}
@@ -330,7 +382,7 @@ One of the known bottlenecks of DAGMC is ray tracing performance degredation in 
   \centering
     \includegraphics[scale=0.2]{iter_sideon.png}
     \includegraphics[scale=0.1]{ds_hv.png}
-    \caption{Exampels of high valence regions in test and analysis models.}
+    \caption{Exampels of high valence regions in analysis and test models.}
 \end{figure}
 
 To begin, a test mesh was manually generated in MOAB with an artificial high-valence region. This mesh is a modified cube centered on the origin in which the typical two-triangle faceting has been replaced by more complex planar surfce of triangles including an offset interior high-valence region within the face (please see figure below as a reference). The high-valence region was generated by inserting vertices along the diagonal of the interior box and connecting them to the opposing corners of the box. This effectively creates two adjacent high-valence regions, but this was necessary in order to maintain a watertight connectivity in the surface. This construction was designed such that the valence of the corner vertices in the interior region could be controled as well as the size of the interior region relative to the size of the entire face. Tests were then peformed on this model in order to characterize the performance impediment induced as well as its cause.
@@ -390,6 +442,7 @@ In this case, the parameter of interest is the worst case splitting ratio. This 
 
 
 With this small change to the BVH builder's parameters, the timing of the high valence region becomes significantly better. This change is likely unsuitable for the general case of a tesselated surface however. A worst case splitting ratio of 1 would lead to much deeper trees which on average will take longer to traverse as well as consume much more memory for larger, more complicated models.
+
 
 
 \bibliographystyle{acm}
