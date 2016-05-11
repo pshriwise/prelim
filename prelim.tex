@@ -193,8 +193,21 @@ Across the board, these models lag behind native MCNP models by a factor of anyw
 
 \subsection{Profiling}
 
-As a part of this study, these runs were repeating using the profiling tool, Callgrind, to determine where this additional time is being spent. Because the geometry representation and geometry query system is the only difference between the two models, it is expected that the time is being spent there, but it is useful to know more specifically where in the query system this is occuring. From this inference, all callgraphs are displayed with the MCNP history\_ subroutine at the top. It is inside this subroutine that MCNP calls upon DAGMC to fulfill geometric queries about the model. Below a callgraph for a profiling run of FNG for 1e7 histories is provided. In this callgraph we can see that the time spent is dominated by MOAB's ray tracing process used by DAGMC to track particles as they move through the geometry totaling about 70\% of the runtime. Andrew Glassner predicts in his book An Introduction to Ray Tracing that ``Insert exact quote from text here''. A prediction which is still true in the case of DAGMC.
+As a part of this study, these runs were repeating using the profiling tool, Callgrind, to determine where this additional time is being spent. Because the geometry representation and geometry query system is the only difference between the two models, it is expected that the time is being spent there, but it is parctical to confirm this and useful to know more specifically where in the query system this is occuring. From this inference, all callgraphs are displayed with the MCNP history\_ subroutine at the top. It is inside this subroutine that MCNP calls upon DAGMC to fulfill geometric queries about the model. Below a callgraph for a profiling run of FNG for 1e7 histories is provided. In this callgraph we can see that the time spent is dominated by MOAB's ray tracing process used by DAGMC to track particles as they move through the geometry totaling about 70\% of the runtime. Andrew Glassner predicts in his book An Introduction to Ray Tracing that ``Insert exact quote from text here''. A prediction which is still true in the case of DAGMC.
 
+\begin{figure}[H]
+  \centering
+  \caption{Callgraph of DAG-MCNP FNG run.}
+  \label{dagmc-fng-coarse}
+  \includegraphics[scale=0.35]{dagmc_fng_cg_coarse.png}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \caption{Callgraph of native MCNP FNG run.}
+  \label{dagmc-fng-coarse}
+  \includegraphics[scale=0.35]{mcnp_fng_cg_coarse.png}
+\end{figure}
 
 \section{Linking DAGMC with Intel's Embree}
 
