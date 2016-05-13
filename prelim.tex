@@ -40,11 +40,11 @@
 \newpage
 \tableofcontents 
 
-\section{Abstract}
+\section{Abstract}%%Status:Done%%
 
 The value of CAD-Based Monte Carlo relies heavily on the ability to return geometric queries quickly and robustly via ray tracing. The Direct Accelerated Monte Carlo (DAGMC) toolkit currently provides a robust ray tracing algorithm\cite{thesis_smith_2010} given certain mesh requirements are met, but shortcomings of the underlying ray tracing kernel causes it to lag behind run times of a given Monte Carlo code using its native geometric analysis. Up to this point, we have relied on research in ray tracing mainly for the application of rendering or collision detection. Neither of these applications align exactly with the application of Monte Carlo ray tracing. Algorithms for collision detection involves moving geometry which isn’t yet a concern in the area of radiation transport. Algorithms for acceleration structures in rendering typically prioritize the time needed for the building of these structures causing them to be less than optimal, but results in an overall decreased time-to-render due to the balance of the build time with the number of ray queries needed to generate the desired graphics. In radiation transport, the number of ray queries needed to generate the desired result is much larger than the number needed for rendering. As more time is spent ray tracing, the build times of the underlying acceleration structures becomes less significant, thus the balance between time spent building these structures and the time using them for ray tracing must be reconsidered in this context. Its is hypothesized that in the case of the large, complex problems for which DAGMC is intended, that extra time spent optimizing the ray tracing acceleration structures via adaptation to certain mesh features and/or mesh refinement/alteration if necessary. This shift in priorities regarding the building process is important, but there are other improvements to be made as well. An area where the application of rendering and radiation transport align very well is in the query process after building of acceleration structures is complete. There are many advancements in ray tracing techniques which can be applied in order to provide further improvements to DAGMC’s performance. It is hoped that the combined effect of these improvements will bring DAGMC’s performance close to that of the native Monte Carlo codes it supports, thus alleviating the concern for additional computational time while maintaining the benefit of reduced human effort in radiation transport on complex geometric models.
 
-\section{Introduction}
+\section{Introduction}%%Status:Done%%
 
 %% The purpose of this document is to outline the current state of the art in spatial partioning hierarchies for the purpose of improving performance in DagMC. It will take into account as much of the existing literature as possible. An analysis of the literature will also be conatined, identifying areas for improvement within the context of ray tracing for the specific application of Monte Carlo ray tracing.
 
@@ -209,7 +209,7 @@ As a part of this study, these runs were repeating using the profiling tool, Cal
   \includegraphics[scale=0.35]{mcnp_fng_cg_coarse.png}
 \end{figure}
 
-\section{Linking DAGMC with Intel's Embree}
+\section{Linking DAGMC with Intel's Embree}%%Status:In Progress%%
 
 As mentioned in the previous section, a surprising number of MOAB-related database calls appear in the profiling of a DAGMC run. MOAB is a powerful tool for mesh generation, manipulation, and storage, but it was postulated that the implementation of a ray tracer in the context of a mesh database design inherently comes with too much overhead for the implementation of an efficient ray tracer. As a result, an attempt at the replacement of MOAB's ray tracing system with a lean, highly-optimized ray tracer was made. Recently, Intel has made an effort to produce just such a CPU-based raytracer called Embree \cite{embree}. In both construction and traversal of BVHs, Embree takes advantage of many of the latest developments in BVH research at a programming level, and takes advantage of chipset architectures via vectorization at an implementation level. The combination of these effects leads to powerful raytracing tool in terms of performance. As a result of these factors and the effort that was put into producing Embree, it was chosen as the tool applied in DAGMC to satisfy geometric queries for MCNP. The resulting tool will be reffered to as EmDAG for the remainder of this discussion.
 
