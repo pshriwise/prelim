@@ -59,13 +59,13 @@ The purpose of most applications involving ray tracing is rendering. Techiques u
 * also, SIMD could be a big win (espeically for history-based threading)
 * we know what volume we're in
 
-\section{Ray Tracing's Role in Monte Carlo}
+\section{Ray Tracing's Role in Monte Carlo}%%Status:Done%%
 
 Ray tracing is most commonly used to generate 2D images by simulating light ray interactions with virtual 3D objects in a process known as rendering. These light rays (photons) are typically cast from the perspective of the image to be generated, and pixel colors are determined by the reflections, refractions, etc. of the photons on their course to the light source (if they reach it at all). This process is analagous to Monte Carlo analysis. Particles are born at the source and go through a series of interactions with 3D objects until they reach an area of interest, or detector, at which point data related to the particle is collected and stored. In both cases, when particles obtain new orientations from their interactions in this virtual 3D space, it is necessary to understand what object this particle will interact with next if it continues on its current trajectory. As such, the problem of ray tracing in either application can be abstracted to a spatial search of a virtual 3D object for the next interaction location given a particle loaction and trajectory. 
 
 In realistic renderings, it is sometimes possible that light rays may scatter before reaching the next object on their path and in Monte Carlo simulations this is the more probable case. In order to determine if this will occur before reaching the next object, the distance to interaction (scattering or otherwise) must be compared to the distance to the next object. In analytic geometric representations this is a straightforward task, but as the complexity of 3D objects increase, the cost of ray-object intersections becomes very computationally expensive. Mesh/CAD-based models, in which the surfaces of objects are discretized into sets of geometric primitives (usually triangles), face the challenge of then finding the correct primitive for which the ray intersects (if it intersects one at all). For the highly complex models, a linear search of the primitives is out of the question in terms of how long these intersections would take to find. As a result, extensive research has been done in the area of acceleration data structures for ray tracing which section the problem space in order to establish a binary tree-like search over the geometric primitives of the model.
 
-\section{Spatial Partitioning Schemes}
+\section{Spatial Partitioning Schemes}%%Status:Done%%
 
 Spatial partioning structures are designed to rapidly narrow the search for a location in virtual space given a location and orientation. This is accomplished by sectioning the space using a partitioning construct. The paritions are determined by a division heuristic which establishes the partitions given a set of primitives. After partitioning, the primitives are then associated with the partition which contains them. This process is recursively repeated until leaf conditions are met. Leaf conditions determine when the partioning process will stop. This can be based on the remaining number of primitives, the current size of the partition, etc. The end result is a hierarchy which can be used to terverse the problem space efficiently for ray intersections or closest intersection queries. 
 
@@ -73,7 +73,7 @@ The above describes a top-down approach to construction of these data structures
 
 %% The tree structure refers almost entirely to the number of children each non-leaf node in the tree should have. The majority of spatial trees are binary trees (two children), but other structures do exist such as quad trees (four children) and oct trees (eight children). The partitioning construct refers to the mechanism by which you are creating partitions out of space. There is a large variety of these which are chosen based on a couple of counteracting criterion 1) number of operations required for an intersection check and 2) their ability to effectively eliminate subsets of the problem space from a given query.
  
-\subsection{Bounding Volume Hierarchy (BVH)}
+\subsection{Bounding Volume Hierarchy (BVH)}%%Status:Done%%
 
 The initial concept of using the bounding volume partitioning construct as a pre-check for ray-intersection with objects was introduced by Weghorst in 1984 \cite{Weghorst:1984:ICM}. Weghorst explored the possibility of using spheres and rectangular parallell pipeds (boxes) to contain geometric objects. This work also went so far as to create a hierarchy of those object-based bounding volumes, noting the importance of hierarchicaly joining bounding volumes which are near each other in space so as not to have parent volumes containing large amounts of empty space between the objects to be joined.
 
@@ -82,14 +82,14 @@ Over time it was found that complex geometric objects become difficult to render
 One difficulty bounding volume hierarchies face is the overlapping bounding volumes. Overlapping sibling volumes can cause additional box intersection checks in the same way that losely fitting boxes can. If a ray enters a region of overlapping sibling volumes, this causes the children of both boxes to be checked despite the fact that the ray will eventually only intersect with the desendants of one box or the other. Overlaps will almost always occur as boxes are required to contain discrete elements for robustness, not just a section of the virtual space. This inefficiency can be exacerbated by the types of triangles or regions of the discretized geometry the data structures are being formed around.
 
 
-\subsubsection{Axis Aligned Bounding Box Hierarchies}
+\subsubsection{Axis Aligned Bounding Box Hierarchies}%%Status:Done%%
 
 Axis aligned bounding boxes are boxes whose faces are parallel to the global planes of the problem space as defined by the global axes of the problem. In practice, tightly fitting axis aligned boxes are straightforward to construct given a set of points to contain, and overlaps between the children of a parent box are minimal. The overlaps found in axis aligned bounding boxes are typically limited to the size of perhaps one or two geometric primitives. Axis aligned boxes are commonly used in BVH's for their simplicity of implementation and fast ray intersection check algorithms.
 
 In addition to the previously mentioned contributions of Weghosrt above, another important conclusion was made regarding the types of boundng volumes used to construct these hierarchies. In his exploration of sphere and box bounding volumes it was found that while spherical bounding volumes are less compuationally expensive to check for ray intersections than bounding boxes, the latter generally provide a tighter fit to the objects they contain. This tighter fitting is important as it decreases the chance of wasted intersection checks. This affect was reflected in the results of Weghorts's work strongly enough to show that bounding boxes were more effective in accelerating the ray intersection process than bounding spheres. 
 
 
-\subsubsection{Oriented Bounding Box Hierarchies}
+\subsubsection{Oriented Bounding Box Hierarchies}%%Status:Done%%
 
 Unlike axis aligned bounding boxes, the faces of oriented bounding boxes are allowed take any orientation whey like to enclose their set of primitives as tightly as possible. There are several existing methods for determining the orientation of a box for best fit to a set of primitives.\cite{gottschalk1996obbtree} As a result, oriented bounding boxes are very good for avoiding erroneous ray-box intersections that would otherwise occur for an axis aligned box, and they more quickly conform to the full set of enclosed primitives as the boxes are subdivided. This conformity indicates that oriented bounding box hierarchies will have fewer levels making the worst case number of intersection tests lower than for an axis aligned box hierachy on average.
 
@@ -102,7 +102,7 @@ As a result of this tight fit to primitives, bounding volume hierarchies are als
 Oriented bounding boxes have been found to be extremely effective in 
 
 
-\subsection{Splitting Schemes}
+\subsection{Splitting Schemes}%%Status:Done%%
 
 Bounding Volume Heirarchies provide a means of recursively narrowing the focus of the ray query to more promising candidates for intersection. This is a natural divide-and-conquer approach for examining a set of primitives for the closest intersection. Spatial subdivision takes a different approach. \cite{Intro2RT} While it is still a divide-and-conquer approach to the problem, the focus is generalized to the problem space instead of on the object themselves. Beginning with the entire model, one partitions the volume bounding the primitives into pieces recursively, creating smaller partitions in each level of the tree until a subset of primitives is left bounded at the leaf node of the hierarchy. This method can arguably be viewed as a top-down approach to bounding volumes but with an emphasis on division of space rather than division of objects.
 
@@ -111,7 +111,7 @@ Many data structures have been created using this philosophy. Some methods use g
 
 % INCLUDE A GRAPH-BASED COMPARISON OF DIFFERENT HIERARCHIES HERE %
 
-\subsubsection{KD-Trees}
+\subsubsection{KD-Trees}%%Status:Done%%
 
 The KD-Tree or multidimensional binary search tree was originally developed as a method for querying records in databases and has since found use in other applications including speech recognition, global information systems, and ray tracing. \cite{Bentley1975} KD-Trees operate by recursively dividing the dimensions of the problem set. Initally the entirety of a problem dimension is divided in half (if one is using median splitting). The resulting subsets of the dimension are labeled as children of the initial set. The two resultant sets are the partitioned as well, but in a different dimension than the original partition. This process is then repeated until the leaf conditions of the hierarchy are met. Entities are listed as contained by a partition only if they are contained by all parents of the partition as well, meaning that all entities lie within some subset in each dimension of the problem.
 
@@ -124,57 +124,57 @@ KD-Treees work very well for nearest neighbor searches in which the query
 %% 2-D Example from Bentley1975 here %%
 
 
-\subsubsection{Bounding Interval Hierarchy}
+\subsubsection{Bounding Interval Hierarchy}%%Status:Done%%
 
 The bounding interval hierarchy is an extension of the KD-Tree in which two planes are used to define an interval of one of the problem dimensions as a node in the hierarchy rather than dividing the dimension into two parts. While the intersection check for an interval is twice as long as a plane's intersection check, the interval excludes more of the problem space for negative intersection checks than a plane can. The interval partioning construct also allows for different tree designs as each dimension can be broken up into an arbitrary number of intervals. Bounding intervals face the same problem that KD-Trees face with planar partitions intersecting primitive entities. The option to split primitive entities along the intersecting planes still exists in this scenario and comes with the same consequences as before. Sharing entity references can actually cause overlaps on either side of the interval making this problem somewhat worse in that case.
 
 %% Interval Overlap Figure Here %%
 
-\subsubsection{Octrees}
+\subsubsection{Octrees}%%Status:Done%%
 
 Octrees are a recursive form of the grid-based methods mentioned above. In this partitioning scheme, cubic voxels are used to partition the problem space into the 8 quadrants defined by the axes of the parent voxel. These 8 voxels are then labeled as children of the original voxel. This process is repeated recursively until leaf conditions are met for the voxel. This typically means that the voxel references a set number of primitives.
 
 Octrees consume a large amount of memory relative to the other data structures in this section and  it is often possible that voxels may be completely devoid of underlying entities. One advantage of octrees is the cubis nature of the partitioning voxels. The value of a voxel (or bounding volume for that matter) lies in its ability to remove candidate space from the query, yet this voxel can only be effective in this way if rays actually strike the voxel. The result is that a voxel's effectiveness is described by the ratio of its probability of an intersection check to the space it will exclude from the query search or its volume. In a problem with a uniform ray distribution, the probablity of a ray to intersect a given voxel is described by its surface area. Thus cubic voxels have the most favorable ratio possible.
 
-\section{Ray Coherence in Radiation Transport}
+\section{Ray Coherence in Radiation Transport}%%Status:Done%%
 
 Ray coherence refers to the likelyhood that a primary ray will follow roughly the same path through the scene or model if fired multiple times. This is generally true in ray tracing processes oriented toward rendering due to the nature of the physics being modeled in reflection/refraction of visible light interacting with object surfaces in a given scene. This ray coherence can be exploited by cacheing the traversal path of rays from a given pixel location and direction. This gives subsequent rays fired from that location with similar directions a short-scut in their traversal with modifications to the traversal path as needed to determine their proper object/primitive intersection. Rays from the same origin and similar direction are grouped together and traverse kernel's acceleration structure. If their path becomes unique, the ray will then split off to coplete its own unique traversal, but this saves time in repeated operations for multiple rays in many or most levels of the hierarchy traversal.
 
 In the application of radiation transport, however, the properties of the underlying physics being modeled does not result in ray coherence. Particles in radiation transport travel far beyond the surface of an object and with a much wider range of possible interaction locations and resulting directions compared to the modeling of visible light. As a result, these methods could only be applied to special situations in which the ray origins will be known such as radiation sources. For the general case, however, it is suspected that the majority of ray queries for a given set of particle histories are not attributed to the initial particle path, but due to subsequent interactions in the model as well as the queries required to resolve the emission of secondary radition. Thus such methods are likely not worth applying in this case.
 
-\section{Ray Generalization in Radiation Transport}
+\section{Ray Generalization in Radiation Transport}%%Status:Pending%%
 
 
 
-\section{Partioning Methods and Leaf Conditions}
+\section{Partioning Methods and Leaf Conditions}%%Status:Pending%%
 
 This section will go over several of the partitioning hueristics and leaf conditions involved in creating these hierarchies.
 
-\subsection{Median Splitting}
+\subsection{Median Splitting}%%Status:Pending%%
 
 This method splits the current partition in half for a given dimension. In the case of bounding boxes this is typically done by splitting using the axis (oriented or axis-aligned) with the largest extent to matain bounding boxes which are as cubic as possible for reasons described in the section above on octrees.
 
-\subsection{Median Snap Splitting}
+\subsection{Median Snap Splitting}%%Status:Pending%%
 
-\subsection{Subdivision Sample Splitting}
+\subsection{Subdivision Sample Splitting}%%Status:Done%%
 
 This methos is similar to the median splitting method, but samples serveral candidate locations along the dimension to be divided. This can provide for better splitting over the entities contained by the parent node. The idea here is that even space is being split evenly the entities may not be, resulting is unbalanced trees with more bounding volumes than necessary for good taversal performance. This conecpt is typically a concern of bounding volume hierarchies as opposed to KDTrees or Bounding Interval Hierarchies. 
 
 
-\subsection{Vertex Median}
+\subsection{Vertex Median}%%Status:Pending%%
 
-\subsection{Vertex Sample}
+\subsection{Vertex Sample}%%Status:Pending%%
 
-\subsection{Surface Area Heuristic}
+\subsection{Surface Area Heuristic}%%Status:Pending%%
 
-\section{DAMC Performance Benchmarking and Profiling}
+\section{DAMC Performance Benchmarking and Profiling}%%Status:In Progress%%
 
 In order to assess the current performance of DAGMC, a number of analysis models were tested and profiled using the full workflow. Each of these models was converted from a native MCNP input geometry into a solid CAD model using the mcnp2cad tool ( createed at the University of Wisconsin - Madison to perform improvements and or updates to original models intended for use with MCNP. As a result of this direct conversion, a set of analysis runs using DAGMC coupled with MCNP (DAG-MCNP) is compared to runs of the same models using native MCNP geometry.
 
 Three different models were selected for this set of tests: the Frastcati Neutron Generator (FNG), Advanced Test Reactor (ATR), and the University of Wisconsin Nuclear Reactor (UWNR). The original purpose of these models are in large part irelevant as the intent of these tests is to measure the difference in geometric query performance between the navie and CAD-based models. The FNG source was modified to be a uniform volumetric source of 14.1 MeV neutrons covering the entire model. Both the ATR and UWNR model's kcode sources were kept intact for this test. All of these problems were run using the high performance computing cluster at the University of Wisconsin - Madison supported by the Advanced Computing Initiative (ACI). It should also be noted that all of these models were successfully made watertight, meaning that no lost particles are expected.
 
 
-\subsection{Performance Results}
+\subsection{Performance Results}%%Status:Done%%
 
 \begin{figure}[H]
   \centering
@@ -191,7 +191,7 @@ Three different models were selected for this set of tests: the Frastcati Neutro
 
 Across the board, these models lag behind native MCNP models by a factor of anywhere between 4 and 10. For smaller problems with simple geometries and relatively low numbers of histories required to reach an acceptably low level of statisitcal uncertainty, this might not pose as much of a problem to users. However, as problem geometries become more complicated and the number of histories larger the discrepancy in computing time becomes of high importance when run times are taking days or weeks longer than they would using a native MCNP geometry representation.
 
-\subsection{Profiling}
+\subsection{Profiling}%%Status:In progress%%
 
 As a part of this study, these runs were repeating using the profiling tool, Callgrind, to determine where this additional time is being spent. Because the geometry representation and geometry query system is the only difference between the two models, it is expected that the time is being spent there, but it is parctical to confirm this and useful to know more specifically where in the query system this is occuring. From this inference, all callgraphs are displayed with the MCNP history\_ subroutine at the top. It is inside this subroutine that MCNP calls upon DAGMC to fulfill geometric queries about the model. Below a callgraph for a profiling run of FNG for 1e7 histories is provided. In this callgraph we can see that the time spent is dominated by MOAB's ray tracing process used by DAGMC to track particles as they move through the geometry totaling about 70\% of the runtime. Andrew Glassner predicts in his book An Introduction to Ray Tracing that ``Insert exact quote from text here''. A prediction which is still true in the case of DAGMC.
 
@@ -213,7 +213,7 @@ As a part of this study, these runs were repeating using the profiling tool, Cal
 
 As mentioned in the previous section, a surprising number of MOAB-related database calls appear in the profiling of a DAGMC run. MOAB is a powerful tool for mesh generation, manipulation, and storage, but it was postulated that the implementation of a ray tracer in the context of a mesh database design inherently comes with too much overhead for the implementation of an efficient ray tracer. As a result, an attempt at the replacement of MOAB's ray tracing system with a lean, highly-optimized ray tracer was made. Recently, Intel has made an effort to produce just such a CPU-based raytracer called Embree \cite{embree}. In both construction and traversal of BVHs, Embree takes advantage of many of the latest developments in BVH research at a programming level, and takes advantage of chipset architectures via vectorization at an implementation level. The combination of these effects leads to powerful raytracing tool in terms of performance. As a result of these factors and the effort that was put into producing Embree, it was chosen as the tool applied in DAGMC to satisfy geometric queries for MCNP. The resulting tool will be reffered to as EmDAG for the remainder of this discussion.
 
-\subsection{Transferring DAGMC Model's to Ebree Scenes}
+\subsection{Transferring DAGMC Model's to Ebree Scenes}%%Status:Done%%
 
 The process of employing Embree as DAGMC's ray tracer begins by establishing an equivalent representation of the MOAB mesh in Embree. In comparison to MOAB, Embree is limited in its ability to represent the underlying topological structure of a model. This topology is necessary and used advantageously during particle tracking in DAGMC by reducing the set of triangles queried to those of the particle's current volume. However, a way was discovered to represent enough of the topology to meet the requirements of DAGMC transport. The general representation of a model in Embree is referred to as a scene. Each scene may contain one or more geometries (meshes). Fortunately, this system is enough to create a workable representation of DAGMC meshes in which MOAB volumes are the equivalent of Embree scenes and MOAB surfaces are represented in their respective scenes as surfaces. This method provides a one-to-one mapping of MOAB volumes and surfaces to their corresponding entities in Embree and allows all topology-based operations to proceed inside of DAGMC in their usual manner. In this way, the requirement for topological information in DAGMC at the surface and volume level is met. Now transfer of the primitive mesh data can be considered.
 
@@ -222,7 +222,7 @@ Scenes do not share mesh data, so the triangle connectivity of each surface is r
 The representation of triangle normals are important to the DAGMC particle tracking algorithm established by Smith et. al. \cite{smith_thesis} in 2011. In DAGMC, particles on or just outside the surface of a volume are handled by ignoring the near-surface intersection upon being established in a new volume. This is accomplished using the convention that triangle normals will always point outward from the center of the volume they belong to. Triangles hit by the ray are ignored if the normal of the triangle opposes the ray direction via a dot product calculation. While this has historically been handled inside of DAGMC, this is accomplished in EmDAG via the use of Embree's filter functions. Filter functions allow for a user-defined callback method which allows users to validate a ray hit inside of Embree before returning a final result. Embree will return is most recent intersection with the scene to the filter function (the hit triangle's unnormalized vector included) and allow a method to either accept the hit or instruct Embree to continute tracing the ray path based on the outcome of the filter function. In MOAB, triangle normals are set in a global manner and adjusted using stored information within MOAB based on what volume is being queried at the time. This is referred to as the surface's sense with respect to that volume. Because we are forced to duplicate surfaces in Embree, the triangle normals are pre-oriented based on this surface's sense for the scene it is being created in upon initialization of the model within the Embree instance. This saves steps in gathering this information upon traversal when the triangle normal is needed to determine a particle's logical position within the model. The resulting memory footprint of EmDAG after duplicating the DAGMC geometry in Embree is not much greater thanks to the single precision values used in Embree. The single nature precision of Embree and its effect on DAGMC will be discuseed further in later sections of this work.
 By meeting these requirements of topology, watertight representation, and hit acceptance/rejection based on triangle normals, Embree provides DagMC with all the information needed to perform geometric operations required by the various Monte Carlo codes it supports, but in an agnostic manner to the ray tracing kernel being used.
 
-\subsection{EmDAG Performance \& Testing}
+\subsection{EmDAG Performance \& Testing}%%Status:In Progress%%
 
 Using a simple ray fire test program, the performance of DAGMC's ray fire ability was compared to that of EmDAG's for three models. These models include a simple sphere, a notched sphere, and a high aspect ratio cylinder. In each of these tests, the models are tesselated with an increasingly smaller faceting tolerance in a higher number of triangles and more complex nature of the surface mesh in terms of BVH construction and traversal. The faceting tolerance is defined as the maximum distance between the faceted curve or surface and the geometric curve or surface which it resolves. 600k rays are then fired from the center of the volume isotropically using the same random number seed so that the same set of rays is fired in each ray tracing system.
 
@@ -385,7 +385,7 @@ While the performance of EmDAG greatly surpases that of DAGMC, it does not come 
 
 
 
-\subsection{Limitations of the EmDAG system}
+\subsection{Limitations of the EmDAG system}%%Status:In Progress%%
 
 \begin{itemize}
 \item Large Models
@@ -393,7 +393,7 @@ While the performance of EmDAG greatly surpases that of DAGMC, it does not come 
 \item Limited control over BVH building relative to MOAB
 \end{itemize}
 
-\section{High Valence Vertex Study}
+\section{High Valence Vertex Study}%%Status:Done%%
 
 One of the known bottlenecks of DAGMC is ray tracing performance degredation in regions with high-valence vertices. High valence vertices are defined as those connected to an unusally high number of triangle entities. This region of the mesh usually takes on a fan-like shape as seen in the figure below. These regions typically occur in regions where a planar surface is bounded by a circular curve, which is quite common in the faceting scheme used to produce DAGMC meshes. This faceting scheme (which comes from ACIS libraries underlying the CUBIT/Trelis graphics engine) is designed to produce the smallest number of triangles possible to represent the model within the representation tolerance specified in the surface mesh generation preprocessing step (dagmc\_preproc). Generally fewer triangles are better as even the ideal ray tracing acceleration structure queries for a given mesh scale as $O(log(N))$. However, even with fewer triangles undesirable configurations of mesh can impede performance. This suspicion was confirmed in a set of tests administered by Steve Jackson in 2011.
 
@@ -465,12 +465,12 @@ With this small change to the BVH builder's parameters, the timing of the high v
 \bibliography{refs}
 
 
-\section{Appendix A: Code used to collect data}
+\section{Appendix A: Code used to collect data}%%Status:Pending%%
 \begin{itemize}
 \item ray\_fire\_test program
 \end{itemize}
 
-\section{Appendix B: Additional Results}
+\section{Appendix B: Additional Results}%%Status:Pending%%
 \begin{itemize}
 \item EmDAG test results
 \item HV WSR Scan Results
