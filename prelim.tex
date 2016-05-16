@@ -165,14 +165,25 @@ This methos is similar to the median splitting method, but samples serveral cand
 
 \subsection{Vertex Sample}%%Status:Pending%%
 
-\subsection{Surface Area Heuristic}%%Status:Pending%%
+\subsection{Surface Area Heuristic}%%Status:Done%%
+
+This heuristic falls under the category of leaf conditions. The surface area heuristic uses the surface area of child bounding volumes relative to their parent as an approximation for the probability that the child will be visited after the parent volume. The explicit form of the surface area heuristic is \cite{sah_paper}
+
+\begin{centering}
+\begin{align*}
+%%   %  \caption{Formula of the surface area heuristic.}
+%%   % \label{SAH}
+    C = & \,C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i} \\ C_{t} - & \,cost\, of\, traversal\, to\, child\, nodes \\ C_{i} - & \, cost\, of\, primitive\, intersection\, check\, \\ SA() - & \, gives\, surface\, area\, of\, bounding\, volume \\ B_{L} - & \, bounding\, volume\, of\, left\, child \\ P_{L} - & \, primitives\, contained\, by\, the\, left\, child  \\ B_{R} - & \, bounding\, volume\, of\, right\, child \\ P_{R} - & \, primitives\, contained\, by\, the\, right\, child \\ B - & \, parent\, bounding\, volume
+\end{align*}
+\end{centering}
+
+So the cost of each split done in the tree is assessed as the cost of an extra traversal downward in the tree, as well as the cost of the intersection checks for each primitive contained by the child nodes. Both of the children will not always be intersected by a ray however so the cost is then adjusted by some estimation of the probability that a ray will intersect with each child. In the surface area heuristic this probability is estimated as the surface area of the child bounding volume divided by the surface area of the parent volume and the cost of the primitive intersections are weighted as such. In reality, a better estimation of  child node intersection probability would be given by the relative cross section of the child/parent bounding volumes with respect to the ray direction. Given that ray directions are unknown a priori, the surface area serves well enough for applications with uniform ray distribution. This leaf condition produces high quality BVH's relative to other methods and is now generally regarded as the best method in many production ray tracers today. 
 
 \section{DAMC Performance Benchmarking and Profiling}%%Status:In Progress%%
 
 In order to assess the current performance of DAGMC, a number of analysis models were tested and profiled using the full workflow. Each of these models was converted from a native MCNP input geometry into a solid CAD model using the mcnp2cad tool ( createed at the University of Wisconsin - Madison to perform improvements and or updates to original models intended for use with MCNP. As a result of this direct conversion, a set of analysis runs using DAGMC coupled with MCNP (DAG-MCNP) is compared to runs of the same models using native MCNP geometry.
 
 Three different models were selected for this set of tests: the Frastcati Neutron Generator (FNG), Advanced Test Reactor (ATR), and the University of Wisconsin Nuclear Reactor (UWNR). The original purpose of these models are in large part irelevant as the intent of these tests is to measure the difference in geometric query performance between the navie and CAD-based models. The FNG source was modified to be a uniform volumetric source of 14.1 MeV neutrons covering the entire model. Both the ATR and UWNR model's kcode sources were kept intact for this test. All of these problems were run using the high performance computing cluster at the University of Wisconsin - Madison supported by the Advanced Computing Initiative (ACI). It should also be noted that all of these models were successfully made watertight, meaning that no lost particles are expected.
-
 
 \subsection{Performance Results}%%Status:Done%%
 
