@@ -189,7 +189,7 @@ This heuristic falls under the category of leaf conditions. The surface area heu
 
 So the cost of each split done in the tree is assessed as the cost of an extra traversal downward in the tree, as well as the cost of the intersection checks for each primitive contained by the child nodes. Both of the children will not always be intersected by a ray however so the cost is then adjusted by some estimation of the probability that a ray will intersect with each child. In the surface area heuristic this probability is estimated as the surface area of the child bounding volume divided by the surface area of the parent volume and the cost of the primitive intersections are weighted as such. In reality, a better estimation of  child node intersection probability would be given by the relative cross section of the child/parent bounding volumes with respect to the ray direction. Given that ray directions are unknown a priori, the surface area serves well enough for applications with uniform ray distribution. This leaf condition produces high quality BVH's relative to other methods and is now generally regarded as the best method in many production ray tracers today. 
 
-\section{DAMC Performance Benchmarking and Profiling}%%Status:In Progress%%
+\section{DAMC Performance Benchmarking and Profiling}%%Status:Done%%
 
 In order to assess the current performance of DAGMC, a number of analysis models were tested and profiled using the full workflow. Each of these models was converted from a native MCNP input geometry into a solid CAD model using the mcnp2cad tool ( createed at the University of Wisconsin - Madison to perform improvements and or updates to original models intended for use with MCNP. As a result of this direct conversion, a set of analysis runs using DAGMC coupled with MCNP (DAG-MCNP) is compared to runs of the same models using native MCNP geometry.
 
@@ -197,7 +197,7 @@ Three different models were selected for this set of tests: the Frastcati Neutro
 
 \subsection{Performance Results}%%Status:Done%%
 
-\begin{figure}[H]
+\begin{table}[H]
   \centering
   \begin{tabular}{l c c c}
     \toprule \\
@@ -205,12 +205,14 @@ Three different models were selected for this set of tests: the Frastcati Neutro
     \hline \\
     FNG &  5871.92 & 22769.33 \\
     ATR &  901.68 & 8627.80 \\
-    UWNR &  8767.29 & ?? \\
+    UWNR &  8767.29 & 69429.60 \\
     \hline \\
   \end{tabular}
-\end{figure}
+\end{table}
 
-Across the board, these models lag behind native MCNP models by a factor of anywhere between 4 and 10. For smaller problems with simple geometries and relatively low numbers of histories required to reach an acceptably low level of statisitcal uncertainty, this might not pose as much of a problem to users. As problem geometries become more complicated and the number of histories larger, the discrepancy in computing time becomes of high importance when run times are taking days or weeks longer than they would using a native MCNP geometry representation.
+Across the board, these models lag behind native MCNP models by a factor of anywhere between 4 and 8. For smaller problems with simple geometries and relatively low numbers of histories required to reach an acceptably low level of statisitcal uncertainty, this might not pose as much of a problem to users. As problem geometries become more complicated and the number of histories larger, the discrepancy in computing time becomes of high importance when run times are taking days or weeks longer than they would using a native MCNP geometry representation.
+
+Included in Appendix B are tables of the native MCNP results alongisde those of DAG-MCNP. Neither a qualitative comparison or quantitative analysis of these results will be made in this work other than to state that the results appear to the result of a successful computation in either system are considered valid from the standpoint of performance comparison between native MCNP and DAG-MCNP.
 
 \subsection{Profiling}%%Status:In progress%%
 
@@ -486,6 +488,26 @@ In this case, the parameter of interest is the worst case splitting ratio. This 
 
 With this small change to the BVH builder's parameters, the timing of the high valence region becomes significantly better. This change is likely unsuitable for the general case of a tesselated surface however. A worst case splitting ratio of 1 would lead to much deeper trees which on average will take longer to traverse as well as consume much more memory for larger, more complicated models.
 
+\section{Research Proposal}%%Status:Pending%%
+
+Key points to touch on:
+\begin{itemize}
+\item optimization of time to solution: building time + traversal time
+  \begin{itemize}
+  \item estimate how long it will take to build BVH?
+  \item coarsen BVH build parameters based on estimation of traversal time
+  \end{itemize}
+\item parallel building of BVH in MOAB
+\item mesh feature detection/adaptation during BVH build
+  \begin{itemize}
+  \item will engineer a system for registering new adaptable features
+  \item each feature will have its own response/solution upon detection
+  \end{itemize}
+\item use of recent heuristics during build
+\item vectorized traversal
+\item thread-safe kernel for DAGMC and its implications
+\item doing this taking advantage of MOAB's intricate/robust mesh interface. then using its direct access to contiguous data for vectorized traversal
+\end{itemize}
 
 
 \bibliographystyle{acm}
@@ -497,10 +519,80 @@ With this small change to the BVH builder's parameters, the timing of the high v
 \item ray\_fire\_test program
 \end{itemize}
 
-\section{Appendix B: Additional Results}%%Status:Pending%%
-\begin{itemize}
-\item EmDAG test results
-\item HV WSR Scan Results
-\end{itemize}
+\section{Appendix B: Additional Results}%%Status:In Progress%%
+
+\subsection{Performance Benchmarking Results}%%Status:Done%%
+
+Below lies a set of table containing native MCNP results alongside the DAG-MCNP results for each test case used in doing the performance benchmarking of DAG-MCNP in its current state. These results are not discussed in the main body of this work as they are outside its focus, but they have been provided here for completeness and vaildation of the performance runs.
+
+\begin{table}[H]
+  \caption{Results from the FNG run using native MCNP and DAG-MCNP. Flux values are in units of  $cm^{-2}$.}
+  \label{fng_perf_results}
+  \centering
+  \begin{tabular}{l c c}
+    \toprule
+    Value & MCNP & DAG-MCNP \\
+    \hline
+    Average Flux Tally & 7.228758E-05 & 7.2278762E-05 \\
+    \hline
+    Maximum Flux Tally & 1.457239E-04 & 1.4572700E-05 \\
+    \hline
+    Minimum Flux Tally & 1.997170E-05 & 1.9971600E-05 \\
+    \hline
+    Average Rel. Error & 4.947389E-04 & 4.947389E-04 \\
+    \hline
+    Maximum Rel. Error & 8.480259E-04 & 8.480239E-04 \\
+    \hline
+    Minimum Rel. Error & 3.164050E-04 & 3.164129E-04 \\
+    \bottomrule
+  \end{tabular}  
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Results from the UWNR performance test run. Flux values are in units of $cm^{-2}$.}
+  \label{uwnr_perf_results}
+  \begin{tabular}{l c c}
+    \toprule
+    Value & MCNP & DAG-MCNP \\
+    \hline
+    Final $K_{eff}$ & 1.02055 & 1.02095 \\
+    \hline
+    Average Flux Tally & 1.95320E-01 & 1.94848E-01 \\
+    \hline
+    Maximum Flux Tally & 4.01669E-01 & 4.05195E-01 \\
+    \hline
+    Minimum Flux Tally & 5.06464E-02 & 4.87302E-02 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{l c c}
+    \toprule
+    Value & MCNP & DAG-MCNP \\
+    \hline
+    Colliision $K_{eff}$ & 9.9289E-01 &  9.9284E-01 \\
+    \hline
+    Absorption $K_{eff}$ & 9.9289E-01 & 9.9278E-01 \\
+    \hline
+    Track Length $K_{eff}$ & 9.9307E-01 & 9.9291E-01 \\
+    \hline
+    Collision/Absorption $K_{eff}$ & 9.9289E-01 & 9.9282E-01 \\
+    \hline
+    Absorption/Track Length $K_{eff}$ & 9.9293E-01 & 9.9280E-01 \\
+    \hline
+    Collision/Track Length $K_{eff}$ & 9.9291E-01 & 9.9285E-01 \\
+    \hline 
+    Collision/Absorption/Track Length $K_{eff}$ & 9.9291E-01 & 9.9283E-01 \\
+    \bottomrule    
+  \end{tabular}
+\end{table}
+
+\subsection{Additional EmDAG Test Results}%%Status:Pending%%
+
+\subsection{Additional HV WSR Scan Results}%%Status:Pending%%
+
 
 \end{document}
