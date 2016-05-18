@@ -10,6 +10,7 @@
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{booktabs}
+\usepackage{caption}
 \usepackage{epsfig}
 \graphicspath{{./images/}{../images/}{./}}
 \usepackage[font={small,it}]{caption}
@@ -152,30 +153,39 @@ This section will go over several of the partitioning hueristics and leaf condit
 
 \subsection{Median Splitting}%%Status:Pending%%
 
-This method splits the current partition in half for a given dimension. In the case of bounding boxes this is typically done by splitting using the axis (oriented or axis-aligned) with the largest extent to matain bounding boxes which are as cubic as possible for reasons described in the section above on octrees.
+This method splits the current node in half for each dimension. In the case of bounding boxes this is typically done by splitting using the axis (oriented or axis-aligned) with the largest extent to matain bounding boxes which are as cubic as possible for reasons described in the section above on octrees.
 
-\subsection{Median Snap Splitting}%%Status:Pending%%
+\subsection{Median Snap Splitting}%%Status:In Progress%%
+
+This method of node splitting is similar to median splitting but the median plane is moved such that it intersects the vertex nearest to it. This is intended to minimize overlap between bounding volumes or to reduce reference splitting/duplication in other hierarchies.
+
 
 \subsection{Subdivision Sample Splitting}%%Status:Done%%
 
-This methos is similar to the median splitting method, but samples serveral candidate locations along the dimension to be divided. This can provide for better splitting over the entities contained by the parent node. The idea here is that even space is being split evenly the entities may not be, resulting is unbalanced trees with more bounding volumes than necessary for good taversal performance. This conecpt is typically a concern of bounding volume hierarchies as opposed to KDTrees or Bounding Interval Hierarchies. 
+In this splitting method serveral candidate locations are sampled along each of the node dimensions. This can provide for better splitting over the entities contained by the parent node. The idea here is that while space is being split evenly the entities may not be, resulting is unbalanced trees with more bounding volumes than necessary for good taversal performance. This is typically a concern of bounding volume hierarchies as opposed to KDTrees or Bounding Interval Hierarchies. This method obviously requires more time than the median splitting method but may result in higher quality hierarchies.
 
+\subsection{Vertex Median}%%Status:In Progress%%
 
-\subsection{Vertex Median}%%Status:Pending%%
+This method is even more time consuming than the subdivision sampling method . In vertex median splitting, the vertices contained by the node are ordered along the splitting axis currently in use from lowest to highest. Planes are then sampled at even intervals \textit{along the number of vertices} not the space the vertices occupy. In this way if many vertices are grouped at one end of the axis, more of the sample planes will be located there as the sampling will be more likely to select planes intersecting vertices in that area. 
 
-\subsection{Vertex Sample}%%Status:Pending%%
+\subsection{Vertex Sample}%%Status:In Progress%%
+
+This method relies heavily on splitting conditions by randomly sampling vertices for planes to go through. 
 
 \subsection{Surface Area Heuristic}%%Status:Done%%
 
 This heuristic falls under the category of leaf conditions. The surface area heuristic uses the surface area of child bounding volumes relative to their parent as an approximation for the probability that the child will be visited after the parent volume. The explicit form of the surface area heuristic is \cite{sah_paper}
 
+
+\begin{figure}
+  \caption{Formula of the surface area heuristic.}
+  \label{SAH}
 \begin{centering}
-\begin{align*}
-%%   %  \caption{Formula of the surface area heuristic.}
-%%   % \label{SAH}
+  \begin{align*}
     C = & \,C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i} \\ C_{t} - & \,cost\, of\, traversal\, to\, child\, nodes \\ C_{i} - & \, cost\, of\, primitive\, intersection\, check\, \\ SA() - & \, gives\, surface\, area\, of\, bounding\, volume \\ B_{L} - & \, bounding\, volume\, of\, left\, child \\ P_{L} - & \, primitives\, contained\, by\, the\, left\, child  \\ B_{R} - & \, bounding\, volume\, of\, right\, child \\ P_{R} - & \, primitives\, contained\, by\, the\, right\, child \\ B - & \, parent\, bounding\, volume
-\end{align*}
+  \end{align*}
 \end{centering}
+\end{figure}
 
 So the cost of each split done in the tree is assessed as the cost of an extra traversal downward in the tree, as well as the cost of the intersection checks for each primitive contained by the child nodes. Both of the children will not always be intersected by a ray however so the cost is then adjusted by some estimation of the probability that a ray will intersect with each child. In the surface area heuristic this probability is estimated as the surface area of the child bounding volume divided by the surface area of the parent volume and the cost of the primitive intersections are weighted as such. In reality, a better estimation of  child node intersection probability would be given by the relative cross section of the child/parent bounding volumes with respect to the ray direction. Given that ray directions are unknown a priori, the surface area serves well enough for applications with uniform ray distribution. This leaf condition produces high quality BVH's relative to other methods and is now generally regarded as the best method in many production ray tracers today. 
 
