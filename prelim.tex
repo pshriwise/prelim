@@ -416,6 +416,19 @@ While the performance of EmDAG greatly surpases that of DAGMC, it does not come 
 
 \subsection{Limitations of the EmDAG system}%%Status:In Progress%%
 
+While the implementation of Embree in DAGMC showed a vast improvement in performance relative to the standard DAGMC implementation, several problems were encountered during the proess. This is not surprising when repurposing a ray tracing kernal for an unintended application.
+
+One of these problems is the presence of lost particles in a watertight model. The FNG model EmDAG was tested on is a fully sealed model via the make\_watertight algorithm. A fully sealed model is one in which every volume is topologically sealed such that there are no gaps between surfaces or adjacent volumes. As a result, DAGMC is able to robustly track particles through such a model with no lost particles. While the lost particle rate for the EmDAG FNG test relatively low, they should not occur at all. After a considerable amount of investigation as to the nature of these lost particles, their cause was determined to be systematic problem not encountered in the nested volume cases. In the DAGMC workflow, a required step for a watertight model is to imprint and merge the surfaces within the CAD system before faceting the model. Imprinting is the process by which CUBIT, the CAD software used to generate DAGMC models, makes surfaces and curves that are coincident in space be fully coincident. This process is accomplished by splitting entities into their coincident and non-coincident parts. The merging process then topologically combines these coincident parts into single entities such that the single entities are topologically adjacent to all entities bounding the original set of entities that were merged into one. The result of these steps is non-manifold model with surfaces shared between neighboring volumes. \cite{smith_thesis}
+
+
+\begin{figure}
+  \caption{Example of two adjacent volumes being imprinted and merged.}
+\end{figure}
+
+
+
+
+
 \begin{itemize}
 \item Large Models
 \item Lost particles due to single to double conversion
@@ -424,9 +437,11 @@ While the performance of EmDAG greatly surpases that of DAGMC, it does not come 
 
 \section{High Valence Vertex Study}%%Status:Done%%
 
-One of the known bottlenecks of DAGMC is ray tracing performance degredation in regions with high-valence vertices. High valence vertices are defined as those connected to an unusally high number of triangle entities. This region of the mesh usually takes on a fan-like shape as seen in the figure below. These regions typically occur in regions where a planar surface is bounded by a circular curve, which is quite common in the faceting scheme used to produce DAGMC meshes. This faceting scheme (which comes from ACIS libraries underlying the CUBIT/Trelis graphics engine) is designed to produce the smallest number of triangles possible to represent the model within the representation tolerance specified in the surface mesh generation preprocessing step (dagmc\_preproc). Generally fewer triangles are better as even the ideal ray tracing acceleration structure queries for a given mesh scale as $O(log(N))$. However, even with fewer triangles undesirable configurations of mesh can impede performance. This suspicion was confirmed in a set of tests administered by Steve Jackson in 2011.
 
-\textbf{This section needs elaboration.}
+One of the known bottlenecks of DAGMC is ray tracing performance degredation in regions with high-valence vertices. High valence vertices are defined as those connected to an unusally high number of triangle entities. This region of the mesh usually takes on a fan-like shape as seen in the figure below. These regions typically occur in regions where a planar surface is bounded by a circular curve, which is quite common in the faceting scheme used to produce DAGMC meshes. This faceting scheme (which comes from ACIS libraries underlying the CUBIT/Trelis graphics engine) is designed to produce the smallest number of triangles possible to represent the model within the representation tolerance specified in the surface mesh generation preprocessing step (dagmc\_preproc). Generally fewer triangles are better as even the ideal ray tracing acceleration structure queries for a given mesh scale as $O(log(N))$. However, even with fewer triangles undesirable configurations can impede performance. This suspicion was confirmed in a set of tests administered by Steve Jackson in 2011.
+
+
+\textbf{Insert SJ tests here and disucss.}
 
 \begin{figure}[H]
   \centering
@@ -594,6 +609,5 @@ Below lies a set of table containing native MCNP results alongside the DAG-MCNP 
 \subsection{Additional EmDAG Test Results}%%Status:Pending%%
 
 \subsection{Additional HV WSR Scan Results}%%Status:Pending%%
-
 
 \end{document}
