@@ -324,7 +324,7 @@ The native MCNP runs were generally the fastest among the test problems with the
 \begin{table}[H]
   \small
   \begin{center}
-    \caption{Nested Spheres Tally Results. Flux tally units are $cm^{-2}$. Energy tally units are MeV/g.}
+    \caption{Nested Spheres Tally Results. Flux tally units are $cm^{-2}$. Energy tally units are MeV/g. Note: result comparisons of other test cases can be found in Appendix B.}
     \label{nestedspheres}
     \begin{tabular}{lccc}
       \toprule
@@ -354,7 +354,7 @@ The native MCNP runs were generally the fastest among the test problems with the
 %%\vspace{-0.2cm}
 \end{table}
 
-Note: result comparisons of the other test cases can be found in Appendix B.
+
 
 The results of the single-volume test cases for native MCNP differ slightly from the agreeing tally results from the DAGMC-based systems. This is not surprising as DAGMC is known to report slightly different results from native MCNP and this was not necessarily the concern of this study. However, differences in the tally results between DAG-MCNP and EmDAG-MCNP are present in the nested spheres model. This results in a small difference in the flux tally for cell 3 as can be seen in Table \ref{nestedspheres}. By examining the number of particle tracks in each cell, it can be determined that this discrepancy is caused by a single particle ending in EmDAG-MCNP near a surface of cell 2 while in DAG-MCNP the particle crosses into cell 3 before abruptly dying though it still contributes slightly to the tally in that cell. It is believed that this difference in tally result is the result of a systematic difference between Embree and MOAB's ray fire conventionality rather than Embree's a result of the double to single floating point conversion of the model that occurs when using EmDAG.
 
@@ -429,8 +429,7 @@ In figure \ref{emdag-lost-particles}
   \label{emdag-lost-particles}
   \end{figure}
 
-In Brandon Smith's thesis Robust Particle Tracking and Advanced Geometry for Monte Carlo Radiation Transport \cite{smith_thesis} there is a detailed description of the different scenarios encountered in tracking particles through a surface mesh representation of a geometric model. 
-
+In Brandon Smith's thesis Robust Particle Tracking and Advanced Geometry for Monte Carlo Radiation Transport \cite{smith_thesis} there is a detailed description of the different problematic scenarios encountered in tracking particles through a surface mesh representation of a geometric model. Briefly mentioned in this chapter is the possibility of a lost particle due to numerical error in the particle's position perpindicular to the particle's trajectory. Lost paticles caused by this pathology are not handled however as the double floating point representation does not allow the particle position to change enough for this case to occur. In EmDAG, howeve, this case is now vulnerable due to the constant conversion from single to double precision values.
 
 \begin{figure}
   \caption{Example of two adjacent volumes being imprinted and merged.}
