@@ -426,7 +426,7 @@ In figure \ref{emdag-lost-particles}
 
 \begin{figure}
   \begin{centering}
-  \caption{Lost particle process in EmDAG for overlapping, imprinted surfaces.}
+  \caption{\textbf{A)} The initial scenario of the lost particle. The particle's trajectory is such that it intersects with the boundary between surfaces A and B. The correct continuation of the particle into volume C is depicted as a dashed line. \textbf{B)} An intersection with surface A is found though either surface A or B are equally valid. The particles position is then updated to its intersection with the boundary of surfaces A and B. The particle then logically moves into volume B. \textbf{C)} Upon establishment of the particle in volume B the Monte Carlo code requests the distance to next surface intersection. The particles position and direction are converted from double to single precision. The small change in the particle's position places it outside of volume B and the trajectory is such that an intersection is not found. At this point the particle is considered lost.}
   \label{emdag-lost-particles}
   \includegraphics[scale=0.7]{emdag_lost.png}
   \end{centering}
