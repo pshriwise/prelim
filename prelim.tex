@@ -425,8 +425,11 @@ Some detailed debugging of this process revealed that this occurs in a systemati
 In figure \ref{emdag-lost-particles} 
 
 \begin{figure}
+  \begin{centering}
   \caption{Lost particle process in EmDAG for overlapping, imprinted surfaces.}
   \label{emdag-lost-particles}
+  \includegraphics[scale=0.7]{emdag_lost.png}
+  \end{centering}
   \end{figure}
 
 In Brandon Smith's thesis Robust Particle Tracking and Advanced Geometry for Monte Carlo Radiation Transport \cite{smith_thesis} there is a detailed description of the different problematic scenarios encountered in tracking particles through a surface mesh representation of a geometric model. Briefly mentioned in this chapter is the possibility of a lost particle due to numerical error in the particle's position perpindicular to the particle's trajectory. Lost paticles caused by this pathology are not handled however as the double floating point representation does not allow the particle position to change enough for this case to occur. In EmDAG, howeve, this case is now vulnerable due to the constant conversion from single to double precision values.
