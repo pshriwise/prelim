@@ -214,11 +214,11 @@ Across the board, these models lag behind native MCNP models by a factor of anyw
 
 Included in Appendix B are tables of the native MCNP results alongisde those of DAG-MCNP. Neither a qualitative comparison or quantitative analysis of these results will be made in this work other than to state that the results appear to the result of a successful computation in either system are considered valid from the standpoint of performance comparison between native MCNP and DAG-MCNP.
 
-\subsection{Profiling}%%Status:In progress%%
+\subsection{Profiling}%%Status:Done%%
 
-As a part of this study, these runs were repeating using the profiling tool, Callgrind, to determine where this additional time is being spent. Because the geometry representation and geometry query system is the only difference between the two models, it is expected that the time is being spent there, but it is parctical to confirm this and useful to know more specifically where in the query system this is occuring. From this inference, all callgraphs are displayed with the MCNP history\_ subroutine at the top. It is inside this subroutine that MCNP calls upon DAGMC to fulfill geometric queries about the model. It should also be noted that for these profiling runs the fcad file produced by a previous DAGMC run was used. DAGMC produces this file after completing the BVH build for a given geometry. Using this file keeps the profiling information from being obfuscated by the building process of the BVH in MOAB and allows DAG-MCNP to move straight to particle transport after loading the geometry and BVH from the fcad file. 
+As a part of this study, these runs were repeating using the profiling tool, Callgrind, to determine where is being spent in both the DAGMC and native runs. Because the geometry representation and query system is the only difference between the two models, it is expected that the time is being spent there, but it is parctical to confirm this and useful to know more specifically where in the query system this is occuring. From this inference, all callgraphs are displayed with the MCNP history\_ subroutine at the top. It is inside this subroutine that MCNP calls upon DAGMC to fulfill geometric queries about the model. It should also be noted that for these profiling runs the fcad file produced by a previous DAGMC run was used. DAGMC produces this file after completing the BVH build for a given geometry. Using this file keeps the profiling information from being obfuscated by the building process of the BVH in MOAB and allows DAG-MCNP to move straight to particle transport after loading the geometry and BVH from the fcad file. 
 
-Below, a callgraph for a profiling run of FNG for 1e7 histories is provided. In this callgraph we can see that the time spent is dominated by MOAB's ray tracing process used by DAGMC to track particles as they move through the geometry totaling about 60\% of the runtime while in native MCNP the relative time spent on this process is reduced to ~5\% with the majority of the time being spent in calculating cross sections under the acetot\_ subroutine. 
+Below, a callgraph for a profiling run of FNG for 1e7 histories is provided. In this callgraph it is shown that the time spent in transport is dominated by MOAB's ray tracing process used by DAGMC to track particles as they move through the geometry. About 60\% of the runtime is spent in firing rays while in native MCNP the relative time spent on this process is reduced to ~5\% with the majority of the time spent in calculating cross sections under the acetot\_ subroutine. 
 
 \begin{figure}[H]
   \centering
@@ -240,7 +240,7 @@ Again, it should be addressed that in this case a pre-built BVH was include in t
 
 \section{Linking DAGMC with Intel's Embree}%%Status:In Progress%%
 
-As mentioned in the previous section, a surprising number of MOAB-related database calls appear in the profiling of a DAGMC run. MOAB is a powerful tool for mesh generation, manipulation, and storage, but it was postulated that the implementation of a ray tracer in the context of a mesh database design inherently comes with too much overhead for the implementation of an efficient ray tracer. As a result, an attempt at the replacement of MOAB's ray tracing system with a lean, highly-optimized ray tracer was made. Recently, Intel has made an effort to produce just such a CPU-based raytracer called Embree \cite{embree}. In both construction and traversal of BVHs, Embree takes advantage of many of the latest developments in BVH research at a programming level, and takes advantage of chipset architectures via vectorization at an implementation level. The combination of these effects leads to powerful raytracing tool in terms of performance. As a result of these factors and the effort that was put into producing Embree, it was chosen as the tool applied in DAGMC to satisfy geometric queries for MCNP. The resulting tool will be reffered to as EmDAG for the remainder of this discussion.
+As mentioned in the previous section, a surprising number of MOAB-related database calls appear in the profiling of a DAGMC run. MOAB is a powerful tool for mesh generation, manipulation, and storage, but it was postulated that the implementation of a ray tracer in the context of this database design inherently comes with too much overhead for the implementation of an efficient ray tracer. As a result, an attempt at the replacement of MOAB's ray tracing system with a lean, highly-optimized ray tracer was made. Recently, Intel has made an effort to produce just such a CPU-based raytracer called Embree \cite{embree}. In both construction and traversal of BVHs, Embree takes advantage of many of the latest developments in BVH research at a programming level, and takes advantage of chipset architectures via vectorization at an implementation level. The combination of these effects leads to powerful raytracing tool in terms of performance. As a result of these factors and the effort that was put into producing Embree, it was chosen as the tool applied in DAGMC to satisfy geometric queries for MCNP. The resulting tool will be reffered to as EmDAG for the remainder of this discussion.
 
 \subsection{Transferring DAGMC Model's to Embree Scenes}%%Status:Done%%
 
@@ -355,7 +355,6 @@ The native MCNP runs were generally the fastest among the test problems with the
 \end{table}
 
 
-
 The results of the single-volume test cases for native MCNP differ slightly from the agreeing tally results from the DAGMC-based systems. This is not surprising as DAGMC is known to report slightly different results from native MCNP and this was not necessarily the concern of this study. However, differences in the tally results between DAG-MCNP and EmDAG-MCNP are present in the nested spheres model. This results in a small difference in the flux tally for cell 3 as can be seen in Table \ref{nestedspheres}. By examining the number of particle tracks in each cell, it can be determined that this discrepancy is caused by a single particle ending in EmDAG-MCNP near a surface of cell 2 while in DAG-MCNP the particle crosses into cell 3 before abruptly dying though it still contributes slightly to the tally in that cell. It is believed that this difference in tally result is the result of a systematic difference between Embree and MOAB's ray fire conventionality rather than Embree's a result of the double to single floating point conversion of the model that occurs when using EmDAG.
 
 Finally, a full-scale test of EmDAG was conducted on the FNG model using the same volumetric source as in the performance benchmarking tests described earlier. Initially this model failed quickly due to lost particles. This was surprising as the model is expected to have the same watertight fidelity that it does when using DAGMC. In order to allow the run to complete, the number of allowed lost particles was increased to the number of the sources particles being run (1e8). The justification for this allowance being that if the lost particle rate is small enough, overall performace and results of the run would still provide a viable comparison of the two systems. In the end, the model lost 255 particles in 1e8 histories. This rate isn't expected to change the perfomance or result of the overall run in a significant way. A comparison of the FNG run using EmDAG-MCNP to the native MCNP model as well as DAG-MCNP is found in Table \ref{fngemdag}.
@@ -398,8 +397,6 @@ While the performance of EmDAG greatly surpases that of DAGMC, it does not come 
   \end{center}
 \end{figure}
 
-
-
 \begin{figure}[H]
   \small
   \begin{center}
@@ -408,7 +405,6 @@ While the performance of EmDAG greatly surpases that of DAGMC, it does not come 
     \caption{The FNG faceted model with (left) and without (right) the length tolerance applied.}
     \label{fng-faceted-models}
   \end{center}
-
 
 \end{figure}
 
@@ -445,7 +441,7 @@ In Brandon Smith's thesis Robust Particle Tracking and Advanced Geometry for Mon
 \item Limited control over BVH building relative to MOAB
 \end{itemize}
 
-\section{High Valence Vertex Study}%%Status:Done%%
+\section{High Valence Vertex Study}%%Status:In Progress%%
 
 
 One of the known bottlenecks of DAGMC is ray tracing performance degredation in regions with high-valence vertices. High valence vertices are defined as those connected to an unusally high number of triangle entities. This region of the mesh usually takes on a fan-like shape as seen in the figure below. These typically occur in regions in which a planar surface is bounded by a circular curve. These regions are quite common in the faceting scheme used to produce DAGMC meshes. This faceting scheme (which comes from ACIS libraries underlying the CUBIT/Trelis graphics engine) is designed to produce the smallest number of triangles possible to represent the model within the representation tolerance specified in the surface mesh generation preprocessing step (dagmc\_preproc). Generally fewer triangles are better as even the ideal ray tracing acceleration structure queries for a given mesh scale as $O(log(N))$. However, even with fewer triangles undesirable configurations can impede performance.
@@ -453,9 +449,6 @@ One of the known bottlenecks of DAGMC is ray tracing performance degredation in 
 A study by Steve Jackson in 2011 on the performance of the MOAB ray tracer with decreasing faceting tolerance (similar to the ones above) revealed a sharp degredation in performance with decreasing faceting tolerance and increasing number of triangles. A similar set of models was used as in previous ray fire tests: a sphere, the slotted sphere, and the implicit compliment of an ITER model. The slotted sphere and ITER model are known to contain high valence regions.
 
 This suspicion was confirmed in a set of tests administered by Steve Jackson in 2011.
-
-
-
 
 \textbf{Insert SJ tests here and disucss.}
 
