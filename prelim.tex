@@ -521,7 +521,27 @@ In Brandon Smith's thesis Robust Particle Tracking and Advanced Geometry for Mon
 \item Limited control over BVH building relative to MOAB
 \end{itemize}
 
-\section{Research Proposal}%%Status:Pending%%
+\section{Research Proposal}%%Status:In Progress%%
+
+In order to make CAD-based Monte Carlo competitive with native codes it is clear that geometry queries must be satistied much more quickly than the ray tracing kernel in DAGMC can provide. Investigation into the shortcomings of the DAGMC ray tracing process have revealed various opportunities for improvement. One in implementation and the other in application.
+
+One aspect of these improvements rely on removing the ray tracing kernel from implementation restrictions associated with it being written in the context of a database system and being confined to construction of those database elements. Separation of the kernel allows for a simplified and streamlined system which may be allowed to take advantage of any set of optimizations available in the world of computing. The coupling of DAGMC to Embree provides good evidence of the combination of these assertions. Embree, being an entirely standalone software tool, is inherently free of the databse context in which MOAB's ray tracing tools exist. Additionally, Embree takes advantage of hardware acceleration techniques in the form of single instruction multiple data (SIMD) avilable on most machines.
+
+
+\begin{figure}[H]
+  \centering
+  \caption{A rough estimation of the number of ray queries in a typical rendering vs. in the FNG model runs. The number of pixels per ray was determined by common practice in rendering.}
+  \label{render_ray_estimate}
+  \[ (8\, rays\, per\, pixel)\, x (1024 x 1080\, pixels) = 16.6M \, rays \]
+\end{figure}
+
+The Embree ray tracing kernel while very powerful is still oriented toward a rendering application in which a fixed number of primary rays is required to resolve each pixel's color with some secondary rays resulting as dictated by the physics of the model. In Monte Carlo, a significantly higher number of ray queries are made. In order to obtain a statistically valid anser to the problem the number of primary rays is generally several times higher and the average number of secondary ray queries per primary ray even more so. In radiation transport, interactions may occur at any point in space (depending on the virtual material which occupys that space) rather than nearly always at the interface of object. This increased interaction frequency leads to a much larger number of secondary ray queries than one might or could see in a rendering process. In either case, the time to solution (render) can be roughly described by the time needed to construct the necesary acceleration structures and satisfy the subsequent ray queries.
+
+\begin{figure}
+  \centering
+  \caption{General equation for the time to solution of a ray tracing based process.}
+\end{figure}
+
 
 
 Outline:
