@@ -540,9 +540,20 @@ The Embree ray tracing kernel while very powerful is still oriented toward a ren
 \begin{figure}
   \centering
   \caption{General equation for the time to solution of a ray tracing based process.}
+  \label{tts_eq}
+  \begin{align*}
+    tts = & C + T_{B} + \sum_{}^{N_{r}} T_{T} \\
+    tts = & C + T_{B} + \sum_{}^{N_{r}} T_{T}(q,\ldots) \\
+    q(T_{B}) & \rightarrow T_{T}(T_{B}) \rightarrow T_{T} \propto \frac{1}{{T_{B}}^{x}} \rightarrow x \geq 0 \\
+    tts = & C + T_{B} + \sum_{}^{N_{r}} T_{T}(T_{B},\ldots) \\
+    tts - & time\, to\, solution \\
+    C - & cost\, of\, other\, operations \\
+    T_{B} - & acceleration\, datastructure\, build\, time \\
+    T_{T} - & average\, traversal\, time \\
+    N_{r} - & rays\, required\, for\, solution \\
+    q - & acceleration\, datastructure\, quality \\
+  \end{align*}
 \end{figure}
-
-
 
 \subsection{Outline}
 
@@ -572,8 +583,8 @@ The Embree ray tracing kernel while very powerful is still oriented toward a ren
   \item Use Andrew Turner presentation to project results in context if I'm feeling confident
   \end{itemize}
 \end{itemize}
-   
-   
+
+
 Key points to touch on:
 \begin{itemize}
 \item optimization of time to solution: building time + traversal time
