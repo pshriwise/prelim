@@ -544,23 +544,34 @@ The Embree ray tracing kernel while very powerful is still oriented toward a ren
 
 
 
-Outline:
-- Reiterate the current state
-   - Moving outside the database context allows for more freedom of ray tracing implementation, optimization
-   - Facet generation can vary largely and has a significant impact on BVH/OBB performance
-- New take on ray tracing
-   - Rendering applications of ray tracing do not fret over these small issues because confronting them would significantly increase their time to render/time to solution
-   - Monte Carlo's time to solution is so much longer that the time spent in optimizing a BVH build becomes negligible compared to the additional time spent firing rays (introduce basic equation for tts)
-   - Justified by the fact that we fire more rays in Monte Carlo than in a rendering process (rough estimate of that)
-- Proposed solution
-   - implementation of a BVH builder supporting many different splitting schemes and SAH leaf condition heuristic
-   - BVH builder will include a registry and solution set for known difficult-to-trace mesh/geometry features
-   - implementation of vectorized ray tracing traversal, taking advantage of MOAB's ability to provide contiguous memory of tag data to create hierarchy
-   - thread-safe kernel which can be used independent of MOAB instance
-   - investigation of available speedup in using different types to define BVH nodes
-- Estimate of performance improvement
-   - based on current number of ray fires for a sample problem, vectorized implementation, lower precision types, etc.
-   - Use Andrew Turner presentation to project results in context if I'm feeling confident
+\subsection{Outline}
+
+\begin{itemize}
+\item Reiterate the current state
+  \begin{itemize}
+  \item Moving outside the database context allows for more freedom of ray tracing implementation, optimization
+  \item Facet generation can vary largely and has a significant impact on BVH/OBB performance
+  \end{itemize}
+\item New take on ray tracing
+  \begin{itemize}
+  \item Rendering applications of ray tracing do not fret over these small issues because confronting them would significantly increase their time to render/time to solution
+  \item Monte Carlo's time to solution is so much longer that the time spent in optimizing a BVH build becomes negligible compared to the additional time spent firing rays (introduce basic equation for tts)
+  \item Justified by the fact that we fire more rays in Monte Carlo than in a rendering process (rough estimate of that)
+  \end{itemize}
+\item Proposed solution
+  \begin{itemize}
+  \item implementation of a BVH builder supporting many different splitting schemes and SAH leaf condition heuristic
+  \item BVH builder will include a registry and solution set for known difficult-to-trace mesh/geometry features
+  \item implementation of vectorized ray tracing traversal, taking advantage of MOAB's ability to provide contiguous memory of tag data to create hierarchy
+  \item thread-safe kernel which can be used independent of MOAB instance
+  \item investigation of available speedup in using different types to define BVH nodes
+  \end{itemize}
+\item Estimate of performance improvement
+  \begin{itemize}
+  \item based on current number of ray fires for a sample problem, vectorized implementation, lower precision types, etc.
+  \item Use Andrew Turner presentation to project results in context if I'm feeling confident
+  \end{itemize}
+\end{itemize}
    
    
 Key points to touch on:
