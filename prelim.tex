@@ -535,9 +535,9 @@ One aspect of these improvements rely on removing the ray tracing kernel from im
   \[ (8\, rays\, per\, pixel)\, x (1024 x 1080\, pixels) = 16.6M \, rays \]
 \end{figure}
 
-The Embree ray tracing kernel while very powerful is still oriented toward a rendering application in which a fixed number of primary rays is required to resolve each pixel's color with some secondary rays resulting as dictated by the physics of the model. In Monte Carlo, a significantly higher number of ray queries are made. In order to obtain a statistically valid anser to the problem the number of primary rays is generally several times higher and the average number of secondary ray queries per primary ray even more so. In radiation transport, interactions may occur at any point in space (depending on the virtual material which occupys that space) rather than nearly always at the interface of object. This increased interaction frequency leads to a much larger number of secondary ray queries than one might or could see in a rendering process. In either case, the time to solution (render) can be roughly described by the time needed to construct the necesary acceleration structures and satisfy the subsequent ray queries.
+The Embree ray tracing kernel while very powerful is still oriented toward a rendering application in which a fixed number of primary rays is required to resolve each pixel's color with some secondary rays resulting as dictated by the physics of the model. In Monte Carlo, a significantly higher number of ray queries are made. In order to obtain a statistically valid anser to the problem the number of primary rays is generally several times higher and the average number of secondary ray queries per primary ray even more so. In radiation transport, interactions may occur at any point in space (depending on the virtual material which occupys that space) rather than nearly always at the interface of object. This increased spatial interaction frequency leads to a much larger number of secondary ray queries ($O(100)$)than one might or could see in a rendering process. In either case, the time to solution (render) can be roughly described by the time needed to construct the necesary acceleration structures and satisfy the ray queries.
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \caption{General equation for the time to solution of a ray tracing based process.}
   \label{tts_eq}
@@ -554,6 +554,11 @@ The Embree ray tracing kernel while very powerful is still oriented toward a ren
     q - & acceleration\, datastructure\, quality \\
   \end{align*}
 \end{figure}
+
+Time it takes to perform the ray tracing queries is partially dependent upon the quality of the acceleration structure being built. The better the quality of these structures is the faster the ray queries will be satisfied and the solution reached. The quality of the accceleration datastructure is also dependent on the amount of time spent in building the datastructures. Presumably the more time spends building the datastructure, the better its quality. Typically, rendering tools focus on building a generalized data structure with respect to the mesh its operating on without consideration of the more subtle features of the mesh and how the datastructure's quality might be improved. This is commonly because the time spent in improving the quality of the datastructure is overly costly compared to the total amount of time saved when performing the ray queries. In the scenario of Monte Carlo, it has been established that many times the number of rays are being fired in order to obtain the solution several times over. In this case the saved time in performing necessary ray queries may then become significant, and that the extra time spend in building the acceleration datastructure to increase its quality becomes favorable. The trade offs of these costs/savings are difficult to quantify in that (as is the case for most ray tracing performance evaluations) they vary greatly model to model. However, the severe degredation in ray fire times due to mesh features produced by the surface mesh generation algorithm on which DAGMC relies leads one to believe that adressing such features and any others discovered in the future is worthwhile.
+
+
+
 
 \subsection{Outline}
 
