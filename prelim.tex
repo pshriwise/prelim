@@ -184,9 +184,25 @@ This heuristic falls under the category of leaf conditions. The surface area heu
 
 So the cost of each split done in the tree is assessed as the cost of an extra traversal downward in the tree, as well as the cost of the intersection checks for each primitive contained by the child nodes. Both of the children will not always be intersected by a ray however so the cost is then adjusted by some estimation of the probability that a ray will intersect with each child. In the surface area heuristic this probability is estimated as the surface area of the child bounding volume divided by the surface area of the parent volume and the cost of the primitive intersections are weighted as such. In reality, a better estimation of  child node intersection probability would be given by the relative cross section of the child/parent bounding volumes with respect to the ray direction. Given that ray directions are unknown a priori, the surface area serves well enough for applications with uniform ray distribution. This leaf condition produces high quality BVH's relative to other methods and is now generally regarded as the best method in many production ray tracers today.
 
-\subsection{Triangle Splitting}%%Status: Pending%%
+\subsection{Triangle Splitting/Duplication}%%Status: Done%%
 
-\subsection{Spatial BVH Splitting}%%Status: Pending%%
+Triangle splitting has been used in several ways to enhance acceleration datastructure quality. Some of these methods involve splitting triangles as the BVH is being built while other methods attemp to pre-emptively split triangle so that node splitting occurs in a more advantageous way for the eventaul building method being used.
+
+\subsubsection{Build time splitting}%%Status: Done&&
+
+It often occurs that a candidate splitting plane intersects with underlying triangle primitives. These triangles are then placed in one child set or the other by whatever heuristic the building method deems appropriate. By definition a node must spatially contain all primitives within its set, thus leading to node overlaps. This is typically seen in the case of BVH structures.
+
+Another option in handling this scenario is to duplicate any primitive references intersecting the splitting plane. This is typically done in more spatially oriented splitting methods such at KD-trees or OctTrees. This allows for non-overlapping nodes, but it also requires an increased memory footprint to store the additional references.
+
+\subsubsection{Pre-emptive triangle splitting}%%Status: Done %%
+
+There have been several cases in which pre-emptively splitting triangles has been shown to improve the quality of acceleration datastructures for surface meshes with have a large variation in triangle sizes. Like the one introduced Ernst and Griener \cite{ernst_2007} these methods typically attempt to smooth regions in which the triangle density varies greatly by splitting large triangles whose area is greater than a predetermined size. These methods have not been shown to work reliably, however, and can acutally end up decreasing traversal performance.
+
+\subsubsection{Triangle splitting and mesh fidelity}%%Status: Done%%
+
+In the application of radiation transport, it is typically best to avoid operations which alter the original mesh is possible. In particular operations which occur during run time and are opaque to the user. However, splitting of triangles shouldn't have an impact on the fiedlity of the model being used in relation to the solid geometry it represents.
+
+\subsection{Spatial BVH Splitting}%%Status: Pending%
 
 Blah blah blah its the best we should use it.
 
@@ -201,6 +217,8 @@ It is often the case that even using the best possible splitting method to gener
 \subsection{Local Tree Rotations}%%Status: Pending%%
 
 \subsection{Node Removal/Insertion}%%Status: Pending%%
+
+\subsection{Treelet Based Optimization}%%Status: Pending%%
 
 \section{DAMC Performance Benchmarking and Profiling}%%Status:Done%%
 
@@ -541,7 +559,6 @@ In order to make CAD-based Monte Carlo competitive with native codes it is clear
 
 One aspect of these improvements rely on removing the ray tracing kernel from implementation restrictions associated with it being written in the context of a database system and being confined to construction of those database elements. Separation of the kernel allows for a simplified and streamlined system which may be allowed to take advantage of any set of optimizations available in the world of computing. The coupling of DAGMC to Embree provides good evidence of the combination of these assertions. Embree, being an entirely standalone software tool, is inherently free of the databse context in which MOAB's ray tracing tools exist. Additionally, Embree takes advantage of hardware acceleration techniques in the form of single instruction multiple data (SIMD) avilable on most machines.
 
-
 \begin{figure}[H]
   \centering
   \caption{A rough estimation of the number of ray queries in a typical rendering vs. in the FNG model runs. The number of pixels per ray was determined by common practice in rendering.}
@@ -609,7 +626,6 @@ To address the issues of the implementation context and add mesh adaptive qualit
 \end{itemize}
 
 \subsection{Ray Generalization in Radiation Transport}%%Status:Pending%%
-
 
 Key points to touch on:
 \begin{itemize}
