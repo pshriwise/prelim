@@ -186,7 +186,7 @@ So the cost of each split done in the tree is assessed as the cost of an extra t
 
 \subsection{Triangle Splitting/Duplication}%%Status: Done%%
 
-Triangle splitting has been used in several ways to enhance acceleration datastructure quality. Some of these methods involve splitting triangles as the BVH is being built while other methods attemp to pre-emptively split triangle so that node splitting occurs in a more advantageous way for the eventaul building method being used.
+Triangle splitting has been used in several ways to enhance acceleration datastructure quality. Some of these methods involve splitting triangles as the BVH is being built while other methods attemp to preemptively split triangle so that node splitting occurs in a more advantageous way for the eventaul building method being used.
 
 \subsubsection{Build time splitting}%%Status: Done&&
 
@@ -194,9 +194,9 @@ It often occurs that a candidate splitting plane intersects with underlying tria
 
 Another option in handling this scenario is to duplicate any primitive references intersecting the splitting plane. This is typically done in more spatially oriented splitting methods such at KD-trees or OctTrees. This allows for non-overlapping nodes, but it also requires an increased memory footprint to store the additional references.
 
-\subsubsection{Pre-emptive triangle splitting}%%Status: Done %%
+\subsubsection{Preemptive triangle splitting}%%Status: Done %%
 
-There have been several cases in which pre-emptively splitting triangles has been shown to improve the quality of acceleration datastructures for surface meshes with have a large variation in triangle sizes. Like the one introduced Ernst and Griener \cite{ernst_2007} these methods typically attempt to smooth regions in which the triangle density varies greatly by splitting large triangles whose area is greater than a predetermined size. These methods have not been shown to work reliably, however, and can acutally end up decreasing traversal performance.
+There have been several cases in which preemptively splitting triangles has been shown to improve the quality of acceleration datastructures for surface meshes with have a large variation in triangle sizes. Like the one introduced Ernst and Griener \cite{ernst_2007} these methods typically attempt to smooth regions in which the triangle density varies greatly by splitting large triangles whose area is greater than a predetermined size. These methods have not been shown to work reliably, however, and can acutally end up decreasing traversal performance.
 
 \subsubsection{Triangle splitting and mesh fidelity}%%Status: Done%%
 
