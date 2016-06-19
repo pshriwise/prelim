@@ -106,7 +106,7 @@ Additionally, the way in which rays traverse a model limits the number of possib
 
 Many ray tracing datastructures, heuristics, and other techniques are explored as part of a review of ray tracing's current state. This is followed by an analysis of DAMC's performance limitations as well as the investigation of known problem-specific difficulties encountered by ray tracing kernels as a result of the process used to generated surface meshes in the DAGMC workflow. Finally a plan is laid out to create a Monte Carlo oriented ray tracing kernel which couples the existing functionality of current tools such as MOAB with some of the more powerful ray tracing techniques currently available and seeks to take advantage of more subtle optimizations specific to its purpose.
 
-\section{Ray Tracing's Role in Monte Carlo}%%Status:Done%%
+\section{More on Ray Tracing's Role in Monte Carlo}%%Status:Done%%
 
 Ray tracing is most commonly used to generate 2D images by simulating light ray interactions with virtual 3D objects in a process known as rendering. These light rays (photons) are typically cast from the perspective of the image to be generated, and pixel colors are determined by the reflections, refractions, etc. of the photons on their course to the light source (if they reach it at all). This process is analagous to Monte Carlo analysis. Particles are born at the source and go through a series of interactions with 3D objects until they reach an area of interest, or detector, at which point data related to the particle is collected and stored. In both cases, when particles obtain new orientations from their interactions in this virtual 3D space, it is necessary to understand what object this particle will interact with next if it continues on its current trajectory. As such, the problem of ray tracing in either application can be abstracted to a spatial search of a virtual 3D object for the next interaction location given a particle loaction and trajectory. 
 
@@ -193,14 +193,13 @@ In the application of radiation transport, however, the properties of the underl
 
 This section will go over several of the partitioning hueristics and leaf conditions involved in creating these hierarchies.
 
-\subsection{Median Splitting}%%Status:Pending%%
+\subsection{Median Splitting}%%Status:Done%%
 
 This method splits the current node in half for each dimension. In the case of bounding boxes this is typically done by splitting using the axis (oriented or axis-aligned) with the largest extent to matain bounding boxes which are as cubic as possible for reasons described in the section above on octrees.
 
 \subsection{Median Snap Splitting}%%Status:In Progress%%
 
-This method of node splitting is similar to median splitting but the median plane is moved such that it intersects the vertex nearest to it. This is intended to minimize overlap between bounding volumes or to reduce reference splitting/duplication in other hierarchies.
-
+This method of node splitting is similar to median splitting but the median plane is moved such that it intersects the vertex nearest to it. This is intended to minimize overlap between bounding volumes or to reduce reference splitting/duplication in other hierarchies. 
 
 \subsection{Subdivision Sample Splitting}%%Status:Done%%
 
@@ -248,13 +247,18 @@ There have been several cases in which preemptively splitting triangles has been
 
 In the application of radiation transport, it is typically best to avoid operations which alter the original mesh is possible. In particular operations which occur during run time and are opaque to the user. However, splitting of triangles shouldn't have an impact on the fiedlity of the model being used in relation to the solid geometry it represents.
 
-\subsection{Spatial BVH Splitting}%%Status:Pending%%
-
-Blah blah blah its the best we should use it.
-
 \subsection{Linear BVH}%%Status:Pending%%
 
 \subsection{Hierarchical Linear BVH}%%Status:Pending%%
+
+\subsection{Spatial BVH Splitting}%%Status:Done %%
+
+The spatial BVH variant (SHBV) was introduced by Stich et. al. in 2009 \cite{sbvh}. In this building method, a bottom-up construction method is applied with an additional complexity to the node splitting step. As candidate split planes are considered, the duplication of references to primitives contained within the node are allowed. This grants much more freedom when considering how a node should be partitioned. Conversely, this extra freedom expands the search space of an optimal split plane for the node, making the process more complex.
+
+The relatively simple application of this method is performed by considering both splits in which reference duplication is prohibited and splits in which it is allowed. In the sceanrio for which reference duplication is prohibited, the set of candidate planes is equivalent to that of a standard BVH building algorithm. Stich applies the surface area heuristic for the purpose of his publication. In the case for which reference duplication is allowed, the search for a splitting plane is much more open - as previously mentioned. In fact, the search becomes fundamentally aligned with the search for a spatial split as might be found in a KDTree implementation. The optimal splitting plane is then selected via a comparision of the SAH cost for all candidate split planes. Several heuristics are used to limit reference splitting in an effort properly manage the datastructure's memory footprint.
+
+The result of the SBVH BVH which can be traversed just like any other BVH. The general effect of the allowance for reference splitting during construction is more tightly fitting bounding volumes and reduced sibling node overlap. Their results consistently show significant improvement over other methods, ranging anywhere from (20-100\%).
+
 
 \section{BVH Hierarchy Optimization}%%Status:In Progress%%
 
