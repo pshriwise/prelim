@@ -49,7 +49,17 @@ The value of CAD-Based Monte Carlo relies heavily on the ability to return geome
 
 %% The purpose of this document is to outline the current state of the art in spatial partioning hierarchies for the purpose of improving performance in DagMC. It will take into account as much of the existing literature as possible. An analysis of the literature will also be conatined, identifying areas for improvement within the context of ray tracing for the specific application of Monte Carlo ray tracing.
 
-Monte Carlo methods are a class of algorithms employed to solve complicated physical systems or mathematically problems which are difficult or impossible to solve analytically. As such, these methods have been employed for the purpose of solving 3D neutron transport problems for real-world systems represented by detailed CAD models. In the Monte Carlo process, the path and energy of particles are tracked from their birth until their termination through a series of randomly-determined collision events which are collectively defined as the particle's history. If a particle is scattered during one of these events, its direction and energy changes and it moves on to the next collision. If the particle is absorbed or escapes the system, the particle's history is terminated. Throughout this process, the material or volume in which the particle exists will will determine physical quantities which influence the randomly-selected events the particle encounters. As such, it is necessary to know when the particle is moving from one volume to the next through out its lifetime. In the organization of Monte Carlo codes, as an event arises in the particle's history the distance to this event along the particle's direction from its current position. It is important to know whether the location of the particle's next event lies inside of the current volume. If the event location lies inside the volume, then the particle can step forward to that location and the event will take place. If the event location lies outside of the volume, however, the even cannot be considered valid as it could be taking place inside of a material with different physical properties with respect to the particle. In this situation, the particle is then moved forward to the boundary of the volume along its current direction and its next event will be determined. In order to deterimine if the event location lies inside the current volume, the closest distance to the boundary of the volume along the particle's current trajectory is calculated via the CAD representation. The tracking of particles through the virtual space a model occupies is a problem commonly encountered in the area of computational modeling. In fact, the specific problem of finding the next closest intersection within a virtual model given a point and a direction is commonly encountered in the area of rendering for 3D models.
+Monte Carlo methods are a class of algorithms employed to solve complicated physical systems or mathematically complex problems which are difficult or impossible to solve analytically. As such, these methods have been employed for the purpose of solving 3D neutron transport problems for real-world systems. In the Monte Carlo process, the path and energy of particles are tracked from their birth until their termination through a series of randomly-determined collision events which are collectively defined as the particle's history. If a particle is scattered during one of these events, its direction and energy changes and it moves on to the next collision or event. If the particle is absorbed or escapes the system, the particle's history is terminated. Throughout this process, the material or volume in which the particle exists will will determine physical quantities which influence the randomly-selected events the particle encounters. As such, it is necessary to know when the particle is moving from one volume to the next through out its lifetime. In the organization of most Monte Carlo codes, an event arises in the particle's history and the distance to this event along the particle's direction from its current position is determined. It is important to know whether the location of the particle's next event lies inside or outside of the volume in which the particle currently exists. If the event location lies inside the volume, then the particle can step forward to that location and the event will take place. If the event location lies outside of the volume, however, the event cannot be considered valid as it could be taking place inside of a material with different physical properties with respect to the particle. In this situation, the particle is then moved forward to boundary of the current volume and is logically place inside of the volume on the other side of that boundary. At this point the particle's history continues and its next event will be calculated. In order to deterimine if the event location lies inside the current volume, the closest distance to the boundary of the volume along the particle's current trajectory is calculated via the CAD representation. The tracking of particles through the virtual space of a model occupies is a problem commonly encountered in the area of computational modeling. The specific queries of interest being the closest surface intersection to a particle's location and the closest surface intersection to a particle's location along its current trajectory. There are many approaches to such a method, each having its own advantages and disadvantages.
+
+Initially, many geometry representations came in the form of Constructive Solid Geometry (CSG). CSG allows one to form a complex volume from a set of boolean operations on more simple objects such as cylinders, spheres, parallelpipeds, etc. or CSG geometric primitives. CSG allows for an exact representation of these objects via analytical forms for each of these objects. This allows for the direct calculation of the nearest surface intersection by performing the intersection check for each of the CSG objects of which the volume is comprised and using the smallest of these values. Given that these operations can be done in an analytical fashion, the necessary geometric queries required for Monte Carlo can be returned quickly to the physics code throughout the particle's history in $O(N)$, where N is the number of primitive objects that define the volume. Historically, there are critical limitations associated with the use of CSG as a geometry representation in Monte Carlo as well. First, there is a practical limit to the complexity of volumes that can be formed using CSG objects. These formations require human knowledge and verification of the primitive object combinations required to form each volume in the CSG model. Given that in most current implementations these models are formed via some kind of text-based implementation, complex volumes can be extremely difficult to track and modify. As a result, a large amount of human time is spent generating and verifying modles of comples real-world systems. In reality, there are certain volumes which are impractical to represent due to the difficulty of their representation via CSG. These objects are typically modified in Monte Carlo models as an approximation of the real volume, each approximation or feature removal requiring its own justification for its affect on the outcome of the desired solution. An additional consequence in the broader scope is that different models are being used for structural, thermal hydraulic, magnetic, etc. analysis. Many of these other types of analysis take advantage of CAD systems for their geometry representation, allowing better representation of the as-built system and faster design iteration for alterations related to the geometry. Based on the established methods of these other types of analysis for CAD-based models, this provides significant motivation for radiation transport on CAD models as well.
+
+The use of CAD models allows for radiation transport on arbitrarily complex models which allows one to almost exactly represent real-world systems. As the representation becomes more complex, however, so does tracking particles during transport. Analytical forms of CAD surfaces are sometimes impractical or impossible to compute over the entire domain of the surface. To circumvent this problem, surfaces are triangulated to provide a generalized representation for each surface as a triangle mesh. All geometric queries from the Monte Carlo code can then be treated the same way despite the volume's form or complexity. It is worth mentioning that these triangle mesh's are generated such that all points on the mesh are within a specified tolerance of the analytical representation of the surface, meaning that all significant features of the model are intact when performing the triangulation of surfaces. The problem of finding the closest or next primitive object of intersection is now more difficult due to the number of triangle primitives needed to represent the model. However, the problem has now been reduced to that of a ray tracing problem, a field which is well-researched. Using acceleration datastructures oriented toward this spatial search, geometric queries can be satisfied in $~O(log(T))$ time, where T is the number of triangles needed to define the volume. Robustness can also be a challenge when using CAD based models, often times caused by poorly defined mesh topology at surface interfaces. It has been shown, however, that transport using CAD models can be equally as reliable as that of CSG based systems can be achieved \cite{smith_thesis_2011}. The performance of such CAD based systems is lacking in comparison to that of most CSG based codes, usually a factor of two or more slower in production models. (citation here?)
+
+The acceleration datastructures currently used in CAD based systems were adapted from work on object interference detection\cite{gottschalk1996obbtree} in 1996. This particular datastructure is a binary hierarchy of oriented box bounding volumes used to rapidly reduce the number of primitives in the geometry query to a small set which are then tested for geometry query of interest. This datastructure was chosen for the relatively small datastructure it produces so that it may work well within the framework of the mesh database it is a part of. Recent work in the area of ray tracing in tandem with the re-emergence of common chipset architectures oriented toward single instruction multiple data (SIMD) implementations has increased the performance of CPU based ray tracing kernels significantly, allowing a proof of concept for CAD based radiation transport which is on the order of CSG based implementations.
+
+This document will discuss the background and theory of several different areas including CAD based Monte Carlo, the current state of ray tracing acceleration datastructures, and other optimization techniques of interest for particle tracking in Chapter \ref{background}. Chapter \ref{perf_benchmark} will examine the descrepancy between the current state of CSG anc CAD geometries in more detail. Next, a particular challenge in the area of ray tracing will be characterized and addressed in Chapter \ref{hv_study}. Then a proof of concept for CAD based Monte Carlo competitive with that of native codes will be presented in Chapter \ref{emdag}. Finally, a new approach to ray tracing for CAD based systems in Monte Carlo will be presented in Chapter \ref{research_proposal}.
+
+In fact, the specific problem of finding the next closest intersection within a virtual model given a point and a direction is commonly encountered in the area of rendering for 3D models.
 
  As a particle is born, the material in which it exists must be determined as it will dictate the underlying physics of its travel through 
 
@@ -109,13 +119,15 @@ Additionally, the way in which rays traverse a model limits the number of possib
 
 Many ray tracing datastructures, heuristics, and other techniques are explored as part of a review of ray tracing's current state. This is followed by an analysis of DAMC's performance limitations as well as the investigation of known problem-specific difficulties encountered by ray tracing kernels as a result of the process used to generated surface meshes in the DAGMC workflow. Finally a plan is laid out to create a Monte Carlo oriented ray tracing kernel which couples the existing functionality of current tools such as MOAB with some of the more powerful ray tracing techniques currently available and seeks to take advantage of more subtle optimizations specific to its purpose.
 
-\section{More on Ray Tracing's Role in Monte Carlo}%%Status:Done%%
+\subsection{More on Ray Tracing's Role in Monte Carlo}%%Status:Done%%
 
 Ray tracing is most commonly used to generate 2D images by simulating light ray interactions with virtual 3D objects in a process known as rendering. These light rays (photons) are typically cast from the perspective of the image to be generated, and pixel colors are determined by the reflections, refractions, etc. of the photons on their course to the light source (if they reach it at all). This process is analagous to Monte Carlo analysis. Particles are born at the source and go through a series of interactions with 3D objects until they reach an area of interest, or detector, at which point data related to the particle is collected and stored. In both cases, when particles obtain new orientations from their interactions in this virtual 3D space, it is necessary to understand what object this particle will interact with next if it continues on its current trajectory. As such, the problem of ray tracing in either application can be abstracted to a spatial search of a virtual 3D object for the next interaction location given a particle loaction and trajectory. 
 
 In realistic renderings, it is sometimes possible that light rays may scatter before reaching the next object on their path and in Monte Carlo simulations this is the more probable case. In order to determine if this will occur before reaching the next object, the distance to interaction (scattering or otherwise) must be compared to the distance to the next object. In analytic geometric representations this is a straightforward task, but as the complexity of 3D objects increase, the cost of ray-object intersections becomes very computationally expensive. Mesh/CAD-based models, in which the surfaces of objects are discretized into sets of geometric primitives (usually triangles), face the challenge of then finding the correct primitive for which the ray intersects (if it intersects one at all). For the highly complex models, a linear search of the primitives is out of the question in terms of how long these intersections would take to find. As a result, extensive research has been done in the area of acceleration data structures for ray tracing which section the problem space in order to establish a binary tree-like search over the geometric primitives of the model.
+\section{Background}%%Status: In Progress%%
+\label{background}
 
-\section{Spatial Partitioning Schemes}%%Status:Done%%
+\subsection{Spatial Partitioning Schemes}%%Status:Done%%
 
 Spatial partioning structures are designed to rapidly narrow the search for a location in virtual space given a location and orientation. This is accomplished by sectioning the space using a partitioning construct. The paritions are determined by a division heuristic which establishes the partitions given a set of primitives. After partitioning, the primitives are then associated with the partition which contains them. This process is recursively repeated until leaf conditions are met. Leaf conditions determine when the partioning process will stop. This can be based on the remaining number of primitives, the current size of the partition, etc. The end result is a hierarchy which can be used to terverse the problem space efficiently for ray intersections or closest intersection queries. 
 
@@ -123,7 +135,7 @@ The above describes a top-down approach to construction of these data structures
 
 %% The tree structure refers almost entirely to the number of children each non-leaf node in the tree should have. The majority of spatial trees are binary trees (two children), but other structures do exist such as quad trees (four children) and oct trees (eight children). The partitioning construct refers to the mechanism by which you are creating partitions out of space. There is a large variety of these which are chosen based on a couple of counteracting criterion 1) number of operations required for an intersection check and 2) their ability to effectively eliminate subsets of the problem space from a given query.
  
-\subsection{Bounding Volume Hierarchy (BVH)}%%Status:Done%%
+\subsubsection{Bounding Volume Hierarchy (BVH)}%%Status:Done%%
 
 The initial concept of using the bounding volume partitioning construct as a pre-check for ray-intersection with objects was introduced by Weghorst in 1984 \cite{Weghorst:1984:ICM}. Weghorst explored the possibility of using spheres and rectangular parallell pipeds (boxes) to contain geometric objects. This work also went so far as to create a hierarchy of those object-based bounding volumes, noting the importance of hierarchicaly joining bounding volumes which are near each other in space so as not to have parent volumes containing large amounts of empty space between the objects to be joined.
 
@@ -152,7 +164,7 @@ As a result of this tight fit to primitives, bounding volume hierarchies are als
 Oriented bounding boxes have been found to be extremely effective in 
 
 
-\subsection{Splitting Schemes}%%Status:Done%%
+\subsubsection{Splitting Schemes}%%Status:Done%%
 
 Bounding Volume Heirarchies provide a means of recursively narrowing the focus of the ray query to more promising candidates for intersection. This is a natural divide-and-conquer approach for examining a set of primitives for the closest intersection. Spatial subdivision takes a different approach. \cite{Intro2RT} While it is still a divide-and-conquer approach to the problem, the focus is generalized to the problem space instead of on the object themselves. Beginning with the entire model, one partitions the volume bounding the primitives into pieces recursively, creating smaller partitions in each level of the tree until a subset of primitives is left bounded at the leaf node of the hierarchy. This method can arguably be viewed as a top-down approach to bounding volumes but with an emphasis on division of space rather than division of objects.
 
@@ -191,37 +203,37 @@ Octrees are a recursive form of the grid-based methods mentioned above. In this 
 
 Octrees consume a large amount of memory relative to the other data structures in this section and  it is often possible that voxels may be completely devoid of underlying entities. One advantage of octrees is the cubis nature of the partitioning voxels. The value of a voxel (or bounding volume for that matter) lies in its ability to remove candidate space from the query, yet this voxel can only be effective in this way if rays actually strike the voxel. The result is that a voxel's effectiveness is described by the ratio of its probability of an intersection check to the space it will exclude from the query search or its volume. In a problem with a uniform ray distribution, the probablity of a ray to intersect a given voxel is described by its surface area. Thus cubic voxels have the most favorable ratio possible.
 
-\section{Ray Coherence in Radiation Transport}%%Status:Done%%
+\subsection{Ray Coherence in Radiation Transport}%%Status:Done%%
 
 Ray coherence refers to the likelyhood that a primary ray will follow roughly the same path through the scene or model if fired multiple times. This is generally true in ray tracing processes oriented toward rendering due to the nature of the physics being modeled in reflection/refraction of visible light interacting with object surfaces in a given scene. This ray coherence can be exploited by cacheing the traversal path of rays from a given pixel location and direction. This gives subsequent rays fired from that location with similar directions a short-scut in their traversal with modifications to the traversal path as needed to determine their proper object/primitive intersection. Rays from the same origin and similar direction are grouped together and traverse kernel's acceleration structure. If their path becomes unique, the ray will then split off to coplete its own unique traversal, but this saves time in repeated operations for multiple rays in many or most levels of the hierarchy traversal.
 
 In the application of radiation transport, however, the properties of the underlying physics being modeled does not result in ray coherence. Particles in radiation transport travel far beyond the surface of an object and with a much wider range of possible interaction locations and resulting directions compared to the modeling of visible light. As a result, these methods could only be applied to special situations in which the ray origins will be known such as radiation sources. For the general case, however, it is suspected that the majority of ray queries for a given set of particle histories are not attributed to the initial particle path, but due to subsequent interactions in the model as well as the queries required to resolve the emission of secondary radition. Thus such methods are likely not worth applying in this case.
 
-\section{Partioning Methods and Leaf Conditions}%%Status:Pending%%
+\subsection{Partioning Methods and Leaf Conditions}%%Status:Pending%%
 
 This section will go over several of the partitioning hueristics and leaf conditions involved in creating these hierarchies.
 
-\subsection{Median Splitting}%%Status:Done%%
+\subsubsection{Median Splitting}%%Status:Done%%
 
 This method splits the current node in half for each dimension. In the case of bounding boxes this is typically done by splitting using the axis (oriented or axis-aligned) with the largest extent to matain bounding boxes which are as cubic as possible for reasons described in the section above on octrees.
 
-\subsection{Median Snap Splitting}%%Status:In Progress%%
+\subsubsection{Median Snap Splitting}%%Status:In Progress%%
 
 This method of node splitting is similar to median splitting but the median plane is moved such that it intersects the vertex nearest to it. This is intended to minimize overlap between bounding volumes or to reduce reference splitting/duplication in other hierarchies. 
 
-\subsection{Subdivision Sample Splitting}%%Status:Done%%
+\subsubsection{Subdivision Sample Splitting}%%Status:Done%%
 
 In this splitting method serveral candidate locations are sampled along each of the node dimensions. This can provide for better splitting over the entities contained by the parent node. The idea here is that while space is being split evenly the entities may not be, resulting is unbalanced trees with more bounding volumes than necessary for good taversal performance. This is typically a concern of bounding volume hierarchies as opposed to KDTrees or Bounding Interval Hierarchies. This method obviously requires more time than the median splitting method but may result in higher quality hierarchies.
 
-\subsection{Vertex Median}%%Status:In Progress%%
+\subsubsection{Vertex Median}%%Status:In Progress%%
 
 This method is even more time consuming than the subdivision sampling method . In vertex median splitting, the vertices contained by the node are ordered along the splitting axis currently in use from lowest to highest. Planes are then sampled at even intervals \textit{along the number of vertices} not the space the vertices occupy. In this way if many vertices are grouped at one end of the axis, more of the sample planes will be located there as the sampling will be more likely to select planes intersecting vertices in that area. 
 
-\subsection{Vertex Sample}%%Status:In Progress%%
+\subsubsection{Vertex Sample}%%Status:In Progress%%
 
 This method relies heavily on splitting conditions by randomly sampling vertices for planes to go through. 
 
-\subsection{Surface Area Heuristic}%%Status:Done%%
+\subsubsection{Surface Area Heuristic}%%Status:Done%%
 
 This heuristic falls under the category of leaf conditions. The surface area heuristic uses the surface area of child bounding volumes relative to their parent as an approximation for the probability that the child will be visited after the parent volume. The explicit form of the surface area heuristic was introduced in 1987 by Goldsmith and Solmon \cite{goldsmith_1987} and later formalized by MacDonald and Booth in 1990 \cite{macdonald_1990}. Its full form is:
 
@@ -237,7 +249,7 @@ This heuristic falls under the category of leaf conditions. The surface area heu
 
 So the cost of each split done in the tree is assessed as the cost of an extra traversal downward in the tree, as well as the cost of the intersection checks for each primitive contained by the child nodes. Both of the children will not always be intersected by a ray however so the cost is then adjusted by some estimation of the probability that a ray will intersect with each child. In the surface area heuristic this probability is estimated as the surface area of the child bounding volume divided by the surface area of the parent volume and the cost of the primitive intersections are weighted as such. In reality, a better estimation of  child node intersection probability would be given by the relative cross section of the child/parent bounding volumes with respect to the ray direction. Given that ray directions are unknown a priori, the surface area serves well enough for applications with uniform ray distribution. This leaf condition produces high quality BVH's relative to other methods and is now generally regarded as the best method in many production ray tracers today.
 
-\subsection{Triangle Splitting/Duplication}%%Status:Done%%
+\subsubsection{Triangle Splitting/Duplication}%%Status:Done%%
 
 Triangle splitting has been used in several ways to enhance acceleration datastructure quality. Some of these methods involve splitting triangles as the BVH is being built while other methods attemp to preemptively split triangle so that node splitting occurs in a more advantageous way for the eventaul building method being used.
 
@@ -255,11 +267,11 @@ There have been several cases in which preemptively splitting triangles has been
 
 In the application of radiation transport, it is typically best to avoid operations which alter the original mesh is possible. In particular operations which occur during run time and are opaque to the user. However, splitting of triangles shouldn't have an impact on the fiedlity of the model being used in relation to the solid geometry it represents.
 
-\subsection{Linear BVH}%%Status:Pending%%
+\subsubsection{Linear BVH}%%Status:Pending%%
 
-\subsection{Hierarchical Linear BVH}%%Status:Pending%%
+\subsubsection{Hierarchical Linear BVH}%%Status:Pending%%
 
-\subsection{Spatial BVH Splitting}%%Status:Done %%
+\subsubsection{Spatial BVH Splitting}%%Status:Done %%
 
 The spatial BVH variant (SHBV) was introduced by Stich et. al. in 2009 \cite{sbvh}. In this building method, a bottom-up construction method is applied with an additional complexity to the node splitting step. As candidate split planes are considered, the duplication of references to primitives contained within the node are allowed. This grants much more freedom when considering how a node should be partitioned. Conversely, this extra freedom expands the search space of an optimal split plane for the node, making the process more complex.
 
@@ -268,17 +280,18 @@ The relatively simple application of this method is performed by considering bot
 The result of the SBVH BVH which can be traversed just like any other BVH. The general effect of the allowance for reference splitting during construction is more tightly fitting bounding volumes and reduced sibling node overlap. Their results consistently show significant improvement over other methods, ranging anywhere from (20-100\%).
 
 
-\section{BVH Hierarchy Optimization}%%Status:In Progress%%
+\subsection{BVH Hierarchy Optimization}%%Status:In Progress%%
 
 It is often the case that even using the best possible splitting method to generate a BVH for a given triangle mesh that one will end up with a sub-optimal hierarchy due to the agnostic nature of local decisions being made regarding splitting of nodes during the initial build. As a result, bounding volumes may have greater overlaps than is necessary to define the disparate sets of triangles they contain or the topology of a given tree may be in efficient due its depth being overly deep or shallow as the case may be. There has recently been much research put into post-processing optimization of BVH's for better traversal performance. Much of this research is related to on-the-fly reconstruction of BVHs to support dynamic mesh features for interactive applications such as movie rendering or architectural design \cite{karras_2013}. While the speed in which these build processses occur is of greater concern to the intended applications, the optimization techniques are of interest for generating a static high-quality BVH in order to further increase the performance of a BVH.
 
-\subsection{Local Tree Rotations}%%Status:Pending%%
+\subsubsection{Local Tree Rotations}%%Status:Pending%%
 
-\subsection{Node Removal/Insertion}%%Status:Pending%%
+\subsubsection{Node Removal/Insertion}%%Status:Pending%%
 
-\subsection{Treelet Based Optimization}%%Status:Pending%%
+\subsubsection{Treelet Based Optimization}%%Status:Pending%%
 
 \section{DAMC Performance Benchmarking and Profiling}%%Status:Done%%
+\label{perf_benchmark}
 
 In order to assess the current performance of DAGMC, a number of analysis models were tested and profiled using the full workflow. Each of these models was converted from a native MCNP input geometry into a solid CAD model using the mcnp2cad tool created at the University of Wisconsin - Madison to perform improvements and or updates to original models intended for use with MCNP. From this conversion, a set of analysis runs using DAGMC coupled with MCNP (DAG-MCNP) is compared to runs of the same models using native MCNP geometry.
 
@@ -316,6 +329,7 @@ Again, it should be addressed that in this case a pre-built BVH was include in t
 
 
 \section{High Valence Vertex Study}%%Status:In Progress%%
+\label{hv_study}
 
 One of the known bottlenecks of DAGMC is ray tracing performance degredation in regions with high-valence vertices. High valence vertices are defined as those connected to an unusally high number of triangle entities. This region of the mesh will take on a fan-like shape as seen in the figure below. High-valence vertices are known to occur on planar surfaces bounded by a circular curve. These regions are commonly generated in the faceting algorithms used to produce DAGMC meshes. This faceting scheme (which comes from ACIS libraries underlying the CUBIT/Trelis graphics engine) is designed to produce the smallest number of triangles possible to represent the model within the representation tolerance specified in DAGMC's surface mesh generation preprocessing step (dagmc\_preproc). Generally fewer triangles are better as even the ideal ray tracing acceleration structure queries for a given mesh scale as $O(log(N))$. However, even with fewer triangles undesirable configurations can impede performance as is shown by a set of tests conducted on models generated using this faceting scheme.
 
@@ -413,6 +427,7 @@ In this case, the parameter of interest is the worst case splitting ratio. This 
 With this small change to the BVH builder's parameters, the timing of the high valence region becomes significantly better. This change is likely unsuitable for the general case of a tesselated surface however. A worst case splitting ratio of 1 would lead to much deeper trees which on average will take longer to traverse as well as consume much more memory for larger, more complicated models.
 
 \section{Linking DAGMC with Intel's Embree}%%Status:In Progress%%
+\label{emdag}
 
 As mentioned in the previous section, a surprising number of MOAB-related database calls appear in the profiling of a DAGMC run. MOAB is a powerful tool for mesh generation, manipulation, and storage, but it was postulated that the implementation of a ray tracer in the context of this database design inherently comes with too much overhead for the implementation of an efficient ray tracer. As a result, an attempt at the replacement of MOAB's ray tracing system with a lean, highly-optimized ray tracer was made. Recently, Intel has made an effort to produce just such a CPU-based raytracer called Embree \cite{embree}. In both construction and traversal of BVHs, Embree takes advantage of many of the latest developments in BVH research at a programming level, and takes advantage of chipset architectures via vectorization at an implementation level. The combination of these effects leads to powerful raytracing tool in terms of performance. As a result of these factors and the effort that was put into producing Embree, it was chosen as the tool applied in DAGMC to satisfy geometric queries for MCNP. The resulting tool will be reffered to as EmDAG for the remainder of this discussion.
 
@@ -624,6 +639,7 @@ In Brandon Smith's thesis Robust Particle Tracking and Advanced Geometry for Mon
 \end{itemize}
 
 \section{Research Proposal}%%Status:In Progress%%
+\label{research_proposal}
 
 \subsection{Research Motiviation Summary}%%Status:In Progress%%
 In order to make CAD-based Monte Carlo competitive with native codes it is clear that geometry queries must be satistied much more quickly than the ray tracing kernel in DAGMC can currently provide. Investigation into the shortcomings of the DAGMC ray tracing process have revealed various opportunities for improvement. One in implementation and the other in application.
