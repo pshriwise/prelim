@@ -145,7 +145,9 @@ KD-Trees are frequently citied as being able to provide the best ray tracing per
   \includegraphics[scale=0.25]{2d_kd_eg.png}
 \end{figure}
 
-KD-Trees are able to out-perform many other acceleration datastructures due to traversal schemes developed based on the inherent quality of KD-Trees having non-overlapping sibling nodes. As a KD-Tree is being constructed, an ever-shrinking bounding box is being defined as one moves deeper into the tree. At the leaves of a KD-Tree a well-resolved bounding box can be conceptualized using the coordinates of the last 6 splitting plane coordinates, two in each dimension. Due to the nonoverlapping quality of the KD-Tree nodes, the faces of this bounding box can be linked to spatially-adjacent nodes in the tree. These links are referred to as neighbor links \cite{KDReview} and can be used to significantly reduce traversal costs. During traversal, if a leaf is visited its neighbor links can be used to direct the query to either the next adjacent leaf or a nearby interior node in the tree thus avoiding a depth-first style traversal in which the next step upon visiting a leaf node is to return to the root node of the tree and continue. These neighbor links take advantage of the idea that if a leaf node is visited, but the desired intersection is not found, then it is likely that the desired intersection is close to the current leaf location. In this way, one can avoid large amounts of shallow-level tree traversal.  
+KD-Trees are able to out-perform many other acceleration datastructures due to traversal schemes developed based on the inherent quality of KD-Trees having non-overlapping sibling nodes. As a KD-Tree is being constructed, an ever-shrinking bounding box is being defined as one moves deeper into the tree. At the leaves of a KD-Tree a well-resolved bounding box can be conceptualized using the coordinates of the last 6 splitting plane coordinates, two in each dimension. Due to the nonoverlapping quality of the KD-Tree nodes, the faces of this bounding box can be linked to spatially-adjacent nodes in the tree. These links are referred to as neighbor links \cite{KDReview} and can be used to significantly reduce traversal costs. During traversal, if a leaf is visited its neighbor links can be used to direct the query to either the next adjacent leaf or a nearby interior node in the tree thus avoiding a depth-first style traversal in which the next step upon visiting a leaf node is to return to the root node of the tree and continue. These neighbor links take advantage of the idea that if a leaf node is visited, but the desired intersection is not found, then it is likely that the desired intersection is close to the current leaf location. In this way, one can avoid large amounts of shallow-level tree traversal.
+
+
 
 \subsubsection{Bounding Volume Hierarchies}%%Status: Done%%
 
@@ -195,9 +197,17 @@ The BVH is currently the most commonly employed acceleration datastructure for r
 
 \subsubsection{Octrees}%%Status:Done%%
 
-Octrees are a recursive form of the grid-based methods mentioned above. In this partitioning scheme, cubic voxels are used to partition the problem space into the 8 quadrants defined by the axes of the parent voxel. These 8 voxels are then labeled as children of the original voxel. This process is repeated recursively until leaf conditions are met for the voxel. This typically means that the voxel references a set number of primitives. \textbf{NEED OCTTREE REFERENCE HERE}
 
-Octrees consume a large amount of memory relative to the other data structures in this section and  it is often possible that voxels may be completely devoid of underlying entities. One advantage of octrees is the cubis nature of the partitioning voxels. The value of a voxel (or bounding volume for that matter) lies in its ability to remove candidate space from the query, yet this voxel can only be effective in this way if rays actually strike the voxel. The result is that a voxel's effectiveness is described by the ratio of its probability of an intersection check to the space it will exclude from the query search or its volume. In a problem with a uniform ray distribution, the probablity of a ray to intersect a given voxel is described by its surface area. Thus cubic voxels have the most favorable ratio possible.
+Octrees are a partitioning scheme in which cuboid voxels are used to partition the problem space into the 8 quadrants defined by the axes and extents of the parent voxel. These 8 voxels are then labeled as children of the original voxel. This process is repeated recursively until leaf conditions are met for the voxel. This typically means that the voxel contains a set number of primitive references and the branch should be ended. This spatial subdivision technique is commonly used to efficiently index data 3-D space.  \cite{Intro2RT} Octrees exist somewhere in the space between KD-trees and BVHs in that they are a spatial division technique and placement of entities in nodes occurs in a similar manner to that of KD-trees, but each node is represented by a well-defined bounding volume as in a BVH.
+
+Octrees typically consume a large amount of memory relative to the other data structures in this section and it is often possible that voxels may be completely devoid of underlying entities. Due to the way they are constructed, there are typically many voxels containing no primitive references but are still required to exist as part of the datastructure. This results in many voxels being stored in memory which aren't useful other than to verify that the space they contain is empty. Additionally, geometric primitives may be referenced multiple times if they intersect multiple leaf nodes. This can lead to multiple intersection checks of the same primitives in a single traversal. Multiple primitive references is another source of the Octree's increased memory footprint as well.  
+
+One advantage of octrees is the cubic nature of the partitioning voxels. The value of a node in hierarchies such as these (or bounding volume for that matter) lies in its ability to remove candidate space from the query, yet this voxel can only be effective in this way if rays actually strike the voxel. The result is that one measure of a voxel's effectiveness can be described by the ratio of its probability of an intersection check to the space it will exclude from the query search or its volume. In a problem with a uniform ray distribution, the probablity of a ray to intersect a given voxel can be related to a voxel's surface area. Thus cubic voxels have the most favorable ratio possible based on their geometry. Similar to KD-trees, Octree's are guarantted to have non-overlapping nodes which allows for traversal costs on the order of KD-trees \cite{parametric_octree_revelles_2000} of the hierarchy and ordering of nodes in the traversal stack from nearest to farthest from the ray's point of origin. Octrees are also used to store spatial data on the vertices of the nodes and as a result an efficient starting point for ray traversal can be determined quickly via the root node's size and origin of the ray. Thanks to the bisecting nature of the splitting planes in an Octree, the deepest node containing the ray's origin can quickly be found. The ray's intersection point can then be determined via a traversal similar to that of a KD-tree's neighbor linked traversal. These types of traversals are conceptually similar to that of the KD-tree's but typically employ some form of Morton encoding to determine which node in the octree the ray should visit next \cite{parametric_octree_revelles_2000}. Other traversal techniques allow Octree's to avoid creating and traversing nodes containing empty space which can significantly reduce its memory footprint in cases where internal nodes of the tree aren't required to define some spatial dataset as mentioned above \cite{SAMET1989445}.
+
+
+
+
+
 
 %% \subsubsection{Splitting Schemes}%%Status:Done%%
 
@@ -245,13 +255,6 @@ This method is even more time consuming than the subdivision sampling method . I
 \subsubsection{Vertex Sample}%%Status:In Progress%%
 
 This method relies heavily on splitting conditions by randomly sampling vertices for planes to go through. 
-
-\subsubsection{Surface Area Heuristic}%%Status:Done%%
-
-
-\subsubsection{Triangle Splitting/Duplication}%%Status:Done%%
-
-Triangle splitting has been used in several ways to enhance acceleration datastructure quality. Some of these methods involve splitting triangles as the BVH is being built while other methods attemp to preemptively split triangle so that node splitting occurs in a more advantageous way for the eventaul building method being used.
 
 \subsubsection{Build time splitting}%%Status:Done %%
 
