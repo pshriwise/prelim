@@ -322,7 +322,7 @@ In Figure \ref{dagmc-fng-coarse} a callgraph for a profiling run of FNG for 1e7 
   \centering
   \caption{Callgraph of native MCNP FNG run for 1E7 histories. (Processes taking $>$10\% of the runtime are filtered out in order to simplify the call graph.)}
   \label{mcnp-fng-coarse}
-  \includegraphics[scale=0.35]{mcnp_fng_cg_coarse.png}
+  \includegraphics[scale=0.35]{native_fng_cg_coarse.png}
 \end{figure}
 
 The combination of the profiling results indicating how much time is spent in tracking particles in DAGMC along with the difference in absolute run times confirms that indeed the performance bottleneck of DAGMC lies in its ability to quickly satisfy the geometric queries of the underlying Monte Carlo code it is coupled to. Looking more closely at the underlying calls in DAGMC, one can see that this time is collectively spent in the DAGMC ray\_fire call with the BVH traversal lying below this along with many underlying MOAB database-related calls. This indicates that this time is spent even more specifically in traversing MOAB's OBB BVH via the database-oriented methods available in DAGMC.
