@@ -207,23 +207,40 @@ The predictable size and location of any given node in the tree determined from 
 
 \subsection{Architecture Based Acceleration}%%Status: Pending%%
 
-\subsection{Implicit Surface Representations and Signed Distance Fields}%%Status: Pending%%
+\subsection{Implicit Surface Representations}%%Status: Pending%%
 
 Implicit surfaces are rich and versitile representation of closed manifolds used for modeling, simulation, and rendering. Implicit surfaces are defined using the isocontour of a scalar function defined over all space in comparison to an \textit{explicit} representation of a surface defines the exact location of this boundary in space. Intuitively it might seem wasteful for a definition to be true for all space considering the relatively small amount of space the object will occupy, however implicit surfaces are used widely in representing closed manifolds for models, simulation, and rendering. \cite{impsurvey}
 
 An implicit surface is a multivariate function defined over an $ R^3 $ domain as:
 
 \begin{center}
-  $ f(R^3)\rightarrow R $
+  $ \Omega(R^3)\rightarrow R $
 \end{center}
 
 An isocontour of this function with the value, $v$, can be described as:
 
 \begin{center}
-  $ f(x,y,z) - v  = 0 $
+  $ \Omega(\vec{x}) - v  = 0 $
 \end{center}
 
-Unlike their explicit counterparts, implicit representations allow complex topologies of surfaces to be integrated into a single representation. This is in part because the function is defined for all space. These same properties allow for straightforward representation of dynamics surfaces as well though this is not of concern in the area of radiation transport. In practice implicit surfaces are used to extract mesh representations of surfaces, re-sample the model into some other proxy for the geometry, and render models via ray tracing.
+For simplicity, the boundary of an implicit surface is defined as the isocontour for which $v=0$. As a result, inside of the surface will have a negative value while any point outside of the surface will have a positive value.
+
+Unlike their explicit counterparts, implicit representations allow complex topologies of surfaces to be integrated into a single representation. This is in part because the function is defined for all space. These same properties allow for straightforward representation of dynamics surfaces as well though this is not of concern in the area of radiation transport. In practice, implicit surfaces are used to extract mesh representations of surfaces, re-sample the model into some other proxy for the geometry, and render models via ray tracing. Implicit surfaces are well-suited to these applications due to the integrated geometric properties that can be quickly recovered from their analytic forms. 
+
+Important geometric information needed for vizualization and simulation can be readily recovered from implicit surface representations. For example, a common operation in particle transport is the determination its containment by a volume in the model. A quick evaluation of the implicit function for this point will indicate its containment by the sign of the function. Such process that is much more complex in the case of an explicit representation. Typically this involves casting a ray to a point outside of the closed surface and counting up the intersections. The oddness or eveness of the number of crossings will then determine the points containment. Additonally, the nearest location on the boundary of the surface from any point in space can quickly be determined via the definition of a signed distance function, $d(\vec{x})$, formally defined as:
+
+\begin{center}
+  $d(\vec{x}) = min(|\vec{x} - \vec{x_{I}}|) $
+\end{center}
+
+
+
+
+Implicit surfaces can be composed of some set of CSG objects, but are able to represnt more complex manifolds as well. Implicit surfaces are commonly used to generate triangle meshes for visualization via rasterization or rendering on Graphics Processing Units (GPUs). This is accomplished via a fast marching method \cite{Set96} for determining an appropriate discretization of the surface. Conversely, implicit surfaces can be reconstructed from triangle meshes using a variety of methods, such as the moving least squares approach \cite{Lev98}.
+
+
+Implementation of implicit surfaces commonly involvses re-sampling of the function for different time steps as simulations are computed. 
+
 
 
 
