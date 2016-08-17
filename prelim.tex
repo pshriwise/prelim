@@ -239,17 +239,28 @@ Unlike their explicit counterparts, implicit representations allow complex topol
 
 Important geometric information needed for vizualization and simulation can be readily recovered from implicit surface representations. For example, a common operation in particle transport is the determination its containment by a volume in the model. A quick evaluation of the implicit function for this point will indicate its containment by the sign of the function. Such process that is much more complex in the case of an explicit representation. Typically this involves casting a ray to a point outside of the closed surface and counting up the intersections. The oddness or eveness of the number of crossings will then determine the points containment. Additonally, the nearest location on the boundary of the surface from any point in space can quickly be determined via the definition of a signed distance function, $d(\vec{x})$, formally defined as:
 
-\begin{equation}
-  d(\vec{x}) = min(|\vec{x} - \vec{x_{I}}|)
-\end{equation}
+\begin{align}
+  & d(\vec{x}) = min(|\vec{x} - \vec{x_{I}}|) \\
+  & \Omega(\vec(x))  \,s.t.  \,|\Omega(\vec{x})| = d(\vec(x)) 
+\end{align}
+\begin{equation*}
+  \vec{x_{I}} \,- \,nearest \, boundary \,intersection
+\end{equation*}
 
+Meaning that implicit surface functions meet these three requirements of a signed distance function:
 
+\begin{figure}[H]
+  \begin{itemize}
+  \item $ \Omega(\vec(x)) = d(\vec(x)) = 0 $ for all $x$ on the surface boundary
+  \item $ \Omega(\vec(x)) = -d(\vec(x)) $ for all $x$ inside the surface boundary
+  \item $ \Omega(\vec(x)) = d(\vec(x)) $ for all $x$ outside the surface boundary
+  \end{itemize}
+\end{figure}
 
+As a result, the nearest distance to the implicit surface for any point can be found by evaulating its signed distance function, $|\Omega(\vec(x))|$. This enables very quick distance queries regarding the proximity of a point to the nearest point on the surface for rendering processes such as ray casting. Nearest intersections along the direction of the ray can also be found directly by solving the analytical form of the implicit surface for a ray with origin, $\vec{c}$ and direction vector, $\vec{v}$, using  $\vec{x} = \vec{c} + t\vec{v}$ and solving for $t$, but robust methods for this process do not exist for higher-order surfaces. An alternative method given a ray origin and direction, is to find the minimum distance from the ray origin to the surface with a signed distance function. The ray can then be clipped by this distance along is direction vector. This process will repeat until the nearest distance to the surface has eventually reached a near-zero value at which point the intersection of the ray with the surface has been found. The distance of the ray's origin to the intersection can be returned as the distance from the current location to the original ray location. 
+%%Need a tie-in here%%
 
 Implicit surfaces can be composed of some set of CSG objects, but are able to represnt more complex manifolds as well. Implicit surfaces are commonly used to generate triangle meshes for visualization via rasterization or rendering on Graphics Processing Units (GPUs). This is accomplished via a fast marching method \cite{Set96} for determining an appropriate discretization of the surface. Conversely, implicit surfaces can be reconstructed from triangle meshes using a variety of methods, such as the moving least squares approach \cite{Lev98}.
-
-
-Implementation of implicit surfaces commonly involvses re-sampling of the function for different time steps as simulations are computed. 
 
 
 
