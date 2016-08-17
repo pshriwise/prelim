@@ -12,7 +12,7 @@
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{booktabs}
-\usepackage{caption}
+%\usepackage{caption}
 \usepackage{epsfig}
 \graphicspath{{./images/}{../images/}{./}}
 \usepackage[font={small,it}]{caption}
@@ -128,16 +128,26 @@ This document will discuss the background and theory of several different areas 
 
 \subsection{Acceleration Datastructures for Ray Tracing}
 
-Acceleration datastructures for ray tracing are designed to rapidly narrow the search for a location in virtual space given a starting position and orientation. This is accomplished by sectioning the space using a partitioning construct in either the spatial or entity dimension. The paritions are determined by a division heuristic which establishes the partitions for a given a set of geometric primitives. After partitioning, the primitives are then associated (either implicitly or explicitly) with the partition in which they are contained. This processes recurs until conditions for leaf creation are met which can be based on a maximum number of associated primitives, the space the partition occupies, or some other heuristic. The most effective heuristic for ray tracing to date is the Surface Area Heuristic (SAH). This heuristic provides a way to select the best split of a set of split planes and determine if current node has met the leaf conditions of the hierarchy. The surface area heuristic uses the surface area of candidate child partitions relative to the current partitions's surface area as an approximation for the probability that the child will be visited after the parent volume. The explicit form of the surface area heuristic was introduced in 1987 by Goldsmith and Solmon \cite{goldsmith_1987} and later formalized by MacDonald and Booth in 1990 \cite{macdonald_1990}. Its full form is found in Figure \ref{SAH}.
+Acceleration datastructures for ray tracing are designed to rapidly narrow the search for a location in virtual space given a starting position and orientation. This is accomplished by sectioning the space using a partitioning construct in either the spatial or entity dimension. The paritions are determined by a division heuristic which establishes the partitions for a given a set of geometric primitives. After partitioning, the primitives are then associated (either implicitly or explicitly) with the partition in which they are contained. This processes recurs until conditions for leaf creation are met which can be based on a maximum number of associated primitives, the space the partition occupies, or some other heuristic. The most effective heuristic for ray tracing to date is the Surface Area Heuristic (SAH). This heuristic provides a way to select the best split of a set of split planes and determine if current node has met the leaf conditions of the hierarchy. The surface area heuristic uses the surface area of candidate child partitions relative to the current partitions's surface area as an approximation for the probability that the child will be visited after the parent volume. The explicit form of the surface area heuristic was introduced in 1987 by Goldsmith and Solmon \cite{goldsmith_1987} and later formalized by MacDonald and Booth in 1990 \cite{macdonald_1990}. Its full form is found in Equation \ref{eq:SAH}.
 
-\begin{figure}
-\begin{centering}
+
+\begin{figure}[H]
+  \begin{equation}
+    C =  C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i}
+    \label{eq:SAH}
+  \end{equation}
   \begin{align*}
-    C = & \,C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i} \\ C_{t} - & \,cost\, of\, traversal\, to\, child\, nodes \\ C_{i} - & \, cost\, of\, primitive\, intersection\, check\, \\ SA() - & \, gives\, surface\, area\, of\, bounding\, volume \\ B_{L} - & \, bounding\, volume\, of\, left\, child \\ P_{L} - & \, primitives\, contained\, by\, the\, left\, child  \\ B_{R} - & \, bounding\, volume\, of\, right\, child \\ P_{R} - & \, primitives\, contained\, by\, the\, right\, child \\ B - & \, parent\, bounding\, volume
+    C_{t} - & \,cost\, of\, traversal\, to\, child\, nodes \\
+    C_{i} - & \, cost\, of\, primitive\, intersection\, check\, \\
+    SA() - & \, gives\, surface\, area\, of\, bounding\, volume \\
+    B_{L} - &  \, bounding\, volume\, of\, left\, child \\
+    P_{L} - & \, primitives\, contained\, by\, the\, left\, child  \\
+    B_{R} - & \, bounding\, volume\, of\, right\, child \\
+    P_{R} - & \, primitives\, contained\, by\, the\, right\, child \\
+    B - & \, parent\, bounding\, volume \\
   \end{align*}
   \caption{Full form of the surface area heuristic.}
-  \label{SAH}
-\end{centering}
+  \label{fig:SAH}
 \end{figure}
 
 So the cost of each split done in the tree is assessed as the cost of an extra traversal downward in the tree, as well as the cost of the intersection checks for each primitive contained by the child nodes as if they will become leaf nodes. Both of the children will not always be intersected by a ray however so the cost is then adjusted by some estimation of the probability that a ray which intersects with the current volume will also intersect with a given child volume. In the surface area heuristic this probability is estimated as the surface area of the child bounding volume divided by the surface area of the parent volume and the cost of the primitive intersections are weighted as such. In reality, a better estimation of  child node intersection probability would be given by the relative cross section of the child/parent nodes with respect to the ray direction. Given that ray directions are unknown a priori, the surface area serves well enough for applications with uniform ray distribution. This heuristic is used to produce the highest quality datastructure achievable by today's standards and now generally regarded as the best method in many production ray tracers today. The end result is a hierarchy which can be used to traverse the problem space efficiently for ray intersections or closest intersection queries.
@@ -213,15 +223,15 @@ Implicit surfaces are rich and versitile representation of closed manifolds used
 
 An implicit surface is a multivariate function defined over an $ R^3 $ domain as:
 
-\begin{center}
-  $ \Omega(R^3)\rightarrow R $
-\end{center}
+\begin{equation}
+    \Omega(R^3)\rightarrow R
+\end{equation}
 
 An isocontour of this function with the value, $v$, can be described as:
 
-\begin{center}
-  $ \Omega(\vec{x}) - v  = 0 $
-\end{center}
+\begin{equation}
+  \Omega(\vec{x}) - v  = 0 
+\end{equation}
 
 For simplicity, the boundary of an implicit surface is defined as the isocontour for which $v=0$. As a result, inside of the surface will have a negative value while any point outside of the surface will have a positive value.
 
@@ -229,9 +239,9 @@ Unlike their explicit counterparts, implicit representations allow complex topol
 
 Important geometric information needed for vizualization and simulation can be readily recovered from implicit surface representations. For example, a common operation in particle transport is the determination its containment by a volume in the model. A quick evaluation of the implicit function for this point will indicate its containment by the sign of the function. Such process that is much more complex in the case of an explicit representation. Typically this involves casting a ray to a point outside of the closed surface and counting up the intersections. The oddness or eveness of the number of crossings will then determine the points containment. Additonally, the nearest location on the boundary of the surface from any point in space can quickly be determined via the definition of a signed distance function, $d(\vec{x})$, formally defined as:
 
-\begin{center}
-  $d(\vec{x}) = min(|\vec{x} - \vec{x_{I}}|) $
-\end{center}
+\begin{equation}
+  d(\vec{x}) = min(|\vec{x} - \vec{x_{I}}|)
+\end{equation}
 
 
 
