@@ -217,7 +217,7 @@ The predictable size and location of any given node in the tree determined from 
 
 \subsection{Architecture Based Acceleration}%%Status: Pending%%
 
-\subsection{Implicit Surface Representations}%%Status: Pending%%
+\subsection{Implicit Surface Representations}%%Status: Done%%
 
 Implicit surfaces are rich and versitile representation of closed manifolds used for modeling, simulation, and rendering. Additionally, implicit surfaces can be used to generate triangle meshes for rasterization or rendering on Graphics Processing Units (GPUs)\cite{Set96} and can also be constructed from arbitrary triangle meshes or point clouds\cite{Lev98}. Implicit surfaces are defined using the isocontour of a scalar function defined over all space unlike an \textit{explicit} representation of a surface which defines the subset of space which the boundary occupies. Intuitively it might seem wasteful for a definition to be true for all space considering the relatively small amount of space the object will occupy, however a number of powerful tools for geometric modeling using these representations will be discussed in this section.
 
@@ -303,61 +303,61 @@ In the case of highly complex implicit surfaces or highly complex combinations, 
 
 %% In the application of radiation transport, however, the properties of the underlying physics being modeled does not result in ray coherence. Particles in radiation transport travel far beyond the surface of an object and with a much wider range of possible interaction locations and resulting directions compared to the modeling of visible light. As a result, these methods could only be applied to special situations in which the ray origins will be known such as radiation sources. For the general case, however, it is suspected that the majority of ray queries for a given set of particle histories are not attributed to the initial particle path, but due to subsequent interactions in the model as well as the queries required to resolve the emission of secondary radition. Thus such methods are likely not worth applying in this case.
 
-\subsection{Partioning Methods and Leaf Conditions}%%Status:Pending%%
+%% \subsection{Partioning Methods and Leaf Conditions}%%Status:Pending%%
 
-This section will go over several of the partitioning hueristics and leaf conditions involved in creating these hierarchies.
+%% This section will go over several of the partitioning hueristics and leaf conditions involved in creating these hierarchies.
 
-\subsubsection{Median Splitting}%%Status:Done%%
+%% \subsubsection{Median Splitting}%%Status:Done%%
 
-This method splits the current node in half for each dimension. In the case of bounding boxes this is typically done by splitting using the axis (oriented or axis-aligned) with the largest extent to matain bounding boxes which are as cubic as possible for reasons described in the section above on octrees.
+%% This method splits the current node in half for each dimension. In the case of bounding boxes this is typically done by splitting using the axis (oriented or axis-aligned) with the largest extent to matain bounding boxes which are as cubic as possible for reasons described in the section above on octrees.
 
-\subsubsection{Median Snap Splitting}%%Status:In Progress%%
+%% \subsubsection{Median Snap Splitting}%%Status:In Progress%%
 
-This method of node splitting is similar to median splitting but the median plane is moved such that it intersects the vertex nearest to it. This is intended to minimize overlap between bounding volumes or to reduce reference splitting/duplication in other hierarchies. 
+%% This method of node splitting is similar to median splitting but the median plane is moved such that it intersects the vertex nearest to it. This is intended to minimize overlap between bounding volumes or to reduce reference splitting/duplication in other hierarchies. 
 
-\subsubsection{Subdivision Sample Splitting}%%Status:Done%%
+%% \subsubsection{Subdivision Sample Splitting}%%Status:Done%%
 
-In this splitting method serveral candidate locations are sampled along each of the node dimensions. This can provide for better splitting over the entities contained by the parent node. The idea here is that while space is being split evenly the entities may not be, resulting is unbalanced trees with more bounding volumes than necessary for good taversal performance. This is typically a concern of bounding volume hierarchies as opposed to KDTrees or Bounding Interval Hierarchies. This method obviously requires more time than the median splitting method but may result in higher quality hierarchies.
+%% In this splitting method serveral candidate locations are sampled along each of the node dimensions. This can provide for better splitting over the entities contained by the parent node. The idea here is that while space is being split evenly the entities may not be, resulting is unbalanced trees with more bounding volumes than necessary for good taversal performance. This is typically a concern of bounding volume hierarchies as opposed to KDTrees or Bounding Interval Hierarchies. This method obviously requires more time than the median splitting method but may result in higher quality hierarchies.
 
-\subsubsection{Vertex Median}%%Status:In Progress%%
+%% \subsubsection{Vertex Median}%%Status:In Progress%%
 
-This method is even more time consuming than the subdivision sampling method . In vertex median splitting, the vertices contained by the node are ordered along the splitting axis currently in use from lowest to highest. Planes are then sampled at even intervals \textit{along the number of vertices} not the space the vertices occupy. In this way if many vertices are grouped at one end of the axis, more of the sample planes will be located there as the sampling will be more likely to select planes intersecting vertices in that area. 
+%% This method is even more time consuming than the subdivision sampling method . In vertex median splitting, the vertices contained by the node are ordered along the splitting axis currently in use from lowest to highest. Planes are then sampled at even intervals \textit{along the number of vertices} not the space the vertices occupy. In this way if many vertices are grouped at one end of the axis, more of the sample planes will be located there as the sampling will be more likely to select planes intersecting vertices in that area. 
 
-\subsubsection{Vertex Sample}%%Status:In Progress%%
+%% \subsubsection{Vertex Sample}%%Status:In Progress%%
 
-This method relies heavily on splitting conditions by randomly sampling vertices for planes to go through. 
+%% This method relies heavily on splitting conditions by randomly sampling vertices for planes to go through. 
 
-\subsubsection{Build time splitting}%%Status:Done %%
+%% \subsubsection{Build time splitting}%%Status:Done %%
 
-It often occurs that a candidate splitting plane intersects with underlying triangle primitives. These triangles are then placed in one child set or the other by whatever heuristic the building method deems appropriate. By definition a node must spatially contain all primitives within its set, thus leading to node overlaps. This is typically seen in the case of BVH structures.
+%% It often occurs that a candidate splitting plane intersects with underlying triangle primitives. These triangles are then placed in one child set or the other by whatever heuristic the building method deems appropriate. By definition a node must spatially contain all primitives within its set, thus leading to node overlaps. This is typically seen in the case of BVH structures.
 
-Another option in handling this scenario is to duplicate any primitive references intersecting the splitting plane. This is typically done in more spatially oriented splitting methods such at KD-trees or OctTrees. This allows for non-overlapping nodes, but it also requires an increased memory footprint to store the additional references.
+%% Another option in handling this scenario is to duplicate any primitive references intersecting the splitting plane. This is typically done in more spatially oriented splitting methods such at KD-trees or OctTrees. This allows for non-overlapping nodes, but it also requires an increased memory footprint to store the additional references.
 
-\subsubsection{Preemptive triangle splitting}%%Status:Done %%
+%% \subsubsection{Preemptive triangle splitting}%%Status:Done %%
 
-There have been several cases in which preemptively splitting triangles has been shown to improve the quality of acceleration datastructures for surface meshes with have a large variation in triangle sizes. Like the one introduced Ernst and Griener \cite{ernst_2007} these methods typically attempt to smooth regions in which the triangle density varies greatly by splitting large triangles whose area is greater than a predetermined size. These methods have not been shown to work reliably, however, and can acutally end up decreasing traversal performance.
+%% There have been several cases in which preemptively splitting triangles has been shown to improve the quality of acceleration datastructures for surface meshes with have a large variation in triangle sizes. Like the one introduced Ernst and Griener \cite{ernst_2007} these methods typically attempt to smooth regions in which the triangle density varies greatly by splitting large triangles whose area is greater than a predetermined size. These methods have not been shown to work reliably, however, and can acutally end up decreasing traversal performance.
 
-\subsubsection{Triangle splitting and mesh fidelity}%%Status:Done%%
+%% \subsubsection{Triangle splitting and mesh fidelity}%%Status:Done%%
 
-In the application of radiation transport, it is typically best to avoid operations which alter the original mesh is possible. In particular operations which occur during run time and are opaque to the user. However, splitting of triangles shouldn't have an impact on the fiedlity of the model being used in relation to the solid geometry it represents.
+%% In the application of radiation transport, it is typically best to avoid operations which alter the original mesh is possible. In particular operations which occur during run time and are opaque to the user. However, splitting of triangles shouldn't have an impact on the fiedlity of the model being used in relation to the solid geometry it represents.
 
-\subsubsection{Linear BVH}%%Status:Pending%%
+%% \subsubsection{Linear BVH}%%Status:Pending%%
 
-\subsubsection{Hierarchical Linear BVH}%%Status:Pending%%
-
-
+%% \subsubsection{Hierarchical Linear BVH}%%Status:Pending%%
 
 
 
-\subsection{BVH Hierarchy Optimization}%%Status:In Progress%%
 
-It is often the case that even using the best possible splitting method to generate a BVH for a given triangle mesh that one will end up with a sub-optimal hierarchy due to the agnostic nature of local decisions being made regarding splitting of nodes during the initial build. As a result, bounding volumes may have greater overlaps than is necessary to define the disparate sets of triangles they contain or the topology of a given tree may be in efficient due its depth being overly deep or shallow as the case may be. There has recently been much research put into post-processing optimization of BVH's for better traversal performance. Much of this research is related to on-the-fly reconstruction of BVHs to support dynamic mesh features for interactive applications such as movie rendering or architectural design \cite{karras_2013}. While the speed in which these build processses occur is of greater concern to the intended applications, the optimization techniques are of interest for generating a static high-quality BVH in order to further increase the performance of a BVH.
 
-\subsubsection{Local Tree Rotations}%%Status:Pending%%
+%% \subsection{BVH Hierarchy Optimization}%%Status:In Progress%%
 
-\subsubsection{Node Removal/Insertion}%%Status:Pending%%
+%% It is often the case that even using the best possible splitting method to generate a BVH for a given triangle mesh that one will end up with a sub-optimal hierarchy due to the agnostic nature of local decisions being made regarding splitting of nodes during the initial build. As a result, bounding volumes may have greater overlaps than is necessary to define the disparate sets of triangles they contain or the topology of a given tree may be in efficient due its depth being overly deep or shallow as the case may be. There has recently been much research put into post-processing optimization of BVH's for better traversal performance. Much of this research is related to on-the-fly reconstruction of BVHs to support dynamic mesh features for interactive applications such as movie rendering or architectural design \cite{karras_2013}. While the speed in which these build processses occur is of greater concern to the intended applications, the optimization techniques are of interest for generating a static high-quality BVH in order to further increase the performance of a BVH.
 
-\subsubsection{Treelet Based Optimization}%%Status:Pending%%
+%% \subsubsection{Local Tree Rotations}%%Status:Pending%%
+
+%% \subsubsection{Node Removal/Insertion}%%Status:Pending%%
+
+%% \subsubsection{Treelet Based Optimization}%%Status:Pending%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
