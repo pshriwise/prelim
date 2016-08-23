@@ -87,7 +87,7 @@ This document will discuss the background and theory of several different areas 
 
 %% Each of the ray tracing kernels studied later in this work were initially intended for other applications and adapted for use in Monte Carlo. MOAB's Oriented Bounding Box (OBB) hierarcy was initally designed for use as part of an interference detection algorithm\cite{gottschalk1996obbtree} while Embree (discussed later) is a ray tracing kernel optimized for the purpose of interactively rendering static or dynamic models. Ray tracing in Monte Carlo differs from each of these applications though it is more closely aligned with the process of rendering than interference detection. Even so, Monte Carlo ray tracing differs from rendering in a fundamental way and deserves to be approached uniquely rather than as an adaptation or extension of another purpose. This is true for a few different reasons.
 
-%% In Monte Carlo, a significantly higher number of ray queries are made than in rendering. In order to obtain a statistically valid anser to the problem at hand, the number of primary is generally an order of magnitude higher than that of a rendering problem. The average number of secondary ray queries is even more so. In radiation transport, interactions may occur at any point in space (depending on the virtual material which occupys that space) rather than nearly always at the interface of object. This increased spatial interaction frequency leads to a much larger number of secondary ray queries ($O(100)$)than one might or could see in a rendering process. In either case, the time to solution (render) can be roughly described by the time needed to construct the necesary acceleration structures and satisfy the ray queries.
+%% In Monte Carlo, a significantly higher number of ray queries are made than in rendering. In order to obtain a statistically valid anser to the problem at hand, the number of primary is generally an order of magnitude higher than that of a rendering problem. The average number of secondary ray queries is even more so. In radiation transport, interactions may occur at any point in space (depending on the virtual material which occupys that space) rather than nearly always at the interface of object. This increased spatial interaction frequency leads to a much larger number of secondary ray queries ($O(100)$)than one might or could see in a rendering process. In either case, the time to solution (render) can be roughly described by the time needed to construct the necesary acceleration structures and satisfy the ray queries. Figures \ref{render_ray_estimate} and \ref{tts_est} provide an esimate of the number of primary rays required for solution and the time to solution for a ray tracing based process, respectively, in a simiarly manner to which Hurley performs this analysis in \cite{Hurley_2002}.
 
 %% \begin{figure}[H]
 %%   \centering
@@ -102,7 +102,7 @@ This document will discuss the background and theory of several different areas 
 %% \begin{figure}[H]
 %%   \centering
 %%   \caption{General equation for the time to solution of a ray tracing based process.}
-%%   \label{tts_eq}
+%%   \label{tts_est}
 %%   \begin{align*}
 %%     tts =\, & C + T_{B} + \sum_{}^{N_{r}} T_{T} \\
 %%     tts =\, & C + T_{B} + \sum_{}^{N_{r}} T_{T}(q,\ldots) \\
