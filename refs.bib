@@ -173,17 +173,6 @@ file = {sah_paper:files/04057175.pdf}
  address = {London, UK, UK},
 } 
 
-@INPROCEEDINGS{wald_simd, 
-author={I. Wald and C. Benthin and S. Boulos}, 
-booktitle={Interactive Ray Tracing, 2008. RT 2008. IEEE Symposium on}, 
-title={Getting rid of packets - Efficient SIMD single-ray traversal using multi-branching BVHs -}, 
-year={2008}, 
-pages={49-57}, 
-keywords={data structures;parallel processing;ray tracing;SIMD single-ray traversal;binary data structure;bounding through volume hierarchy;coherent rays traversing packets;ray tracing;secdondary ray distributions;Computer architecture;Concurrent computing;Data structures;Hardware;Layout;Optical reflection;Parallel processing;Ray tracing;Robots;Yarn}, 
-doi={10.1109/RT.2008.4634620}, 
-month={Aug},
-}
-
 @article{KDReview,
 Abstract = {In this paper we review the traversal algorithms for kd-trees for ray tracing. Ordinary traversal algorithms such as sequential, recursive, and those with neighbour-links have different limitations, which led to several new developments within the last decade. We describe algorithms exploiting ray coherence and algorithms designed with specific hardware architecture limitations such as memory latency and consumption in mind. We also discuss the robustness of traversal algorithms as one issue that has been neglected in previous research. [ABSTRACT FROM AUTHOR]},
 Author = {Hapala, M. and Havran, V.},
@@ -233,3 +222,36 @@ doi="10.1007/BF00991005",
 url="http://dx.doi.org/10.1007/BF00991005"
 }
 
+@INPROCEEDINGS{Wald_2008, 
+author={I. Wald and C. Benthin and S. Boulos}, 
+booktitle={Interactive Ray Tracing, 2008. RT 2008. IEEE Symposium on}, 
+title={Getting rid of packets - Efficient SIMD single-ray traversal using multi-branching BVHs -}, 
+year={2008}, 
+pages={49-57}, 
+keywords={data structures;parallel processing;ray tracing;SIMD single-ray traversal;binary data structure;bounding through volume hierarchy;coherent rays traversing packets;ray tracing;secdondary ray distributions;Computer architecture;Concurrent computing;Data structures;Hardware;Layout;Optical reflection;Parallel processing;Ray tracing;Robots;Yarn}, 
+doi={10.1109/RT.2008.4634620}, 
+month={Aug},
+}
+
+@online{Intel_AVX,
+title= {Introduction to Intel Advanced Vector Extensions},
+author = {Chris Lamont},
+howpublished ={https://software.intel.com/en-us/articles/introduction-to-intel-advanced-vector-extensions},
+year = {2011},
+urldate  = {2016-08-22},
+}
+
+@INPROCEEDINGS{Hurley_2002,
+    author = {Jim Hurley and Er Kapustin and Er Reshetov and Alexei Soupikov},
+    title = {Fast Ray Tracing for Modern General Purpose CPU},
+    booktitle = {In Proceedings of Graphicon},
+    year = {2002},
+    pages = {2002}
+}
+
+@phdthesis{Havran_2000,
+title = {Heuristic Ray Shooting Algorithms},
+school = {Czech Technical University},
+author = {Havran, Vlastimil},
+year = {2000}
+}
