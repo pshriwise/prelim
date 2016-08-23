@@ -379,20 +379,23 @@ In the case of highly complex implicit surfaces or highly complex combinations, 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
-\section{DAGMC Performance Benchmarking and Profiling}%%Status:Done%%
+
+\section{Experiments and Data}%%Status: Done%%
+
+\subsection{DAGMC Performance Benchmarking and Profiling}%%Status:Done%%
 \label{perf_benchmark}
 
 In order to assess the current performance of DAGMC, a number of analysis models were tested and profiled using the full workflow. Each of these models were converted from a native MCNP input geometry into a solid CAD model using the mcnp2cad tool created at the University of Wisconsin - Madison to perform improvements and or updates to original models intended for use with MCNP. From this conversion, a set of analysis runs using DAGMC coupled with MCNP (DAG-MCNP) is compared to runs of the same models using native MCNP geometry.
 
 Three different models were selected for this set of tests: the Frastcati Neutron Generator (FNG), Advanced Test Reactor (ATR), and the University of Wisconsin Nuclear Reactor (UWNR). The original purpose of these models are in large part irelevant as the intent of these tests is to measure the difference in geometric query performance between the native and CAD-based models. The FNG source was modified to be a uniform volumetric source of 14.1 MeV neutrons covering the entire model. Both the ATR and UWNR model's kcode sources were kept intact for this test. All of these problems were run using the high performance computing cluster at the University of Wisconsin - Madison supported by the Advanced Computing Initiative (ACI). It should also be noted that all of these models were successfully made watertight, meaning that no lost particles are expected.
 
-\subsection{Performance Results}%%Status:Done%%
+\subsubsection{Performance Results}%%Status:Done%%
 
 Across the board, these models lag behind native MCNP models by a factor of anywhere between 4 and 8. For smaller problems with simple geometries and relatively low numbers of histories required to reach an acceptably low level of statisitcal uncertainty, this might not pose as much of a problem to users. As problem geometries become more complicated and the number of histories becomes larger, the discrepancy in computing time becomes of high importance when run times extend to days or weeks longer than they would using a native MCNP geometry representation.
 
 Included in Appendix B are tables of the native MCNP results alongisde those of DAG-MCNP. Neither a qualitative comparison or quantitative analysis of these results will be made in this work other than to state that the results appear to be the result of a successful computation in either system are considered valid from the standpoint of performance comparison between native MCNP and DAG-MCNP.
 
-\subsection{Profiling}%%Status:Done%%
+\subsubsection{Profiling}%%Status:Done%%
 
 As a part of this study, these runs were repeating using the profiling tool, Callgrind, within KCachegrind to determine where is being spent in both the DAGMC and native runs. Because the geometry representation and query system is the only difference between the two models, it is expected that the time is being spent there, but it is parctical to confirm this and useful to know more specifically where in the query system this is occuring. From this inference, all callgraphs are displayed with the MCNP history\_ subroutine at the top. It is inside this subroutine that MCNP calls upon DAGMC to fulfill geometric queries about the model. It should also be noted that for these profiling runs the fcad file produced by a previous DAGMC run was used. DAGMC produces this file after completing the BVH build for a given geometry. Using this file keeps the profiling information from being obfuscated by the building process of the BVH in MOAB and allows DAG-MCNP to move straight to particle transport after loading the geometry and BVH from the fcad file. 
 
@@ -417,7 +420,7 @@ The combination of the profiling results indicating how much time is spent in tr
 Again, it should be addressed that in this case a pre-built BVH was include in the geometry file and read into place much more quickly than in a typical DAGMC run. While this processes does contribute to additional DAGMC runtime, the amount of time spent building these hierarchies is small relative to the time spent in particle transport due to the high number of histories required for good statistics.
 
 
-\section{High Valence Vertex Study}%%Status:In Progress%%
+\subsection{High Valence Vertex Study}%%Status:In Progress%%
 \label{hv_study}
 
 One of the known bottlenecks of DAGMC is ray tracing performance degredation in regions with high-valence vertices. High valence vertices are defined as those connected to an unusally high number of triangle entities. This region of the mesh will take on a fan-like shape as seen in Figure \ref{hv_examples}. High-valence vertices are known to occur on planar surfaces bounded by a circular curve. These regions are commonly generated in the faceting algorithms used to produce DAGMC meshes. This faceting scheme (which comes from ACIS libraries underlying the CUBIT/Trelis graphics engine) is designed to produce the smallest number of triangles possible to represent the model within the representation tolerance specified in DAGMC's surface mesh generation preprocessing step (dagmc\_preproc). Generally fewer triangles are better as even the ideal ray tracing acceleration structure queries for a given mesh scale as $O(log(N))$. However, even with fewer triangles undesirable configurations can impede performance as is shown by a set of tests conducted on models generated using this faceting scheme.
@@ -516,12 +519,12 @@ In this case, the parameter of interest is the worst case splitting ratio. This 
 
 With this small change to the BVH builder's parameters, the timing of the high valence region becomes significantly better. This change is likely unsuitable for the general case of a tesselated surface however. A worst case splitting ratio of 1 would lead to much deeper trees which on average will take longer to traverse as well as consume much more memory for larger, more complicated models.
 
-\section{Linking DAGMC with Intel's Embree}%%Status:In Progress%%
+\subsection{Linking DAGMC with Intel's Embree}%%Status:In Progress%%
 \label{emdag}
 
 As mentioned in the previous section, a surprising number of MOAB-related database calls appear in the profiling of a DAGMC run. MOAB is a powerful tool for mesh generation, manipulation, and storage, but it was postulated that the implementation of a ray tracer in the context of this database design inherently comes with too much overhead for the implementation of an efficient ray tracer. As a result, an attempt at the replacement of MOAB's ray tracing system with a lean, highly-optimized ray tracer was made. Recently, Intel has made an effort to produce just such a CPU-based raytracer called Embree \cite{embree}. In both construction and traversal of BVHs, Embree takes advantage of many of the latest developments in BVH research at a programming level, and takes advantage of chipset architectures via vectorization at an implementation level. The combination of these effects leads to powerful raytracing tool in terms of performance. As a result of these factors and the effort that was put into producing Embree, it was chosen as the tool applied in DAGMC to satisfy geometric queries for MCNP. The resulting tool will be reffered to as EmDAG for the remainder of this discussion.
 
-\subsection{Transferring DAGMC Model's to Embree Scenes}%%Status:Done%%
+\subsubsection{Transferring DAGMC Model's to Embree Scenes}%%Status:Done%%
 
 The process of employing Embree as DAGMC's ray tracer begins by establishing an equivalent representation of the MOAB mesh in Embree. In comparison to MOAB, Embree is limited in its ability to represent the underlying topological structure of a model. This topology is necessary and used advantageously during particle tracking in DAGMC by reducing the set of triangles queried to those of the particle's current volume. However, a method was discovered to represent enough of the topology to meet the requirements of DAGMC transport. The general representation of a model in Embree is referred to as a scene. Each scene may contain one or more geometries (meshes). Fortunately, this system is enough to create a workable representation of DAGMC meshes in which MOAB volumes are the equivalent of Embree scenes and MOAB surfaces are represented in their respective scenes as surfaces. This method provides a one-to-one mapping of MOAB volumes and surfaces to their corresponding entities in Embree and allows all topology-based operations to proceed inside of DAGMC in their usual manner. In this way, the requirement for topological information in DAGMC at the surface and volume level is met. Now transfer of the primitive mesh data can be considered.
 
@@ -530,7 +533,7 @@ Scenes do not share mesh data, so the triangle connectivity of each surface is r
 The representation of triangle normals are important to the DAGMC particle tracking algorithm established by Smith et. al. \cite{smith_thesis_2011} in 2011. In DAGMC, particles on or just outside the surface of a volume are handled by ignoring the near-surface intersection upon being established in a new volume. This is accomplished using the convention that triangle normals will always point outward from the center of the volume they belong to. Triangles hit by the ray are ignored if the normal of the triangle opposes the ray direction via a dot product calculation. While this has historically been handled inside of DAGMC, this is accomplished in EmDAG via the use of Embree's filter functions. Filter functions allow for a user-defined callback method which allows users to validate a ray hit inside of Embree before returning a final result. Embree will return is most recent intersection with the scene to the filter function (the hit triangle's unnormalized vector included) and allow a method to either accept the hit or instruct Embree to continute tracing the ray path based on the outcome of the filter function. In MOAB, triangle normals are set in a global manner and adjusted using stored information within MOAB based on what volume is being queried at the time. This is referred to as the surface's sense with respect to that volume. Because we are forced to duplicate surfaces in Embree, the triangle normals are pre-oriented based on this surface's sense for the scene it is being created in upon initialization of the model within the Embree instance. This saves steps in gathering this information upon traversal when the triangle normal is needed to determine a particle's logical position within the model. The resulting memory footprint of EmDAG after duplicating the DAGMC geometry in Embree is not much greater thanks to the single precision values used in Embree. The single nature precision of Embree and its effect on DAGMC will be discused further in later sections of this work.
 By meeting these requirements of topology, watertight representation, and hit acceptance/rejection based on triangle normals, Embree provides DagMC with all the information needed to perform geometric operations required by the various Monte Carlo codes it supports, but in an agnostic manner to the ray tracing kernel being used.
 
-\subsection{EmDAG Performance and Testing}%%Status:In Progress%%
+\subsubsection{EmDAG Performance and Testing}%%Status:In Progress%%
 
 Using the same DAGMC-based ray fire test program, the performance of DAGMC's ray fire ability was compared to that of EmDAG's for three models. These models include a simple sphere, a notched sphere, and a high aspect ratio cylinder. In each of these tests, the models are tesselated with an increasingly smaller faceting tolerance in a higher number of triangles and more complex nature of the surface mesh in terms of BVH construction and traversal. The faceting tolerance is defined as the maximum distance between the faceted curve or surface and the geometric curve or surface which it resolves. 600k rays are then fired from the center of the volume isotropically using the same random number seed so that the same set of rays is fired in each ray tracing system.
 
@@ -597,9 +600,6 @@ As an extension of these pure ray fire tests, the effect of an improved ray trac
 \end{table}
 
 The native MCNP runs were generally the fastest among the test problems with the exception of the nested cubes case in which EmDAG-MCNP marginally outperformed the native code by ~8\%. This is likely due to the fact that very few triangles are needed to exactly represent the surfaces of cubic volumes. This creates a very simple problem in the area of BVH building and results in a very shallow tree. The fact that these volumes have many surfaces is also of importance here. MCNP searches linearly through a given cell's (volume's) surfaces to determine the intersection of a particle with the nearest surface whereas both DAG-MCNP and EmDAG-MCNP perform this search spatially. In the nested cubes model, it is likely that the number of surfaces relative to the number of triangles in their representation is high enough to allow EmDAG-MCNP to overtake MCNP's CSG calculations. 
-
-
-
 
 \begin{table}[H]
   \small
@@ -695,7 +695,7 @@ While the performance of EmDAG greatly surpases that of DAGMC, it does not come 
 
 
 
-\subsection{Limitations of the EmDAG system}%%Status:In Progress%%
+\subsubsection{Limitations of the EmDAG system}%%Status:In Progress%%
 
 While the implementation of Embree in DAGMC showed a vast improvement in performance relative to the standard DAGMC implementation, several problems were encountered during the proess. This is not surprising when repurposing a ray tracing kernal for an unintended application.
 
