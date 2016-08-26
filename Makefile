@@ -2,7 +2,7 @@
 all: pdf
 
 pdf: ps2png svg2png
-	pdflatex prelim.tex && bibtex prelim && pdflatex prelim #&& dvipdfm prelim.dvi 
+	bibtex prelim && pdflatex prelim #&& dvipdfm prelim.dvi 
 
 preview: pdf
 	evince prelim.pdf
