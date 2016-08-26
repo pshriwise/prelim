@@ -59,7 +59,7 @@ The use of CAD models allows for radiation transport on arbitrarily complex or h
 
 The acceleration datastructures currently used in CAD-based systems were adapted from work on object interference detection in 1996\cite{gottschalk1996obbtree}. This particular datastructure is a binary hierarchy of oriented box bounding volumes used to rapidly reduce the number of primitives in the geometry query to a small set which are then tested for geometry query of interest. This datastructure was chosen for the relatively shallow hierarchy it produces so that it may work well within a mesh database framework which is not necessarily oriented toward binary search performance. Recent work in the area of ray tracing in conjunction with the re-emergence of common chipset architectures oriented toward single instruction multiple data (SIMD) implementations has increased the performance of CPU based ray tracing kernels significantly \cite{Wald_2008}, allowing a proof of concept for CAD-based radiation transport which is on the order of CSG based implementations.
 
-This document will discuss the background and theory of several different areas surrounding particle tracking in CAD-based Monte Carlo, the current state of ray tracing acceleration datastructures, and other optimization techniques of interest for particle tracking in Chapter \ref{background}. Chapter \ref{perf_benchmark} will examine the descrepancy in performance between the current state of CSG anc CAD geometries in more detail. Next, a particularly problematic feature seen in CAD-based meshes will be characterized and addressed in Chapter \ref{hv_study}. Then a proof of concept for CAD-based Monte Carlo competitive with that of native codes will be presented in Chapter \ref{emdag}. Finally, a new approach to ray tracing for CAD-based systems in Monte Carlo will be proposed in Chapter \ref{research_proposal}.
+This document will discuss the background and theory of several different areas surrounding particle tracking in CAD-based Monte Carlo, the current state of ray tracing acceleration datastructures, and other optimization techniques of interest in Chapter \ref{background}. Chapter \ref{experiments_and_data} will go over some previous work investigating the performanc limitations of CAD-Based transport. This will begin with an evaluation of a CAD-based geometry library developed at the University of Wisconsin-Madison in comparison to the native CSG kernel it replaces. Next, a particularly problematic feature seen in CAD-based meshes will be examined. Then a proof of concept for CAD-based Monte Carlo competitive with that of native codes will be presented. Finally, a set of improvements for ray tracing kernels applied to particle tracking in CAD geometries will be proposed in Chapter \ref{research_proposal}.
 
 
 \section{Background}%%Status: In Progress%%
@@ -340,6 +340,7 @@ In the case of highly complex implicit surfaces or highly complex combinations, 
 \newpage
 
 \section{Experiments and Data}%%Status: Done%%
+\label{experiments_and_data}
 
 \subsection{DAGMC Performance Benchmarking and Profiling}%%Status:Done%%
 \label{perf_benchmark}
@@ -688,7 +689,6 @@ In Brandon Smith's thesis Robust Particle Tracking and Advanced Geometry for Mon
 \section{Research Proposal}%%Status:In Progress%%
 \label{research_proposal}
 
-\subsection{Research Motiviation Summary}%%Status:In Progress%%
 In order to make CAD-based Monte Carlo competitive with native codes it is clear that geometry queries must be satisfied much more quickly than the ray tracing kernel in DAGMC can currently provide. Investigation into the shortcomings of the DAGMC ray tracing process have revealed various opportunities for improvement. One in implementation and the other in application.
 
 One aspect of these improvements rely on removing the ray tracing kernel from implementation restrictions associated with it being written in the context of a database system and being confined to construction of those database elements. Separation of the kernel allows for a simplified and streamlined system which may be allowed to take advantage of any set of optimizations available in the world of computing. The coupling of DAGMC to Embree provides good evidence of the combination of these assertions. Embree, being an entirely standalone software tool, is inherently free of the databse context in which MOAB's ray tracing tools exist. Additionally, Embree takes advantage of hardware acceleration techniques in the form of single instruction multiple data (SIMD) avilable on most machines.
@@ -697,66 +697,11 @@ The Embree ray tracing kernel while very powerful is still oriented toward a ren
 
 Time it takes to perform the ray tracing queries is partially dependent upon the quality of the acceleration structure being built. The better the quality of these structures is the faster the ray queries will be satisfied and the solution reached. The quality of the accceleration datastructure is also dependent on the amount of time spent in building the datastructures. Presumably the more time spends building the datastructure, the better its quality. Typically, rendering tools focus on building a generalized data structure with respect to the mesh its operating on without consideration of the more subtle features of the mesh and how the datastructure's quality might be improved. This is commonly because the time spent in improving the quality of the datastructure is overly costly compared to the total amount of time saved when performing the ray queries. In the scenario of Monte Carlo, it has been established that many times the number of rays are being fired in order to obtain the solution several times over. In this case the saved time in performing necessary ray queries may then become significant, and that the extra time spend in building the acceleration datastructure to increase its quality becomes favorable. The trade offs of these costs/savings are difficult to quantify in that (as is the case for most ray tracing performance evaluations) they vary greatly model to model. However, the severe degredation in ray fire times due to mesh features produced by the surface mesh generation algorithm on which DAGMC relies leads one to believe that adapting to such mesh features and any other such features discovered in the future is worthwhile.
 
-\subsection{Research Proposal}%%Status:In Progress%%
-
 To address the issues of the implementation context and add mesh adaptive qualities to the BVH build process, a new ray tracing kernel is propsed. This kernel will have components both inside and outside of MOAB. MOAB is currently used to represent DAGMC model topologies as well as their discretized representations. These meshes are generated inside MOAB and as such MOAB has access to alter, manipulate, and query all information about the mesh. It also provides a rich set of mesh manipulation, detection and generation tools. Most importantly, MOAB provides the capability to gaurantee contiguity in memory for both mesh elements and mesh-related data via dense tags. This is a key requirement for many of the efficiencies made available by vectorized operations during traversal of the datastructures. MOAB's unique ability to provide this contiguous data allows one to link its powerful generation, adaptation tools to any set of low-level optimizations available on current CPU architectures. It does not in itself contain the ability to utilize these optimizations within its database oriented system, however. As a result, the traversal component of the ray tracing kernel will need to be implemented outside of MOAB. There are a few viable options for accomplishing this. Currently, a system close to this exists inside EmDAG but under the hood Embree is creating its own BVH. It may be possible to structure a BVH from MOAB and pass it to Embree as the data structure to use for traversal. Problems related to the conversion back and forth from double to single precision would need to be addressed as they currently violate the parameters of DADMC's robust particle tracking algorithm and its possible that the particular pathology resulting in lost particles in the EmDAG system is impossible to resolve. Another option is to develop a traversal module either alongside or separate from MOAB which allows for robust raytracing on a double precision triangle surface mesh. This option gives more control over DAGMC in the future in terms of the ability to study different acceleration datastructures, support of specific vector extensions, and a simpler implementation. Embree is an excellent tool with support for many features such as subdivision surfaces, advanced techniques for representation and tracing of hair geometry, etc. which are related more to rendering than they are to ray tracing of static surfaces meshes. 
 
-
-\subsection{Outline}
-
-\begin{itemize}
-\item Reiterate the current state
-  \begin{itemize}
-  \item Moving outside the database context allows for more freedom of ray tracing implementation, optimization
-  \item Facet generation can vary largely and has a significant impact on BVH/OBB performance
-  \end{itemize}
-\item New take on ray tracing
-  \begin{itemize}
-  \item Rendering applications of ray tracing do not fret over these small issues because confronting them would significantly increase their time to render/time to solution
-  \item Monte Carlo's time to solution is so much longer that the time spent in optimizing a BVH build becomes negligible compared to the additional time spent firing rays (introduce basic equation for tts)
-  \item Justified by the fact that we fire more rays in Monte Carlo than in a rendering process (rough estimate of that)
-  \end{itemize}
-\item Proposed solution
-  \begin{itemize}
-  \item implementation of a BVH builder supporting many different splitting schemes and SAH leaf condition heuristic
-  \item BVH builder will include a registry and solution set for known difficult-to-trace mesh/geometry features
-  \item implementation of vectorized ray tracing traversal, taking advantage of MOAB's ability to provide contiguous memory of tag data to create hierarchy
-  \item thread-safe kernel which can be used independent of MOAB instance
-  \item investigation of available speedup in using different types to define BVH nodes
-  \item takes advantage of MOAB's mesh generation capabilities and its ability to provide data in a contiguous set of memory
-  \end{itemize}
-\item Estimate of performance improvement
-  \begin{itemize}
-  \item based on current number of ray fires for a sample problem, vectorized implementation, lower precision types, etc.
-  \item Use Andrew Turner presentation to project results in context if I'm feeling confident
-  \end{itemize}
-\end{itemize}
-
-\subsection{Ray Generalization in Radiation Transport}%%Status:Pending%%
-
-Key points to touch on:
-\begin{itemize}
-\item optimization of time to solution: building time + traversal time
-  \begin{itemize}
-  \item estimate how long it will take to build BVH?
-  \item coarsen BVH build parameters based on estimation of traversal time
-  \end{itemize}
-\item parallel building of BVH in MOAB
-\item mesh feature detection/adaptation during BVH build
-  \begin{itemize}
-  \item will engineer a system for registering new adaptable features
-  \item each feature will have its own response/solution upon detection
-  \end{itemize}
-\item use of recent heuristics during build
-\item vectorized traversal
-\item thread-safe kernel for DAGMC and its implications
-\item doing this taking advantage of MOAB's intricate/robust mesh interface. then using its direct access to contiguous data for vectorized traversal
-\item estimation of improved performance as a result of this work
-\end{itemize}
-
-
-\section{Temporary Extras}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% EXTRA STUFF TO DRAW FROM %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 In fact, the specific problem of finding the next closest intersection within a virtual model given a point and a direction is commonly encountered in the area of rendering for 3D models.
 
  As a particle is born, the material in which it exists must be determined as it will dictate the underlying physics of its travel through 
@@ -816,6 +761,10 @@ Time it takes to perform the ray tracing queries is partially dependent upon the
 Additionally, the way in which rays traverse a model limits the number of possible triangles for a given ray query to the triangles used to form the current volume (cell) in which the particle resides. As a result, trees are created on a per-volume basis whereas in rendering rays are allowed to hit any object in the virtual space. This difference in perspective a manifestation of the underlying physics between the two applications. Most interactions of influence occur inside virtual objects of non-negligible density rather than in the relatively empty space between them. In rendering, most of the interesting interactions affecting the blurring of objects, shadowing, etc. occur in this void or air-filled space between objects.
 
 Many ray tracing datastructures, heuristics, and other techniques are explored as part of a review of ray tracing's current state. This is followed by an analysis of DAMC's performance limitations as well as the investigation of known problem-specific difficulties encountered by ray tracing kernels as a result of the process used to generated surface meshes in the DAGMC workflow. Finally a plan is laid out to create a Monte Carlo oriented ray tracing kernel which couples the existing functionality of current tools such as MOAB with some of the more powerful ray tracing techniques currently available and seeks to take advantage of more subtle optimizations specific to its purpose.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \bibliographystyle{acm}
 \bibliography{refs}
