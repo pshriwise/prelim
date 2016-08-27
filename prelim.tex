@@ -689,7 +689,23 @@ In Brandon Smith's thesis Robust Particle Tracking and Advanced Geometry for Mon
 \section{Research Proposal}%%Status:In Progress%%
 \label{research_proposal}
 
-The performance of CAD-based transport is a concern moving forward in the area of Monte Carlo radiation transport, particularly in complex systems such as high-energy physics or fusion energy systems. In comparison to well-established CSG modeling of geometries, the performance is several times worse as down in Section \ref{perf_benchmark}. This proposal will outline three different approaches for improving CAD-based transport performance in the DAGMC toolkit.
+This chapter outlines a short summary of the motivation for this work, and outlines the work to be done supported by previous work of the author.
+
+The performance of CAD-based transport is a concern moving forward in the area of Monte Carlo radiation transport, particularly in relatively new areas such as high-energy physics devices or fusion energy systems. In comparison to well-established CSG modeling of geometries, the performance is several times worse as down in Section \ref{perf_benchmark}. DAGMC is a robust tool for tracking particles through surface meshes of CAD models, but can be made more efficient using the various approaches outlined below. This proposal will outline three different approaches for improving CAD-based transport performance in the DAGMC toolkit.
+
+\subsection{SIMD-Enabled Acceleration Datastructure}
+
+As described in Section \ref{emdag}, a SIMD-enabled ray tracing kernal, Embree, has already been applied within the DAGMC framework with great success. Unfortunately DAGMC's robustness was lost due to a fundamental difference in the precision used to store geometric primitives and intersect rays. It is believed that this problem can be remedied in a straightforward manner by altering these datatypes from single to double floating point precision to match those of the underlying physics codes DAGMC supports and adjusting the underlying algorithms accordingly. A substantial reduction in performance due to this change in floating point calculations is not expected however as the construction of the underlying hierarchy used to isolate triangles for intersection can remain in single precision if built appropriately.
+
+There are two ways to accomplish the above goal of applying SIMD-enabled ray tracing robustly within DAGMC. The first is to alter Embree to meet the requirements of higher precision primitives and expanded single precision bounding boxes and link it to the MOAB primitives as was done in previous work. An alternative approach, and perhaps a more desirable one, is to design a kernal with many of the features that exist in Embree but that couples more cleanly with DAGMC's underlying mesh database, MOAB. MOAB's design does not easily support such a kernel directly, but its ability to store data in a contiguous manner and provide direct access to that data would meet the necessary basic requirements for a SIMD-enabled ray tracing kernel that is more catered toward the current needs of the scientific community.
+
+Despite this loss in robustness, higher nary bounding volume hierarchies designed for vectorized traversal align well with the priorities of acceleration datastructures used in large, complicated models. 
+
+\subsection{Special Case Allowance in BVH Building}
+
+\subsection{Signed Distance Field Preconditioner}
+
+
 
 
 %% In order to make CAD-based Monte Carlo competitive with native codes it is clear that geometry queries must be satisfied much more quickly than the ray tracing kernel in DAGMC can currently provide. Investigation into the shortcomings of the DAGMC ray tracing process have revealed various opportunities for improvement. One in implementation and the other in application.
