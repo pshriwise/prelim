@@ -193,6 +193,7 @@ These shallow BVH structures optimized using SIMD instruction sets could be of g
 %% SIMD is a form of complex instruction set computing (CISC) which combines operations that are often done together to make them more efficient. More specifically, SIMD provides the capability to apply the same operation, or set of operations, to independent data elements. Because this is done in a single processor thread, it is classified as data parallelism. 
 
 \subsection{Implicit Surface Representations}%%Status: Done%%
+\label{implicit_surfaces}
 
 Implicit surfaces are rich and versitile representation of closed manifolds used for modeling, simulation, and rendering. Additionally, implicit surfaces can be used to generate triangle meshes for rasterization or rendering on Graphics Processing Units (GPUs)\cite{Set96} and can also be constructed from arbitrary triangle meshes or point clouds\cite{Lev98}. Implicit surfaces are defined using the isocontour of a scalar function defined over all space unlike an \textit{explicit} representation of a surface which defines the subset of space which the boundary occupies. Intuitively it might seem wasteful for a definition to be true for all space considering the relatively small amount of space the object will occupy, however a number of powerful tools for geometric modeling using these representations will be discussed in this section.
 
@@ -720,8 +721,16 @@ This flexible building scheme will be implemented within the ray tracing kernel 
 
 \subsection{Signed Distance Field Preconditioner}
 
+Chapter \ref{implicit_surfaces} discusses the used of implicit surfaces and their derived signed distance fields in vizualization and rendering. In particular, a signed distance field defined over the domain of a volume has been envisioned as a valuable pre-conditioning tool for the ray fire process. As discussed in the introduction of this work, the particle's current location along with the intended physical interaction location is provided to the particle tracking section of the code. It is purposed that the signed distance to nearest intersection could be approximated via interpolation for both the particle origin and intended interaction location. This can be accomplished by populating a structured cartesian mesh with extents equal to that of the volume's bounding box. The signed distance value can then be stored for each node in the mesh. While implicit surfaces provide a natural way to populate such a mesh with signed distance values and can be generated from triangle mesh structures like the ones used in DAGMC, this can also be accomplished using BVH algorithms for finding the nearest triangle intersection without added support for implicit surface generation and handling. Using the same structure to retrieve signed distance values is also important for self-consistency between the preconditioner and ray tracing kernel. The imporantance of this has been experienced before \cite{Smith_2011}. To minimize the memory footprint of the datastructure, the explicit storage of vertex locations in the mesh can be avoided by relying on a single corner location and the consistent step size of mesh to retrieve signed distance values stored as a single array of double values. A tri-linear interpolation can then be performed using data values quickly gathered from the array using indices provided by the number of steps from the mesh corner to the point of interest in each dimension. Using the $O(1)$ two signed distance values, a set of conditions can be formulated for which an $O(log(N))$ ray fire is uneeded to determine the outcome of the particle's next event.
 
+Figure \ref{preconditioner_ex} demonstrates how this could work. 
 
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.4]{preconditioner_ex.png}
+  \caption{Example of how a signed distance values at the beginning and end of a ray can be used to avoid un-nessecary ray queries.}
+  \label{preconditioner_ex}
+\end{figure}
 
 
 
