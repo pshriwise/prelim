@@ -699,13 +699,13 @@ As described in Section \ref{emdag}, a SIMD-enabled ray tracing kernal, Embree, 
 
 %Estimation of performance change here%
 
-\begin{figure}
-  \begin{equation}
-    \sum_{}^{N_r}T_T + I\sum_{}^{N_r} P_{n}
-  \end{equation}
-  \caption{A theoretical estimation of the performance reduction in Embree when using geometric primitives with double precision.}
-  \label{perf_estimate}
-\end{figure}
+%% \begin{figure}
+%%   \begin{equation}
+%%     \sum_{}^{N_r}T_T + I\sum_{}^{N_r} P_{n}
+%%   \end{equation}
+%%   \caption{A theoretical estimation of the performance reduction in Embree when using geometric primitives with double precision.}
+%%   \label{perf_estimate}
+%% \end{figure}
 
 
 Two options to accomplish the above goal of applying SIMD-enabled ray tracing robustly within DAGMC will be explored and the more advantageous one selected for implementation. The first is to alter Embree to meet the requirements of higher precision primitives and expanded single precision bounding boxes and link it to the MOAB primitives as was done in previous work. A member of the Intel development team has indicated that this process may already be underway. An alternative approach, and perhaps is to design a kernal with many of the features that exist in Embree but that couples more cleanly with DAGMC's underlying mesh database, MOAB. Embree is an excellent kernel, but its focus may be too broad for the purposes of DAGMC. Omitting some of the existing features within Embree such as dynamic surface represenataion and support for hair geometries \cite{Woop_2014} will allow for a more simple design and implementation for future researchers. MOAB's database oriented design does not easily support such a kernel directly, but its ability to store data in a contiguous manner and provide direct access to that data is a unique feature that would allow it to interact directly with a SIMD-enabled ray tracing kernel that is more catered toward the current needs of the scientific community.
