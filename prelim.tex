@@ -738,7 +738,7 @@ Nearest surface intersection's along a particle trajectory will be preconditione
 \begin{figure}[H]
   \centering
   \includegraphics[trim = 50 0 0 0 , scale=0.6]{preconditioner_ex.png}
-  \caption{Example of how a signed distance values at the beginning and end of a ray can be used to avoid un-nessecary ray queries.}
+  \caption{Example of how a signed distance values at the beginning and end of a ray can be used to avoid un-nessecary ray queries. a) The ray fire process can be avoided as it has been definitively shown that there is no interface intersection. b) A ray fire must be performed as it is possible there is a surface intersection between the two points of interest. c) The signed distance values indicate that a ray fire can be avoided but not definitevly when accounting for error - a ray fire must be executed.}
   \label{preconditioner_ex}
 \end{figure}
 
