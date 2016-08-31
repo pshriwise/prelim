@@ -1,4 +1,85 @@
-@article{Weghorst:1984:ICM,
+@article{MacDonald_1990,
+author={MacDonald, J. David
+; Booth, Kellogg S.},
+title={Heuristics for ray tracing using space subdivision},
+journal={The Visual Computer},
+year={1990},
+volume={6},
+number={3},
+pages={153--166},
+abstract={Ray tracing requires testing of many rays to determine intersections with objects. A way of reducing the computation is to organize objects into hierarchical data structures. We examine two heuristics for space subdivisions using bintrees, one based on the intuition that surface area is a good estimate of intersection probability, one based on the fact that the optimal splitting plane lies between the spatial median and the object median planes of a volume. Traversal algorithms using cross links between nodes are presented as generalizations of ropes in octrees. Simulations of the surface area heuristic and the cross link scheme are presented. These results generalize to other hierarchical data structures.},
+issn={1432-2315},
+doi={10.1007/BF01911006},
+url={http://dx.doi.org/10.1007/BF01911006}
+}
+
+@inproceedings{Karras_2013,
+  doi = {10.1145/2492045.2492055},
+  url = {http://dx.doi.org/10.1145/2492045.2492055},
+  year  = {2013},
+  publisher = {Association for Computing Machinery ({ACM})},
+  author = {Tero Karras and Timo Aila},
+  title = {Fast parallel construction of high-quality bounding volume hierarchies},
+  booktitle = {Proceedings of the 5th High-Performance Graphics Conference on - HPG }
+}
+
+@inproceedings{Woop_2014,
+  author    = {Sven Woop and
+               Carsten Benthin and
+               Ingo Wald and
+               Gregory S. Johnson and
+               Eric Tabellion},
+  title     = {Exploiting Local Orientation Similarity for Efficient Ray Traversal
+               of Hair and Fur},
+  booktitle = {High-Performance Graphics 2014, Lyon, France, 2014. Proceedings},
+  pages     = {41--49},
+  year      = {2014},
+  url       = {http://dx.doi.org/10.2312/hpg.20141092},
+  doi       = {10.2312/hpg.20141092},
+  timestamp = {Wed, 23 Jul 2014 15:23:12 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/egh/WoopBWJT14},
+  bibsource = {dblp computer science bibliography, http://dblp.org},
+}
+
+@article {Dammertz_2008,
+author = {Dammertz, H. and Hanika, J. and Keller, A.},
+title = {Shallow Bounding Volume Hierarchies for Fast SIMD Ray Tracing of Incoherent Rays},
+journal = {Computer Graphics Forum},
+volume = {27},
+number = {4},
+publisher = {Blackwell Publishing Ltd},
+issn = {1467-8659},
+url = {http://dx.doi.org/10.1111/j.1467-8659.2008.01261.x},
+doi = {10.1111/j.1467-8659.2008.01261.x},
+pages = {1225--1233},
+keywords = {I.3.6 [Methodology and Techniques]: Graphics data structures and data types, I.3.7 [Three-Dimensional Graphics and Realism]: Raytracing},
+year = {2008},
+}
+
+@data{Watcher_2006,
+  doi = {10.2312/EGWR/EGSR06/139-149},
+  url = {http://dx.doi.org/10.2312/EGWR/EGSR06/139-149},
+  author = {Wächter, Carsten; Keller, Alexander; },
+  publisher = {The Eurographics Association},
+  title = {Instant Ray Tracing: The Bounding Interval Hierarchy},
+  year = {2006},
+}
+
+@article{Goldsmith_1987, 
+author={Goldsmith, J. and Salmon, J.}, 
+journal={Computer Graphics and Applications, IEEE}, 
+title={Automatic Creation of Object Hierarchies for Ray Tracing}, 
+year={1987}, 
+volume={7}, 
+number={5}, 
+pages={14-20}, 
+keywords={Computational modeling;Image databases;Optical refraction;Ray tracing;Rendering (computer graphics);Visual databases}, 
+doi={10.1109/MCG.1987.276983}, 
+ISSN={0272-1716}, 
+month={May},
+}
+
+@article{Weghorst_1984,
  author = {Weghorst, Hank and Hooper, Gary and Greenberg, Donald P.},
  title = {Improved Computational Methods for Ray Tracing},
  journal = {ACM Trans. Graph.},
@@ -15,20 +96,18 @@
  acmid = {357335},
  publisher = {ACM},
  address = {New York, NY, USA},
- file = {bvh_comp:files/p52-weghorst.pdf}
 } 
 
-@inproceedings{gottschalk1996obbtree,
+@inproceedings{Gottschalk_1996,
   title={OBBTree: A hierarchical structure for rapid interference detection},
   author={Gottschalk, Stefan and Lin, Ming C and Manocha, Dinesh},
   booktitle={Proceedings of the 23rd annual conference on Computer graphics and interactive techniques},
   pages={171--180},
   year={1996},
   organization={ACM},
-  file = {obbtree:files/p171-gottschalk.pdf}
 }
 
-@inproceedings{make_watertight_smith_2010,
+@inproceedings{Smith_2010,
 	address = {Chattanooga, TN, United States},
 	title = {Sealing {Faceted} {Surfaces} to {Achieve} {Watertight} {CAD} {Models}},
 	author = {Smith, B.M. and Tautges, T.J. and Wilson, P.P.H.},
@@ -36,7 +115,7 @@
 	year = {2010}
 }
 
-@inproceedings{dagmc_2009,
+@inproceedings{Tautges_2009,
 	address = {Saratoga Springs, NY},
 	title = {Acceleration {Techniques} for {Direct} {Use} of {CAD}-{Based} {Geometries} in {Monte} {Carlo} {Radiation} {Transport}},
 	booktitle = {International {Conference} on {Mathematics}, {Computational} {Methods} \& {Reactor} {Physics} ({M}\&{C} 2009)},
@@ -45,10 +124,9 @@
 	month = may,
 	year = {2009},
 	keywords = {Acceleration, CAD, DAGMC, Monte Carlo Methods},
-	file = {2009_5_Tautges_DAGMC_MC2009.pdf:files/3730/2009_5_Tautges_DAGMC_MC2009.pdf:application/pdf;Tautges et al. - 2009 - Acceleration Techniques for Direct Use of CAD-Base.doc:files/3085/Tautges et al. - 2009 - Acceleration Techniques for Direct Use of CAD-Base.doc:application/msword}
 }
 
-@techreport{moab,
+@techreport{Tautges_2004,
 	type = {{SAND}2004-1592},
 	title = {{MOAB}: {A} {Mesh}-{Oriented} {Database}},
 	institution = {Sandia National Laboratories},
@@ -59,7 +137,7 @@
 	keywords = {MOAB}
 }
 
-@article{embree,
+@article{Wald_2014,
  author = {Wald, Ingo and Woop, Sven and Benthin, Carsten and Johnson, Gregory S. and Ernst, Manfred},
  title = {Embree: A Kernel Framework for Efficient CPU Ray Tracing},
  journal = {ACM Trans. Graph.},
@@ -80,7 +158,34 @@
  keywords = {CPU, SIMD, SPMD, coprocessor, ray tracing},
 } 
 
-@article{Bentley1975,
+@inproceedings{Stich_2009,
+ author = {Stich, Martin and Friedrich, Heiko and Dietrich, Andreas},
+ title = {Spatial Splits in Bounding Volume Hierarchies},
+ booktitle = {Proceedings of the Conference on High Performance Graphics 2009},
+ series = {HPG '09},
+ year = {2009},
+ isbn = {978-1-60558-603-8},
+ location = {New Orleans, Louisiana},
+ pages = {7--13},
+ numpages = {7},
+ url = {http://doi.acm.org/10.1145/1572769.1572771},
+ doi = {10.1145/1572769.1572771},
+ acmid = {1572771},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {bounding volume hierarchy, ray tracing},
+}
+
+@book{Glassner_1989,
+ editor = {Glassner, Andrew S.},
+ title = {An Introduction to Ray Tracing},
+ year = {1989},
+ isbn = {0-12-286160-4},
+ publisher = {Academic Press Ltd.},
+ address = {London, UK, UK},
+} 
+
+@article{Bentley_1975,
  author = {Bentley, Jon Louis},
  title = {Multidimensional Binary Search Trees Used for Associative Searching},
  journal = {Commun. ACM},
@@ -100,32 +205,17 @@
  keywords = {associative retrieval, attribute, binary search trees, binary tree insertion, information retrieval system, intersection queries, key, nearest neighbor queries, partial match queries},
 } 
 
-@inproceedings{karras_2013,
-  doi = {10.1145/2492045.2492055},
-  url = {http://dx.doi.org/10.1145/2492045.2492055},
-  year  = {2013},
-  publisher = {Association for Computing Machinery ({ACM})},
-  author = {Tero Karras and Timo Aila},
-  title = {Fast parallel construction of high-quality bounding volume hierarchies},
-  booktitle = {Proceedings of the 5th High-Performance Graphics Conference on - HPG }
+@phdthesis{Mahovsky_2005,
+address = {Calgary, Alberta, Canada},
+title = {Ray Tracing with Reduce-Precision Bounding Volume Hierarchies},
+type = {{PhD} {Computer Science}},
+language = {English},
+year = {2005},
+author = {Jeffry A. Mahovsky},
+school = {University of Calgary},
 }
 
-@article{goldsmith_1987, 
-author={Goldsmith, J. and Salmon, J.}, 
-journal={Computer Graphics and Applications, IEEE}, 
-title={Automatic Creation of Object Hierarchies for Ray Tracing}, 
-year={1987}, 
-volume={7}, 
-number={5}, 
-pages={14-20}, 
-keywords={Computational modeling;Image databases;Optical refraction;Ray tracing;Rendering (computer graphics);Visual databases}, 
-doi={10.1109/MCG.1987.276983}, 
-ISSN={0272-1716}, 
-month={May},
-file = {sah_paper:files/04057175.pdf}
-}
-
-@phdthesis{smith_thesis_2011,
+@phdthesis{Smith_2011,
 	address = {Madison, WI, United States},
 	type = {{PhD} {Nuclear} {Engineering} and {Engineering} {Physics}},
 	title = {Robust {Tracking} and {Advanced} {Geometry} for {Monte} {Carlo} {Radiation} {Transport}},
@@ -134,9 +224,9 @@ file = {sah_paper:files/04057175.pdf}
 	school = {University of Wisconsin-Madison},
 	author = {Smith, Brandon M.},
 	year = {2011},
-	file = {NEEP-PhD-BrandonSmith-DefensePresentation.pdf:/home/shriwise/.zotero/zotero/1u6yj37s.default/zotero/storage/GUXS9QRA/NEEP-PhD-BrandonSmith-DefensePresentation.pdf:application/pdf;NEEP-PhD-BrandonSmith.pdf:/home/shriwise/.zotero/zotero/1u6yj37s.default/zotero/storage/8A2VET6U/NEEP-PhD-BrandonSmith.pdf:application/pdf}
 }
-@inproceedings{ernst_2007,
+
+@inproceedings{Ernst_2007,
   doi = {10.1109/rt.2007.4342593},
   url = {http://dx.doi.org/10.1109/RT.2007.4342593},
   year  = {2007},
@@ -145,81 +235,6 @@ file = {sah_paper:files/04057175.pdf}
   author = {Manfred Ernst and Gunther Greiner},
   title = {Early Split Clipping for Bounding Volume Hierarchies},
   booktitle = {2007 {IEEE} Symposium on Interactive Ray Tracing}
-}
-@inproceedings{sbvh,
- author = {Stich, Martin and Friedrich, Heiko and Dietrich, Andreas},
- title = {Spatial Splits in Bounding Volume Hierarchies},
- booktitle = {Proceedings of the Conference on High Performance Graphics 2009},
- series = {HPG '09},
- year = {2009},
- isbn = {978-1-60558-603-8},
- location = {New Orleans, Louisiana},
- pages = {7--13},
- numpages = {7},
- url = {http://doi.acm.org/10.1145/1572769.1572771},
- doi = {10.1145/1572769.1572771},
- acmid = {1572771},
- publisher = {ACM},
- address = {New York, NY, USA},
- keywords = {bounding volume hierarchy, ray tracing},
-}
-
-@book{Intro2RT,
- editor = {Glassner, Andrew S.},
- title = {An Introduction to Ray Tracing},
- year = {1989},
- isbn = {0-12-286160-4},
- publisher = {Academic Press Ltd.},
- address = {London, UK, UK},
-} 
-
-@article{KDReview,
-Abstract = {In this paper we review the traversal algorithms for kd-trees for ray tracing. Ordinary traversal algorithms such as sequential, recursive, and those with neighbour-links have different limitations, which led to several new developments within the last decade. We describe algorithms exploiting ray coherence and algorithms designed with specific hardware architecture limitations such as memory latency and consumption in mind. We also discuss the robustness of traversal algorithms as one issue that has been neglected in previous research. [ABSTRACT FROM AUTHOR]},
-Author = {Hapala, M. and Havran, V.},
-ISSN = {01677055},
-Journal = {Computer Graphics Forum},
-Keywords = {RAY tracing algorithms, ALGORITHMS, COMPUTER-generated imagery, COMPUTER graphics, COMPUTER architecture, kd-tree, ray tracing, traversal},
-Number = {1},
-Pages = {199 - 213},
-Title = {Review: Kd-tree Traversal Algorithms for Ray Tracing.},
-Volume = {30},
-URL = {http://search.ebscohost.com.ezproxy.library.wisc.edu/login.aspx?direct=true&AuthType=ip,uid&db=aph&AN=58613009&site=ehost-live&scope=site},
-Year = {2011},
-}
-@article{SAMET1989445,
-title = {Implementing ray tracing with octrees and neighbor finding},
-journal = {Computers and Graphics},
-volume = {13},
-number = {4},
-pages = {445 - 460},
-year = {1989},
-note = {},
-issn = {0097-8493},
-doi = {http://dx.doi.org/10.1016/0097-8493(89)90006- X},
-url = {http://www.sciencedirect.com/science/article/pii/009784938990006X},
-author = {Hanan Samet},
-}
-
-@INPROCEEDINGS{parametric_octree_revelles_2000,
-    author = {J. Revelles and C. Ureña and M. Lastra},
-    title = {An Efficient Parametric Algorithm for Octree Traversal},
-    booktitle = {Journal of WSCG},
-    year = {2000},
-    pages = {212--219}
-}
-
-@Article{ORourke_1985,
-author="O'Rourke, Joseph",
-title="Finding minimal enclosing boxes",
-journal="International Journal of Computer {\&} Information Sciences",
-year="1985",
-volume="14",
-number="3",
-pages="183--199",
-abstract="The problem of finding minimal volume boxes circumscribing a given set of three-dimensional points is investigated. It is shown that it is not necessary for a minimum volume box to have any sides flush with a face of the convex hull of the set of points, which makes a naive search problematic. Nevertheless, it is proven that at least two adjacent box sides are flush with edges of the hull, and this characterization enables anO(n3) algorithm to find all minimal boxes for a set ofn points.",
-issn="1573-7640",
-doi="10.1007/BF00991005",
-url="http://dx.doi.org/10.1007/BF00991005"
 }
 
 @INPROCEEDINGS{Wald_2008, 
@@ -231,6 +246,28 @@ pages={49-57},
 keywords={data structures;parallel processing;ray tracing;SIMD single-ray traversal;binary data structure;bounding through volume hierarchy;coherent rays traversing packets;ray tracing;secdondary ray distributions;Computer architecture;Concurrent computing;Data structures;Hardware;Layout;Optical reflection;Parallel processing;Ray tracing;Robots;Yarn}, 
 doi={10.1109/RT.2008.4634620}, 
 month={Aug},
+}
+
+@article{Samet_1989,
+title = {Implementing ray tracing with octrees and neighbor finding},
+journal = {Computers and Graphics},
+volume = {13},
+number = {4},
+pages = {445 - 460},
+year = {1989},
+note = {},
+issn = {0097-8493},
+doi = {http://dx.doi.org/10.1016/0097-8493(89)90006-X},
+url = {http://www.sciencedirect.com/science/article/pii/009784938990006X},
+author = {Hanan Samet},
+}
+
+@INPROCEEDINGS{Revelles_2000,
+    author = {J. Revelles and C. Ureña and M. Lastra},
+    title = {An Efficient Parametric Algorithm for Octree Traversal},
+    booktitle = {Journal of WSCG},
+    year = {2000},
+    pages = {212--219}
 }
 
 @online{Intel_AVX,
@@ -249,36 +286,18 @@ urldate  = {2016-08-22},
     pages = {2002}
 }
 
-@phdthesis{Havran_2000,
-title = {Heuristic Ray Shooting Algorithms},
-school = {Czech Technical University},
-author = {Havran, Vlastimil},
-year = {2000}
-}
-@article {Dammertz_2008,
-author = {Dammertz, H. and Hanika, J. and Keller, A.},
-title = {Shallow Bounding Volume Hierarchies for Fast SIMD Ray Tracing of Incoherent Rays},
-journal = {Computer Graphics Forum},
-volume = {27},
-number = {4},
-publisher = {Blackwell Publishing Ltd},
-issn = {1467-8659},
-url = {http://dx.doi.org/10.1111/j.1467-8659.2008.01261.x},
-doi = {10.1111/j.1467-8659.2008.01261.x},
-pages = {1225--1233},
-keywords = {I.3.6 [Methodology and Techniques]: Graphics data structures and data types, I.3.7 [Three-Dimensional Graphics and Realism]: Raytracing},
-year = {2008},
-file = {SIMD:files/QBVH.pdf}
-}
-
-@data{Watcher_2006,
-  doi = {10.2312/EGWR/EGSR06/139-149},
-  url = {http://dx.doi.org/10.2312/EGWR/EGSR06/139-149},
-  author = {Wächter, Carsten; Keller, Alexander; },
-  publisher = {The Eurographics Association},
-  title = {Instant Ray Tracing: The Bounding Interval Hierarchy},
-  year = {2006},
-  file = {BIH:files/bounding-interval-WK06.pdf}
+@Article{ORourke_1985,
+author="O'Rourke, Joseph",
+title="Finding minimal enclosing boxes",
+journal="International Journal of Computer {\&} Information Sciences",
+year="1985",
+volume="14",
+number="3",
+pages="183--199",
+abstract="The problem of finding minimal volume boxes circumscribing a given set of three-dimensional points is investigated. It is shown that it is not necessary for a minimum volume box to have any sides flush with a face of the convex hull of the set of points, which makes a naive search problematic. Nevertheless, it is proven that at least two adjacent box sides are flush with edges of the hull, and this characterization enables anO(n3) algorithm to find all minimal boxes for a set ofn points.",
+issn="1573-7640",
+doi="10.1007/BF00991005",
+url="http://dx.doi.org/10.1007/BF00991005"
 }
 
 @article {Wald_2001,
@@ -296,3 +315,57 @@ keywords = {Image-based modeling/rendering, projective geometry, vanishing line,
 year = {2001},
 }
 
+@phdthesis{Havran_2000,
+title = {Heuristic Ray Shooting Algorithms},
+school = {Czech Technical University},
+author = {Havran, Vlastimil},
+year = {2000}
+}
+
+@article{Hughes_2015,
+  doi = {10.2200/s00647ed1v01y201505cac032},
+  url = {http://dx.doi.org/10.2200/S00647ED1V01Y201505CAC032},
+  year  = {2015},
+  month = {may},
+  publisher = {Morgan {\&} Claypool Publishers {LLC}},
+  volume = {10},
+  number = {1},
+  pages = {1--121},
+  author = {Christopher J. Hughes},
+  title = {Single-Instruction Multiple-Data Execution},
+  journal = {Synthesis Lectures on Computer Architecture}
+}
+
+@ARTICLE{IEEE_STD_2008, 
+journal={IEEE Std 754-2008}, 
+title={IEEE Standard for Floating-Point Arithmetic}, 
+year={2008}, 
+pages={1-70}, 
+keywords={IEEE standards;floating point arithmetic;programming;IEEE standard;arithmetic formats;computer programming;decimal floating-point arithmetic;754-2008;NaN;arithmetic;binary;computer;decimal;exponent;floating-point;format;interchange;number;rounding;significand;subnormal}, 
+doi={10.1109/IEEESTD.2008.4610935}, 
+month={Aug},}
+
+@book{Osher_2003,
+   title = "Level set methods and dynamic implicit surfaces",
+   author = "Osher, Stanley and Fedkiw, Ronald P.",
+   series = "Applied mathematical science",
+   publisher = "Springer",
+   address = "New York, N.Y.",
+   url = "http://opac.inria.fr/record=b1099358",
+   isbn = "0-387-95482-1",
+   year = 2003
+}
+
+@article{Bohlen_2014,
+title = "The FLUKA Code: Developments and Challenges for High Energy and Medical Applications",
+journal = "Nuclear Data Sheets",
+volume = "120",
+number = "",
+pages = "211 - 214",
+year = "2014",
+note = "",
+issn = "0090-3752",
+doi = "http://dx.doi.org/10.1016/j.nds.2014.07.049",
+url = "http://www.sciencedirect.com/science/article/pii/S0090375214005018",
+author = "T.T. Böhlen and F. Cerutti and M.P.W. Chin and A. Fassò and A. Ferrari and P.G. Ortega and A. Mairani and P.R. Sala and G. Smirnov and V. Vlachoudis",
+}
