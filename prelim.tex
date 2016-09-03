@@ -356,6 +356,21 @@ Three different models were selected for this set of tests: the Frastcati Neutro
 
 Across the board, these models lag behind native MCNP models by a factor of anywhere between 4 and 8. For smaller problems with simple geometries and relatively low numbers of histories required to reach an acceptably low level of statisitcal uncertainty, this might not pose as much of a problem to users. As problem geometries become more complicated and the number of histories becomes larger, the discrepancy in computing time becomes of high importance when run times extend to days or weeks longer than they would using a native MCNP geometry representation.
 
+\begin{table}[H]
+  \centering
+  \caption{Table comparing the performance of DAG-MCNP to native MCNP for the same modules after translation to a CAD-based surface mesh.}
+    \label{DAG-MCNP_performance}  
+  \begin{tabular}{l c c c}
+    \toprule \\
+    Model & Native ctme (min) & DAGMC ctme (min) & Ratio (Native/DAGMC) \\
+    \hline \\
+    FNG &  5871.92 & 22769.33 & 3.9\\
+    ATR &  901.68 & 8627.80 & 9.6 \\
+    UWNR &  8767.29 & 69429.60 7.9\\
+    \hline \\
+  \end{tabular}
+\end{table}
+
 Included in Appendix B are tables of the native MCNP results alongisde those of DAG-MCNP. Neither a qualitative comparison or quantitative analysis of these results will be made in this work other than to state that the results appear to be the result of a successful computation in either system are considered valid from the standpoint of performance comparison between native MCNP and DAG-MCNP.
 
 \subsubsection{Profiling}%%Status:Done%%
