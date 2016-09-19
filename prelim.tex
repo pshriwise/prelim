@@ -259,7 +259,7 @@ Surface representations commonly found in CSG are a simple subset of implicit su
 
 In practice, complex implicit surfaces or highly complex combinations of implicit surfaces are sampled into a single representation allowing for spatial organization of the data which still only requires a single computation for return of desired geometric information. In order to achieve this, the implicit surface's signed distance field is sampled and placed on an adaptive grid datastructure, typically an octree, which was described in section \ref{sec:octree}. The values of the signed distance field are assigned to the vertices of the octree nodes which become better resolved closer to the surface's boundary. The values of the signed distance function for any point in the domain can then be recovered using trilinear interpolation on the voxel data which contains the point of interest. With the discretization of the signed distance function, there will be error associated with any method of evaluation, but as Osher and Fedkiw observe in ``Level set Methods and Dynamic Implicit Surfaces'' \cite{Osher_2003}: ``most numerical methods depend on the fact that the results are stable in the presence of small perturbations. If this is not true, then the problem under consideration is probably ill-posed, and numerical methods should be used only with extreme caution (and suspicion.)'' While radiation transport is an application which requires high-precision, data structures composed of signed distance fields may be of use so long as maximal errors of interpolation can be detected and logically accounted for in which case redundancies may be necessary as well.
 
-The use of a sampled signed distance field could be of great use for particle tracking in CAD based Monte Carlo radiation transport for situations requiring less precision than an exact value of the nearest distance intersection with DAGMC's underlying surface mesh. This concept will be discussed more specifically in the Chapter \ref{reserach_proposal}
+The use of a sampled signed distance field could be of great use for particle tracking in CAD based Monte Carlo radiation transport for situations requiring less precision than an exact value of the nearest distance intersection with DAGMC's underlying surface mesh. This concept will be discussed more specifically in the Chapter \ref{research_proposal}
 
 
 
@@ -788,7 +788,7 @@ Nearest surface intersection's along a particle trajectory will be preconditione
 \begin{figure}[H]
   \centering
   \includegraphics[trim = 50 0 0 0 , scale=0.6]{preconditioner_ex.png}
-  \caption{Example of how a signed distance values at the beginning and end of a ray can be used to avoid un-nessecary ray queries. a) The ray fire process can be avoided as it has been definitively shown that there is no interface intersection. b) A ray fire must be performed as it is possible there is a surface intersection between the two points of interest. c) The signed distance values indicate that a ray fire can be avoided but not definitevly when accounting for error - a ray fire must be executed.}
+  \caption{Example of how signed distance values at the beginning and end of a ray can be used to avoid un-nessecary ray queries. a) The ray fire process can be avoided as it has been definitively shown that there is no interface intersection. b) A ray fire must be performed as it is possible there is a surface intersection between the two points of interest. c) The signed distance values indicate that a ray fire can be avoided but not definitevly when accounting for error - a ray fire must be executed.}
   \label{preconditioner_ex}
 \end{figure}
 
@@ -805,7 +805,22 @@ While implicit surfaces provide a natural way to populate such a mesh with signe
 
 While mentioned breifly in the sections on application of the preconditioner during transport, signed distance values interpolated from the mesh will come with some associated error. A conservative estimate of this error is a critical component for robustness during transport of particles. The biggest concern being that empty space is incorrectly declared between the particle location and the next event location in which case the particle's numerical and logical position will become inconsistent.
 
-The typical error associated with an interpolcation of this type is $O(h^3)$ where $h$ is the step size of the mesh. As seen in Equation \ref{interpolation_err_2d}, the error associated with a two dimensional bilinear interpolation is also dependent upon the curvature of the interface. While for the majority of cases one can expect that the mesh error will be dominant in this formula, the fiedlity of simulation results is put at risk if this is not well-understood. A stringent set of unit test cases will be developed to ensure robust use of the preconditioner as well as comparison to previous DAGMC-based simulations which rely entirely on the ray tracing process to verify results produced using this method.
+The typical error associated with an interpolcation of this type is $O(h^3)$ where $h$ is the step size of the mesh. As seen in Equation \ref{interpolation_err_2d}, the error associated with a two dimensional bilinear interpolation is also dependent upon the curvature of the surface. While for the majority of cases one can expect that the mesh error will be dominant in this formula, the fiedlity of simulation results is put at risk if this is not well-understood. A stringent set of unit test cases will be developed to ensure robust use of the preconditioner as well as comparison to previous DAGMC-based simulations which rely entirely on the ray tracing process to verify results produced using this method.
+
+\begin{figure}[H]
+  \begin{equation}
+    \epsilon = \frac{1}{2} \Delta x (h-\Delta x) \frac{\partial^2 u}{\partial x^2} + \frac{1}{2} \Delta y (h-\Delta y)  \frac{\partial^2 u}{\partial y^2}
+  \end{equation}
+  \begin{align*}
+    h - & \, mesh\, interval\, size \\
+    x - & \, x\, value\, of\, interpolation\, point \\
+    y - & \, y\, value\, of\, interpolation\, point \\
+    u(x,y) - &\, sampled\, function\, on\, mesh \\
+    \epsilon - & \, error \\
+  \end{align*}
+  \caption{Taylor expansion of 2D interpolation equation as an estimate for the error of a function sampled onto a structured cartesian mesh.}
+  \label{interpolation_err_2d}
+\end{figure}
 
 There are several cases in Monte Carlo for which the use of a ray tracing preconditioner will be wasteful. Obvious cases include low density volumes, void volumes, or very small volumes. These cases can be further generalized as volumes for which the average mean free path is large relative to its size. Meaning that particles are more likely to cross a surface than not. This observation leads to the question of how to quantify such a characteristic for use in discerning when the application of this preconditioner is effective. For the purpose of this research, the signed distance preconditioner will be applied indescriminantely for each volume with the exception of void volumes.
 
@@ -903,10 +918,10 @@ Each of these areas provide a benefit to DAGMC's performance on their own, but i
 \bibliography{refs}
 
 
-\section{Appendix A: Code used to collect data}%%Status:Pending%%
-\begin{itemize}
-\item ray\_fire\_test program
-\end{itemize}
+%% \section{Appendix A: Code used to collect data}%%Status:Pending%%
+%% \begin{itemize}
+%% \item ray\_fire\_test program
+%% \end{itemize}
 
 \section{Appendix B: Additional Results}%%Status:In Progress%%
 
@@ -978,9 +993,5 @@ Below lies a set of table containing native MCNP results alongside the DAG-MCNP 
     \bottomrule    
   \end{tabular}
 \end{table}
-
-\subsection{Additional EmDAG Test Results}%%Status:Pending%%
-
-\subsection{Additional HV WSR Scan Results}%%Status:Pending%%
 
 \end{document}
