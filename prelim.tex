@@ -766,9 +766,43 @@ The new ray tracing kernel will be applied to the performance benchmarking model
 
 \subsection{Special Case Allowance in BVH Building}
 
-Historically, DAGMC's performance has struggled due to high-valance mesh features. In Section \ref{hv_study} of this work it was established that the resulting performance degredation came from difficulties in building an effective hierarchy in mesh regions containing this feature and that this problem could be remedied with a small alteration to MOAB's BVH building algorithm. Furthermore, it was established that this mesh feature was problematic not only for DAGMC's building algorithm but also for Embree's which uses a different heuristic to build its BVH datastructure.
+Historically, DAGMC's performance has suffered due to high-valance mesh features. In Section \ref{hv_study} of this work it was established that the resulting performance degredation came from difficulties in building an effective hierarchy in mesh regions containing this feature and that this problem could be remedied with a small alteration to MOAB's BVH building algorithm. Furthermore, it was established that this mesh feature was problematic not only for DAGMC's building algorithm but also for Embree's which uses a different heuristic to build its BVH datastructure. Given this information, it is proposed that pathological mesh features such as high-valence regions be given special attention when building a BVH despite the extra time this may take for models with many of these regions.
 
-Given this information, it is proposed that pathological mesh features such as high-valence regions be given special attention when building a BVH. While one could imagine a process in which high-valence regions could be detected and isolated in a global manner for the entire surface mesh and parameters adjusted when those regions are encountered, this process could be very computationally expensive with little reward if no high-valence regions exist or if they are inconsquential during problem execution. Conveniently, the building algorithms tend to isolate such regions naturally as poorly formed leaf nodes. If the branch of the hierarchy terminates at a poorly formed leaf, detection of a high-valence region can be performed on this portion of the mesh contained by the leaf and a specialized building algorithm could be applied should one be found. This process may occur after the hierarchies' normal build is complete via tree analysis or the poorly formed leaves may be handled as they are encountered during the intial build. Whichever implementation is used, it will be applied in such a way that it is easily extended to other such pathologies in CAD-based surface meshes as they are encountered in the future.
+In Monte Carlo radiation transport, a significantly higher number of ray queries are made than in rendering. In order to obtain a statistically valid anser to the problem at hand, the number of primary rays is generally an order of magnitude higher than that of a rendering problem in which a fixed number of primary rays are fired per pixel in the desired view (see Figure \ref{render_ray_estimate}). Additionally, the number of secondary rays is much higher in radiation transport than in rendering due to the nature of the underlying physics and variance reduction techniques employed. In either ray tracing application, the time to solution can be roughly described by the time needed to construct the necesary acceleration structures and satisfy the ray queries.
+
+\begin{figure}[H]
+  \centering
+  Rendering:
+  \[ (8\, rays\, per\, pixel)\, x (1024 x 1080\, pixels) = 16.6M rays \]
+  Monte Carlo: \\
+  ITER Model Standard = $10^{9}$ primary particles
+  \caption{An  estimation of the number of ray queries in a typical rendering vs. in the FNG model runs. The number of pixels per ray was determined by common practice in rendering.}
+  \label{render_ray_estimate}
+\end{figure}
+
+Figure \ref{tts_est} provides an esimate of the time to solution for a ray tracing based process in a similar manner to which Hurley performs this analysis in \cite{Hurley_2002}. The time it takes to perform the ray tracing queries is partially dependent upon the quality of the acceleration structure being built. The better the quality of these structures, the faster the ray queries will be satisfied and the solution reached. The quality of the accceleration datastructure is also dependent on the amount of time spent in building the datastructures. Presumably the more time spent building the datastructure, the better its quality. By establishing this dependence of total ray traversal time on the time spent building acceleration datastructures, the result is an optimization of the time spent building the right quality of acceleration datastructures for the lowest time to solution. 
+
+Typically, rendering tools focus on building a generalized data structure with respect to the mesh its operating on without consideration of the more subtle features of the mesh and how the datastructure's quality might be improved. This is commonly because the time spent in improving the quality of the datastructure is overly costly compared to the total amount of time saved when performing the ray queries. In the scenario of Monte Carlo radiation transport, the saved time in performing necessary ray queries may become significant, making the extra time spent in building the acceleration datastructures to increase their quality becomes favorable. The trade offs of these costs/savings are difficult to quantify in that they vary greatly model to model - as is the case for most a priori ray tracing performance evaluations. However, the severe degredation in ray fire performance due to mesh features produced by triangulation algorithm on which DAGMC relies leads one to believe that time spent adapting to such mesh features is worthwhile.
+
+\begin{figure}[H]
+  \centering
+  \begin{align*}
+    tts =\, & C + T_{B} + \sum_{}^{N_{r}} T_{T} \\
+    tts =\, & C + T_{B} + \sum_{}^{N_{r}} T_{T}(q,\ldots) \\
+    q(T_{B}) & \rightarrow T_{T}(T_{B}) \rightarrow T_{T} \propto \frac{1}{{T_{B}}^{x}} \, (where \, x \geq 0) \\
+    tts =\, & C + T_{B} + \sum_{}^{N_{r}} T_{T}(T_{B},\ldots) \\
+    tts \, - & time\, to\, solution \\
+    C \, - & cost\, of\, operations \, not \, reliant \, on \, ray \, tracing \\
+    T_{B} \, - & acceleration\, datastructure\, build\, time \\
+    T_{T} \, - & average\, traversal\, time \\
+    N_{r} \, - & ray\, queries \, required\, for\, solution \\
+    q \, - & acceleration\, datastructure\, quality \\
+  \end{align*}
+  \caption{General equation for the time to solution of a ray tracing based process.}
+  \label{tts_est}
+\end{figure}
+
+While one could imagine a process in which high-valence regions could be detected and isolated in a global manner for the entire surface mesh and parameters adjusted when those regions are encountered, this process could be very computationally expensive with little reward if no high-valence regions exist or if they are inconsquential during problem execution. Conveniently, the building algorithms tend to isolate such regions naturally as poorly formed leaf nodes. If the branch of the hierarchy terminates at a poorly formed leaf, detection of a high-valence region can be performed on this portion of the mesh contained by the leaf and a specialized building algorithm could be applied should one be found. This process may occur after the hierarchies' normal build is complete via tree analysis or the poorly formed leaves may be handled as they are encountered during the intial build. Whichever implementation is used, it will be applied in such a way that it is easily extended to other such pathologies in CAD-based surface meshes as they are encountered in the future.
 
 This extended building scheme will be implemented within the ray tracing kernel mentioned above and applied to the high-valence study model as well as transport problems known to cantain high-valence regions to demonstrate is ability to provide an improvement in performance for models produced by the faceting algorithms used in DAGMC's recommended workflow.
 
