@@ -1,0 +1,3 @@
+[submodule "presentation/reveal.js"]
+	path = presentation/reveal.js
+	url = git@github.com:pshriwise/reveal.js
