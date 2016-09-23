@@ -8,11 +8,11 @@ preview: pdf
 	evince prelim.pdf
 
 svg2png:
-	cd images/ && \
+	cd ../images/ && \
 	inkscape -z -e emdag_lost.png -w 545 -h 401 emdag_fng_lost.svg
 
 ps2png:
-	cd images/ && \
+	cd ../images/ && \
 	for file in *.ps ; do \
 	convert -density 150 $$file "`basename $$file .ps`.png" ; \
 	done
