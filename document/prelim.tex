@@ -747,7 +747,7 @@ This chapter outlines a short summary of the motivation for this work, and outli
 
 The performance of CAD-based transport is a concern moving forward in the area of Monte Carlo radiation transport, particularly in relatively new areas such as high-energy physics devices or fusion energy systems. In comparison to well-established CSG modeling of geometries, the performance is several times worse as down in Section \ref{perf_benchmark}. DAGMC is a robust tool for tracking particles through surface meshes of CAD models, but can be made more efficient using the various approaches outlined below. This proposal will outline three different approaches for improving CAD-based transport performance in the DAGMC toolkit.
 
-\subsection{SIMD-Enabled Acceleration Datastructure}
+\subsection{SIMD-Enabled Acceleration Data Structure}
 
 As described in Section \ref{emdag}, a SIMD-enabled ray tracing kernal, Embree, has already been applied within the DAGMC framework with great success. Unfortunately some aspects of DAGMC's robustness were lost due to a fundamental difference in the precision used to store geometric primitives and intersect rays. It is believed that this problem can be remedied in a straightforward manner by altering these datatypes from single to double floating point precision to match those of the underlying physics codes DAGMC supports and adjusting the underlying algorithms accordingly. A substantial reduction in performance due to this change in floating point calculations is not expected however as the construction of the underlying hierarchy used to isolate triangles for intersection can remain in single precision if built appropriately. Others have noted such a benefit from reduced-precision bounding volumes in the past as well\cite{Mahovsky_2005}.
 
@@ -850,8 +850,8 @@ The typical error associated with an interpolcation of this type is $O(h^3)$ whe
   \end{equation}
   \begin{align*}
     h - & \, mesh\, interval\, size \\
-    x - & \, x\, value\, of\, interpolation\, point \\
-    y - & \, y\, value\, of\, interpolation\, point \\
+    \Delta x - & \, x\, distance\, to\, interpolation\, point\, from\, data\, point \\
+    \Delta y - & \, y\, distance\, to\, interpolation\, point\, from\, data\, point \\
     u(x,y) - &\, sampled\, function\, on\, mesh \\
     \epsilon - & \, error \\
   \end{align*}
@@ -863,7 +863,6 @@ There are several cases in Monte Carlo for which the use of a ray tracing precon
 
 This method is expected to be particularly effective in transport simulation of charged particles who's curved paths are often modeled as a series of small segments, each of which requires next intersection confirmation throughout the particle's history. This hypothesis will be tested by applying the preconditioner in Flu-DAG, a version of DAGMC coupled with Fluka\cite{Bohlen_2014}, which has the capability for such charged particle transport.
 
-
 \subsection{Summary}
 
 Three areas of improvement have been identified as valuable additions to the DAGMC radiation transport toolkit. A SIMD-enabled ray tracing kernel which takes advantage of MOAB's direct access and contiguous memory capabilities will improve the performance of DAGMC's current tracking algorithm while maintaining the rich mesh-based representation with underlying topological attributes. From previously gathered data in Chapter \ref{experiments_and_data} this improvement alone is expected to improve DAGMC's performance many times over, achieving speeds on the order of native geometry handling in native Monte Carlo Codes.
@@ -873,6 +872,23 @@ A specialized extension of the bounding volume hierarchy builder has been propos
 For particles commonly interacting away from the boundary of volumes, the ray tracing process may be overly precise and expensive for a simple determination of whether or not the particle crosses a surface. The implementation of a rudimentary preconditioner based on techniques used in implicit surface rendering has been proposed. This preconditioner will store a signed distance field populated by the ray tracing kernel to provide an $O(1)$ check for unambiguous situations in which both the particle and its next intended location are far enough from the boundary of the volume that a ray fire process is un-needed, allowing the particle's transport to continue unimpeded. In this way the ray tracing process is reserved for situations in which its precise answer is necessary, preserving the capability for robust transport in DAGMC.
 
 Each of these areas provide a benefit to DAGMC's performance on their own, but it is hoped that the combined effects of these improvements will be most pronounced when used together for greatly improved perforamnce using CAD-based models. For example, the use of a pre-conditioner can help to avoid ray fires, but there will always be situations in which a ray query is necessary to provide an unambiguous answer about the particle's next step in transport. The improvements to the underlying ray traversals via SIMD and a specialized building algorithm for handling of high-valance regions will also result in improved performance when these situations are encountered. At the same time it can also be stated that the application of any of these methods individually will also improve the performance of DAGMC to some degree.
+
+\subsection{Contributions}
+
+This section concisely states the specific contributions of the three areas described in the research proposal.
+
+\subsubsection{SIMD-Enabled Acceleration Data Structure}
+
+SIMD traversal of BVH's has been shown to greatly improve the performance of CAD-based radiation transport by DAGMC's use of Embree, but it is not robust in its current form. A new data structure is proposed which will maintain much of the current system's performance by building and traversing single-precision bounding volumes around double precision primitives. It is proposed that utilization of this mixed-precision system will allow for a ray tracing kernel with performance rivaling those of analytic methods (CSG) on common CPU architectures while meeting the expectations that DAGMC's robust tracking algorithm provides.
+
+\subsubsection{Special Case Allowance in BVH Building}
+
+High valence regions studied in this work are common features seen in surface faceting algorithms. The size of these features can be mitigated by applying a maximum facet edge length tolerance, but this can greatly increase the overall memory of a model. A method for maintaining good performance by altering median splitting parameters has been demonstrated. By applying a similar building method or by modifying the SAH method in production models, ray tracing performance can be maintained without the additional memory cost. This will also involve the creation of a generalized building process in which poorly formed nodes are revisited and revaluated for mesh features such as the high valence regions.
+
+\subsubsection{Signed Distance Field Preconditioner}
+
+A signed distance field allows DAGMC to rely on an O(1) process, falling back onto the robust O(logN) ray tracing process only when necessary. This data structure has been used for directly rendering surfaces, but never as a preconditioning tool for particle tracking before. Because this data structure will be applied to a static mesh and only needs to be populated once, DAGMC's ray tracing kernel could be used to populate the data structure without the need to generate a full implicit surface representation. Also of interest is the possibility of coupled acceleration data structures in which information from one data structure can enhance the other's performance.
+
 
 %% In order to make CAD-based Monte Carlo competitive with native codes it is clear that geometry queries must be satisfied much more quickly than the ray tracing kernel in DAGMC can currently provide. Investigation into the shortcomings of the DAGMC ray tracing process have revealed various opportunities for improvement. One in implementation and the other in application.
 
