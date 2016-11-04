@@ -48,40 +48,43 @@
 			<a href="https://beta.etherpad.org/p/shriwise_prelim_2016">https://beta.etherpad.org/p/shriwise_prelim_2016</a>
 		</section>
 		<section>
-		<section>
-		    <h2>Motivation</h2>
-		    <p>
-			CAD-based radition transport as a robust and practical analysis tool
-		    </p>
-		    <ul>
-			<li> equal freedom in deisgn and analysis </li>
-			<li> engineering analysis on the same model </li>
-		    </ul>
-		</section>
-		<section>
-		    <h2>DAGMC</h2>
-		    <ul>
-			<li>provides a pathway for robust particle transport in CAD geometries</li>
-		    <p>DAGMC workflow image here </p>
-			<li> not yet fully practical: </li>
+		    <section>
+			<h1>Introduction</h1>
+		    </section>
+		    <section>
+			<h2>Motivation</h2>
+			<p>
+			    CAD-based radition transport as a robust and practical analysis tool
+			</p>
 			<ul>
-			    <li> some upstream CAD issues </li>
-			    <li><b>long simulation times (3-20 times longer than native codes)</b></li>
+			    <li> equal freedom in deisgn and analysis </li>
+			    <li> engineering analysis on the same model </li>
 			</ul>
-		    </ul>
-		</section>
-		<section>
-		    <h2> Research Goal </h2>
-		    <p> CAD-based radiation transport performance competitive with native Monte Carlo geometry representations </p>
-		    <ul>
-			<li>mult-faceted approach:</li>
+		    </section>
+		    <section>
+			<h3>Direct Accelerated Geometry Monte Carlo (DAGMC) toolkit</h3>
 			<ul>
-			    <li>acceleration data structure construction improvements based on DAGMC workflow</li>
-			    <li>extension of architecture-based accelerations used in rendering to raditaion transport</li>
-			    <li>addition of acceleration data structure adapted from dynamic implicit surface rendering</li>
+			    <li>a pathway for robust particle transport in CAD geometries</li>
+			    <p style="text-align:center"><img src="images/dagmc_workflow.png" style="border-style:none" width="650"></img></p>
+			    <li> not yet fully practical: </li>			    
+			    <ul>
+				<li> some upstream CAD issues </li>
+				<li><b>long simulation times (3-20 times longer than native codes)</b></li>
+			    </ul>
 			</ul>
-		    </ul>
-		</section>
+		    </section>
+		    <section>
+			<h2> Research Goal </h2>
+			<p> CAD-based radiation transport performance competitive with native Monte Carlo geometry representations </p>
+			<ul>
+			    <li>mult-faceted approach:</li>
+			    <ul>
+				<li>acceleration data structure construction improvements based on DAGMC workflow</li>
+				<li>extension of architecture-based accelerations used in rendering to raditaion transport</li>
+				<li>addition of acceleration data structure adapted from dynamic implicit surface rendering</li>
+			    </ul>
+			</ul>
+		    </section>
 		</section>
 		<!-- BACKGROUND -->
 		<section>
@@ -136,7 +139,7 @@
 			<ul>
 			    <li>field dedicated to these types of queries on discretized surfaces</li>
 			    <li>accomplished via spatial acceleration data structures in O(logN)</li>
-			</ul>
+			</ul>			
 		    </section>
 		</section>
 		<!-- SCRIPTS -->
