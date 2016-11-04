@@ -83,6 +83,62 @@
 		    </ul>
 		</section>
 		</section>
+		<!-- BACKGROUND -->
+		<section>
+		    <section>
+			<h1>Background</h2>
+		    </section>
+		    <section>
+			<h2>MC Geometry Representations</h2>
+			<table>
+			    <tbody>
+				<tr>
+				    <th align="center">Native Geometry</th>
+				    <th align="center">CAD Geometry</th>
+				</tr>
+				<tr>
+				    <td valign="top">
+					<ul>
+					    <li>variants of Computational Solid Geometry (CSG)</li>
+					    <li>volumes formed from boolean combinations of simple implicit surfaces</li>
+					</ul>
+				    </td>
+				    <td>
+					<ul>
+					    <li>higher order surface complexity</li>
+					    <li>convenient design tools</li>
+					    <li>extrude, sweep, loft, splines, etc.</li>
+					</ul>
+				    </td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+		    <section>
+			<h2>MC Geometry Queries</h2>
+			<p align="left">Three common queries:</p>
+			<ul>
+			    <li>volume point containment</li>
+			    <li>next surface intersection distance</li>
+			    <li>surface crossing angle</li>
+			</ul>
+		    </section>
+		    <section>
+			<h2>CAD-based surface meshes</h2>
+			<ul>
+			    <li>geometry queries can be difficult/impossible to satisfy analytically</li>
+			    <li>surfaces are reduced to a primitive type via triangulation</li>
+			    <li>generalized algorithms for triangle intersections</li>
+			</ul>
+		    </section>
+		    <section>
+			<h2>Ray Tracing</h2>
+			<ul>
+			    <li>field dedicated to these types of queries on discretized surfaces</li>
+			    <li>accomplished via spatial acceleration data structures in O(logN)</li>
+			</ul>
+		    </section>
+		</section>
 		<!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
 		<script src="reveal.js/js/reveal.js"></script>
