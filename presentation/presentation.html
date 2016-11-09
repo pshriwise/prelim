@@ -70,7 +70,7 @@
 			    <li> not yet fully practical: </li>			    
 			    <ul>
 				<li>some upstream CAD issues</li>
-				<li><b>long simulation times (3-20 times longer than native codes)</b></li>
+				<li><b>long simulation times (2-20 times longer than native codes)</b></li>
 			    </ul>
 			</ul>
 			<p text-align="center" style="margin-top:2cm">This can mean hours or days of additional simulation runtime</p>
@@ -132,19 +132,29 @@
 			<h2>CAD-based surface meshes</h2>
 			<ul>
 			    <li>geometry queries can be difficult/impossible to satisfy analytically</li>
-			    <li>surfaces are reduced to a primitive type via triangulation</li>
+			    <li>surfaces are discretized into planar objects (triangles)</li>
 			    <li>generalized algorithms for triangle intersections</li>
 			</ul>
 		    </section>
+		</section>
+		<section>
 		    <section>
 			<h2>Ray Tracing</h2>
 			<ul>
 			    <li>field dedicated to these types of queries on discretized surfaces</li>
 			    <li>accomplished via spatial acceleration data structures in O(logN)</li>
+			    <li>combined with geometry-based mesh topology for a particle tracking algorithm</li>
 			</ul>			
 		    </section>
+		    <section>
+			<ul>
+			    <li> Bounding Volume Hierarchies (BVH) </li>
+			    <li> KD-Tree </li>
+			    <li> Octree </li>
+			</ul>
+		    </section>
 		</section>
-		<!-- SCRIPTS -->
+                <!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
 		<script src="reveal.js/js/reveal.js"></script>
 		<script>
