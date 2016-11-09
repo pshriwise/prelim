@@ -27,7 +27,7 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : '/reveal.js/css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
-
+		
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
@@ -65,7 +65,7 @@
 		    <section>
 			<h3>CAD-Based Monte Carlo Radiation Transport</h3>
 			<ul>
-			    <li>pathway for robust particle transport in CAD geometries exists in DAGMC</li>
+			    <li>pathway for robust particle transport on CAD geometries exists</li>
 			    <!-- <p style="text-align:center"><img src="images/dagmc_workflow.png" style="border-style:none" width="650"></img></p> -->
 			    <li> not yet fully practical: </li>			    
 			    <ul>
@@ -120,21 +120,26 @@
 			</table>
 		    </section>
 		    <section>
-			<h2>MC Geometry Queries</h2>
-			<p align="left">Three common queries:</p>
+		      <h2> DAGMC </h2>
+		      <p>transport performed on CAD-based surface meshes</p>
+		      <p> Why? </p>
 			<ul>
-			    <li>volume point containment</li>
-			    <li>next surface intersection distance</li>
-			    <li>surface crossing angle</li>
+			  <li>geometry queries can be difficult/impossible to satisfy analytically</li>
+			  <ul>
+			      <li> higher-order root finding </li>
+			  </ul>
+			    <li>surfaces are discretized into planar objects (triangles)</li>
+			    <li>generalized algorithms and spatial searches for triangle intersections</li>
 			</ul>
 		    </section>
 		    <section>
-			<h2>CAD-based surface meshes</h2>
-			<ul>
-			    <li>geometry queries can be difficult/impossible to satisfy analytically</li>
-			    <li>surfaces are discretized into planar objects (triangles)</li>
-			    <li>generalized algorithms for triangle intersections</li>
-			</ul>
+			<h2>MC Geometry Queries</h2>
+			<p align="left">Three common queries:</p>
+			<ol>
+			    <li>volume point containment</li>
+			    <li>next surface intersection distance</li>
+			    <li>surface crossing angle</li>
+			</ol>
 		    </section>
 		</section>
 		<section>
@@ -148,10 +153,59 @@
 		    </section>
 		    <section>
 			<ul>
-			    <li> Bounding Volume Hierarchies (BVH) </li>
-			    <li> KD-Tree </li>
-			    <li> Octree </li>
+			    <li> <h4> KD-Tree </h4> </li>
+			    <ul>
+				<li> efficient traversal algorithms </li>
+				<li> large memory footprint </li>
+			    </ul>
+			    <li> <h4> Octree </h4> </li>
+			    <ul>
+				<li> large memory footprint </li>
+			    </ul>
+			    <li> <h4> Bounding Volume Hierarchies </h4> </li>
+			    <ul>
+				<li> relatively low memory footprint </li>
+				<li> fast to build </li>				
+				<li> currently favored </li>				
+			    </ul>
+			    
 			</ul>
+		    </section>
+		    <section>
+			<h2> Bounding Volume Hierarchies </h2>
+			<div class="fragment fade-up">
+			    <p class="fragment shrink highlight-red"> bounding sphere </p>
+			    <div class="fragment fade-up current-visible">
+				<object data="images/bounding_sphere.svg" height="200" type="image/svg+xml"></object>
+				<ul>
+				    <li> poor object bounding </li>
+				    <li> simple intersection check </li>
+				    <li> low memory storage (center and radius) </li>
+				</ul>
+			    </div>
+			</div>
+			<div class="fragment fade-up">
+			    <p class="fragment grow highlight-blue"> axis-aligned bounding box (AABB)</p>
+			    <div class="fragment fade-up current-visible">
+			    <object data="images/bounding_aabb.svg" height="200" type="image/svg+xml"></object>
+			    <ul>
+				<li> good object bounding</li>
+				<li> more complex intersection-check (6-planes) </li>
+				<li> more memory required (6 extents) </li>
+			    </ul>
+			    </div>
+			</div>
+			<div class="fragment fade-up">
+			    <p class="fragment grow highlight-blue"> oriented bounding box (OBB)</p>
+			    <div class="fragment fade-up current-visible">
+				<object data="images/bounding_obb.svg" height="200" type="image/svg+xml"></object>
+				<ul>
+				    <li> tightly bounds objects </li>
+				    <li> higher complexity of intersection-check (ray coord. transformation) </li>
+				    <li> higher memory storage (AABB plus axes orientation) </li>
+			    </div>
+			</div>
+
 		    </section>
 		</section>
                 <!-- SCRIPTS -->
