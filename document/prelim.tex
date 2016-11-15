@@ -880,7 +880,7 @@ This section concisely states the specific contributions of the three areas desc
 
 \subsubsection{SIMD-Enabled Acceleration Data Structure}
 
-SIMD traversal of BVH's has been shown to greatly improve the performance of CAD-based radiation transport by DAGMC's use of Embree, but it is not robust in its current form. A new data structure is proposed which will maintain much of the current system's performance by building and traversing single-precision bounding volumes around double precision primitives. It is proposed that utilization of this mixed-precision system will allow for a ray tracing kernel with performance rivaling those of analytic methods (CSG) on common CPU architectures while meeting the expectations that DAGMC's robust tracking algorithm provides.
+SIMD traversal of BVH's has been shown to greatly improve the performance of CAD-based radiation transport by DAGMC's use of Embree, but cannot be made robust using this kernel. A new data structure is proposed which will maintain much of the performance improvement seen in EmDAG by building and traversing single-precision bounding volumes around double precision primitives. It is proposed that utilization of this mixed-precision system will allow for a ray tracing kernel with performance rivaling those of native geometry representations (CSG) on common CPU architectures while meeting requirements of DAGMC's particle tracking algorithm.
 
 \subsubsection{Special Case Allowance in BVH Building}
 
@@ -888,7 +888,7 @@ High valence regions studied in this work are common features seen in surface fa
 
 \subsubsection{Signed Distance Field Preconditioner}
 
-A signed distance field allows DAGMC to rely on an O(1) process, falling back onto the robust O(logN) ray tracing process only when necessary. This data structure has been used for directly rendering surfaces, but never as a preconditioning tool for particle tracking before. Because this data structure will be applied to a static mesh and only needs to be populated once, DAGMC's ray tracing kernel could be used to populate the data structure without the need to generate a full implicit surface representation. Also of interest is the possibility of coupled acceleration data structures in which information from one data structure can enhance the other's performance.
+A signed distance field allows DAGMC to rely on an O(1) process when tracking particles far from surface interfaces, falling back onto the robust O(logN) ray tracing process only when necessary. This data structure has been used for directly rendering surfaces, but never as a preconditioning tool for particle tracking before. Because this data structure will be applied to a static mesh and only needs to be populated once, DAGMC's ray tracing kernel could be used to populate the data structure without the need to generate an implicit surface representation. Also of interest is the possibility of coupled acceleration data structures in which information from one data structure can enhance the other's performance.
 
 
 %% In order to make CAD-based Monte Carlo competitive with native codes it is clear that geometry queries must be satisfied much more quickly than the ray tracing kernel in DAGMC can currently provide. Investigation into the shortcomings of the DAGMC ray tracing process have revealed various opportunities for improvement. One in implementation and the other in application.
