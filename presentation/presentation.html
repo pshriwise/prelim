@@ -92,7 +92,7 @@
 			</table>
 		    </section>
 		    <section>
-			<h3>CAD-Based Monte Carlo Radiation Transport</h3>
+			<h3>CAD-Based MCRT</h3>
 			<ul>
 			  <li>pathway for robust particle transport on CAD geometries exists</li>
 			  <ul>
@@ -112,104 +112,44 @@
 			<p style="text-align:center"><img src="images/dagmc_workflow.png" style="border-style:none" height="500px"></img></p>
 		    </section>
 		    <section>
-			<h2> Research Goal </h2>
+			<h3> Research Goal </h3>
+			<b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
+			<p>
+			<table>
+			  <tbody>
+			    <tr>
+			      <td align="center"> FNG </td>
+			      <td align="center"> ATR </td>
+			      <td align="center"> UWNR </td>
+			    </tr>
+			    <tr>
+			      <td> <img src="images/FNG_cad.png" width="300" style="border-style:none;vert-align:center" /> </td>
+			      <td> <img src="images/ATR_cad1.png" width="300" style="border-style:none" /> </td>
+			      <td> <img src="images/UWNR_cad.png" width="350" style="border-style:none" /> </td>
+			    </tr>
+			  </tbody>
+			  </table>
+			   </p>   
+		    </section>
+		    <section>
+			<h3> Research Goal </h3>
 			<b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
 			<iframe data-src="fng_performance_plot.html" width="100%" height="500px"> </iframe>
 		    </section>
 		</section>
-		<!-- BACKGROUND -->
+		<!-- High Valence -->
 		<section>
-		    <section>
-			<h1>Background</h2>
-		    </section>
-		    <section>
-		      <h2> DAGMC </h2>
-		      <p>transport performed on CAD-based surface meshes</p>
-		      <p> Why? </p>
-			<ul>
-			  <li>geometry queries can be difficult/impossible to satisfy analytically</li>
-			  <ul>
-			      <li> higher-order root finding </li>
-			  </ul>
-			    <li>surfaces are discretized into planar objects (triangles)</li>
-			    <li>generalized algorithms and spatial searches for triangle intersections</li>
-			</ul>
-		    </section>
-		    <section>
-			<h2>MC Geometry Queries</h2>
-			<p align="left">Three common queries:</p>
-			<ol>
-			    <li>volume point containment</li>
-			    <li>next surface intersection distance</li>
-			    <li>surface crossing angle</li>
-			</ol>
-		    </section>
+		<section>
+		  <h3> High Valence Vertices </h3>
+		  <ul>
+		    <li>common feature of many triangulation algorithms</li>
+		    <li>result of trying to minimize triangles used to represent a surface</li>
+		    <li>shown to be detrimental to DAGMC performance</li>
+		  </ul>
 		</section>
 		<section>
-		    <section>
-			<h2>Ray Tracing</h2>
-			<ul>
-			    <li>field dedicated to these types of queries on discretized surfaces</li>
-			    <li>accomplished via spatial acceleration data structures in O(logN)</li>
-			    <li>combined with geometry-based mesh topology for a particle tracking algorithm</li>
-			</ul>			
-		    </section>
-		    <section>
-			<ul>
-			    <li> <h4> KD-Tree </h4> </li>
-			    <ul>
-				<li> efficient traversal algorithms </li>
-				<li> large memory footprint </li>
-			    </ul>
-			    <li> <h4> Octree </h4> </li>
-			    <ul>
-				<li> large memory footprint </li>
-			    </ul>
-			    <li> <h4> Bounding Volume Hierarchies </h4> </li>
-			    <ul>
-				<li> relatively low memory footprint </li>
-				<li> fast to build </li>				
-				<li> currently favored </li>				
-			    </ul>
-			    
-			</ul>
-		    </section>
-		    <section>
-			<h2> Bounding Volume Hierarchies </h2>
-			<!-- <div class="fragment fade-up">
-			     <p class="fragment shrink highlight-red"> bounding sphere </p>
-			     <div class="fragment fade-up current-visible">
-			     <object data="images/bounding_sphere.svg" height="200" type="image/svg+xml"></object>
-			     <ul>
-			     <li> poor object bounding </li>
-			     <li> simple intersection check </li>
-			     <li> low memory storage (center and radius) </li>
-			     </ul>
-			     </div>
-			     </div> -->
-			<div class="fragment fade-up">
-			    <p class="fragment grow highlight-blue"> axis-aligned bounding box (AABB)</p>
-			    <div class="fragment fade-up current-visible">
-			    <object data="images/bounding_aabb.svg" height="200" type="image/svg+xml"></object>
-			    <ul>
-				<li> good object bounding</li>
-				<li> more complex intersection-check (6-planes) </li>
-				<li> more memory required (6 extents) </li>
-			    </ul>
-			    </div>
-			</div>
-			<div class="fragment fade-up">
-			    <p class="fragment grow highlight-blue"> oriented bounding box (OBB)</p>
-			    <div class="fragment fade-up current-visible">
-				<object data="images/bounding_obb.svg" height="200" type="image/svg+xml"></object>
-				<ul>
-				    <li> tightly bounds objects </li>
-				    <li> higher complexity of intersection-check (ray coord. transformation) </li>
-				    <li> higher memory storage (AABB plus axes orientation) </li>
-			    </div>
-			</div>
-
-		    </section>
+		  <h3>High Valence Vertices</h3>
+		</section>
 		</section>
                 <!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
