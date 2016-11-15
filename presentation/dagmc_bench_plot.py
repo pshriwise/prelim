@@ -14,7 +14,8 @@ native_data = go.Bar(x = ['FNG','ATR','UWNR'],
                     name = 'MCNP5')
 data = [native_data,dagmc_data]
 layout = go.Layout(barmode='group',
-                   yaxis = dict(title = "Runtime (min)"))
+                   yaxis = dict(title = "Runtime (min)"),
+                   legend = dict(font = dict( size = 20)))
 fig = go.Figure(data=data,layout=layout)
 py.plot(fig,filename="fng_performance_plot.html",auto_open=False)
 
