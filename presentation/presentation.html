@@ -101,15 +101,61 @@
 			    <li> not at its full potential: </li>			    
 			    <ul>
 				<li>CAD quality struggles to meet requirements</li>
-				<li class="fragment grow highlight-red">long simulation times (2-10<i>x</i> longer than native codes)</li>
+				<li class="fragment highlight-blue">long simulation times (2-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation runtime</li>
 			    </ul>
 			</ul>
-			<p text-align="center" style="margin-top:3cm" class="fragment fade-in">Resulting in  hours or even days of additional simulation runtime</p>
+
 		    </section>
 		    <section>
-			<h3> DAGMC Workflow</h3>
-			<p style="text-align:center"><img src="images/dagmc_workflow.png" style="border-style:none" height="500px"></img></p>
-		    </section>
+		      <h2>DAGMC Workflow</h2>
+		      <style class="text/css">
+		       tr.noBorder td {border: 0;}
+		       td.redBlock {text-align: center; color: white; background-color: #b70101; vertical-align: middle; }
+		      </style>
+		      <table>
+			<tbody>
+			  <tr class="noBorder">
+			    <td></td>
+			    <td style="border: 0" ></td>
+			    <td style="border: 0" align="center"> surface faceting </td>
+			    <td style="border: 0" ></td>			    
+			    <td style="border-top: 2px dashed black;border-left: 2px dashed black" align="center">geometric queries</td>
+			    <td style="border-top: 2px dashed black"></td>			    
+			    <td align="center" style="border-right: 2px dashed black;border-top: 2px dashed black"> MCNP5 </td>
+			  </tr>
+			  <tr class="noBorder" style="height:100px">
+			    <td class="redBlock" align="center"> CAD </td>
+			    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
+			    <td class="redBlock" align="center"> preprocessing </td>
+			    <td style="vertical-align:middle" align="center"> &#8594; </td>			    			    
+			    <td class="redBlock" align="center" style="border-left: 2px dashed black"> DAGMC </td>
+			    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
+			    <td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
+			  </tr>
+			  <tr class="noBorder">
+			      <td align="center"> geometric design </td>
+			      <td></td>
+			      <td align="center"> facet sealing </td>
+			      <td></td>
+			      <td align="center" style="border-left: 2px dashed black;border-bottom: 2px dashed black"> ray tracing </td>
+			      <td style="border-bottom: 2px dashed black"></td>
+			      <td align="center" style="border-right: 2px dashed black;border-bottom: 2px dashed black"> physics </td>			      
+			  </tr>
+			  <tr>
+			      <td></td>
+			      <td></td>			      
+			      <td align="center">
+				  <img class="fragment fade-in" src="images/facet_tol_zoomed.png" height="100px"/>				  
+				  <img class="fragment fade-in" src="images/sealing_example.png" width="300px"/>
+			      </td>
+			      <td></td>
+			      <td align="center" colspan="3" style="vertical-align:top">
+				  <p>Analysis</p>
+			      </td>
+			  </tr>
+			</tbody>
+		      </table>
+		      </section>
 		    <section>
 			<h3> Research Goal </h3>
 			<b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
@@ -126,14 +172,22 @@
 			      <td> <img src="images/ATR_cad1.png" width="300" style="border-style:none" /> </td>
 			      <td> <img src="images/UWNR_cad.png" width="350" style="border-style:none" /> </td>
 			    </tr>
+			    <tr>
+				<td align="center"> neutron source </td>
+				<td align="center"> kcode </td>
+				<td align="center"> kcode </td>
+			    </tr>
 			  </tbody>
 			  </table>
-			   </p>   
+			</p>
+			<ul>
+			    <li> problems run with both native & CAD geometries</li>
+			</ul>
 		    </section>
 		    <section>
 			<h3> Research Goal </h3>
 			<b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
-			<iframe data-src="fng_performance_plot.html" width="100%" height="500px"> </iframe>
+			<iframe data-src="performance_plot.html" width="100%" height="500px"> </iframe>
 		    </section>
 		<!-- High Valence -->
 		<section>

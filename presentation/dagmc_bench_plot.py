@@ -17,5 +17,5 @@ layout = go.Layout(barmode='group',
                    yaxis = dict(title = "Runtime (min)"),
                    legend = dict(font = dict( size = 20)))
 fig = go.Figure(data=data,layout=layout)
-py.plot(fig,filename="fng_performance_plot.html",auto_open=False)
+py.plot(fig,filename="performance_plot.html",auto_open=False)
 
