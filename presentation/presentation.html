@@ -197,10 +197,85 @@
 		    <li>result of trying to minimize triangles used to represent a surface</li>
 		    <li>shown to be detrimental to DAGMC performance</li>
 		  </ul>
+		  <object align="center" data="images/hv.svg" height="400px" style="margin: 50px 50px 50px 50px" type="image/svg+xml"></object>
 		</section>
 		<section>
-		  <h3>High Valence Vertices</h3>
+		    <h3>High Valence In Production Models</h3>
+		    <img src="images/hv_ex0.png" height="200px" />
+		    <img src="images/hv_ex1.png" height="200px" />
+		    <img src="images/hv_ex2.png" height="300px" />		    
 		</section>
+		<section>
+		    <h3> High Valence Test Model </h3>
+		    <p align="left"> manual faceting of cube surface </p>
+		    <img src="../images/hv_study_design.png" height="350px"/>
+		    <p align="left"> can vary: </p>
+		    <ul>
+			<li> fraction of surface that high valence region occupies</li>
+			<li> valence of corner vertices </li>
+		    </ul>
+		</section>
+		<section>
+		    <h3> High Valence Study </h3>
+		    <img src="../images/hv_study_MOAB.png" height="500px" align="center" />
+		</section>
+		<section>
+		    <h3> High Valence OBB Investigation </h3>
+		    <img src="../images/obbs_wsr_0.95.png" height="500px" align="center" />
+		</section>
+		<section>
+		    <h3> Median Splitting Algorithm </h3>
+		    <h4 align="center"> Controllable Parameters</h4>
+		    <table>
+			<tbody>
+			    <tr>
+				<td align="center"> Parameter </td>
+				<td align="center"> Default Value </td>
+			    </tr>
+			    <tr>
+				<td align="center"> Max Num. Leaf Entities </td>
+				<td align="center"> 8 </td>
+			    </tr>
+			    <tr>
+				<td align="center"> Max Tree Depth </td>
+				<td align="center"> 0 </td>
+			    </tr>
+			    <tr>
+				<td align="center"> Worst Split Ratio </td>
+				<td align="center"> 0.95 </td>
+			    </tr>
+			    <tr>
+				<td align="center"> Best Split Ratio </td>
+				<td align="center"> 0.0 </td>
+			    </tr>
+			</tbody>
+		    </table>
+		</section>
+		    <section>
+			<h3> Median Splitting Algorithm </h3>
+		      <pre width="1000px"><code class="hljs" data-trim>
+for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) {
+      Range left_list, right_list;
+
+      rval = split_box( instance, tmp_box, axis, entities, left_list, right_list );
+      if (MB_SUCCESS != rval) 
+        { delete_tree( set ); return rval; }
+        
+      double ratio = fabs((double)right_list.size() - left_list.size()) / entities.size();
+      
+      if (ratio < best_ratio) {
+        best_ratio = ratio;
+        best_left_list.swap( left_list );
+        best_right_list.swap( right_list );
+      }
+    }			  
+		  </code></pre>
+		      <p align="center"> Solution: set WSR to 1 </p>
+		    </section>
+		    <section>
+			<h3> New HV Study Results </h3>
+			<img src="../images/hv_study_MOAB_wsr1.png" height="500px" align="center" />
+		    </section>
                 <!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
 		<script src="reveal.js/js/reveal.js"></script>
