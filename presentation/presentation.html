@@ -321,10 +321,55 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		<section>
 		    <h2> Architecture Based Acceleration </h2>
 		    <p align="center"> Embree not just selected for building heuristic</p>
-		    
+		    <p align="center"> Employs Single Instruction Multiple Data (SIMD) to do multiple ray-box and ray-triangle intersection checks at once </p>
+		    <img src="../images/simd_ex.png" height="300px"/>
 		</section>
 		<section>
 		    <h3> Some Noteworthy History </h3>
+		    <p> Two approaches to using SIMD in ray tracing: </p>
+		    <ul>
+			<li>N:1 - test many rays against a single box at once</li>
+			<li>1:N - test one ray against many boxes at once </li>
+		    </ul>
+		    <div class="fragment fade-in">
+		    <p> method selection depends on <i>ray coherence</i></p>
+		    <img src="../images/ray_coherence.jpg" width="500px"/>
+		    <table width="500px"><tbody><tr><td align="center"> coherent</td><td align="center">incoherent</td></tr></tbody></table>
+		    </div>
+		</section>
+		<section>
+		    <h3>Quasi-Monte Carlo Ray Tracing</h3>
+		    <p> photo-realism (rendering based on realistic photon physics)</p>
+		    <style class="text/css">
+		     tr.noBorder td {border: 0;}
+		    </style>
+		    <table>
+			<tbody>
+			    <tr class="noBorder">
+				<td align="center"> <b>N:1</b> </td>
+				<td align="center"></td>
+				<td align="center"> <b>1:N</b> </td>
+			    </tr>
+			    <tr class="noBorder">
+				<large>
+				<td align="center"> (ray packets) </td>
+				<td align="center"></td>
+				<td align="center"> (single-ray SIMD traversal) </td>
+				</large>
+			    </tr>
+			    <tr class="noBorder fragment fade-in">
+				<td align="center"> ray coherence </td>
+				<td style="vertical-align:middle" align="center"> &#8594; </td>
+				<td align="center"> ray incoherence </td>
+			    </tr>			    
+			    <tr class="noBorder fragment fade-in">
+				<td align="center"> visualization </td>
+				<td style="vertical-align:middle" align="center"> &#8594; </td>
+				<td align="center"> physical simulation (MC) </td>
+			    </tr>
+			</tbody>
+		    </table>
+		    
 		</section>
                 <!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
