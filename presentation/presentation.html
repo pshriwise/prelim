@@ -29,175 +29,175 @@
 		</script>
 		
 		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
+		    <script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
-	</head>
+    </head>
     <body>
 	<div class="reveal">
 	    <div class="slides">
 		<!-- SLIDE 1 Title Slide-->
 		<section>
-			<h3>Improved Methods for Particle Tracking in CAD-Based Monte Carlo Radiation Transport</h3>
-			<h2>University of Wisconsin-Madison</h2>
-			<p>
-			  Patrick C. Shriwise
-			</p>
-			<p>
-			  <span id="displayDate">empty text</span>
-			</p>
-			<a href="https://beta.etherpad.org/p/shriwise_prelim_2016">https://beta.etherpad.org/p/shriwise_prelim_2016</a>
+		    <h3>Improved Methods for Particle Tracking in CAD-Based Monte Carlo Radiation Transport</h3>
+		    <h2>University of Wisconsin-Madison</h2>
+		    <p>
+			Patrick C. Shriwise
+		    </p>
+		    <p>
+			<span id="displayDate">empty text</span>
+		    </p>
+		    <a href="https://beta.etherpad.org/p/shriwise_prelim_2016">https://beta.etherpad.org/p/shriwise_prelim_2016</a>
 		</section>
-		    <section>
-			<h1>Introduction</h1>
-		    </section>
-		    <section>			
-			<h2>Motivation</h2>
-			<p>
-			    CAD-based radition transport as a robust and practical analysis tool
-			</p>
-			
+		<section>
+		    <h1>Introduction</h1>
+		</section>
+		<section>			
+		    <h2>Motivation</h2>
+		    <p>
+			CAD-based radition transport as a robust and practical analysis tool
+		    </p>
+		    
+		    <ul>
+			<li> equal freedom in deisgn and analysis </li>
+			<li> engineering analysis on the same model </li>
+		    </ul>
+		    <img src="images/cad_screenshot.png" style="border-style:none" height="450"/>
+		</section>
+		<section>
+		    <h2>MC Geometry Representations</h2>
+		    <table style="border-style:black">
+			<tbody>
+			    <tr>
+				<th align="center">Native Geometries</th>
+				<th align="center">CAD Geometry</th>
+			    </tr>
+			    <tr>
+				<td valign="top">
+				    <ul>
+					<li>variants of Computational Solid Geometry (CSG)</li>
+					<li>volumes formed from boolean combinations of simple implicit surfaces</li>
+					<li>geometry queries are analytic in nature</li>
+				    </ul>
+				</td>
+				<td>
+				    <ul>
+					<li>allows for higher order surface complexity</li>
+					<li>convenient design tools</li>
+					<li>extrude, sweep, loft, splines, etc.</li>
+					<li>geometry queries are complex and sometimes impossible analytically</li>
+				    </ul>
+				</td>
+			    </tr>
+			</tbody>
+		    </table>
+		</section>
+		<section>
+		    <h3>CAD-Based MCRT</h3>
+		    <ul>
+			<li>pathway for robust particle transport on CAD geometries exists</li>
 			<ul>
-			    <li> equal freedom in deisgn and analysis </li>
-			    <li> engineering analysis on the same model </li>
+			    <li> Direct Accelerated Geometry Mone Carlo (DAGMC)</li>
 			</ul>
-			<img src="images/cad_screenshot.png" style="border-style:none" height="450"/>
-		    </section>
-		    <section>
-			<h2>MC Geometry Representations</h2>
-			<table style="border-style:black">
+			<!-- <p style="text-align:center"><img src="images/dagmc_workflow.png" style="border-style:none" width="650"></img></p> -->
+			<li> not at its full potential: </li>			    
+			<ul>
+			    <li>CAD quality struggles to meet requirements</li>
+			    <li class="fragment highlight-blue">long simulation times (2-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation runtime</li>
+			</ul>
+		    </ul>
+
+		</section>
+		<section>
+		    <h2>DAGMC Workflow</h2>
+		    <style class="text/css">
+		     tr.noBorder td {border: 0;}
+		     td.redBlock {text-align: center; color: white; background-color: #b70101; vertical-align: middle; }
+		    </style>
+		    <table>
+			<tbody>
+			    <tr class="noBorder">
+				<td></td>
+				<td style="border: 0" ></td>
+				<td style="border: 0" align="center"> surface faceting </td>
+				<td style="border: 0" ></td>			    
+				<td style="border-top: 2px dashed black;border-left: 2px dashed black" align="center">geometric queries</td>
+				<td style="border-top: 2px dashed black"></td>			    
+				<td align="center" style="border-right: 2px dashed black;border-top: 2px dashed black"> MCNP5 </td>
+			    </tr>
+			    <tr class="noBorder" style="height:100px">
+				<td class="redBlock" align="center"> CAD </td>
+				<td style="vertical-align:middle" align="center"> &#8594; </td>			    
+				<td class="redBlock" align="center"> preprocessing </td>
+				<td style="vertical-align:middle" align="center"> &#8594; </td>			    			    
+				<td class="redBlock" align="center" style="border-left: 2px dashed black"> DAGMC </td>
+				<td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
+				<td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
+			    </tr>
+			    <tr class="noBorder">
+				<td align="center"> geometric design </td>
+				<td></td>
+				<td align="center"> facet sealing </td>
+				<td></td>
+				<td align="center" style="border-left: 2px dashed black;border-bottom: 2px dashed black"> ray tracing </td>
+				<td style="border-bottom: 2px dashed black"></td>
+				<td align="center" style="border-right: 2px dashed black;border-bottom: 2px dashed black"> physics </td>			      
+			    </tr>
+			    <tr>
+				<td></td>
+				<td></td>			      
+				<td align="center">
+				    <img class="fragment fade-in" src="images/facet_tol_zoomed.png" height="100px"/>				  
+				    <img class="fragment fade-in" src="images/sealing_example.png" width="300px"/>
+				</td>
+				<td></td>
+				<td align="center" colspan="3" style="vertical-align:top">
+				    <p>Analysis</p>
+				</td>
+			    </tr>
+			</tbody>
+		    </table>
+		</section>
+		<section>
+		    <h3> Research Goal </h3>
+		    <b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
+		    <p>
+			<table>
 			    <tbody>
 				<tr>
-				    <th align="center">Native Geometries</th>
-				    <th align="center">CAD Geometry</th>
+				    <td align="center"> FNG </td>
+				    <td align="center"> ATR </td>
+				    <td align="center"> UWNR </td>
 				</tr>
 				<tr>
-				    <td valign="top">
-					<ul>
-					    <li>variants of Computational Solid Geometry (CSG)</li>
-					    <li>volumes formed from boolean combinations of simple implicit surfaces</li>
-					    <li>geometry queries are analytic in nature</li>
-					</ul>
-				    </td>
-				    <td>
-					<ul>
-					    <li>allows for higher order surface complexity</li>
-					    <li>convenient design tools</li>
-					    <li>extrude, sweep, loft, splines, etc.</li>
-					    <li>geometry queries are complex and sometimes impossible analytically</li>
-					</ul>
-				    </td>
+				    <td> <img src="images/FNG_cad.png" width="300" style="border-style:none;vert-align:center" /> </td>
+				    <td> <img src="images/ATR_cad1.png" width="300" style="border-style:none" /> </td>
+				    <td> <img src="images/UWNR_cad.png" width="350" style="border-style:none" /> </td>
+				</tr>
+				<tr>
+				    <td align="center"> neutron source </td>
+				    <td align="center"> kcode </td>
+				    <td align="center"> kcode </td>
 				</tr>
 			    </tbody>
 			</table>
-		    </section>
-		    <section>
-			<h3>CAD-Based MCRT</h3>
-			<ul>
-			  <li>pathway for robust particle transport on CAD geometries exists</li>
-			  <ul>
-			      <li> Direct Accelerated Geometry Mone Carlo (DAGMC)</li>
-			  </ul>
-			    <!-- <p style="text-align:center"><img src="images/dagmc_workflow.png" style="border-style:none" width="650"></img></p> -->
-			    <li> not at its full potential: </li>			    
-			    <ul>
-				<li>CAD quality struggles to meet requirements</li>
-				<li class="fragment highlight-blue">long simulation times (2-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation runtime</li>
-			    </ul>
-			</ul>
-
-		    </section>
-		    <section>
-		      <h2>DAGMC Workflow</h2>
-		      <style class="text/css">
-		       tr.noBorder td {border: 0;}
-		       td.redBlock {text-align: center; color: white; background-color: #b70101; vertical-align: middle; }
-		      </style>
-		      <table>
-			<tbody>
-			  <tr class="noBorder">
-			    <td></td>
-			    <td style="border: 0" ></td>
-			    <td style="border: 0" align="center"> surface faceting </td>
-			    <td style="border: 0" ></td>			    
-			    <td style="border-top: 2px dashed black;border-left: 2px dashed black" align="center">geometric queries</td>
-			    <td style="border-top: 2px dashed black"></td>			    
-			    <td align="center" style="border-right: 2px dashed black;border-top: 2px dashed black"> MCNP5 </td>
-			  </tr>
-			  <tr class="noBorder" style="height:100px">
-			    <td class="redBlock" align="center"> CAD </td>
-			    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
-			    <td class="redBlock" align="center"> preprocessing </td>
-			    <td style="vertical-align:middle" align="center"> &#8594; </td>			    			    
-			    <td class="redBlock" align="center" style="border-left: 2px dashed black"> DAGMC </td>
-			    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
-			    <td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
-			  </tr>
-			  <tr class="noBorder">
-			      <td align="center"> geometric design </td>
-			      <td></td>
-			      <td align="center"> facet sealing </td>
-			      <td></td>
-			      <td align="center" style="border-left: 2px dashed black;border-bottom: 2px dashed black"> ray tracing </td>
-			      <td style="border-bottom: 2px dashed black"></td>
-			      <td align="center" style="border-right: 2px dashed black;border-bottom: 2px dashed black"> physics </td>			      
-			  </tr>
-			  <tr>
-			      <td></td>
-			      <td></td>			      
-			      <td align="center">
-				  <img class="fragment fade-in" src="images/facet_tol_zoomed.png" height="100px"/>				  
-				  <img class="fragment fade-in" src="images/sealing_example.png" width="300px"/>
-			      </td>
-			      <td></td>
-			      <td align="center" colspan="3" style="vertical-align:top">
-				  <p>Analysis</p>
-			      </td>
-			  </tr>
-			</tbody>
-		      </table>
-		      </section>
-		    <section>
-			<h3> Research Goal </h3>
-			<b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
-			<p>
-			<table>
-			  <tbody>
-			    <tr>
-			      <td align="center"> FNG </td>
-			      <td align="center"> ATR </td>
-			      <td align="center"> UWNR </td>
-			    </tr>
-			    <tr>
-			      <td> <img src="images/FNG_cad.png" width="300" style="border-style:none;vert-align:center" /> </td>
-			      <td> <img src="images/ATR_cad1.png" width="300" style="border-style:none" /> </td>
-			      <td> <img src="images/UWNR_cad.png" width="350" style="border-style:none" /> </td>
-			    </tr>
-			    <tr>
-				<td align="center"> neutron source </td>
-				<td align="center"> kcode </td>
-				<td align="center"> kcode </td>
-			    </tr>
-			  </tbody>
-			  </table>
-			</p>
-			<ul>
-			    <li> problems run with both native & CAD geometries</li>
-			</ul>
-		    </section>
-		    <section>
-			<h3> Research Goal </h3>
-			<b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
-			<iframe data-src="performance_plot.html" width="100%" height="500px"> </iframe>
-		    </section>
+		    </p>
+		    <ul>
+			<li> problems run with both native & CAD geometries</li>
+		    </ul>
+		</section>
+		<section>
+		    <h3> Research Goal </h3>
+		    <b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
+		    <iframe data-src="performance_plot.html" width="100%" height="500px"> </iframe>
+		</section>
 		<!-- High Valence -->
 		<section>
-		  <h3> High Valence Vertices </h3>
-		  <ul>
-		    <li>common feature of many triangulation algorithms</li>
-		    <li>result of trying to minimize triangles used to represent a surface</li>
-		    <li>shown to be detrimental to DAGMC performance</li>
-		  </ul>
-		  <object align="center" data="images/hv.svg" height="400px" style="margin: 50px 50px 50px 50px" type="image/svg+xml"></object>
+		    <h3> High Valence Vertices </h3>
+		    <ul>
+			<li>common feature of many triangulation algorithms</li>
+			<li>result of trying to minimize triangles used to represent a surface</li>
+			<li>shown to be detrimental to DAGMC performance</li>
+		    </ul>
+		    <object align="center" data="images/hv.svg" height="400px" style="margin: 50px 50px 50px 50px" type="image/svg+xml"></object>
 		</section>
 		<section>
 		    <h3>High Valence In Production Models</h3>
@@ -209,7 +209,7 @@
 		    <h3> High Valence Test Model </h3>
 		    <p align="left"> manual faceting of cube surface </p>
 		    <img src="../images/hv_study_design.png" height="350px"/>
-		    <p align="left"> can vary: </p>
+		    <p align="left"> variable parameters: </p>
 		    <ul>
 			<li> fraction of surface that high valence region occupies</li>
 			<li> valence of corner vertices </li>
@@ -251,9 +251,9 @@
 			</tbody>
 		    </table>
 		</section>
-		    <section>
-			<h3> Median Splitting Algorithm </h3>
-		      <pre width="1000px"><code class="hljs" data-trim>
+		<section>
+		    <h3> Median Splitting Algorithm </h3>
+		    <pre width="1000px"><code class="hljs" data-trim>
 for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) {
       Range left_list, right_list;
 
@@ -269,17 +269,63 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
         best_right_list.swap( right_list );
       }
     }			  
-		  </code></pre>
-		      <p align="center"> Solution: set WSR to 1 </p>
-		    </section>
-		    <section>
-			<h3> New HV Study Results </h3>
-			<img src="../images/hv_study_MOAB_wsr1.png" height="500px" align="center" />
-			<p class="fragment fade-in"> maintained performance without need for altered faceting </p> 
-		    </section>
-		    <section>
-			<h3> Surface Area Heuristic </h3>
-		    </section>
+		    </code></pre>
+		    <p align="center"> Solution: set WSR to 1 </p>
+		</section>
+		<section>
+		    <h3> New HV Study Results </h3>
+		    <img src="../images/hv_study_MOAB_wsr1.png" height="500px" align="center" />
+		    <p class="fragment fade-in"> maintained performance without need for altered faceting </p> 
+		</section>
+		<section>
+		    <h3> Surface Area Heuristic </h3>
+		    <h4>SAH</h4>
+		    <p> $$C =  C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i}$$ </p>
+		    <style class="text/css">
+		     tr.noBorder td {border: 0;}
+		    </style>
+		    <table>
+			<tbody>
+			    <tr class="noBorder">
+				<td>$$C_{t}$$ </td><td> - cost of traversal to child nodes</td>
+			    </tr>
+			    <tr class="noBorder">
+				<td>$$C_{i} $$</td><td> - cost of primitive intersection check </td>
+			    </tr>
+			    <tr class="noBorder">
+				<td>$$SA() $$</td><td> - gives surface area of bounding volume </td>
+			    </tr>
+			    <tr class="noBorder">
+				<td>$$B_{L} $$</td><td> - bounding volume of left child </td>
+			    </tr>
+			    <tr class="noBorder">
+				<td>$$P_{L} $$</td><td> - primitives contained by the left child  </td>
+			    </tr>
+			    <tr class="noBorder">
+				<td>$$B_{R} $$</td><td> - bounding volume of right child </td>
+			    </tr>
+			    <tr class="noBorder">
+				<td>$$P_{R} $$</td><td> - primitives contained by the right child </td>
+			    </tr>
+			    <tr class="noBorder">
+				<td>$$B $$</td><td> - parent bounding volume</td>
+			    </tr>
+			</tbody>
+		    </table>
+		</section>
+		<section>
+		    <h3> SAH Applied to High Valence </h3>
+		    <p align="center">same tests performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel</p>
+		    <img src="../images/hv_emdag.png" height="500px" align="center" />		    
+		</section>
+		<section>
+		    <h2> Architecture Based Acceleration </h2>
+		    <p align="center"> Embree not just selected for building heuristic</p>
+		    
+		</section>
+		<section>
+		    <h3> Some Noteworthy History </h3>
+		</section>
                 <!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
 		<script src="reveal.js/js/reveal.js"></script>
@@ -291,7 +337,6 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			 center: false,
 
 			 transition: 'none', // none/fade/slide/convex/concave/zoom
-
 			 // More info https://github.com/hakimel/reveal.js#dependencies
 			 dependencies: [
 			     { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
@@ -299,7 +344,8 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			     { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 			     { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 			     { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
-			     { src: 'reveal.js/plugin/notes/notes.js', async: true }
+			     { src: 'reveal.js/plugin/notes/notes.js', async: true },
+			     { src: 'reveal.js/plugin/math/math.js', async: true }
 			 ]
 		     });
 
@@ -309,5 +355,6 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		 newDate.setDate(newDate.getDate());
 		 document.getElementById('displayDate').innerHTML = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
 		</script>
+
     </body>
 </html>
