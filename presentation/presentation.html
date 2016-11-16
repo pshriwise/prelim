@@ -98,9 +98,9 @@
 			    <li> Direct Accelerated Geometry Mone Carlo (DAGMC)</li>
 			</ul>
 			<!-- <p style="text-align:center"><img src="images/dagmc_workflow.png" style="border-style:none" width="650"></img></p> -->
-			<li> not at its full potential: </li>			    
+			<li> not yet at its full potential: </li>			    
 			<ul>
-			    <li>CAD quality struggles to meet requirements</li>
+			    <li>difficult to meet CAD quality required for robustness in DAGMC</li>
 			    <li class="fragment highlight-blue">long simulation times (2-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation runtime</li>
 			</ul>
 		    </ul>
@@ -180,9 +180,7 @@
 			    </tbody>
 			</table>
 		    </p>
-		    <ul>
-			<li> problems run with both native & CAD geometries</li>
-		    </ul>
+			<p class="fragment fade-in"> problems run with both native & CAD geometries</p>
 		</section>
 		<section>
 		    <h3> Research Goal </h3>
@@ -270,7 +268,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
       }
     }			  
 		    </code></pre>
-		    <p align="center"> Solution: set WSR to 1 </p>
+		    <p align="center"> solution: WSR = 1 </p>
 		</section>
 		<section>
 		    <h3> New HV Study Results </h3>
@@ -325,7 +323,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    <img src="../images/simd_ex.png" height="300px"/>
 		</section>
 		<section>
-		    <h3> Some Noteworthy History </h3>
+		    <h3> Some Noteworthy RT History </h3>
 		    <p> Two approaches to using SIMD in ray tracing: </p>
 		    <ul>
 			<li>N:1 - test many rays against a single box at once</li>
@@ -366,11 +364,47 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			    <tr class="noBorder fragment fade-in">
 				<td align="center"> visualization </td>
 				<td style="vertical-align:middle" align="center"> &#8594; </td>
-				<td align="center"> physical simulation (MC) </td>
+				<td align="center"> physical rendering/simulation </td>
+			    </tr>
+			    <tr class="noBorder fragment fade-in">
+				<td align="center"> </td>
+				<td style="vertical-align:middle" align="center"></td>
+				<td align="center" > <font color="#b7071">MCRT</font> </td>
 			    </tr>
 			</tbody>
 		    </table>
-		    
+		</section>
+		<section>
+		  <h3> Integrating Embree with DAGMC </h3>
+		  <h2> (EmDAG) </h2>
+		  <img src="../images/emdag_mapping.png" align="center"/>
+		</section>
+		<section>
+		  <h3> Ray Fire Testing Zoo </h3>
+		  <table style="margin: 100px 0px 0px 0px">
+		    <tbody>
+		      <tr>
+			<td align="center"> <img src="../images/sphere.png" width="400px" /></td>
+			<td align="center"> <img src="../images/ds.png" width="400px" /></td>
+			<td align="center"> <img src="../images/larcyl.png" width="400px" /></td>
+		      </tr>
+		    </tbody>
+		  </table>
+		</section>
+		<section>
+		  <h3> Performance Comparison</h3>
+		  <table width="1000px" style="table-layout:fixed">
+		    <tbody>
+		      <tr>
+			<td align="center"> <b>DAGMC (MOAB)</b> </td>
+			<td align="center"> <b>EmDAG (Embree)</b> </td>
+		      </tr>
+		      <tr>
+			<td align="center"> <img src="../images/Eig_fix_rf.png" /> </td>
+			<td align="center"> <img src="../images/embree_rf.png" /> </td>
+		      </tr>
+		    </tbody>
+		    <table>
 		</section>
                 <!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
