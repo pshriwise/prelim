@@ -21,7 +21,7 @@ dagmc_data = go.Bar(x = sphere_models,
                     y = dagmc_sphere_data,
                     name = 'DAG-MCNP5')
 data = [mcnp_data,emdag_data,dagmc_data]
-layout = go.Layout(barmode='group',
+layout = go.Layout(barmode='group', font = dict(size = 20),
                    yaxis = dict(title = "Runtime (min)"),
                    legend = dict(font = dict( size = 20)))
 fig = go.Figure(data=data,layout=layout)
@@ -44,7 +44,7 @@ dagmc_data = go.Bar(x = cube_models,
                     y = dagmc_cube_data,
                     name = 'DAG-MCNP5')
 data = [mcnp_data,emdag_data,dagmc_data]
-layout = go.Layout(barmode='group',
+layout = go.Layout(barmode='group', font= dict(size = 20),
                    yaxis = dict(title = "Runtime (min)"),
                    legend = dict(font = dict( size = 20)))
 fig = go.Figure(data=data,layout=layout)
