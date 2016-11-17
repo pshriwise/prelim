@@ -448,6 +448,35 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    <h4> Cube Models </h4>
 		    <iframe data-src="emdag_cube_performance.html" class="stretch"></iframe>
 		</section>
+		<section>
+		    <h3>FNG Transport Results</h3>
+		    <ul>
+			<li class="fragment fade-in"> original source replaced with 14.1 MeV neutron isotropic volume source </li>
+			<li class="fragment fade-in"> facet tolerance: 1e-04 cm</li>
+			<li class="fragment fade-in">  100M histories</li>
+			<li class="fragment fade-in"> length tolerance: 5cm </li>
+		    </ul>
+		    <img src="images/fng_cad.png" height="400px"></section>
+		</section>
+		<section>
+		    <h3> FNG Transport Test </h3>
+		    <iframe data-src="emdag_fng_performance.html" class="stretch"></iframe>		    
+		</section>
+		<section>
+		    <h3> EmDAG Limitations </h3>
+		    <ul>
+			<li> faceting toleracne: 255 lost particles </li>
+			<li> length toleracne: 247 lost particles </li>
+		    </ul>
+		    <img src="../images/emdag_lost.png" height="400px"/>
+			<p align="center "class="fragment fade-in"> caused by conversions from single to double precision and vice versa </p>
+		</section>
+		<section>
+		    <h2>Implicit Surfaces and Signed Distance Fields </h2>
+		</section>
+		<section>
+		    <h3> Implicit Surfaces </h3>
+		</section>
                 <!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
 		<script src="reveal.js/js/reveal.js"></script>
