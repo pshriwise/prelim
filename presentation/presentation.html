@@ -404,7 +404,49 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			<td align="center"> <object data="../images/embree_rf_annotated.svg" width="400px"type="image/svg+xml"/> </td>
 		      </tr>
 		    </tbody>
+		</table>
+		</section>
+		<section>
+		    <h3> Transport Testing </h3>
+		    <p align="left"> EmDAG was applied to a few simple models </p>
+		    <ul>
+			<li class="fragment fade-in">5 MeV isotropic neutron point source at model origin</li>
+			<li class="fragment fade-in">all volumes are water-filled (&rho; = 1 g/cc)</li>
+			<li class="fragment fade-in"> faceting tolerance: 1e-04cm </li>			
+			<li class="fragment fade-in"> 1M histories </li>
+		    </ul>
 		    <table>
+			<tbody>
+			    <tr>
+				<td class="noBorder fragment fade-in">
+				    <p align="center"> Single Sphere </p>
+				    <img src="../images/sphere_cad.png" width="300px" />
+				</td>								
+				<td class="noBorder fragment fade-in">
+				    <p align="center"> Nested Spheres </p>
+				    <img src="../images/nested_spheres.png" width="300px" />
+				</td>				
+				<td class="noBorder fragment fade-in">
+				    <p align="center"> Cube </p>
+				    <img src="../images/cube_cad.png" width="300px" />
+				</td>
+				<td class="noBorder fragment fade-in">
+				    <p align="center"> Nested Cubes </p>
+				    <img src="../images/nested_cubes.png" width="300px" />
+				</td>				
+			    </tr>
+			</tbody>
+		    </table>
+		</section>
+		<section>
+		    <h3> Transport Performance </h3>
+		    <h4> Sphere Models </h4>
+		    <iframe data-src="emdag_sphere_performance.html" class="stretch"></iframe>
+		</section>
+		<section>
+		    <h3> Transport Performance </h3>
+		    <h4> Cube Models </h4>
+		    <iframe data-src="emdag_cube_performance.html" class="stretch"></iframe>
 		</section>
                 <!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
