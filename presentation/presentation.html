@@ -5,7 +5,7 @@
 
 		<title>Improved Methods for Particle Tracking in CAD-Based Monte Carlo Radiation Transport</title>
 
-		<meta name="description" content="DAGMC Performance update for KAPL Sept. 2016">
+		<meta name="description" content="Preliminary Defense Slides">
 		<meta name="author" content="Patrick C Shriwise">
 
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -101,7 +101,7 @@
 			<li> not yet at its full potential: </li>			    
 			<ul>
 			    <li>difficult to meet CAD quality required for robustness in DAGMC</li>
-			    <li class="fragment highlight-blue">long simulation times (2-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation runtime</li>
+			    <li class="fragment highlight-blue">long simulation times (2.5-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation runtime</li>
 			</ul>
 		    </ul>
 
@@ -475,8 +475,105 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    <h2>Implicit Surfaces and Signed Distance Fields </h2>
 		</section>
 		<section>
-		    <h3> Implicit Surfaces </h3>
+		  <h3> Implicit Surfaces </h3>
+		  <h4> (& Level-Set Methods) </h4>
+		  <p align="center"> An implicit surface is a multivariate function defined over an $ R^3 $ domain</p>
+		  $$    \Omega(R^3)\rightarrow R $$
+		  <p align="center"> where points on the surface are represented by the isocontour $v=0$ </p>
+		  $$   \Omega(\vec{x}) - v  = 0 $$
+		  <p align="center"> important geometric properties can be easily recovered from this represntation </p>
+		  <table>
+		    <tbody>
+		      <tr class="noBorder">
+			<td align="center" class="fragment">
+			<p align="center"> Surface Normal </p>
+			$$(\Omega_{x}(\vec{x}),\Omega_{y}(\vec{y}),\Omega_{z}(\vec{z}))$$
+			</td>
+			<td align="center" class="fragment">
+			  <p> Distance to Nearest Intersection </p>
+			  $$ |\Omega(\vec{x})| $$
+			</td>
+			<td align="center" class="fragment">
+			  <p align="center"> Interior vs. Exterior Locations </p>
+			  $$ sign(\Omega(\vec{x}))$$
+			  </td>
+		      </tr>
+		    </tbody>
+		  </table>
 		</section>
+		<section>
+		  <h3> Implicit Surfaces </h3>
+		  <p align="left"> uses:
+		  <ul>
+		    <li> modeling (CSG), simulation, triangulation </li>
+		    <li class="fragment"> and rendering of dynamic surfaces like smoke or fire ($\Omega(\vec{x},t)$) </li>
+		  </ul>
+		  <p align="left" class="fragment"> ray marching: </p>
+		  <p class="fragment current-visible"><object data="../images/rm0.svg" height="450px" type="image/svg+xml"></object></p>
+		  <p class="fragment current-visible"><object data="../images/rm1.svg" height="450px" type="image/svg+xml"></object></p>
+		</section>
+		<section>
+		  <h3> Signed Distance Fields </h3>
+		  <p align="left"> ray marching is accomplished using sampled fields with these requirements </p>
+		  <ul>
+		    <li> $ d(\vec{x}) = 0 $ for all $x$ on the surface boundary </li>
+		    <li> $ d(\vec{x}) < 0 $ for all $x$ inside the surface boundary </li>
+		    <li> $ d(\vec{x}) > 0  $ for all $x$ outside the surface boundary </li>
+		  </ul>
+		  <p align="center"> $ d(\vec{x}) = sign(\Omega(\vec{x}))|\Omega(\vec{x})| $ </p>
+		</section>
+		<section>
+		  <h3> Particle Tracking Preconditioner </h3>
+		  <ul>
+		    <li> use interpolated signed distance values to rule out surface crossing </li>
+		    <li> avoids O(log(N)) in favor of O(1) process </li>
+		    <li> best for particles traveling far from surfaces </li>
+		    <li> sign-based point containment queries </li>
+		  </ul>
+		  <object data="../images/preconditioner_datastruct.svg" type="image/svg+xml" height="400px"></object>
+		</section>
+		<section>
+		  <h3> Particle Tracking Preconditioner </h3>
+		  <object data="../images/preconditioner_ex.svg" type="image/svg+xml" class="stretch"></object>
+		</section>
+		<section>
+		  <h3> Interpolation Error Estimate </h3>
+		  <h4> (a 2D example) </h4>
+		  <p align="center"> $$ \epsilon = \frac{1}{2} \Delta x (h-\Delta x) \frac{\partial^2 u}{\partial x^2} + \frac{1}{2} \Delta y (h-\Delta y)  \frac{\partial^2 u}{\partial y^2} $$ </p>
+		  <table>
+		    <tbody>
+		    <tr class="noBorder"><td>$$ h $$</td><td> - mesh interval size </td></tr>
+		    <tr class="noBorder"><td>$$ \Delta x $$</td><td> - x distance to interpolation point from data point </td></tr>
+		    <tr class="noBorder"><td>$$ \Delta y $$ </td> <td> - y distance to interpolation point from data point </td></tr>
+		    <tr class="noBorder"><td>$$ u(x,y) $$</td><td>- sampled function on mesh </td></tr>
+		    <tr class="noBorder"><td>$$ \epsilon $$</td><td>- interpolation error </td></tr>
+		    </tbody>
+		  </table>
+		  <p align="center highlight-red"> <i>curvature terms are problematic</i> </p>
+		</section>
+		<section>
+		  <h3> Initial Implementation </h3>
+		  <ul>
+		    <li>uses MOAB's structured mesh interface</li>
+		    <li>populated using MOAB's ray tracing interface (closest to location)</li>
+		    <li>disambiguates distance value signs using DAGMC's point containment algorithm</li>		    
+		  </ul>
+		  <img src="../images/sdf_sphere.png" height="400x"/>
+		  <p class="fragment"> intended to study preconditioner utilization </p>
+		</section>
+		<section>
+		  <h3> Preconditioner Test </h3>
+		  <ul>
+		    <li>5 MeV isotropic neutron point source at model origin</li>
+		    <li>single volume: 10 cm radius sphere</li>
+		    <li>all volumes are water-filled </li>
+		    <li>density varied from 0 to 1 (g/cc) </li>
+		    <li>faceting tolerance: 1e-04cm </li>			
+		    <li>1M histories </li>
+		  </ul>
+		  <img src="../images/sphere_cad.png" height="400px" align="center" />
+		</section>
+		
                 <!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
 		<script src="reveal.js/js/reveal.js"></script>
