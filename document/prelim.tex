@@ -23,14 +23,35 @@
     linkcolor=black,  %choose some color if you want links to stand out
 }
 
+\makeatletter
+\def\copyrightpage{
+  \newpage
+  \thispagestyle{empty}    % No page number
+  \addtocounter{page}{-1}
+  \section*{}            % Required for \vfill to work
+  \begin{center}
+   \vfill
+   \copyright\ Copyright by \@author\ \the\year\\
+   All Rights Reserved
+   \newpage
+\end{center}}
+
 \begin{document}
 
 \begin{center}
+  \thispagestyle{empty}
+  \addtocounter{page}{-1}
   \textbf{Improved Methods for Particle Tracking in CAD-Based Monte Carlo Radiation Transport} \\
   \bigskip
   by \\
   \bigskip
   Patrick C. Shriwise \\
+  \bigskip
+  A preliminary examination submitted in partial fulfillment of the requirements for the degree of \\
+  \bigskip
+  Doctor of Philosophy \\
+  \bigskip
+  (Nuclear Engineering and Engineering Physics) \\
   \bigskip 
   at the \\
   \bigskip
@@ -38,10 +59,12 @@
   \bigskip
   2016
 \end{center}
-
 \newpage
+\copyrightpage
+
 \tableofcontents 
 
+\newpage
 \section{Abstract}%%Status:Done%%
 
 The performance of CAD-based Monte Carlo radiation transport relies heavily on its ability to return geometric queries quickly and robustly via ray tracing. The Direct Accelerated Monte Carlo (DAGMC) toolkit currently provides a robust ray tracing algorithm\cite{Smith_2011} given certain mesh requirements are met, but shortcomings of the underlying ray tracing kernel causes it to lag behind run times of a given Monte Carlo code using its native geometry engine. The current ray tracing kernel in DAGMC relies upon research in the areas of collision detection and rendering. Algorithms for collision detection involve moving geometry which isn't a concern in the area of radiation transport, and until recently rendering techniques have not aligned well with the needs of a Monte Carlo process. However, as new ray tracing kernels are developed for real-time, photo-realistic rendering, algorithmic approaches have appeared which are believed to be advantageous in radiation transport. In particular, the application of data parallelized ray tracing for Monte Carlo has been demonstrated - resulting in significant performance improvements. Single processor parallelization of this ray fire process cannot alleviate systematic performance problems coming from mesh features produced by the triangulation of CAD surfaces which are used to represent the model during transport. It is recommended that special attention be paid to these features when building acceleration datastructures to avoid performance degredation during particle interaction with those regions of the model. Algorithms for acceleration datastructures in rendering typically prioritize the time needed for the building of these structures, commonly leaving them less than optimal, but this results in an overall decreased time-to-render due to the balance of the build time with the the number of ray queries needed to generate the desired image or view. In radiation transport, the number of ray queries needed to generate the desired result is much larger than the number needed for rendering. As more time is spent ray tracing, the build times of the underlying acceleration structures becomes less significant, thus the balance between time spent building these structures and the time using them for ray tracing must be reconsidered in this context. It is hypothesized that in the case of large and geometrically complex problems for which DAGMC is intended, extra time spent optimizing the ray tracing acceleration datastructures via adaptation to troublesome mesh features may result in reduced overall runtimes. Finally, a preconditioning scheme is presented to avoid unecessary ray queries when particles are far from cell boundaries based on implicit surface techniques used in rendering. It is hoped that the combined effect of these improvements will allow DAGMC to provide CAD-based Monte Carlo simulations with performance on the order of the native codes it supports, thus alleviating the concern for additional computational time while maintaining the benefit of reduced human time and effort in model preparation.
@@ -967,7 +990,7 @@ A signed distance field allows DAGMC to rely on an O(1) process when tracking pa
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\section{Bibliography}
 \bibliographystyle{acm}
 \bibliography{refs}
 
