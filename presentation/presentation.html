@@ -585,7 +585,54 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    <h3> Initial Results </h3>
 		    <p align="center">$$ U = \frac{dagmc\, rays -  dagmc\, w/\, precond.\, rays}{dagmc\, rays}$$ </p>
 		    <iframe data-src="precond_utilization.html" class="stretch"></iframe>		    		    
-		</section>		
+		</section>
+		<section>
+		    <h2> Proposed Work </h2>
+		</section>
+		<section>
+		    <h3> Feature Adaptation in BVH Construction </h3>
+		    <ul>
+			<li>alter building parameters for problematic mesh regions which can be identified by poorly formed tree topology</li>
+			<li>of particular interest is the high valence case</li>
+		    </ul>
+		    <p align="center"> this process is likely of more interest to radiation transport than rendering </p>
+		    <table>
+			<tbody>
+			    <tr>
+				<td align="center" colspan="2"> <b>Primary Ray Estimates</b> </td>
+			    </tr>
+			    <tr>
+				<td style="border-right: 1px solid black"> rendering </td>
+				<td align="right" width="800px"> $ (\sim 8 \frac{rays}{pixel})(1024 \times 1080\, pixels) $ = $16.6 \times 10^6$ rays</td>
+			    </tr>
+			    <tr style="border-bottom: 1px solid black">
+				<td style="border-right: 1px solid black"> radiation transport </td>
+				<td style="vertical-align:middle" align="right"> $ 1 \times 10^9 $ histories $ $ = $ 1 \times 10^9 $ rays </td>
+			    </tr>
+			</tbody>
+		    </table>
+			    <p align="center" class="fragment"> est. additional order-of-magnitude in secondary rays </p>
+		</section>
+		<section>
+		    <h3> Feature Adaptation in BVH Construction </h3>
+		    $$ tts = C + T_{B} + \sum_{}^{N_{r}} T_{T} $$
+		    $$ tts =\,  C + T_{B} + \sum_{}^{N_{r}} T_{T}(q,\ldots) $$
+		    $$ q(T_{B})  \rightarrow T_{T}(T_{B}) \rightarrow T_{T} \propto \frac{1}{{T_{B}}^{x}} \,\, (\, x \geq 0) $$
+		    $$ tts =\,  C + T_{B} + \sum_{}^{N_{r}} T_{T}(T_{B},\ldots) $$
+		    $$ tts \, -  time\, to\, solution $$
+		    $$ C \, -  cost\, of\, operations \, not \, reliant \, on \, ray \, tracing $$
+		    $$ T_{B} \, -  acceleration\, datastructure\, build\, time $$
+		    $$ T_{T} \, -  average\, traversal\, time $$
+		    $$ N_{r} \, -  ray\, queries \, required\, for\, solution $$
+			$$ q \, -  acceleration\, datastructure\, quality $$
+		</section>
+		<section>
+		    <h3> Feature Adaptation in BVH Construction </h3>
+		    <h4> Objectives </h4>
+		    <ul>
+			<li></li>
+		    </ul>
+		</section>
                 <!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
 		<script src="reveal.js/js/reveal.js"></script>
