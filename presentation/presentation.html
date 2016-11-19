@@ -97,6 +97,7 @@
 			<ul>
 			    <li> Direct Accelerated Geometry Mone Carlo (DAGMC)</li>
 			</ul>
+			<br>
 			<!-- <p style="text-align:center"><img src="images/dagmc_workflow.png" style="border-style:none" width="650"></img></p> -->
 			<li> not yet at its full potential: </li>			    
 			<ul>
@@ -148,7 +149,7 @@
 			    <tr class="noBorder">
 				<td></td>
 				<td style="border: 0" ></td>
-				<td style="border: 0" align="center"> surface faceting </td>
+				<td style="border: 0; vertical-align:bottom" align="center"> surface faceting </td>
 				<td style="border: 0" ></td>			    
 				<td style="border-top: 2px dashed black;border-left: 2px dashed black" align="center">geometric queries</td>
 				<td style="border-top: 2px dashed black"></td>			    
@@ -273,7 +274,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		<section>
 		    <h3> New HV Study Results </h3>
 		    <img src="../images/hv_study_MOAB_wsr1.png" height="500px" align="center" />
-		    <p class="fragment fade-in"> maintained performance without need for altered faceting </p> 
+		    <p class="fragment fade-in"> maintains performance without need for altered faceting </p> 
 		</section>
 		<section>
 		    <h3> Surface Area Heuristic </h3>
@@ -394,15 +395,16 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		</section>
 		<section>
 		  <h3> Performance Comparison</h3>
-		  <table style="table-layout:fixed">
+		  <table>
 		    <tbody>
 		      <tr>
 			<td align="center"> <b>DAGMC (MOAB)</b> </td>
 			<td align="center"> <b>EmDAG (Embree)</b> </td>
 		      </tr>
 		      <tr>
-			<td align="center"> <object data="../images/eig_fix_rf_annotated.svg" width="400px" type="image/svg+xml" /> </td>
-			<td align="center"> <object data="../images/embree_rf_annotated.svg" width="400px"type="image/svg+xml"/> </td>
+			<br>
+			<td> <object data="../images/eig_fix_rf_annotated.svg" width="500px" type="image/svg+xml" /> </td>
+			<td> <object data="../images/embree_rf_annotated.svg" width="500px"type="image/svg+xml"/> </td>
 		      </tr>
 		    </tbody>
 		</table>
@@ -483,8 +485,8 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		<section>
 		    <h3> EmDAG Limitations </h3>
 		    <ul>
-			<li> faceting toleracne: 255 lost particles </li>
-			<li> length toleracne: 247 lost particles </li>
+			<li> faceting tolerance: 255 lost particles </li>
+			<li> length tolerance: 247 lost particles </li>
 		    </ul>
 		    <p></p>
 		    <object data="../images/emdag_fng_lost.svg" type="image/svg+xml"></object>
@@ -567,7 +569,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    <tr class="noBorder"><td>$$ \epsilon $$</td><td>- interpolation error </td></tr>
 		    </tbody>
 		  </table>
-		  <p align="center highlight-red"> <i>curvature terms are problematic</i> </p>
+		  <p align="center" class="fragment"> <i>curvature terms are problematic</i> </p>
 		</section>
 		<section>
 		  <h3> Initial Implementation </h3>
@@ -578,8 +580,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		      <li>disambiguates distance value signs using DAGMC's point containment algorithm</li>
 		    </ul>
 		  </ul>
-		  <img src="../images/sdf_sphere.png" height="400x"/>
-		  <p class="fragment"> intended to study preconditioner utilization </p>
+		  <img src="../images/sdf_sphere.png" height="550x"/>
 		</section>
 		<section>
 		  <h3> Preconditioner Test </h3>
@@ -711,7 +712,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			<li class="fragment highlight-red">separate DAGMC tracking code from MOAB's ray tracing interface</li>
 			<ul>
 			    <div class="fragment">
-				<li>determine what is critical; what is necessary; what requires moab</li>
+				<li>determine what is critical; what is necessary; what requires MOAB</li>
 			    </div>
 			</ul>
 			<br>
@@ -729,7 +730,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			<li class="fragment highlight-red">proposed implementation </li>
 			<ul>
 			    <div class="fragment">
-				<li>constructing single-precision boxes around MOAB's double-precision primitives</li>
+				<li>single-precision boxes constructed around MOAB's double-precision primitives</li>
 				<li> perform SIMD traversal of n-ary tree </li>
 				<li> double precision intersection of triangles</li>
 				<li>will maintain much of Embree's speed as majority of time is spent in BVH traversal</li>
@@ -741,7 +742,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    <h3> Architecture Based Acceleration </h3>
 		    <h4> Contributions </h4>
 		    <ul>
-			<li class="fragment"> mixed-precision SIMD BVH traversal on common CPU archs. </li>
+			<li class="fragment"> mixed-precision SIMD BVH traversal on common CPU architectures </li>
 			<br>
 			<li class="fragment"> provides high-performance spatial searches coupled with mesh database designed for engineering analysis </li>
 			<br>
@@ -766,15 +767,15 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    </ul>
 		</section>
 		<section>
-		    <h3> Combined Contributions </h3>
-		    <p> each area aids in approaching the goal of CAD-Based Monte Carlo Radiation Transport on the order of analytic/native/CSG geometry representations</p>
+		    <h3> Summary </h3>
+		    <p> each approach aides in goal of CAD-Based Monte Carlo Radiation Transport performance on the order of analytic/native/CSG geometry representations</p>
 		    <ul>
 			<li class="fragment"> trees should now be optimized for high valence regions </li>
 			<li class="fragment"> ray tracing greatly increases single-node efficiency </li>
 			<li class="fragment"> preconditioner will help to reduce overall order of particle tracking compelxity if utilized well</li>
 			<li class="fragment"> increased ray tracing performance assists other MOAB and DAGMC based applications as well </li>
 		    </ul>
-		    <p class="fragment"> it is hoped that the final combined effect is that CB-MCRT is a more effective tool due to its faster return of answers </p>
+		    <p class="fragment"><b>final combined effect is a more effective CB-MCRT pathway for analysis</b> </p>
 		</section>
                 <!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
