@@ -218,6 +218,70 @@
 			</table>
 		    </section>
 
+		    <section>
+			<h3> Faceting </h3>
+			<p> faceting tolerance: tolerance for farthest point on the facet from the analytic surface </p>
+			<img src="images/facet_tol_zoomed.png" height="100px"/>
+			<ul>
+			    <li> reduce all surfaces to planar type (regardless of actual surface complexity) </li>
+			    <li> many many more of them </li>
+			</ul>
+			<table>
+			    <tbody>
+				<tr>
+				    <td></td>
+				    <td>FNG</td>
+				    <td>ATR</td>
+				    <td>UWNR</td>
+				    <td> ITER SDDR </td>
+				</tr>
+				<tr>
+				    <td> Surfaces </td>
+				    <td> $1 \times 10^3$ </td>
+				    <td> $2.8 \times 10^3$ </td>
+				    <td> $5.5 \times 10^3$ </td>
+				    <td> $6.9 \times 10^3$ </td>
+				</tr>
+				<tr>
+				    <td> Triangles </td>
+				    <td> $1.2 \times 10^6$ </td>
+				    <td> $4.9 \times 10^6$ </td>
+				    <td> $3.3 \times 10^6$ </td>
+				    <td> $43.9 \times 10^6$ </td>
+				</tr>
+			    </tbody>
+			</table>
+			<br>
+			<p class="fragment">linear search of triangles is unreasonable</p>
+		    </section>
+
+		    <section>
+			<h3> Ray Tracing Acceleration Data Structures </h3>
+			<br>
+			<p><i>field dedicated to geometric queries on surface meshses of triangles</i></p>
+			<br>
+			<p> employs a variety of hierarhical structures </p>
+			<ul>
+			    <li class="fragment"> Bounding Volume Hierarchy (BVH) </li>
+			    <li class="fragment"> KDTree </li>
+			    <li class="fragment"> Octree </li>
+			</ul>
+		    </section>
+		    
+		    <section>
+			<h3> Bounding Volume Hierarchy </h3>
+			<object data="../images/pauls_bvh.svg" class="stretch" type="image/svg+xml"></object>
+		    </section>
+		    
+		    <section>
+			<h3> Bounding Volumes </h3>
+			<div class="fragment">
+			    <iframe src="https://www.youtube.com/embed/z_H2E3vYp_M" allowfullscreen height="300px" width="300px"></iframe>
+			    <iframe src="https://www.youtube.com/embed/w16oiYxFJJc" allowfullscreen height="300px" width="300px"></iframe>
+			</div>
+			
+		    </section>
+		    
 		</section>
 
 		<!-- High Valence Features -->
@@ -691,6 +755,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		
 		</section>
 
+		<!-- Research Proposal -->
 		<section>
 
 		    <section>
