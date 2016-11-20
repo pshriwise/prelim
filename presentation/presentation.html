@@ -274,12 +274,35 @@
 		    </section>
 		    
 		    <section>
-			<h3> Bounding Volumes </h3>
-			<div class="fragment">
-			    <iframe src="https://www.youtube.com/embed/z_H2E3vYp_M" allowfullscreen height="300px" width="300px"></iframe>
-			    <iframe src="https://www.youtube.com/embed/w16oiYxFJJc" allowfullscreen height="300px" width="300px"></iframe>
-			</div>
-			
+			<h3> Bounding Boxes </h3>
+			<table>
+			    <tbody>
+				<tr>
+				    <td align="center"> Axis-Aligned </td>
+				    <td align="center"> Oriented </td>
+				</tr>
+				<tr height="300px">
+				    <td align="center"><iframe src="https://www.youtube.com/embed/w16oiYxFJJc" allowfullscreen height="300px" width="300px"></iframe></td>
+				    <td align="center"><iframe src="https://www.youtube.com/embed/z_H2E3vYp_M" allowfullscreen height="300px" width="300px"></iframe></td>
+				</tr>
+				<tr>
+				    <td align="center">
+					<ul>
+					    <li>low storage (6 extents)</li>
+					    <li>fast, simple intersection checks</li>
+					    <li>don't bound as well</li>
+					</ul>
+				    </td>
+				    <td align="center">
+					<ul>
+					    <li>higher storage (AABB+axes)</li>
+					    <li>must re-orient ray for intersection checking</li>
+					    <li>bound triangles well</li>
+					</ul>
+				    </td>
+				</tr>
+			    </tbody>
+			</table>
 		    </section>
 		    
 		</section>
