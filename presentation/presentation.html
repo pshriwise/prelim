@@ -380,21 +380,22 @@
 		<section>
 		    <h3 class="no-toc-progress"> Median Splitting Algorithm </h3>
 		    <pre width="1000px"><code class="hljs" data-trim>
-for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) {
-      Range left_list, right_list;
 
-      rval = split_box( instance, tmp_box, axis, entities, left_list, right_list );
-      if (MB_SUCCESS != rval) 
-        { delete_tree( set ); return rval; }
-        
-      double ratio = fabs((double)right_list.size() - left_list.size()) / entities.size();
-      
-      if (ratio < best_ratio) {
-        best_ratio = ratio;
-        best_left_list.swap( left_list );
-        best_right_list.swap( right_list );
-      }
-    }			  
+#//attempt split on each axis
+best_ratio = worst_split_ratio
+for axis in axes:
+    // split the box w/ a median plane along one of its axes
+    left_tris, right tris = median_box_split(box, box_triangles, axis)
+
+    // calculate the split ratio
+    split_ratio = len(left_tris)-len(right_tris)/ len(box_triangles)
+
+    // if better than the current ratio, update split
+    if ( split_ratio < current_best_ratio ):
+        current_best_ratio = split_ratio
+        update_split(left_tris,right_tris)
+
+//if no split better than the worst ratio is found, do nothing
 		    </code></pre>
 		    <p align="center"> solution: WSR = 1 </p>
 		</section>
