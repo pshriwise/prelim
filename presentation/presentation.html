@@ -41,9 +41,9 @@
     <body>
 	<div class="reveal">
 	    <div class="slides">
-		<!-- SLIDE 1 Title Slide-->
+		<!-- Title Slide -->
 		<section>
-		    <h3>Improved Methods for Particle Tracking in CAD-Based Monte Carlo Radiation Transport</h3>
+		    <h3 class="no-toc-progress">Improved Methods for Particle Tracking in CAD-Based Monte Carlo Radiation Transport</h3>
 		    <h2>University of Wisconsin-Madison</h2>
 		    <p>
 			Patrick C. Shriwise
@@ -53,214 +53,243 @@
 		    </p>
 		    <a href="https://beta.etherpad.org/p/shriwise_prelim_2016">https://beta.etherpad.org/p/shriwise_prelim_2016</a>
 		</section>
-		<section>
-		  <nav id="presentable-toc" class="revealjs"></nav>
-		</section>
-		<section>
-		<section>
-		    <h1>Introduction</h1>
-		</section>
-		<section>			
-		    <h2>Motivation</h2>
-		    <p>
-			CAD-based radition transport as a robust and practical analysis tool
-		    </p>
-		    
-		    <ul>
-			<li> equal freedom in deisgn and analysis </li>
-			<li> engineering analysis on the same model </li>
-		    </ul>
-		    <img src="images/cad_screenshot.png" style="border-style:none" height="450"/>
-		</section>
-		<section>
-		    <h2>MC Geometry Representations</h2>
-		    <table style="border-style:black">
-			<tbody>
-			    <tr>
-				<th align="center">Native Geometries</th>
-				<th align="center">CAD Geometry</th>
-			    </tr>
-			    <tr>
-				<td valign="top">
-				    <ul>
-					<li>variants of Computational Solid Geometry (CSG)</li>
-					<li>volumes formed from boolean combinations of simple implicit surfaces</li>
-					<li>geometry queries are analytic in nature</li>
-				    </ul>
-				</td>
-				<td>
-				    <ul>
-					<li>allows for higher order surface complexity</li>
-					<li>convenient design tools</li>
-					<li>extrude, sweep, loft, splines, etc.</li>
-					<li>geometry queries are complex and sometimes impossible analytically</li>
-				    </ul>
-				</td>
-			    </tr>
-			</tbody>
-		    </table>
-		</section>
-		</section>
-		<section>
-		    <h3>CAD-Based MCRT</h3>
-		    <ul>
-			<li>pathway for robust particle transport on CAD geometries exists</li>
-			<ul>
-			    <li> Direct Accelerated Geometry Mone Carlo (DAGMC)</li>
-			</ul>
-			<br>
-			<!-- <p style="text-align:center"><img src="images/dagmc_workflow.png" style="border-style:none" width="650"></img></p> -->
-			<li> not yet at its full potential: </li>			    
-			<ul>
-			    <li>difficult to meet CAD quality required for robustness in DAGMC</li>
-			    <li class="fragment highlight-blue">long simulation times (2.5-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation runtime</li>
-			</ul>
-		    </ul>
 
-		</section>
+		<!-- Table of Contents -->		
 		<section>
-		    <h3> Research Goal </h3>
-		    <b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
-		    <p>
-			<table>
+		    <h3 class="no-toc-progress"> Contents </h3>
+		    <nav id="presentable-toc" class="revealjs"></nav>
+		</section>
+
+		<!-- Introduction -->		
+		<section>
+		    <section>
+			<h1>Introduction</h1>
+		    </section>
+		    
+		    <section>			
+			<h2>Motivation</h2>
+			<p>
+			    CAD-based radition transport as a robust and practical analysis tool
+			</p>
+			
+			<ul>
+			    <li> equal freedom in deisgn and analysis </li>
+			    <li> engineering analysis on the same model </li>
+			</ul>
+			<img src="images/cad_screenshot.png" style="border-style:none" height="450"/>
+		    </section>
+		    
+		    <section>
+			<h2>MC Geometry Representations</h2>
+			<table style="border-style:black">
 			    <tbody>
 				<tr>
-				    <td align="center"> FNG </td>
-				    <td align="center"> ATR </td>
-				    <td align="center"> UWNR </td>
+				    <th align="center">Native Geometries</th>
+				    <th align="center">CAD Geometry</th>
 				</tr>
 				<tr>
-				    <td> <img src="images/FNG_cad.png" width="300" style="border-style:none;vert-align:center" /> </td>
-				    <td> <img src="images/ATR_cad1.png" width="300" style="border-style:none" /> </td>
-				    <td> <img src="images/UWNR_cad.png" width="350" style="border-style:none" /> </td>
-				</tr>
-				<tr>
-				    <td align="center"> neutron source </td>
-				    <td align="center"> kcode </td>
-				    <td align="center"> kcode </td>
+				    <td valign="top">
+					<ul>
+					    <li>variants of Computational Solid Geometry (CSG)</li>
+					    <li>volumes formed from boolean combinations of simple implicit surfaces</li>
+					    <li>geometry queries are analytic in nature</li>
+					</ul>
+				    </td>
+				    <td>
+					<ul>
+					    <li>allows for higher order surface complexity</li>
+					    <li>convenient design tools</li>
+					    <li>extrude, sweep, loft, splines, etc.</li>
+					    <li>geometry queries are complex and sometimes impossible analytically</li>
+					</ul>
+				    </td>
 				</tr>
 			    </tbody>
 			</table>
-		    </p>
+		    </section>
+		    
+		    <section>
+			<h3>CAD-Based MCRT</h3>
+			<ul>
+			    <li>pathway for robust particle transport on CAD geometries exists</li>
+			    <ul>
+				<li> Direct Accelerated Geometry Mone Carlo (DAGMC)</li>
+			    </ul>
+			    <br>
+			    <!-- <p style="text-align:center"><img src="images/dagmc_workflow.png" style="border-style:none" width="650"></img></p> -->
+			    <li> not yet at its full potential: </li>			    
+			    <ul>
+				<li>difficult to meet CAD quality required for robustness in DAGMC</li>
+				<li class="fragment highlight-blue">long simulation times (2.5-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation runtime</li>
+			    </ul>
+			</ul>
+		    </section>
+		    
+		    <section>
+			<h3> Research Goal </h3>
+			<b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
+			<p>
+			    <table>
+				<tbody>
+				    <tr>
+					<td align="center"> FNG </td>
+					<td align="center"> ATR </td>
+					<td align="center"> UWNR </td>
+				    </tr>
+				    <tr>
+					<td> <img src="images/FNG_cad.png" width="300" style="border-style:none;vert-align:center" /> </td>
+					<td> <img src="images/ATR_cad1.png" width="300" style="border-style:none" /> </td>
+					<td> <img src="images/UWNR_cad.png" width="350" style="border-style:none" /> </td>
+				    </tr>
+				    <tr>
+					<td align="center"> neutron source </td>
+					<td align="center"> kcode </td>
+					<td align="center"> kcode </td>
+				    </tr>
+				</tbody>
+			    </table>
+			</p>
 			<p class="fragment fade-in"> problems run with both native & CAD geometries</p>
+		    </section>
+		    
+		    <section>
+			<h3> Research Goal </h3>
+			<b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
+			<iframe data-src="performance_plot.html" width="100%" height="500px"> </iframe>
+		    </section>
+		    
 		</section>
+
+		<!-- Background  -->
 		<section>
-		    <h3> Research Goal </h3>
-		    <b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
-		    <iframe data-src="performance_plot.html" width="100%" height="500px"> </iframe>
+		    
+		    <section>
+			<h1> Background </h1>
+		    </section>
+		    
+		    <section>
+			<h2>DAGMC Workflow</h2>
+			<style class="text/css">
+			 tr.noBorder td {border: 0;}
+			 td.redBlock {text-align: center; color: white; background-color: #b70101; vertical-align: middle; }
+			</style>
+			<table>
+			    <tbody>
+				<tr class="noBorder">
+				    <td></td>
+				    <td style="border: 0" ></td>
+				    <td style="border: 0; vertical-align:bottom" align="center"> surface faceting </td>
+				    <td style="border: 0" ></td>			    
+				    <td style="border-top: 2px dashed black;border-left: 2px dashed black" align="center">geometric queries</td>
+				    <td style="border-top: 2px dashed black"></td>			    
+				    <td align="center" style="border-right: 2px dashed black;border-top: 2px dashed black"> MCNP5 </td>
+				</tr>
+				<tr class="noBorder" style="height:100px">
+				    <td class="redBlock" align="center"> CAD </td>
+				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
+				    <td class="redBlock" align="center"> preprocessing </td>
+				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    			    
+				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> DAGMC </td>
+				    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
+				    <td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
+				</tr>
+				<tr class="noBorder">
+				    <td align="center"> geometric design </td>
+				    <td></td>
+				    <td align="center"> facet sealing </td>
+				    <td></td>
+				    <td align="center" style="border-left: 2px dashed black;border-bottom: 2px dashed black"> ray tracing </td>
+				    <td style="border-bottom: 2px dashed black"></td>
+				    <td align="center" style="border-right: 2px dashed black;border-bottom: 2px dashed black"> physics </td>			      
+				</tr>
+				<tr>
+				    <td></td>
+				    <td></td>			      
+				    <td align="center">
+					<img class="fragment fade-in" src="images/facet_tol_zoomed.png" height="100px"/>				  
+					<img class="fragment fade-in" src="images/sealing_example.png" width="300px"/>
+				    </td>
+				    <td></td>
+				    <td align="center" colspan="3" style="vertical-align:top">
+					<p>Analysis</p>
+				    </td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+
 		</section>
+
+		<!-- High Valence Features -->
 		<section>
-		    <h2>DAGMC Workflow</h2>
-		    <style class="text/css">
-		     tr.noBorder td {border: 0;}
-		     td.redBlock {text-align: center; color: white; background-color: #b70101; vertical-align: middle; }
-		    </style>
-		    <table>
-			<tbody>
-			    <tr class="noBorder">
-				<td></td>
-				<td style="border: 0" ></td>
-				<td style="border: 0; vertical-align:bottom" align="center"> surface faceting </td>
-				<td style="border: 0" ></td>			    
-				<td style="border-top: 2px dashed black;border-left: 2px dashed black" align="center">geometric queries</td>
-				<td style="border-top: 2px dashed black"></td>			    
-				<td align="center" style="border-right: 2px dashed black;border-top: 2px dashed black"> MCNP5 </td>
-			    </tr>
-			    <tr class="noBorder" style="height:100px">
-				<td class="redBlock" align="center"> CAD </td>
-				<td style="vertical-align:middle" align="center"> &#8594; </td>			    
-				<td class="redBlock" align="center"> preprocessing </td>
-				<td style="vertical-align:middle" align="center"> &#8594; </td>			    			    
-				<td class="redBlock" align="center" style="border-left: 2px dashed black"> DAGMC </td>
-				<td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
-				<td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
-			    </tr>
-			    <tr class="noBorder">
-				<td align="center"> geometric design </td>
-				<td></td>
-				<td align="center"> facet sealing </td>
-				<td></td>
-				<td align="center" style="border-left: 2px dashed black;border-bottom: 2px dashed black"> ray tracing </td>
-				<td style="border-bottom: 2px dashed black"></td>
-				<td align="center" style="border-right: 2px dashed black;border-bottom: 2px dashed black"> physics </td>			      
-			    </tr>
-			    <tr>
-				<td></td>
-				<td></td>			      
-				<td align="center">
-				    <img class="fragment fade-in" src="images/facet_tol_zoomed.png" height="100px"/>				  
-				    <img class="fragment fade-in" src="images/sealing_example.png" width="300px"/>
-				</td>
-				<td></td>
-				<td align="center" colspan="3" style="vertical-align:top">
-				    <p>Analysis</p>
-				</td>
-			    </tr>
-			</tbody>
-		    </table>
-		</section>		
-		<!-- High Valence -->
-		<section>
-		    <h3> High Valence Vertices </h3>
-		    <ul>
-			<li>common feature of many triangulation algorithms</li>
-			<li>result of trying to minimize triangles used to represent a surface</li>
-			<li>shown to be detrimental to DAGMC performance</li>
-		    </ul>
-		    <object align="center" data="images/hv.svg" height="400px" style="margin: 50px 50px 50px 50px" type="image/svg+xml"></object>
-		</section>
-		<section>
-		    <h3>High Valence In Production Models</h3>
-		    <img src="images/hv_ex0.png" height="200px" />
-		    <img src="images/hv_ex1.png" height="200px" />
-		    <img src="images/hv_ex2.png" height="300px" />		    
-		</section>
-		<section>
-		    <h3> High Valence Test Model </h3>
-		    <p align="left"> manual faceting of cube surface </p>
-		    <img src="../images/hv_study_design.png" height="350px"/>
-		    <p align="left"> variable parameters: </p>
-		    <ul>
-			<li> fraction of surface that high valence region occupies</li>
-			<li> valence of corner vertices </li>
-		    </ul>
-		</section>
-		<section>
-		    <h3> High Valence Study </h3>
-		    <img src="../images/hv_study_MOAB.png" height="500px" align="center" />
-		</section>
-		<section>
-		    <h3> High Valence OBB Investigation </h3>
-		    <img src="../images/obbs_wsr_0.95.png" height="500px" align="center" />
-		</section>
-		<section>
-		    <h3> Median Splitting Algorithm </h3>
-		    <h4 align="center"> Controllable Parameters</h4>
-		    <table>
-			<tbody>
-			    <tr>
-				<td align="center"> Parameter </td>
-				<td align="center"> Default Value </td>
-			    </tr>
-			    <tr>
-				<td align="center"> Max Num. Leaf Entities </td>
-				<td align="center"> 8 </td>
-			    </tr>
-			    <tr>
-				<td align="center"> Max Tree Depth </td>
-				<td align="center"> 0 </td>
-			    </tr>
-			    <tr>
-				<td align="center"> Worst Split Ratio </td>
-				<td align="center"> 0.95 </td>
-			    </tr>
-			    <tr>
-				<td align="center"> Best Split Ratio </td>
-				<td align="center"> 0.0 </td>
-			    </tr>
-			</tbody>
-		    </table>
-		</section>
+		    <!-- High Valence -->
+		    <section>
+			<h3> High Valence Mesh Features </h3>
+			<ul>
+			    <li>common feature of many triangulation algorithms</li>
+			    <li>result of trying to minimize triangles used to represent a surface</li>
+			    <li>shown to be detrimental to DAGMC performance</li>
+			</ul>
+			<object align="center" data="images/hv.svg" height="400px" style="margin: 50px 50px 50px 50px" type="image/svg+xml"></object>
+		    </section>
+		    
+		    <section>
+			<h3>High Valence In Production Models</h3>
+			<img src="images/hv_ex0.png" height="200px" />
+			<img src="images/hv_ex1.png" height="200px" />
+			<img src="images/hv_ex2.png" height="300px" />		    
+		    </section>
+		    
+		    <section>
+			<h3> High Valence Test Model </h3>
+			<p align="left"> manual faceting of cube surface </p>
+			<img src="../images/hv_study_design.png" height="350px"/>
+			<p align="left"> variable parameters: </p>
+			<ul>
+			    <li> fraction of surface that high valence region occupies</li>
+			    <li> valence of corner vertices </li>
+			</ul>
+		    </section>
+		    
+		    <section>
+			<h3> High Valence Study </h3>
+			<img src="../images/hv_study_MOAB.png" height="500px" align="center" />
+		    </section>
+		    
+		    <section>
+			<h3> High Valence OBB Investigation </h3>
+			<img src="../images/obbs_wsr_0.95.png" height="500px" align="center" />
+		    </section>
+		    
+		    <section>
+			<h3> Median Splitting Algorithm </h3>
+			<h4 align="center"> Controllable Parameters</h4>
+			<table>
+			    <tbody>
+				<tr>
+				    <td align="center"> Parameter </td>
+				    <td align="center"> Default Value </td>
+				</tr>
+				<tr>
+				    <td align="center"> Max Num. Leaf Entities </td>
+				    <td align="center"> 8 </td>
+				</tr>
+				<tr>
+				    <td align="center"> Max Tree Depth </td>
+				    <td align="center"> 0 </td>
+				</tr>
+				<tr>
+				    <td align="center"> Worst Split Ratio </td>
+				    <td align="center"> 0.95 </td>
+				</tr>
+				<tr>
+				    <td align="center"> Best Split Ratio </td>
+				    <td align="center"> 0.0 </td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+		    
 		<section>
 		    <h3> Median Splitting Algorithm </h3>
 		    <pre width="1000px"><code class="hljs" data-trim>
@@ -282,11 +311,13 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    </code></pre>
 		    <p align="center"> solution: WSR = 1 </p>
 		</section>
+		
 		<section>
 		    <h3> New HV Study Results </h3>
 		    <img src="../images/hv_study_MOAB_wsr1.png" height="500px" align="center" />
 		    <p class="fragment fade-in"> maintains performance without need for altered faceting </p> 
 		</section>
+		
 		<section>
 		    <h3> Surface Area Heuristic </h3>
 		    <h4>(SAH)</h4>
@@ -324,19 +355,31 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    </table>
 		    <cite><small style="vertical-align:bottom">MacDonald_1990</small></cite>
 		</section>
+		
 		<section>
 		    <h3> SAH Applied to High Valence </h3>
 		    <p align="center">same tests performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel</p>
 		    <img src="../images/hv_emdag.png" height="500px" align="center" />		    
 		</section>
+
+		</section>
+		
+		<!-- SIMD BVH -->
+		<section>
+		    
+		<section>
+			<h1> Architecture Based Accelerations </h1>
+		    </section>
+		    
 		<section>
 		    <h2> Architecture Based Acceleration </h2>
 		    <p align="center"> Embree not just selected for building heuristic</p>
 		    <p align="center"> Employs Single Instruction Multiple Data (SIMD) to do multiple ray-box and ray-triangle intersection checks at once </p>
 		    <img src="../images/simd_ex.png" height="300px"/>
 		</section>
+		
 		<section>
-		    <h3> Some Noteworthy RT History </h3>
+		    <h3> Some History </h3>
 		    <p> Two approaches to using SIMD in ray tracing: </p>
 		    <ul>
 			<li>N:1 - test many rays against a single box at once</li>
@@ -349,6 +392,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    <small> <p>* image courtesy of <a href="https://software.intel.com/en-us/articles/embree-highly-optimized-visibility-algorithms-for-monte-carlo-ray-tracing">Intel</a></p></small>
 		    </div>
 		</section>
+		
 		<section>
 		    <h3>Quasi-Monte Carlo Ray Tracing</h3>
 		    <p> photo-realism (rendering based on realistic photon physics)</p>
@@ -387,11 +431,13 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			</tbody>
 		    </table>
 		</section>
+		
 		<section>
 		  <h3> Integrating Embree with DAGMC </h3>
 		  <h2> (EmDAG) </h2>
 		  <img src="../images/emdag_mapping.png" align="center"/>
 		</section>
+		
 		<section>
 		  <h3> Ray Fire Testing Zoo </h3>
 		  <table style="margin: 100px 0px 0px 0px">
@@ -404,6 +450,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    </tbody>
 		  </table>
 		</section>
+		
 		<section>
 		  <h3> Performance Comparison</h3>
 		  <table>
@@ -420,6 +467,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    </tbody>
 		</table>
 		</section>
+		
 		<section>
 		    <h3> Transport Testing </h3>
 		    <p align="left"> EmDAG was applied to a few simple models </p>
@@ -452,16 +500,19 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			</tbody>
 		    </table>
 		</section>
+		
 		<section>
 		    <h3> Transport Performance </h3>
 		    <h4> Sphere Models </h4>
 		    <iframe data-src="emdag_sphere_performance.html" class="stretch"></iframe>
 		</section>
+		
 		<section>
 		    <h3> Transport Performance </h3>
 		    <h4> Cube Models </h4>
 		    <iframe data-src="emdag_cube_performance.html" class="stretch"></iframe>
 		</section>
+		
 		<section>
 		    <h3>FNG Transport Results</h3>
 		    <ul>
@@ -470,8 +521,9 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			<li class="fragment fade-in"> length tolerance: 5cm </li>
 			<li class="fragment fade-in">  100M histories</li>
 		    </ul>
-		    <img src="images/fng_cad.png" height="400px"></section>
+		    <img src="images/fng_cad.png" height="400px">
 		</section>
+		
 		<section>
 		    <h3> FNG Faceting </h3>
 		    <br><br>
@@ -488,11 +540,13 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			</tbody>
 		    </table>
 		</section>
+		
 		<section>
 		    <h3> FNG Transport Test </h3>
 		    <iframe data-src="emdag_fng_performance.html" class="stretch"></iframe>
 		    <p class="fragment"> 15% improvement in EmDAG performance w/ lentgh tolerance </p> 
 		</section>
+		
 		<section>
 		    <h3> EmDAG Limitations </h3>
 		    <ul>
@@ -503,9 +557,16 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    <object data="../images/emdag_fng_lost.svg" type="image/svg+xml"></object>
 		    <p align="center "class="fragment fade-in"> caused by conversions from single to double precision and vice versa </p>
 		</section>
-		<section>
-		    <h2>Implicit Surfaces and Signed Distance Fields </h2>
+
 		</section>
+
+		<!-- Implicit Surfaces -->
+		<section>
+		    
+		    <section>
+			<h2>Implicit Surfaces and Signed Distance Fields </h2>
+		    </section>
+		    
 		<section>
 		  <h3> Implicit Surfaces </h3>
 		  <h4> (& Level-Set Methods) </h4>
@@ -533,6 +594,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    </tbody>
 		  </table>
 		</section>
+		
 		<section>
 		  <h3> Implicit Surfaces </h3>
 		  <p align="left"> used for:
@@ -544,6 +606,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		  <p class="fragment current-visible"><object data="../images/rm0.svg" style="margin: -50px -80px 0px 0px" height="500px" type="image/svg+xml"></object></p>
 		  <p class="fragment current-visible"><object data="../images/rm1.svg" style="margin: -50px -80px 0px 0px" height="500px" type="image/svg+xml"></object></p>
 		</section>
+		
 		<section>
 		  <h3> Signed Distance Fields </h3>
 		  <p align="left"> ray marching is accomplished using sampled fields with these requirements </p>
@@ -557,6 +620,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		  </small>
 		  <object data="../images/preconditioner_datastruct.svg" type="image/svg+xml" height="400px"></object>		  
 		</section>
+		
 		<section>
 		  <h3> Particle Tracking Preconditioner </h3>
 		  <ul>
@@ -567,6 +631,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		  </ul>
 		  <object data="../images/preconditioner_ex.svg" type="image/svg+xml" class="stretch"></object>
 		</section>
+		
 		<section>
 		  <h3> Interpolation Error Estimate </h3>
 		  <h4> (a 2D example) </h4>
@@ -582,6 +647,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		  </table>
 		  <p align="center" class="fragment"> <i>curvature terms are problematic</i> </p>
 		</section>
+		
 		<section>
 		  <h3> Initial Implementation </h3>
 		  <ul>
@@ -593,6 +659,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		  </ul>
 		  <img src="../images/sdf_sphere.png" height="550x"/>
 		</section>
+		
 		<section>
 		  <h3> Preconditioner Test </h3>
 		  <ul>
@@ -615,14 +682,21 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    <h3> Initial Results </h3>
 		    <iframe data-src="precond_rays_fired.html" class="stretch"></iframe>		    		    
 		</section>
+		
 		<section>
 		    <h3> Initial Results </h3>
 		    <p align="center">$$ U = \frac{dagmc\, rays -  dagmc\, w/\, precond.\, rays}{dagmc\, rays}$$ </p>
 		    <iframe data-src="precond_utilization.html" class="stretch"></iframe>		    		    
 		</section>
-		<section>
-		    <h2> Proposed Work </h2>
+		
 		</section>
+
+		<section>
+
+		    <section>
+			<h2> Proposed Work </h2>
+		    </section>
+		    
 		<section>
 		    <h3> Feature Adaptation in BVH Construction </h3>
 		    <ul>
@@ -669,6 +743,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			</tbody>
 		    </table>
 		</section>
+		
 		<section>
 		    <h3> Feature Adaptation in BVH Construction </h3>
 		    <h4> Objectives </h4>
@@ -683,6 +758,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			<li> apply to test model and other production models known to contain high valence regions to examine improvement </li>
 		    </ul>
 		</section>
+		
 		<section>
 		    <h3> Architecture Based Acceleration </h3>
 		    <p> the Embree kernel does not meet the requirments of the robust tracking algorithm used by DAGMC as it currently exists </p>
@@ -716,6 +792,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			</tbody>
 		    </table>
 		</section>
+		
 		<section>
 		    <h3> Architecture Based Acceleration </h3>
 		    <h4> Going Forward </h4>
@@ -762,6 +839,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			<li class="fragment"> significantly improves performance of radiation transport on CAD models </li>
 		    </ul>
 		</section>
+		
 		<section>
 		    <h3> Signed Distance Field Preconditioner </h3>
 		    <ul>
@@ -777,6 +855,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			</ul>
 		    </ul>
 		</section>
+
 		<section>
 		    <h3> Summary </h3>
 		    <p> each approach aides in goal of CAD-Based Monte Carlo Radiation Transport performance on the order of analytic/native/CSG geometry representations</p>
@@ -788,6 +867,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    </ul>
 		    <p class="fragment"><b>final combined effect is a more effective CB-MCRT pathway for analysis</b></p>
 		</section>
+		
 	    </div>
 	</div>
                 <!-- SCRIPTS -->
@@ -815,7 +895,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			     { src: 'toc-progress/plugin/toc-progress/toc-progress.js', async: true, callback: function() { toc_progress.initialize(); toc_progress.create(); } }
 			 ]
 		     });
-
+		 Reveal.configure( {slideNumber: 'c/t'});
 		</script>
 		<script type="text/javascript">
 		 var newDate = new Date();
