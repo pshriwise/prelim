@@ -18,7 +18,13 @@
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
-		
+
+		<link rel="stylesheet" href="presentable/dist/presentable.css">
+
+		<!-- TOC-Progress plugin -->
+		<link rel="stylesheet" href="toc-progress/plugin/toc-progress/toc-progress.css">
+
+
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement( 'link' );
@@ -47,6 +53,10 @@
 		    </p>
 		    <a href="https://beta.etherpad.org/p/shriwise_prelim_2016">https://beta.etherpad.org/p/shriwise_prelim_2016</a>
 		</section>
+		<section>
+		  <nav id="presentable-toc" class="revealjs"></nav>
+		</section>
+		<section>
 		<section>
 		    <h1>Introduction</h1>
 		</section>
@@ -89,6 +99,7 @@
 			    </tr>
 			</tbody>
 		    </table>
+		</section>
 		</section>
 		<section>
 		    <h3>CAD-Based MCRT</h3>
@@ -775,8 +786,10 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			<li class="fragment"> preconditioner will help to reduce overall order of particle tracking compelxity if utilized well</li>
 			<li class="fragment"> increased ray tracing performance assists other MOAB and DAGMC based applications as well </li>
 		    </ul>
-		    <p class="fragment"><b>final combined effect is a more effective CB-MCRT pathway for analysis</b> </p>
+		    <p class="fragment"><b>final combined effect is a more effective CB-MCRT pathway for analysis</b></p>
 		</section>
+	    </div>
+	</div>
                 <!-- SCRIPTS -->
 		<script src="reveal.js/lib/js/head.min.js"></script>
 		<script src="reveal.js/js/reveal.js"></script>
@@ -797,7 +810,9 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			     { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 			     { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
 			     { src: 'reveal.js/plugin/notes/notes.js', async: true },
-			     { src: 'reveal.js/plugin/math/math.js', async: true }
+			     { src: 'reveal.js/plugin/math/math.js', async: true },
+			     { src: 'presentable/dist/presentable.js', callback: function() { presentable.toc({framework: "revealjs"}); } },
+			     { src: 'toc-progress/plugin/toc-progress/toc-progress.js', async: true, callback: function() { toc_progress.initialize(); toc_progress.create(); } }
 			 ]
 		     });
 
