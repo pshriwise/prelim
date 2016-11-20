@@ -153,7 +153,7 @@
 		    </section>
 		    
 		    <section>
-			<h3> Research Goal </h3>
+			<h3 class="no-toc-progress"> Research Goal </h3>
 			<b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
 			<iframe data-src="performance_plot.html" width="100%" height="500px"> </iframe>
 		    </section>
@@ -291,7 +291,7 @@
 		    </section>
 		    
 		<section>
-		    <h3> Median Splitting Algorithm </h3>
+		    <h3 class="no-toc-progress"> Median Splitting Algorithm </h3>
 		    <pre width="1000px"><code class="hljs" data-trim>
 for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) {
       Range left_list, right_list;
@@ -368,11 +368,11 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		<section>
 		    
 		<section>
-			<h1> Architecture Based Accelerations </h1>
-		    </section>
+		    <h1> Architecture Based Acceleration </h1>
+		</section>
 		    
 		<section>
-		    <h2> Architecture Based Acceleration </h2>
+		    <h2 class="no-toc-progress"> Architecture Based Acceleration </h2>
 		    <p align="center"> Embree not just selected for building heuristic</p>
 		    <p align="center"> Employs Single Instruction Multiple Data (SIMD) to do multiple ray-box and ray-triangle intersection checks at once </p>
 		    <img src="../images/simd_ex.png" height="300px"/>
@@ -508,7 +508,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		</section>
 		
 		<section>
-		    <h3> Transport Performance </h3>
+		    <h3 class="no-toc-progress"> Transport Performance </h3>
 		    <h4> Cube Models </h4>
 		    <iframe data-src="emdag_cube_performance.html" class="stretch"></iframe>
 		</section>
@@ -596,7 +596,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		</section>
 		
 		<section>
-		  <h3> Implicit Surfaces </h3>
+		  <h3 class="no-toc-progress"> Implicit Surfaces </h3>
 		  <p align="left"> used for:
 		  <ul>
 		    <li> modeling (CSG), simulation, triangulation </li>
@@ -722,7 +722,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 			    <p align="center" class="fragment"> additional order-of-magnitude in secondary rays for radiation transport as well</p>
 		</section>
 		<section>
-		    <h3> Feature Adaptation in BVH Construction </h3>
+		    <h3 class="no-toc-progress"> Feature Adaptation in BVH Construction </h3>
 		    <table>
 			<tbody>
 			<tr>
@@ -745,7 +745,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		</section>
 		
 		<section>
-		    <h3> Feature Adaptation in BVH Construction </h3>
+		    <h3 class="no-toc-progress"> Feature Adaptation in BVH Construction </h3>
 		    <h4> Objectives </h4>
 		    <ul>
 			<li> create a generalized building scheme for poorly formed tree nodes involving two steps</li>
@@ -794,7 +794,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		</section>
 		
 		<section>
-		    <h3> Architecture Based Acceleration </h3>
+		    <h3 class="no-toc-progress"> Architecture Based Acceleration </h3>
 		    <h4> Going Forward </h4>
 		    <ul>
 			<li class="fragment highlight-red">separate DAGMC tracking code from MOAB's ray tracing interface</li>
@@ -827,7 +827,7 @@ for (int axis = 2; best_ratio > settings.best_split_ratio && axis >= 0; --axis) 
 		    </ul>
 		</section>
 		<section>
-		    <h3> Architecture Based Acceleration </h3>
+		    <h3 class="no-toc-progress"> Architecture Based Acceleration </h3>
 		    <h4> Contributions </h4>
 		    <ul>
 			<li class="fragment"> mixed-precision SIMD BVH traversal on common CPU architectures </li>
