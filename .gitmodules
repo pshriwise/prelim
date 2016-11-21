@@ -3,7 +3,7 @@
 	url = git@github.com:pshriwise/reveal.js
 [submodule "presentation/--force"]
 	path = presentation/presentable
-	url = https://github.com/frederickf/presentable
+	url = https://github.com/pshriwise/presentable
 [submodule "presentation/toc-progress"]
 	path = presentation/toc-progress
 	url = https://github.com/pshriwise/Reveal.js-TOC-Progress/
