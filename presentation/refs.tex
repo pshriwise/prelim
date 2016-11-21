@@ -1,0 +1,20 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{etoolbox}
+
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+\begin{document}
+
+\phantom{
+  \cite{Tautges_2009}
+  \cite{Tautges_2004}
+  \cite{MacDonald_1990}
+  \cite{Setaluri_2014}
+  \cite{Wald_2014}
+}
+\bibliographystyle{acm}
+\bibliography{refs}
+
+\end{document}
+
