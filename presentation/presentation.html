@@ -169,7 +169,7 @@
 		    </section>
 		    
 		    <section>
-			<h2>DAGMC Workflow</h2>
+			<h2>DAGMC Geometry Workflow</h2>
 			<style class="text/css">
 			 tr.noBorder td {border: 0;}
 			 td.redBlock {text-align: center; color: white; background-color: #b70101; vertical-align: middle; }
@@ -181,16 +181,16 @@
 				    <td style="border: 0" ></td>
 				    <td style="border: 0; vertical-align:bottom" align="center"> surface faceting </td>
 				    <td style="border: 0" ></td>			    
-				    <td style="border-top: 2px dashed black;border-left: 2px dashed black" align="center">geometric queries</td>
+				    <td style="border-top: 2px dashed black;border-left: 2px dashed black" align="center">particle tracking</td>
 				    <td style="border-top: 2px dashed black"></td>			    
 				    <td align="center" style="border-right: 2px dashed black;border-top: 2px dashed black"> MCNP5 </td>
 				</tr>
 				<tr class="noBorder" style="height:100px">
-				    <td class="redBlock" align="center"> CAD </td>
+				    <td class="redBlock" align="center"><p>CAD</p> <p>(Cubit/Trelis)</p></td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
-				    <td class="redBlock" align="center"> preprocessing </td>
+				    <td class="redBlock" align="center"><p>preprocessing</p> <p>(MOAB)</p></td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    			    
-				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> DAGMC </td>
+				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC</p> <p>(MOAB/DAGMC)</p> </td>
 				    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
 				    <td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
 				</tr>
@@ -220,7 +220,7 @@
 		    </section>
 
 		    <section>
-			<h3> Faceting </h3>
+			<h3> Surface Faceting </h3>
 			<p> faceting tolerance: tolerance for farthest point on the facet from the analytic surface </p>
 			<img src="images/facet_tol_zoomed.png" height="100px"/>
 			<ul>
