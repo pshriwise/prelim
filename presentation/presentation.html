@@ -377,9 +377,9 @@
 			</table>
 		    </section>
 		    
-		<section>
-		    <h3 class="no-toc-progress"> Median Splitting Algorithm </h3>
-		    <pre width="1000px"><code class="hljs" data-trim>
+		    <section>
+			<h3 class="no-toc-progress"> Median Splitting Algorithm </h3>
+			<pre width="1000px"><code class="hljs" data-trim>
 
 #//attempt split on each axis
 best_ratio = worst_split_ratio
@@ -396,255 +396,255 @@ for axis in axes:
         update_split(left_tris,right_tris)
 
 //if no split better than the worst ratio is found, do nothing
-		    </code></pre>
-		    <p align="center"> solution: WSR = 1 </p>
-		</section>
+			</code></pre>
+			<p align="center"> solution: WSR = 1 </p>
+		    </section>
 		
-		<section>
-		    <h3> New HV Study Results </h3>
-		    <img src="../images/hv_study_MOAB_wsr1.png" height="500px" align="center" />
-		    <p class="fragment fade-in"> maintains performance without need for altered faceting </p> 
-		</section>
+		    <section>
+			<h3> New HV Study Results </h3>
+			<img src="../images/hv_study_MOAB_wsr1.png" height="500px" align="center" />
+			<p class="fragment fade-in"> maintains performance without need for altered faceting </p> 
+		    </section>
+		    
+		    <section>
+			<h3> Surface Area Heuristic </h3>
+			<h4>(SAH)</h4>
+			<p> $$C =  C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i}$$ </p>
+			<style class="text/css">
+			 tr.noBorder td {border: 0;}
+			</style>
+			<table>
+			    <tbody>
+				<tr class="noBorder">
+				    <td>$$C_{t}$$ </td><td> - cost of traversal to child nodes</td>
+				</tr>
+				<tr class="noBorder">
+				    <td>$$C_{i} $$</td><td> - cost of primitive intersection check </td>
+				</tr>
+				<tr class="noBorder">
+				    <td>$$SA() $$</td><td> - gives surface area of bounding volume </td>
+				</tr>
+				<tr class="noBorder">
+				    <td>$$B_{L} $$</td><td> - bounding volume of left child </td>
+				</tr>
+				<tr class="noBorder">
+				    <td>$$P_{L} $$</td><td> - primitives contained by the left child  </td>
+				</tr>
+				<tr class="noBorder">
+				    <td>$$B_{R} $$</td><td> - bounding volume of right child </td>
+				</tr>
+				<tr class="noBorder">
+				    <td>$$P_{R} $$</td><td> - primitives contained by the right child </td>
+				</tr>
+				<tr class="noBorder">
+				    <td>$$B $$</td><td> - parent bounding volume</td>
+				</tr>
+			    </tbody>
+			</table>
+			<cite><small style="vertical-align:bottom">MacDonald_1990</small></cite>
+		    </section>
 		
-		<section>
-		    <h3> Surface Area Heuristic </h3>
-		    <h4>(SAH)</h4>
-		    <p> $$C =  C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i}$$ </p>
-		    <style class="text/css">
-		     tr.noBorder td {border: 0;}
-		    </style>
-		    <table>
-			<tbody>
-			    <tr class="noBorder">
-				<td>$$C_{t}$$ </td><td> - cost of traversal to child nodes</td>
-			    </tr>
-			    <tr class="noBorder">
-				<td>$$C_{i} $$</td><td> - cost of primitive intersection check </td>
-			    </tr>
-			    <tr class="noBorder">
-				<td>$$SA() $$</td><td> - gives surface area of bounding volume </td>
-			    </tr>
-			    <tr class="noBorder">
-				<td>$$B_{L} $$</td><td> - bounding volume of left child </td>
-			    </tr>
-			    <tr class="noBorder">
-				<td>$$P_{L} $$</td><td> - primitives contained by the left child  </td>
-			    </tr>
-			    <tr class="noBorder">
-				<td>$$B_{R} $$</td><td> - bounding volume of right child </td>
-			    </tr>
-			    <tr class="noBorder">
-				<td>$$P_{R} $$</td><td> - primitives contained by the right child </td>
-			    </tr>
-			    <tr class="noBorder">
-				<td>$$B $$</td><td> - parent bounding volume</td>
-			    </tr>
-			</tbody>
-		    </table>
-		    <cite><small style="vertical-align:bottom">MacDonald_1990</small></cite>
-		</section>
-		
-		<section>
-		    <h3> SAH Applied to High Valence </h3>
-		    <p align="center">same tests performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel</p>
-		    <img src="../images/hv_emdag.png" height="500px" align="center" />		    
-		</section>
+		    <section>
+			<h3> SAH Applied to High Valence </h3>
+			<p align="center">same tests performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel</p>
+			<img src="../images/hv_emdag.png" height="500px" align="center" />		    
+		    </section>
 
 		</section>
 		
 		<!-- SIMD BVH -->
 		<section>
 		    
-		<section>
-		    <h1> Architecture Based Acceleration </h1>
-		</section>
+		    <section>
+			<h1> Architecture Based Acceleration </h1>
+		    </section>
 		    
-		<section>
-		    <h2 class="no-toc-progress"> Architecture Based Acceleration </h2>
-		    <p align="center"> Embree not just selected for building heuristic</p>
-		    <p align="center"> Employs Single Instruction Multiple Data (SIMD) to do multiple ray-box and ray-triangle intersection checks at once </p>
-		    <img src="../images/simd_ex.png" height="300px"/>
-		</section>
-		
-		<section>
-		    <h3> Some History </h3>
-		    <p> Two approaches to using SIMD in ray tracing: </p>
-		    <ul>
-			<li>N:1 - test many rays against a single box at once</li>
-			<li>1:N - test one ray against many boxes at once </li>
-		    </ul>
-		    <div class="fragment fade-in">
-		    <p> method selection depends on <i>ray coherence</i></p>
-		    <img src="../images/ray_coherence.jpg" width="500px"/>
-		    <table width="500px"><tbody><tr><td align="center"> coherent</td><td align="center">incoherent</td></tr></tbody></table>
-		    <small> <p>* image courtesy of <a href="https://software.intel.com/en-us/articles/embree-highly-optimized-visibility-algorithms-for-monte-carlo-ray-tracing">Intel</a></p></small>
-		    </div>
-		</section>
-		
-		<section>
-		    <h3>Quasi-Monte Carlo Ray Tracing</h3>
-		    <p> photo-realism (rendering based on realistic photon physics)</p>
-		    <style class="text/css">
-		     tr.noBorder td {border: 0;}
-		    </style>
-		    <table>
-			<tbody>
-			    <tr class="noBorder">
-				<td align="center"> <b>N:1</b> </td>
-				<td align="center"></td>
-				<td align="center"> <b>1:N</b> </td>
-			    </tr>
-			    <tr class="noBorder">
-				<large>
-				<td align="center"> (ray packets) </td>
-				<td align="center"></td>
-				<td align="center"> (single-ray SIMD traversal) </td>
-				</large>
-			    </tr>
-			    <tr class="noBorder fragment fade-in">
-				<td align="center"> ray coherence </td>
-				<td style="vertical-align:middle" align="center"> &#8594; </td>
-				<td align="center"> ray incoherence </td>
-			    </tr>			    
-			    <tr class="noBorder fragment fade-in">
-				<td align="center"> visualization </td>
-				<td style="vertical-align:middle" align="center"> &#8594; </td>
-				<td align="center"> physical rendering/simulation </td>
-			    </tr>
-			    <tr class="noBorder fragment fade-in">
-				<td align="center"> </td>
-				<td style="vertical-align:middle" align="center"></td>
-				<td align="center" > <font color="#b7071">MCRT</font> </td>
-			    </tr>
-			</tbody>
-		    </table>
-		</section>
-		
-		<section>
-		  <h3> Integrating Embree with DAGMC </h3>
-		  <h2> (EmDAG) </h2>
-		  <img src="../images/emdag_mapping.png" align="center"/>
-		</section>
-		
-		<section>
-		  <h3> Ray Fire Testing Zoo </h3>
-		  <table style="margin: 100px 0px 0px 0px">
-		    <tbody>
-		      <tr>
-			<td align="center"> <img src="../images/sphere.png" width="400px" /></td>
-			<td align="center"> <img src="../images/ds.png" width="400px" /></td>
-			<td align="center"> <img src="../images/larcyl.png" width="400px" /></td>
-		      </tr>
-		    </tbody>
-		  </table>
-		</section>
-		
-		<section>
-		  <h3> Performance Comparison</h3>
-		  <table>
-		    <tbody>
-		      <tr>
-			<td align="center"> <b>DAGMC (MOAB)</b> </td>
-			<td align="center"> <b>EmDAG (Embree)</b> </td>
-		      </tr>
-		      <tr>
-			<br>
-			<td> <object data="../images/eig_fix_rf_annotated.svg" width="500px" type="image/svg+xml" /> </td>
-			<td> <object data="../images/embree_rf_annotated.svg" width="500px"type="image/svg+xml"/> </td>
-		      </tr>
-		    </tbody>
-		</table>
-		</section>
-		
-		<section>
-		    <h3> Transport Testing </h3>
-		    <p align="left"> EmDAG was applied to a few simple models </p>
-		    <ul>
-			<li class="fragment fade-in">5 MeV isotropic neutron point source at model origin</li>
-			<li class="fragment fade-in">all volumes are water-filled (&rho; = 1 g/cc)</li>
-			<li class="fragment fade-in"> faceting tolerance: 1e-04cm </li>			
-			<li class="fragment fade-in"> 1M histories </li>
-		    </ul>
-		    <table>
-			<tbody>
-			    <tr>
-				<td class="noBorder fragment fade-in">
-				    <p align="center"> Single Sphere </p>
-				    <img src="../images/sphere_cad.png" width="300px" />
-				</td>								
-				<td class="noBorder fragment fade-in">
-				    <p align="center"> Nested Spheres </p>
-				    <img src="../images/nested_spheres.png" width="300px" />
-				</td>				
-				<td class="noBorder fragment fade-in">
-				    <p align="center"> Cube </p>
-				    <img src="../images/cube_cad.png" width="300px" />
-				</td>
-				<td class="noBorder fragment fade-in">
-				    <p align="center"> Nested Cubes </p>
-				    <img src="../images/nested_cubes.png" width="300px" />
-				</td>				
-			    </tr>
-			</tbody>
-		    </table>
-		</section>
-		
-		<section>
-		    <h3> Transport Performance </h3>
-		    <h4> Sphere Models </h4>
-		    <iframe data-src="emdag_sphere_performance.html" class="stretch"></iframe>
-		</section>
-		
-		<section>
-		    <h3 class="no-toc-progress"> Transport Performance </h3>
-		    <h4> Cube Models </h4>
-		    <iframe data-src="emdag_cube_performance.html" class="stretch"></iframe>
-		</section>
-		
-		<section>
-		    <h3>FNG Transport Results</h3>
-		    <ul>
-			<li class="fragment fade-in"> original source replaced with 14.1 MeV neutron isotropic volume source </li>
-			<li class="fragment fade-in"> facet tolerance: 1e-04cm</li>
-			<li class="fragment fade-in"> length tolerance: 5cm </li>
-			<li class="fragment fade-in">  100M histories</li>
-		    </ul>
-		    <img src="images/fng_cad.png" height="400px">
-		</section>
-		
-		<section>
-		    <h3> FNG Faceting </h3>
-		    <br><br>
-		    <table>
-			<tbody>
-			    <tr>
-				<td align="center"> Faceting Tolerance Only </td>
-				<td align="center">  with Length Tolerance </td>
-			    </tr>
-			    <tr>
-				<td align="center"><img src="../images/fng271_facet_tol.png" width="450px"/></td>
-				<td align="center"><img src="../images/fng271_len_tol.png" width="450px"/></td>
-			    </tr>
-			</tbody>
-		    </table>
-		</section>
-		
-		<section>
-		    <h3> FNG Transport Test </h3>
-		    <iframe data-src="emdag_fng_performance.html" class="stretch"></iframe>
-		    <p class="fragment"> 15% improvement in EmDAG performance w/ lentgh tolerance </p> 
-		</section>
-		
-		<section>
-		    <h3> EmDAG Limitations </h3>
-		    <ul>
-			<li> faceting tolerance: 255 lost particles </li>
-			<li> length tolerance: 247 lost particles </li>
-		    </ul>
-		    <p></p>
-		    <object data="../images/emdag_fng_lost.svg" type="image/svg+xml"></object>
-		    <p align="center "class="fragment fade-in"> caused by conversions from single to double precision and vice versa </p>
-		</section>
+		    <section>
+			<h2 class="no-toc-progress"> Architecture Based Acceleration </h2>
+			<p align="center"> Embree not just selected for building heuristic</p>
+			<p align="center"> Employs Single Instruction Multiple Data (SIMD) to do multiple ray-box and ray-triangle intersection checks at once </p>
+			<img src="../images/simd_ex.png" height="300px"/>
+		    </section>
+		    
+		    <section>
+			<h3> Some History </h3>
+			<p> Two approaches to using SIMD in ray tracing: </p>
+			<ul>
+			    <li>N:1 - test many rays against a single box at once</li>
+			    <li>1:N - test one ray against many boxes at once </li>
+			</ul>
+			<div class="fragment fade-in">
+			    <p> method selection depends on <i>ray coherence</i></p>
+			    <img src="../images/ray_coherence.jpg" width="500px"/>
+			    <table width="500px"><tbody><tr><td align="center"> coherent</td><td align="center">incoherent</td></tr></tbody></table>
+			    <small> <p>* image courtesy of <a href="https://software.intel.com/en-us/articles/embree-highly-optimized-visibility-algorithms-for-monte-carlo-ray-tracing">Intel</a></p></small>
+			</div>
+		    </section>
+		    
+		    <section>
+			<h3>Quasi-Monte Carlo Ray Tracing</h3>
+			<p> photo-realism (rendering based on realistic photon physics)</p>
+			<style class="text/css">
+			 tr.noBorder td {border: 0;}
+			</style>
+			<table>
+			    <tbody>
+				<tr class="noBorder">
+				    <td align="center"> <b>N:1</b> </td>
+				    <td align="center"></td>
+				    <td align="center"> <b>1:N</b> </td>
+				</tr>
+				<tr class="noBorder">
+				    <large>
+					<td align="center"> (ray packets) </td>
+					<td align="center"></td>
+					<td align="center"> (single-ray SIMD traversal) </td>
+				    </large>
+				</tr>
+				<tr class="noBorder fragment fade-in">
+				    <td align="center"> ray coherence </td>
+				    <td style="vertical-align:middle" align="center"> &#8594; </td>
+				    <td align="center"> ray incoherence </td>
+				</tr>			    
+				<tr class="noBorder fragment fade-in">
+				    <td align="center"> visualization </td>
+				    <td style="vertical-align:middle" align="center"> &#8594; </td>
+				    <td align="center"> physical rendering/simulation </td>
+				</tr>
+				<tr class="noBorder fragment fade-in">
+				    <td align="center"> </td>
+				    <td style="vertical-align:middle" align="center"></td>
+				    <td align="center" > <font color="#b7071">MCRT</font> </td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+		    
+		    <section>
+			<h3> Integrating Embree with DAGMC </h3>
+			<h2> (EmDAG) </h2>
+			<img src="../images/emdag_mapping.png" align="center"/>
+		    </section>
+		    
+		    <section>
+			<h3> Ray Fire Testing Zoo </h3>
+			<table style="margin: 100px 0px 0px 0px">
+			    <tbody>
+				<tr>
+				    <td align="center"> <img src="../images/sphere.png" width="400px" /></td>
+				    <td align="center"> <img src="../images/ds.png" width="400px" /></td>
+				    <td align="center"> <img src="../images/larcyl.png" width="400px" /></td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+		    
+		    <section>
+			<h3> Performance Comparison</h3>
+			<table>
+			    <tbody>
+				<tr>
+				    <td align="center"> <b>DAGMC (MOAB)</b> </td>
+				    <td align="center"> <b>EmDAG (Embree)</b> </td>
+				</tr>
+				<tr>
+				    <br>
+				    <td> <object data="../images/eig_fix_rf_annotated.svg" width="500px" type="image/svg+xml" /> </td>
+				    <td> <object data="../images/embree_rf_annotated.svg" width="500px"type="image/svg+xml"/> </td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+		    
+		    <section>
+			<h3> Transport Testing </h3>
+			<p align="left"> EmDAG was applied to a few simple models </p>
+			<ul>
+			    <li class="fragment fade-in">5 MeV isotropic neutron point source at model origin</li>
+			    <li class="fragment fade-in">all volumes are water-filled (&rho; = 1 g/cc)</li>
+			    <li class="fragment fade-in"> faceting tolerance: 1e-04cm </li>			
+			    <li class="fragment fade-in"> 1M histories </li>
+			</ul>
+			<table>
+			    <tbody>
+				<tr>
+				    <td class="noBorder fragment fade-in">
+					<p align="center"> Single Sphere </p>
+					<img src="../images/sphere_cad.png" width="300px" />
+				    </td>								
+				    <td class="noBorder fragment fade-in">
+					<p align="center"> Nested Spheres </p>
+					<img src="../images/nested_spheres.png" width="300px" />
+				    </td>				
+				    <td class="noBorder fragment fade-in">
+					<p align="center"> Cube </p>
+					<img src="../images/cube_cad.png" width="300px" />
+				    </td>
+				    <td class="noBorder fragment fade-in">
+					<p align="center"> Nested Cubes </p>
+					<img src="../images/nested_cubes.png" width="300px" />
+				    </td>				
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+		    
+		    <section>
+			<h3> Transport Performance </h3>
+			<h4> Sphere Models </h4>
+			<iframe data-src="emdag_sphere_performance.html" class="stretch"></iframe>
+		    </section>
+		    
+		    <section>
+			<h3 class="no-toc-progress"> Transport Performance </h3>
+			<h4> Cube Models </h4>
+			<iframe data-src="emdag_cube_performance.html" class="stretch"></iframe>
+		    </section>
+		    
+		    <section>
+			<h3>FNG Transport Results</h3>
+			<ul>
+			    <li class="fragment fade-in"> original source replaced with 14.1 MeV neutron isotropic volume source </li>
+			    <li class="fragment fade-in"> facet tolerance: 1e-04cm</li>
+			    <li class="fragment fade-in"> length tolerance: 5cm </li>
+			    <li class="fragment fade-in">  100M histories</li>
+			</ul>
+			<img src="images/fng_cad.png" height="400px">
+		    </section>
+		    
+		    <section>
+			<h3> FNG Faceting </h3>
+			<br><br>
+			<table>
+			    <tbody>
+				<tr>
+				    <td align="center"> Faceting Tolerance Only </td>
+				    <td align="center">  with Length Tolerance </td>
+				</tr>
+				<tr>
+				    <td align="center"><img src="../images/fng271_facet_tol.png" width="450px"/></td>
+				    <td align="center"><img src="../images/fng271_len_tol.png" width="450px"/></td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+		    
+		    <section>
+			<h3> FNG Transport Test </h3>
+			<iframe data-src="emdag_fng_performance.html" class="stretch"></iframe>
+			<p class="fragment"> 15% improvement in EmDAG performance w/ lentgh tolerance </p> 
+		    </section>
+		    
+		    <section>
+			<h3> EmDAG Limitations </h3>
+			<ul>
+			    <li> faceting tolerance: 255 lost particles </li>
+			    <li> length tolerance: 247 lost particles </li>
+			</ul>
+			<p></p>
+			<object data="../images/emdag_fng_lost.svg" type="image/svg+xml"></object>
+			<p align="center "class="fragment fade-in"> caused by conversions from single to double precision and vice versa </p>
+		    </section>
 
 		</section>
 
@@ -655,128 +655,129 @@ for axis in axes:
 			<h2>Implicit Surfaces and Signed Distance Fields </h2>
 		    </section>
 		    
-		<section>
-		  <h3> Implicit Surfaces </h3>
-		  <h4> (& Level-Set Methods) </h4>
-		  <p align="center"> An implicit surface is a multivariate function defined over an $ R^3 $ domain</p>
-		  $$    \Omega(R^3)\rightarrow R $$
-		  <p align="center"> where points on the surface are represented by the isocontour $v=0$ </p>
-		  $$   \Omega(\vec{x}) - v  = 0 $$
-		  <p align="center"> important geometric properties can be easily recovered from this represntation </p>
-		  <table>
-		    <tbody>
-		      <tr class="noBorder">
-			<td align="center" class="fragment">
-			<p align="center"> Surface Normal </p>
-			$$<\Omega_{x}(\vec{x}),\Omega_{y}(\vec{y}),\Omega_{z}(\vec{z})>$$
-			</td>
-			<td align="center" class="fragment">
-			  <p> Distance to Nearest Intersection </p>
-			  $$ |\Omega(\vec{x})| $$
-			</td>
-			<td align="center" class="fragment">
-			  <p align="center"> Interior vs. Exterior Locations </p>
-			  $$ sign(\Omega(\vec{x}))$$
-			  </td>
-		      </tr>
-		    </tbody>
-		  </table>
-		</section>
-		
-		<section>
-		  <h3 class="no-toc-progress"> Implicit Surfaces </h3>
-		  <p align="left"> used for:
-		  <ul>
-		    <li> modeling (CSG), simulation, triangulation </li>
-		    <li class="fragment"> and rendering of dynamic surfaces like smoke or fire ($\Omega(\vec{x},t)$) </li>
-		  </ul>
-		  <p align="left" class="fragment"> ray marching: </p>
-		  <p class="fragment current-visible"><object data="../images/rm0.svg" style="margin: -50px -80px 0px 0px" height="500px" type="image/svg+xml"></object></p>
-		  <p class="fragment current-visible"><object data="../images/rm1.svg" style="margin: -50px -80px 0px 0px" height="500px" type="image/svg+xml"></object></p>
-		</section>
-		
-		<section>
-		  <h3> Signed Distance Fields </h3>
-		  <p align="left"> ray marching is accomplished using sampled fields with these requirements </p>
-		  <small>
-		  <ul>
-		    <li> $ d(\vec{x}) = 0 $ for all $x$ on the surface boundary </li>
-		    <li> $ d(\vec{x}) < 0 $ for all $x$ inside the surface boundary </li>
-		    <li> $ d(\vec{x}) > 0  $ for all $x$ outside the surface boundary </li>
-		  </ul>
-		  <p align="center"> $ d(\vec{x}) = sign(\Omega(\vec{x}))|\Omega(\vec{x})| $ </p>
-		  </small>
-		  <object data="../images/preconditioner_datastruct.svg" type="image/svg+xml" height="400px"></object>		  
-		</section>
-		
-		<section>
-		  <h3> Particle Tracking Preconditioner </h3>
-		  <ul>
-		    <li> use interpolated signed distance values to rule out surface crossing </li>
-		    <li> avoids O(log(N)) in favor of O(1) process </li>
-		    <li> best for particles traveling far from surfaces </li>
-		    <li> sign-based point containment queries </li>
-		  </ul>
-		  <object data="../images/preconditioner_ex.svg" type="image/svg+xml" class="stretch"></object>
-		</section>
-		
-		<section>
-		  <h3> Interpolation Error Estimate </h3>
-		  <h4> (a 2D example) </h4>
-		  <p align="center"> $$ \epsilon = \frac{1}{2} \Delta x (h-\Delta x) \frac{\partial^2 u}{\partial x^2} + \frac{1}{2} \Delta y (h-\Delta y)  \frac{\partial^2 u}{\partial y^2} $$ </p>
-		  <table>
-		    <tbody>
-		    <tr class="noBorder"><td>$$ h $$</td><td> - mesh interval size </td></tr>
-		    <tr class="noBorder"><td>$$ \Delta x $$</td><td> - x distance to interpolation point from data point </td></tr>
-		    <tr class="noBorder"><td>$$ \Delta y $$ </td> <td> - y distance to interpolation point from data point </td></tr>
-		    <tr class="noBorder"><td>$$ u(x,y) $$</td><td>- sampled function on mesh </td></tr>
-		    <tr class="noBorder"><td>$$ \epsilon $$</td><td>- interpolation error </td></tr>
-		    </tbody>
-		  </table>
-		  <p align="center" class="fragment"> <i>curvature terms are problematic</i> </p>
-		</section>
-		
-		<section>
-		  <h3> Initial Implementation </h3>
-		  <ul>
-		    <li>uses MOAB's structured mesh interface</li>
-		    <li>populated using MOAB's ray tracing interface (closest to location alg.)</li>
-		    <ul>
-		      <li>disambiguates distance value signs using DAGMC's point containment algorithm</li>
-		    </ul>
-		  </ul>
-		  <img src="../images/sdf_sphere.png" height="550x"/>
-		</section>
-		
-		<section>
-		  <h3> Preconditioner Test </h3>
-		  <ul>
-		    <li>5 MeV isotropic neutron point source at model origin</li>
-		    <li>single volume: 10 cm radius sphere</li>
-		    <li>all volumes are water-filled </li>
-		    <li>density varied from 0 to 1 (g/cc) </li>
-		    <li>faceting tolerance: 1e-04cm </li>			
-		    <li>1M histories </li>
-		  </ul>
-		  <img src="../images/sphere_cad.png" height="400px" align="center" />
-		</section>
-		<section id="precond_sphere_water">
-		    <h3> Initial Results </h3>
+		    <section>
+			<h3> Implicit Surfaces </h3>
+			<h4> (& Level-Set Methods) </h4>
+			<p align="center"> An implicit surface is a multivariate function defined over an $ R^3 $ domain</p>
+			$$    \Omega(R^3)\rightarrow R $$
+			<p align="center"> where points on the surface are represented by the isocontour $v=0$ </p>
+			$$   \Omega(\vec{x}) - v  = 0 $$
+			<p align="center"> important geometric properties can be easily recovered from this represntation </p>
+			<table>
+			    <tbody>
+				<tr class="noBorder">
+				    <td align="center" class="fragment">
+					<p align="center"> Surface Normal </p>
+					$$<\Omega_{x}(\vec{x}),\Omega_{y}(\vec{y}),\Omega_{z}(\vec{z})>$$
+				    </td>
+				    <td align="center" class="fragment">
+					<p> Distance to Nearest Intersection </p>
+					$$ |\Omega(\vec{x})| $$
+				    </td>
+				    <td align="center" class="fragment">
+					<p align="center"> Interior vs. Exterior Locations </p>
+					$$ sign(\Omega(\vec{x}))$$
+				    </td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
 		    
-		    <iframe data-src="precond_sphere_water.html" class="stretch"></iframe>
-		</section>
+		    <section>
+			<h3 class="no-toc-progress"> Implicit Surfaces </h3>
+			<p align="left"> used for:
+			    <ul>
+				<li> modeling (CSG), simulation, triangulation </li>
+				<li class="fragment"> and rendering of dynamic surfaces like smoke or fire ($\Omega(\vec{x},t)$) </li>
+			    </ul>
+			    <p align="left" class="fragment"> ray marching: </p>
+			    <p class="fragment current-visible"><object data="../images/rm0.svg" style="margin: -50px -80px 0px 0px" height="500px" type="image/svg+xml"></object></p>
+			    <p class="fragment current-visible"><object data="../images/rm1.svg" style="margin: -50px -80px 0px 0px" height="500px" type="image/svg+xml"></object></p>
+		    </section>
+		    
+		    <section>
+			<h3> Signed Distance Fields </h3>
+			<p align="left"> ray marching is accomplished using sampled fields with these requirements </p>
+			<small>
+			    <ul>
+				<li> $ d(\vec{x}) = 0 $ for all $x$ on the surface boundary </li>
+				<li> $ d(\vec{x}) < 0 $ for all $x$ inside the surface boundary </li>
+				<li> $ d(\vec{x}) > 0  $ for all $x$ outside the surface boundary </li>
+			    </ul>
+			    <p align="center"> $ d(\vec{x}) = sign(\Omega(\vec{x}))|\Omega(\vec{x})| $ </p>
+			</small>
+			<object data="../images/preconditioner_datastruct.svg" type="image/svg+xml" height="400px"></object>		  
+		    </section>
+		    
+		    <section>
+			<h3> Particle Tracking Preconditioner </h3>
+			<ul>
+			    <li> use interpolated signed distance values to rule out surface crossing </li>
+			    <li> avoids O(log(N)) in favor of O(1) process </li>
+			    <li> best for particles traveling far from surfaces </li>
+			    <li> sign-based point containment queries </li>
+			</ul>
+			<object data="../images/preconditioner_ex.svg" type="image/svg+xml" class="stretch"></object>
+		    </section>
+		    
+		    <section>
+			<h3> Interpolation Error Estimate </h3>
+			<h4> (a 2D example) </h4>
+			<p align="center"> $$ \epsilon = \frac{1}{2} \Delta x (h-\Delta x) \frac{\partial^2 u}{\partial x^2} + \frac{1}{2} \Delta y (h-\Delta y)  \frac{\partial^2 u}{\partial y^2} $$ </p>
+			<table>
+			    <tbody>
+				<tr class="noBorder"><td>$$ h $$</td><td> - mesh interval size </td></tr>
+				<tr class="noBorder"><td>$$ \Delta x $$</td><td> - x distance to interpolation point from data point </td></tr>
+				<tr class="noBorder"><td>$$ \Delta y $$ </td> <td> - y distance to interpolation point from data point </td></tr>
+				<tr class="noBorder"><td>$$ u(x,y) $$</td><td>- sampled function on mesh </td></tr>
+				<tr class="noBorder"><td>$$ \epsilon $$</td><td>- interpolation error </td></tr>
+			    </tbody>
+			</table>
+			<p align="center" class="fragment"> <i>curvature terms are problematic</i> </p>
+		    </section>
+		    
+		    <section>
+			<h3> Initial Implementation </h3>
+			<ul>
+			    <li>uses MOAB's structured mesh interface</li>
+			    <li>populated using MOAB's ray tracing interface (closest to location alg.)</li>
+			    <ul>
+				<li>disambiguates distance value signs using DAGMC's point containment algorithm</li>
+			    </ul>
+			</ul>
+			<img src="../images/sdf_sphere.png" height="550x"/>
+		    </section>
+		    
+		    <section>
+			<h3> Preconditioner Test </h3>
+			<ul>
+			    <li>5 MeV isotropic neutron point source at model origin</li>
+			    <li>single volume: 10 cm radius sphere</li>
+			    <li>all volumes are water-filled </li>
+			    <li>density varied from 0 to 1 (g/cc) </li>
+			    <li>faceting tolerance: 1e-04cm </li>			
+			    <li>1M histories </li>
+			</ul>
+			<img src="../images/sphere_cad.png" height="400px" align="center" />
+				    </section>
+		    
+		    <section id="precond_sphere_water">
+			<h3> Initial Results </h3>
+			
+			<iframe data-src="precond_sphere_water.html" class="stretch"></iframe>
+		    </section>
 
-		<section>
-		    <h3> Initial Results </h3>
-		    <iframe data-src="precond_rays_fired.html" class="stretch"></iframe>		    		    
-		</section>
-		
-		<section>
-		    <h3> Initial Results </h3>
-		    <p align="center">$$ U = \frac{dagmc\, rays -  dagmc\, w/\, precond.\, rays}{dagmc\, rays}$$ </p>
-		    <iframe data-src="precond_utilization.html" class="stretch"></iframe>		    		    
-		</section>
-		
+		    <section>
+			<h3> Initial Results </h3>
+			<iframe data-src="precond_rays_fired.html" class="stretch"></iframe>		    		    
+		    </section>
+		    
+		    <section>
+			<h3> Initial Results </h3>
+			<p align="center">$$ U = \frac{dagmc\, rays -  dagmc\, w/\, precond.\, rays}{dagmc\, rays}$$ </p>
+			<iframe data-src="precond_utilization.html" class="stretch"></iframe>		    		    
+		    </section>
+		    
 		</section>
 
 		<!-- Research Proposal -->
@@ -786,177 +787,179 @@ for axis in axes:
 			<h2> Proposed Work </h2>
 		    </section>
 		    
-		<section>
-		    <h3> Feature Adaptation in BVH Construction </h3>
-		    <ul>
-			<li>alter building parameters for problematic mesh regions which can be identified by poorly formed tree topology</li>
-			<li>of particular interest is the high valence case</li>
-		    </ul>
-		    <p align="center"> this process is likely of more interest to radiation transport than rendering </p>
-		    <table>
-			<tbody>
-			    <tr>
-				<td align="center" colspan="2"> <b>Primary Ray Estimates</b> </td>
-			    </tr>
-			    <tr>
-				<td style="border-right: 1px solid black"> rendering </td>
-				<td align="right" width="800px"> $ (\sim 8 \frac{rays}{pixel})(1024 \times 1080\, pixels) $ = $16.6 \times 10^6$ rays</td>
-			    </tr>
-			    <tr style="border-bottom: 1px solid black">
-				<td style="border-right: 1px solid black"> radiation transport </td>
-				<td style="vertical-align:middle" align="right"> $ 1 \times 10^9 $ histories $ $ = $ 1 \times 10^9 $ rays </td>
-			    </tr>
-			</tbody>
-		    </table>
-			    <p align="center" class="fragment"> additional order-of-magnitude in secondary rays for radiation transport as well</p>
-		</section>
-		<section>
-		    <h3 class="no-toc-progress"> Feature Adaptation in BVH Construction </h3>
-		    <table>
-			<tbody>
-			<tr>
-			    <td>
-				<p>$ tts $ -  time to solution</p>
-				<p>$ C $ -  cost of other operations </p>
-				<p>$ T_{B} $ -  acceleration datastructure build time </p>
-				<p>$ T_{T} $ -  average traversal time </p>
-				<p>$ N_{r} $ -  ray queries  required for solution </p>
-				<p>$ q $ -  acceleration datastructure quality </p>
-			    </td>
-			    <td>$$ tts = C + T_{B} + \sum_{}^{N_{r}} T_{T} $$
-				$$ tts =\,  C + T_{B} + \sum_{}^{N_{r}} T_{T}(q,\ldots) $$
-				$$ q(T_{B})  \rightarrow T_{T}(T_{B}) \rightarrow T_{T} \propto \frac{1}{{T_{B}}^{x}} \,\, (\, x \geq 0) $$
-				$$ tts =\,  C + T_{B} + \sum_{}^{N_{r}} T_{T}(T_{B},\ldots) $$
-			    </td>
-			</tr>
-			</tbody>
-		    </table>
-		</section>
-		
-		<section>
-		    <h3 class="no-toc-progress"> Feature Adaptation in BVH Construction </h3>
-		    <h4> Objectives </h4>
-		    <ul>
-			<li> create a generalized building scheme for poorly formed tree nodes involving two steps</li>
+		    <section>
+			<h3> Feature Adaptation in BVH Construction </h3>
 			<ul>
-			    <li> feature detection </li>
-			    <li> feature adaptation </li>
-			    <li> can similar solution be applied to SAH building or is the modified median splitting build necessary?</li>
+			    <li>alter building parameters for problematic mesh regions which can be identified by poorly formed tree topology</li>
+			    <li>of particular interest is the high valence case</li>
 			</ul>
-			<li> ideally this can be applied to other problematic mesh features as well </li>
-			<li> apply to test model and other production models known to contain high valence regions to examine improvement </li>
-		    </ul>
-		</section>
-		
-		<section>
-		    <h3> Architecture Based Acceleration </h3>
-		    <p> the Embree kernel does not meet the requirments of the robust tracking algorithm used by DAGMC as it currently exists </p>
-		    <ul>
-			<li class="fragment"> single to double precision conversion </li>
-			<li class="fragment"> logic involving mesh interrogation </li>
-		    </ul>
-		    <br></br>
-		    <br></br>
-		    <table class="fragment">
-			<tbody>
-			    <tr>
-				<td align="center"><b>MOAB</b></td>
-				<td align="center"><b>EmDAG</b></td>
-			    </tr>
-			    <tr>
-				<td width="300px">
+			<p align="center"> this process is likely of more interest to radiation transport than rendering </p>
+			<table>
+			    <tbody>
+				<tr>
+				    <td align="center" colspan="2"> <b>Primary Ray Estimates</b> </td>
+				</tr>
+				<tr>
+				    <td style="border-right: 1px solid black"> rendering </td>
+				    <td align="right" width="800px"> $ (\sim 8 \frac{rays}{pixel})(1024 \times 1080\, pixels) $ = $16.6 \times 10^6$ rays</td>
+				</tr>
+				<tr style="border-bottom: 1px solid black">
+				    <td style="border-right: 1px solid black"> radiation transport </td>
+				    <td style="vertical-align:middle" align="right"> $ 1 \times 10^9 $ histories $ $ = $ 1 \times 10^9 $ rays </td>
+				</tr>
+			    </tbody>
+			</table>
+			<p align="center" class="fragment"> additional order-of-magnitude in secondary rays for radiation transport as well</p>
+				    </section>
+		    
+		    <section>
+			<h3 class="no-toc-progress"> Feature Adaptation in BVH Construction </h3>
+			<table>
+			    <tbody>
+				<tr>
+				    <td>
+					<p>$ tts $ -  time to solution</p>
+					<p>$ C $ -  cost of other operations </p>
+					<p>$ T_{B} $ -  acceleration datastructure build time </p>
+					<p>$ T_{T} $ -  average traversal time </p>
+					<p>$ N_{r} $ -  ray queries  required for solution </p>
+					<p>$ q $ -  acceleration datastructure quality </p>
+				    </td>
+				    <td>$$ tts = C + T_{B} + \sum_{}^{N_{r}} T_{T} $$
+					$$ tts =\,  C + T_{B} + \sum_{}^{N_{r}} T_{T}(q,\ldots) $$
+					$$ q(T_{B})  \rightarrow T_{T}(T_{B}) \rightarrow T_{T} \propto \frac{1}{{T_{B}}^{x}} \,\, (\, x \geq 0) $$
+					$$ tts =\,  C + T_{B} + \sum_{}^{N_{r}} T_{T}(T_{B},\ldots) $$
+				    </td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+		    
+		    <section>
+			<h3 class="no-toc-progress"> Feature Adaptation in BVH Construction </h3>
+			<h4> Objectives </h4>
+			<ul>
+			    <li> create a generalized building scheme for poorly formed tree nodes involving two steps</li>
+			    <ul>
+				<li> feature detection </li>
+				<li> feature adaptation </li>
+				<li> can similar solution be applied to SAH building or is the modified median splitting build necessary?</li>
+			    </ul>
+			    <li> ideally this can be applied to other problematic mesh features as well </li>
+			    <li> apply to test model and other production models known to contain high valence regions to examine improvement </li>
+			</ul>
+		    </section>
+		    
+		    <section>
+			<h3> Architecture Based Acceleration </h3>
+			<p> the Embree kernel does not meet the requirments of the robust tracking algorithm used by DAGMC as it currently exists </p>
+			<ul>
+			    <li class="fragment"> single to double precision conversion </li>
+			    <li class="fragment"> logic involving mesh interrogation </li>
+			</ul>
+			<br></br>
+			<br></br>
+			<table class="fragment">
+			    <tbody>
+				<tr>
+				    <td align="center"><b>MOAB</b></td>
+				    <td align="center"><b>EmDAG</b></td>
+				</tr>
+				<tr>
+				    <td width="300px">
+					<ul>
+					    <li>designed for interrogation/manipulation of mesh</li>
+					    <li>slow due to database context</li>
+					</ul>
+				    </td>
+				    <td width="300px">
+					<ul>
+					    <li>very fast CPU-based ray tracing</li>
+					    <li>single-precision</li>
+					    <li>limited mesh interface</li>
+					</ul>
+				    </td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+		    
+		    <section>
+			<h3 class="no-toc-progress"> Architecture Based Acceleration </h3>
+			<h4> Going Forward </h4>
+			<ul>
+			    <li class="fragment highlight-red">separate DAGMC tracking code from MOAB's ray tracing interface</li>
+			    <ul>
+				<div class="fragment">
+				    <li>determine what is critical; what is necessary; what requires MOAB</li>
+				</div>
+			    </ul>
+			    <br>
+			    <li class="fragment highlight-red"> couple SIMD BVH traversal to a MOAB-build hierarchy </li>
+			    <ul>
+				<div class="fragment">
+				    <li>MOAB provides contiguous memory sets via its direct access methods</li>
 				    <ul>
-					<li>designed for interrogation/manipulation of mesh</li>
-					<li>slow due to database context</li>
+					<li>no primitive  memory duplication</li>
+					<li>contiguous memory for primitives, hierarchy</li>
 				    </ul>
-				</td>
-				<td width="300px">
-				    <ul>
-					<li>very fast CPU-based ray tracing</li>
-					<li>single-precision</li>
-					<li>limited mesh interface</li>
-				    </ul>
-				</td>
-			    </tr>
-			</tbody>
-		    </table>
-		</section>
-		
-		<section>
-		    <h3 class="no-toc-progress"> Architecture Based Acceleration </h3>
-		    <h4> Going Forward </h4>
-		    <ul>
-			<li class="fragment highlight-red">separate DAGMC tracking code from MOAB's ray tracing interface</li>
+				</div>
+			    </ul>
+			    <br>
+			    <li class="fragment highlight-red">proposed implementation </li>
+			    <ul>
+				<div class="fragment">
+				    <li>single-precision boxes constructed around MOAB's double-precision primitives</li>
+				    <li> perform SIMD traversal of n-ary tree </li>
+				    <li> double precision intersection of triangles</li>
+				    <li>will maintain much of Embree's speed as majority of time is spent in BVH traversal</li>
+				</div>
+			    </ul>
+			</ul>
+				    </section>
+		    
+		    <section>
+			<h3 class="no-toc-progress"> Architecture Based Acceleration </h3>
+			<h4> Contributions </h4>
 			<ul>
-			    <div class="fragment">
-				<li>determine what is critical; what is necessary; what requires MOAB</li>
-			    </div>
+			    <li class="fragment"> mixed-precision SIMD BVH traversal on common CPU architectures </li>
+			    <br>
+			    <li class="fragment"> provides high-performance spatial searches coupled with mesh database designed for engineering analysis </li>
+			    <br>
+			    <li class="fragment"> allows DAGMC particle tracking logic to be coupled to high-performance CPU ray tracer w/ double precision </li>
+			    <br>
+			    <li class="fragment"> significantly improves performance of radiation transport on CAD models </li>
 			</ul>
-			<br>
-			<li class="fragment highlight-red"> couple SIMD BVH traversal to a MOAB-build hierarchy </li>
+		    </section>
+		    
+		    <section>
+			<h3> Signed Distance Field Preconditioner </h3>
 			<ul>
-			    <div class="fragment">
-				<li>MOAB provides contiguous memory sets via its direct access methods</li>
-				<ul>
-				    <li>no primitive  memory duplication</li>
-				    <li>contiguous memory for primitives, hierarchy</li>
-				</ul>
-			    </div>
+			    <li class="fragment"> has already been shown to be a powerful acceleration tool given the <a href="#precond_sphere_water">proper conditions</a>  </li>
+			    <br>
+			    <li class="fragment"> identification of proper conditions for this datastructure is important</li>
+			    <br>
+			    <li class="fragment"> memory footprint is of concern </li>
+			    <ul class="fragment">
+				<li> adaptive mesh refinement or octree may be useful </li>
+				<li> error estimation becomes more difficult with non-uniform techniques </li>
+				<li> other uniform mesh methods could be helpful <cite><small style="vertical-align:bottom">Setaulri_2014</small></cite> </li>
+			    </ul>
 			</ul>
-			<br>
-			<li class="fragment highlight-red">proposed implementation </li>
-			<ul>
-			    <div class="fragment">
-				<li>single-precision boxes constructed around MOAB's double-precision primitives</li>
-				<li> perform SIMD traversal of n-ary tree </li>
-				<li> double precision intersection of triangles</li>
-				<li>will maintain much of Embree's speed as majority of time is spent in BVH traversal</li>
-			    </div>
-			</ul>
-		    </ul>
-		</section>
-		<section>
-		    <h3 class="no-toc-progress"> Architecture Based Acceleration </h3>
-		    <h4> Contributions </h4>
-		    <ul>
-			<li class="fragment"> mixed-precision SIMD BVH traversal on common CPU architectures </li>
-			<br>
-			<li class="fragment"> provides high-performance spatial searches coupled with mesh database designed for engineering analysis </li>
-			<br>
-			<li class="fragment"> allows DAGMC particle tracking logic to be coupled to high-performance CPU ray tracer w/ double precision </li>
-			<br>
-			<li class="fragment"> significantly improves performance of radiation transport on CAD models </li>
-		    </ul>
-		</section>
-		
-		<section>
-		    <h3> Signed Distance Field Preconditioner </h3>
-		    <ul>
-			<li class="fragment"> has already been shown to be a powerful acceleration tool given the <a href="#precond_sphere_water">proper conditions</a>  </li>
-			<br>
-			<li class="fragment"> identification of proper conditions for this datastructure is important</li>
-			<br>
-			<li class="fragment"> memory footprint is of concern </li>
-			<ul class="fragment">
-			    <li> adaptive mesh refinement or octree may be useful </li>
-			    <li> error estimation becomes more difficult with non-uniform techniques </li>
-			    <li> other uniform mesh methods could be helpful <cite><small style="vertical-align:bottom">Setaulri_2014</small></cite> </li>
-			</ul>
-		    </ul>
-		</section>
+		    </section>
 
-		<section>
-		    <h3> Summary </h3>
-		    <p> each approach aides in goal of CAD-Based Monte Carlo Radiation Transport performance on the order of analytic/native/CSG geometry representations</p>
-		    <ul>
-			<li class="fragment"> trees should now be optimized for high valence regions </li>
-			<li class="fragment"> ray tracing greatly increases single-node efficiency </li>
-			<li class="fragment"> preconditioner will help to reduce overall order of particle tracking compelxity if utilized well</li>
-			<li class="fragment"> increased ray tracing performance assists other MOAB and DAGMC based applications as well </li>
-		    </ul>
-		    <p class="fragment"><b>final combined effect is a more effective CB-MCRT pathway for analysis</b></p>
-		</section>
-		
+		    <section>
+			<h3> Summary </h3>
+			<p> each approach aides in goal of CAD-Based Monte Carlo Radiation Transport performance on the order of analytic/native/CSG geometry representations</p>
+			<ul>
+			    <li class="fragment"> trees should now be optimized for high valence regions </li>
+			    <li class="fragment"> ray tracing greatly increases single-node efficiency </li>
+			    <li class="fragment"> preconditioner will help to reduce overall order of particle tracking compelxity if utilized well</li>
+			    <li class="fragment"> increased ray tracing performance assists other MOAB and DAGMC based applications as well </li>
+			</ul>
+			<p class="fragment"><b>final combined effect is a more effective CB-MCRT pathway for analysis</b></p>
+		    </section>
+		    
 	    </div>
 	</div>
                 <!-- SCRIPTS -->
