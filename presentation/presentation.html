@@ -179,9 +179,9 @@
 				<tr class="noBorder" style="height:100px">
 				    <td class="redBlock" align="center"><p>CAD</p> <p>(Cubit/Trelis)</p></td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
-				    <td class="redBlock" align="center"><p>preprocessing</p> <p>(MOAB<small style="vertical-align:bottom">[3]</small>)</p></td>
+				    <td class="redBlock" align="center"><p>preprocessing</p> <p>(MOAB<a href="#bib"><small style="vertical-align:bottom;color:white">[3]</small></a>)</p></td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    			    
-				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC</p> <p>(MOAB/DAGMC)</p> </td>
+				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[4]</small></a></p> <p>(MOAB)</p> </td>
 				    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
 				    <td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
 				</tr>
@@ -282,7 +282,6 @@
 					<ul>
 					    <li>low storage (6 extents)</li>
 					    <li>fast, simple intersection checks</li>
-					    <li>don't bound as well</li>
 					</ul>
 				    </td>
 				    <td align="center">
@@ -401,7 +400,10 @@ for axis in axes:
 		    <section>
 			<h3> Surface Area Heuristic </h3>
 			<h4>(SAH)</h4>
-			<p> $$C =  C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i}$$ </p>
+			<p>
+			  $C =  C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i}$
+			    <a href="#bib"><small style="vertical-align:bottom">[1]</small></a>
+			</p>
 			<style class="text/css">
 			 tr.noBorder td {border: 0;}
 			</style>
@@ -433,7 +435,6 @@ for axis in axes:
 				</tr>
 			    </tbody>
 			</table>
-			<cite><small style="vertical-align:bottom">MacDonald_1990</small></cite>
 		    </section>
 		
 		    <section>
@@ -952,9 +953,17 @@ for axis in axes:
 			<p class="fragment"><b>final combined effect is a more effective CB-MCRT pathway for analysis</b></p>
 		    </section>
 
-		    <section>
+		    <section id="bib">
 			<h3> References </h3>
-		      <img src="refs.png" height="1000px" style="margin: -150px 0px 0px 0px"/>
+			<small>
+			    <div class="references">
+				<p>[1] MacDonald, Kellogg S., J. David ; Booth. 1990. “Heuristics for Ray Tracing Using Space Subdivision.” <em>The Visual Computer</em> 6 (3): 153–66. doi:<a href="http://dx.doi.org/10.1007/BF01911006">10.1007/BF01911006</a>.</p>
+				<p>[2] Setaluri, Rajsekhar, Mridul Aanjaneya, Sean Bauer, and Eftychios Sifakis. 2014. “SPGrid: A Sparse Paged Grid Structure Applied to Adaptive Smoke Simulation.” <em>ACM Trans. Graph.</em> 33 (6). New York, NY, USA: ACM: 205:1–205:12. doi:<a href="http://dx.doi.org/10.1145/2661229.2661269">10.1145/2661229.2661269</a>.</p>
+				<p>[3] Tautges, T. J., R. Meyers, K. Merkley, C. Stimpson, and C. Ernst. 2004. <em>MOAB: A Mesh-Oriented Database</em>. SAND2004-1592. Sandia National Laboratories.</p>
+				<p>[4] Tautges, Timothy J., P. P. H. Wilson, Jason Kraftcheck, Brandon M. Smith, and Douglass L. Henderson. 2009. “Acceleration Techniques for Direct Use of CAD-Based Geometries in Monte Carlo Radiation Transport.” In <em>International Conference on Mathematics, Computational Methods &amp; Reactor Physics (M&amp;C 2009)</em>. Saratoga Springs, NY: American Nuclear Society.</p>
+				<p>[5] Wald, Ingo, Sven Woop, Carsten Benthin, Gregory S. Johnson, and Manfred Ernst. 2014. “Embree: A Kernel Framework for Efficient CPU Ray Tracing.” <em>ACM Trans. Graph.</em> 33 (4). New York, NY, USA: ACM: 143:1–:8. doi:<a href="http://dx.doi.org/10.1145/2601097.2601199">10.1145/2601097.2601199</a>.</p>
+				<p>[6] X-5 Monte Carlo Team. 2004. <em>MCNP - a General Monte Carlo N-Particle Transport Code, Version 5 - Volume III: Developers Guide</em>. LA-CP-03-0284. Los Alamos National Laboratory.</p>
+			    </div></small>
 		    </section>
 		    
 	    </div>
