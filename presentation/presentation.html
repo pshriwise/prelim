@@ -105,7 +105,7 @@
 			<ul>
 			    <li>pathway for robust particle transport on CAD geometries exists</li>
 			    <ul>
-				<li> Direct Accelerated Geometry Mone Carlo (DAGMC<small style="vertical-align:bottom">[4]</small>)</li>
+				<li> Direct Accelerated Geometry Mone Carlo (DAGMC<a href="#bib"><small style="vertical-align:bottom">[5]</small></a>)</li>
 			    </ul>
 			    <br>
 			    <!-- <p style="text-align:center"><img src="images/dagmc_workflow.png" style="border-style:none" width="650"></img></p> -->
@@ -179,9 +179,9 @@
 				<tr class="noBorder" style="height:100px">
 				    <td class="redBlock" align="center"><p>CAD</p> <p>(Cubit/Trelis)</p></td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
-				    <td class="redBlock" align="center"><p>preprocessing</p> <p>(MOAB<a href="#bib"><small style="vertical-align:bottom;color:white">[3]</small></a>)</p></td>
+				    <td class="redBlock" align="center"><p>preprocessing</p> <p>(MOAB<a href="#bib"><small style="vertical-align:bottom;color:white">[4]</small></a>)</p></td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    			    
-				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[4]</small></a></p> <p>(MOAB)</p> </td>
+				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[5]</small></a></p> <p>(MOAB)</p> </td>
 				    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
 				    <td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
 				</tr>
@@ -266,6 +266,51 @@
 		    </section>
 		    
 		    <section>
+			<h3> KDTrees </h3>
+			<ul align="left">
+			    <li>same concept of hierarchy as BVH</li>
+			    <li>partitions are based on planar splits </li>
+			    <li>non-overlapping nodes allow for faster traversal of adjacent leaves <a href="#bib"><small style="vertical-align:bottom">[2]</small></a></li>
+			</ul>
+			<object data="../images/2d_kd_eg.svg" type="image/svg+xml" class="stretch"></object>
+		    </section>
+
+		    <section>
+			<h3> Octrees </h3>
+			<ul>
+			    <li>cubic, non-overlapping bounding boxes (voxels)</li>
+			    <li>hierarchy traversal just like BVH or KDTree</li>
+			</ul>
+			<object data="../images/octree_2d_ex.svg" type="image/svg+xml" class="stretch"></object>
+			<p> (3D tree would have 8 children per node) </p>
+		    </section>
+		    
+		    <section>
+			<h3> Why BVH? </h3>
+			<table>
+			    <tbody>
+				<td style="border: 1px solid black;vertical-align:middle">KDTree</td>
+				<td style="border: 1px solid black">
+				    <ul>
+					<li>fastest algorithmic traversal</li>
+					<li>deep trees (more memory consuption)</li>
+				    </ul>
+				</td>
+				<tr>
+				    <td style="border: 1px solid black;vertical-align:middle">Octree</td>
+				    <td style="border: 1px solid black">
+					<ul>
+					    <li>slower traversals (typically)</li>
+					    <li>data field storage</li>
+					    <li>
+					</ul>
+				    </td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+		    
+		    <section>
 			<h3> Bounding Boxes </h3>
 			<table>
 			    <tbody>
@@ -295,7 +340,8 @@
 			    </tbody>
 			</table>
 		    </section>
-		    
+
+		
 		</section>
 
 		<!-- High Valence Features -->
@@ -398,11 +444,36 @@ for axis in axes:
 		    </section>
 		    
 		    <section>
+			<h3> Datastructure Quality </h3>
+			<blockquote>
+			    <p>An often quoted statistic.. is that better than 95% of time can be spent performing this operation for complex environments.</p>
+			    - Glassner, Intro to Ray Tracing
+			</blockquote>
+			<table>
+			    <tbody>
+				<tr>
+				    <td style="vertical-align:top">
+					<p>$ tts $ -  time to solution</p>
+					<p>$ C $ -  cost of other operations </p>
+					<p>$ T_{B} $ -  acceleration datastructure build time </p>
+					<p>$ T_{T} $ -  traversal time </p>
+					<p>$ N_{r} $ -  ray queries required for solution </p>
+					<p>$ q $ -  acceleration datastructure quality </p>
+				    </td>
+				    <td style="vertical-align:top">$$ tts = C + T_{B} + \sum_{}^{N_{r}} T_{T} $$
+					$$ tts =\,  C + T_{B} + \sum_{}^{N_{r}} T_{T}(q,\ldots) $$
+				    </td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+    
+		    <section>
 			<h3> Surface Area Heuristic </h3>
 			<h4>(SAH)</h4>
 			<p>
 			  $C =  C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i}$
-			    <a href="#bib"><small style="vertical-align:bottom">[1]</small></a>
+			    <a href="#bib"><small style="vertical-align:bottom">[2]</small></a>
 			</p>
 			<style class="text/css">
 			 tr.noBorder td {border: 0;}
@@ -439,10 +510,11 @@ for axis in axes:
 		
 		    <section>
 			<h3> SAH Applied to High Valence </h3>
-			<p align="center">same tests performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel <small style="vertical-align:bottom">[5]</small></p>
+			<p align="center">same tests performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel <small style="vertical-align:bottom">[6]</small></p>
 			<img src="../images/hv_emdag.png" height="500px" align="center" />		    
 		    </section>
 
+		    
 		</section>
 		
 		<!-- SIMD BVH -->
@@ -512,10 +584,17 @@ for axis in axes:
 			    </tbody>
 			</table>
 		    </section>
+
+		    <section>
+			<h3> SIMD BVH Trees </h3>
+			<p>in order to take advantage of SIMD register widths, tree topologies are altered</p>
+			<img src="../images/quad_tree.png" class="stretch" />
+			<p> this is accomplished by collapsing a binary tree into a quad tree </p>
+		    </section>
 		    
 		    <section>
 			<h3> Integrating Embree with DAGMC </h3>
-			<h2> (EmDAG) </h2>
+			<p style="color:#b70101"><b> (EmDAG) </b></p>
 			<img src="../images/emdag_mapping.png" align="center"/>
 		    </section>
 		    
@@ -957,13 +1036,15 @@ for axis in axes:
 			<h3> References </h3>
 			<small>
 			    <div class="references">
-				<p>[1] MacDonald, Kellogg S., J. David ; Booth. 1990. “Heuristics for Ray Tracing Using Space Subdivision.” <em>The Visual Computer</em> 6 (3): 153–66. doi:<a href="http://dx.doi.org/10.1007/BF01911006">10.1007/BF01911006</a>.</p>
-				<p>[2] Setaluri, Rajsekhar, Mridul Aanjaneya, Sean Bauer, and Eftychios Sifakis. 2014. “SPGrid: A Sparse Paged Grid Structure Applied to Adaptive Smoke Simulation.” <em>ACM Trans. Graph.</em> 33 (6). New York, NY, USA: ACM: 205:1–205:12. doi:<a href="http://dx.doi.org/10.1145/2661229.2661269">10.1145/2661229.2661269</a>.</p>
-				<p>[3] Tautges, T. J., R. Meyers, K. Merkley, C. Stimpson, and C. Ernst. 2004. <em>MOAB: A Mesh-Oriented Database</em>. SAND2004-1592. Sandia National Laboratories.</p>
-				<p>[4] Tautges, Timothy J., P. P. H. Wilson, Jason Kraftcheck, Brandon M. Smith, and Douglass L. Henderson. 2009. “Acceleration Techniques for Direct Use of CAD-Based Geometries in Monte Carlo Radiation Transport.” In <em>International Conference on Mathematics, Computational Methods &amp; Reactor Physics (M&amp;C 2009)</em>. Saratoga Springs, NY: American Nuclear Society.</p>
-				<p>[5] Wald, Ingo, Sven Woop, Carsten Benthin, Gregory S. Johnson, and Manfred Ernst. 2014. “Embree: A Kernel Framework for Efficient CPU Ray Tracing.” <em>ACM Trans. Graph.</em> 33 (4). New York, NY, USA: ACM: 143:1–:8. doi:<a href="http://dx.doi.org/10.1145/2601097.2601199">10.1145/2601097.2601199</a>.</p>
-				<p>[6] X-5 Monte Carlo Team. 2004. <em>MCNP - a General Monte Carlo N-Particle Transport Code, Version 5 - Volume III: Developers Guide</em>. LA-CP-03-0284. Los Alamos National Laboratory.</p>
-			    </div></small>
+				<p>[1] Hapala, M., and V. Havran. 2011. “Review: Kd-Tree Traversal Algorithms for Ray Tracing.” <em>Computer Graphics Forum</em> 30 (1): 199–213. <a href="http://search.ebscohost.com.ezproxy.library.wisc.edu/login.aspx?direct=true&amp;AuthType=ip,uid&amp;db=aph&amp;AN=58613009&amp;site=ehost-live&amp;scope=site" class="uri">http://search.ebscohost.com.ezproxy.library.wisc.edu/login.aspx?direct=true&amp;AuthType=ip,uid&amp;db=aph&amp;AN=58613009&amp;site=ehost-live&amp;scope=site</a>.</p>
+				<p>[2] MacDonald, Kellogg S., J. David ; Booth. 1990. “Heuristics for Ray Tracing Using Space Subdivision.” <em>The Visual Computer</em> 6 (3): 153–66. doi:<a href="http://dx.doi.org/10.1007/BF01911006">10.1007/BF01911006</a>.</p>
+				<p>[3] Setaluri, Rajsekhar, Mridul Aanjaneya, Sean Bauer, and Eftychios Sifakis. 2014. “SPGrid: A Sparse Paged Grid Structure Applied to Adaptive Smoke Simulation.” <em>ACM Trans. Graph.</em> 33 (6). New York, NY, USA: ACM: 205:1–205:12. doi:<a href="http://dx.doi.org/10.1145/2661229.2661269">10.1145/2661229.2661269</a>.</p>
+				<p>[4] Tautges, T. J., R. Meyers, K. Merkley, C. Stimpson, and C. Ernst. 2004. <em>MOAB: A Mesh-Oriented Database</em>. SAND2004-1592. Sandia National Laboratories.</p>
+				<p>[5] Tautges, Timothy J., P. P. H. Wilson, Jason Kraftcheck, Brandon M. Smith, and Douglass L. Henderson. 2009. “Acceleration Techniques for Direct Use of CAD-Based Geometries in Monte Carlo Radiation Transport.” In <em>International Conference on Mathematics, Computational Methods &amp; Reactor Physics (M&amp;C 2009)</em>. Saratoga Springs, NY: American Nuclear Society.</p>
+				<p>[6] Wald, Ingo, Sven Woop, Carsten Benthin, Gregory S. Johnson, and Manfred Ernst. 2014. “Embree: A Kernel Framework for Efficient CPU Ray Tracing.” <em>ACM Trans. Graph.</em> 33 (4). New York, NY, USA: ACM: 143:1–:8. doi:<a href="http://dx.doi.org/10.1145/2601097.2601199">10.1145/2601097.2601199</a>.</p>
+				<p>[7] X-5 Monte Carlo Team. 2004. <em>MCNP - a General Monte Carlo N-Particle Transport Code, Version 5 - Volume III: Developers Guide</em>. LA-CP-03-0284. Los Alamos National Laboratory.</p>
+			    </div>
+			</small>
 		    </section>
 		    
 	    </div>
