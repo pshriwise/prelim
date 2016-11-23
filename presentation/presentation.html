@@ -160,9 +160,11 @@
 				<br>
 				<li class="fragment">lower human time investment in model generation </li>
 				<br>
-				<li class="fragment">performance comparable to native makes this more realisitc, deisrable</li>
+				<li class="fragment">current problems requiring CAD MCRT will benefit</li>
 				<br>
-				<li class="fragment">new methods may be necessary for reasonable runtimes in charged particle problems</li>
+				<li class="fragment">performance comparable to native more  realisitc, deisrable for a more broad range of problems</li>
+				<br>
+				<li class="fragment">new methods may be necessary for reasonable runtimes with charged particle transport </li>
 			    </ul>
 			</ul>
 		    </section>
@@ -228,6 +230,33 @@
 		    </section>
 
 		    <section>
+			<h3> MC Geometry Queries </h3>
+			<small>
+			<table>
+			    <tbody>
+				<tr class="noBorder">
+				    <td align="center">particle tracking</td>
+				    <td> </td>			    
+				    <td align="center"> MCNP5 </td>
+				</tr>
+				<tr class="noBorder" style="height:100px">
+				    <td class="redBlock" align="center"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[5]</small></a></p> <p>(MOAB)</p> </td>
+				    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
+				    <td class="redBlock" align="center"> Monte Carlo </td>
+				</tr>
+				<tr class="noBorder">
+				    <td align="center"> ray tracing </td>
+				    <td></td>
+				    <td align="center"> physics </td>			      
+				</tr>
+			    </tbody>
+			</table>
+			</small>
+			<p> 3 types of queries: </p>
+			<object data="../images/mc_geom_queries.svg" type="image/svg+xml" class="stretch"></object>
+		    </section>
+
+		    <section>
 			<h3> Surface Faceting </h3>
 			<p> faceting tolerance: tolerance for farthest point on the facet from the analytic surface </p>
 			<img src="images/facet_tol_zoomed.png" height="100px"/>
@@ -274,6 +303,7 @@
 			    <li class="fragment"> Bounding Volume Hierarchy (BVH) </li>
 			    <li class="fragment"> KDTree </li>
 			    <li class="fragment"> Octree </li>
+			    <li type="none" class="fragment"> ...</li>
 			</ul>
 		    </section>
 		    
