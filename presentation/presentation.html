@@ -316,50 +316,6 @@
 			<object data="../images/pauls_bvh.svg" class="stretch" type="image/svg+xml"></object>
 		    </section>
 		    
-		    <section>
-			<h3> KDTrees </h3>
-			<ul align="left">
-			    <li>same concept of hierarchy as BVH</li>
-			    <li>partitions are based on planar splits </li>
-			    <li>non-overlapping nodes allow for faster traversal of adjacent leaves <a href="#bib"><small style="vertical-align:bottom">[2]</small></a></li>
-			</ul>
-			<object data="../images/2d_kd_eg.svg" type="image/svg+xml" class="stretch"></object>
-		    </section>
-
-		    <section>
-			<h3> Octrees </h3>
-			<ul>
-			    <li>cubic, non-overlapping bounding boxes (voxels)</li>
-			    <li>hierarchy traversal just like BVH or KDTree</li>
-			</ul>
-			<object data="../images/octree_2d_ex.svg" type="image/svg+xml" class="stretch"></object>
-			<p> (3D tree would have 8 children per node) </p>
-		    </section>
-		    
-		    <section>
-			<h3> Why BVH? </h3>
-			<table>
-			    <tbody>
-				<td style="border: 1px solid black;vertical-align:middle">KDTree</td>
-				<td style="border: 1px solid black">
-				    <ul>
-					<li>fastest algorithmic traversal</li>
-					<li>deep trees (more memory consuption)</li>
-				    </ul>
-				</td>
-				<tr>
-				    <td style="border: 1px solid black;vertical-align:middle">Octree</td>
-				    <td style="border: 1px solid black">
-					<ul>
-					    <li>slower traversals (typically)</li>
-					    <li>data field storage</li>
-					    <li>
-					</ul>
-				    </td>
-				</tr>
-			    </tbody>
-			</table>
-		    </section>
 		    
 		    <section>
 			<h3> Bounding Boxes </h3>
