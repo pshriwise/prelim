@@ -1097,7 +1097,7 @@ for axis in axes:
 			    <ul class="fragment">
 				<li> adaptive mesh refinement or octree may be useful </li>
 				<li> error estimation becomes more difficult with non-uniform techniques </li>
-				<li> other uniform mesh methods could be helpful <cite><small style="vertical-align:bottom">Setaulri_2014</small></cite> </li>
+				<li> other uniform mesh methods using virtual memory could be applied<cite><small style="vertical-align:bottom">[6]</small></cite> </li>
 			    </ul>
 			</ul>
 		    </section>
@@ -1121,9 +1121,17 @@ for axis in axes:
 				<li> feature adaptation </li>
 				<li> can similar solution be applied to SAH building or is the modified median splitting build necessary?</li>
 			    </ul>
-			    <li> ideally this can be applied to other problematic mesh features as well </li>
-			    <li> apply to test model and other production models known to contain high valence regions to examine improvement </li>
+			    <li>
+				<li> ideally this can be applied to other problematic mesh features as well </li>
+				<li> apply to test model and other production models known to contain high valence regions to examine improvement </li>
 			</ul>
+			<span style="color: #00b300"  > $tts$ </span>
+			$ =\,  C +$ <span style="color: #b70101">$T_{B}$</span>
+			$ + $
+			<span style="color: #00b300"> $\sum_{}^{N_{r}} T_{T}$</span>
+			$($
+			<span style="color: #b70101">$T_{B}$</span> $,\ldots) $
+
 		    </section>
 		    
 		    
@@ -1158,7 +1166,7 @@ for axis in axes:
 		    </section>
 
 		    <section>
-			<h3> Summary </h3>
+			<h3 class="no-toc-progress"> Summary </h3>
 			<p> each approach aides in goal of CAD-Based Monte Carlo Radiation Transport performance on the order of analytic/native/CSG geometry representations</p>
 			<ul>
 			    <li class="fragment"> trees should now be optimized for high valence regions </li>
