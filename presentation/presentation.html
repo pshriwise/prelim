@@ -310,10 +310,20 @@
 			    <li type="none" class="fragment"> ...</li>
 			</ul>
 		    </section>
-		    
+
+		</section>
+		<section>
 		    <section>
 			<h3> Bounding Volume Hierarchy </h3>
-			<object data="../images/pauls_bvh.svg" class="stretch" type="image/svg+xml"></object>
+			<br><br>
+			<table>
+			    <tbody>
+				<tr>
+				    <td> <img src="../images/bvh_2d_ex.png" width="700px"/></td>
+				    <td class="fragment"> <img src="../images/binary_graph.png" width="600px"/></td>
+				</tr>
+			    </tbody>
+			</table>
 		    </section>
 		    
 		    
@@ -453,32 +463,7 @@ for axis in axes:
 			<img src="../images/hv_study_MOAB_wsr1.png" height="500px" align="center" />
 			<p class="fragment fade-in"> maintains performance without need for altered faceting </p> 
 		    </section>
-		    
-		    <section>
-			<h3> Data Structure Quality </h3>
-			<blockquote>
-			    <p>An often quoted statistic...is that better than 95% of time can be spent performing this operation for complex environments.</p>
-			    - Glassner, Introduction to Ray Tracing
-			</blockquote>
-			<table>
-			    <tbody>
-				<tr>
-				    <td style="vertical-align:top">
-					<p>$ tts $ -  time to solution</p>
-					<p>$ C $ -  cost of other operations </p>
-					<p>$ T_{B} $ -  acceleration data structure build time </p>
-					<p>$ T_{T} $ -  traversal time </p>
-					<p>$ N_{r} $ -  ray queries required for solution </p>
-					<p>$ q $ -  acceleration data structure quality </p>
-				    </td>
-				    <td style="vertical-align:top">$$ tts = C + T_{B} + \sum_{}^{N_{r}} T_{T} $$
-					$$ tts =\,  C + T_{B} + \sum_{}^{N_{r}} T_{T}(q,\ldots) $$
-				    </td>
-				</tr>
-			    </tbody>
-			</table>
-		    </section>
-    
+		        
 		    <section>
 			<h3> Surface Area Heuristic </h3>
 			<h4>(SAH)</h4>
@@ -525,6 +510,58 @@ for axis in axes:
 			<img src="../images/hv_emdag.png" height="500px" align="center" />		    
 		    </section>
 
+		</section>
+
+		<section>
+
+		    <section>
+			<h3> Feature Adaptive BVH Building </h3>
+			<ul>
+			    <li>alter building parameters for problematic mesh regions which can be identified by poorly formed tree topology</li>
+			    <li>of particular interest is the high valence case</li>
+			</ul>
+			<p align="center"> this process is likely of more interest to radiation transport than rendering </p>
+			<table>
+			    <tbody>
+				<tr>
+				    <td align="center" colspan="2"> <b>Primary Ray Estimates</b> </td>
+				</tr>
+				<tr>
+				    <td style="border-right: 1px solid black"> rendering </td>
+				    <td align="right" width="800px"> $ (\sim 8 \frac{rays}{pixel})(1024 \times 1080\, pixels) $ = $16.6 \times 10^6$ rays</td>
+				</tr>
+				<tr style="border-bottom: 1px solid black">
+				    <td style="border-right: 1px solid black"> radiation transport </td>
+				    <td style="vertical-align:middle" align="right"> $ 1 \times 10^9 $ histories $ $ = $ 1 \times 10^9 $ rays </td>
+				</tr>
+			    </tbody>
+			</table>
+			<p align="center" class="fragment"> additional order-of-magnitude in secondary rays for radiation transport as well</p>
+				    </section>
+		    
+		    <section>
+			<h3 class="no-toc-progress"> Feature Adaptation in BVH Construction </h3>
+			<table>
+			    <tbody>
+				<tr>
+				    <td>
+					<p>$ tts $ -  time to solution</p>
+					<p>$ C $ -  cost of other operations </p>
+					<p>$ T_{B} $ -  acceleration data structure build time </p>
+					<p>$ T_{T} $ -  average traversal time </p>
+					<p>$ N_{r} $ -  ray queries  required for solution </p>
+					<p>$ q $ -  acceleration data structure quality </p>
+				    </td>
+				    <td>$$ tts = C + T_{B} + \sum_{}^{N_{r}} T_{T} $$
+					$$ tts =\,  C + T_{B} + \sum_{}^{N_{r}} T_{T}(q,\ldots) $$
+					$$ q(T_{B})  \rightarrow T_{T}(T_{B}) \rightarrow T_{T} \propto \frac{1}{{T_{B}}^{x}} \,\, (\, x \geq 0) $$
+					$$ tts =\,  C + T_{B} + \sum_{}^{N_{r}} T_{T}(T_{B},\ldots) $$
+				    </td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+		    
 		    
 		</section>
 		
@@ -532,7 +569,7 @@ for axis in axes:
 		<section>
 		    
 		    <section>
-			<h1> Architecture Based Acceleration </h1>
+			<h1> EmDAG </h1>
 		    </section>
 		    
 		    <section>
@@ -733,6 +770,76 @@ for axis in axes:
 
 		</section>
 
+		<section>
+		    <section>
+			<h3> Enhanced SIMD BVH Traversal for MCRT</h3>
+			<p> the Embree kernel does not meet the requirments of the robust tracking algorithm used by DAGMC as it currently exists </p>
+			<ul>
+			    <li class="fragment"> single to double precision conversion </li>
+			    <li class="fragment"> logic involving mesh interrogation </li>
+			</ul>
+			<br></br>
+			<br></br>
+			<table class="fragment">
+			    <tbody>
+				<tr>
+				    <td align="center"><b>MOAB</b></td>
+				    <td align="center"><b>EmDAG</b></td>
+				</tr>
+				<tr>
+				    <td width="300px">
+					<ul>
+					    <li>designed for interrogation/manipulation of mesh</li>
+					    <li>slow due to database context</li>
+					</ul>
+				    </td>
+				    <td width="300px">
+					<ul>
+					    <li>very fast CPU-based ray tracing</li>
+					    <li>single-precision</li>
+					    <li>limited mesh interface</li>
+					</ul>
+				    </td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+		    
+		    <section>
+			<h3 class="no-toc-progress"> Architecture Based Acceleration </h3>
+			<h4> Going Forward </h4>
+			<ul>
+			    <li class="fragment highlight-red">separate DAGMC tracking code from MOAB's ray tracing interface</li>
+			    <ul>
+				<div class="fragment">
+				    <li>determine what is critical; what is necessary; what requires MOAB</li>
+				</div>
+			    </ul>
+			    <br>
+			    <li class="fragment highlight-red"> couple SIMD BVH traversal to a MOAB-build hierarchy </li>
+			    <ul>
+				<div class="fragment">
+				    <li>MOAB provides contiguous memory sets via its direct access methods</li>
+				    <ul>
+					<li>no primitive  memory duplication</li>
+					<li>contiguous memory for primitives, hierarchy</li>
+				    </ul>
+				</div>
+			    </ul>
+			    <br>
+			    <li class="fragment highlight-red">proposed implementation </li>
+			    <ul>
+				<div class="fragment">
+				    <li>single-precision boxes constructed around MOAB's double-precision primitives</li>
+				    <li> perform SIMD traversal of n-ary tree </li>
+				    <li> double precision intersection of triangles</li>
+				    <li>will maintain much of Embree's speed as majority of time is spent in BVH traversal</li>
+				</div>
+			    </ul>
+			</ul>
+		    </section>
+
+		</section>
 		<!-- Implicit Surfaces -->
 		<section>
 		    
@@ -860,62 +967,33 @@ for axis in axes:
 			<p align="center">$$ U = \frac{dagmc\, rays -  dagmc\, w/\, precond.\, rays}{dagmc\, rays}$$ </p>
 			<object data="precond_utilization.html" class="stretch"></object>
 		    </section>
+
+		</section>
+		<section>
 		    
+		    <section>
+			<h3> Signed Distance Field Preconditioner </h3>
+			<ul>
+			    <li class="fragment"> has already been shown to be a powerful acceleration tool given the <a href="#precond_sphere_water">proper conditions</a>  </li>
+			    <br>
+			    <li class="fragment"> identification of proper conditions for this data structure is important</li>
+			    <br>
+			    <li class="fragment"> memory footprint is of concern </li>
+			    <ul class="fragment">
+				<li> adaptive mesh refinement or octree may be useful </li>
+				<li> error estimation becomes more difficult with non-uniform techniques </li>
+				<li> other uniform mesh methods could be helpful <cite><small style="vertical-align:bottom">Setaulri_2014</small></cite> </li>
+			    </ul>
+			</ul>
+		    </section>
+
 		</section>
 
 		<!-- Research Proposal -->
 		<section>
 
 		    <section>
-			<h2> Proposed Work </h2>
-		    </section>
-		    
-		    <section>
-			<h3> Feature Adaptation in BVH Construction </h3>
-			<ul>
-			    <li>alter building parameters for problematic mesh regions which can be identified by poorly formed tree topology</li>
-			    <li>of particular interest is the high valence case</li>
-			</ul>
-			<p align="center"> this process is likely of more interest to radiation transport than rendering </p>
-			<table>
-			    <tbody>
-				<tr>
-				    <td align="center" colspan="2"> <b>Primary Ray Estimates</b> </td>
-				</tr>
-				<tr>
-				    <td style="border-right: 1px solid black"> rendering </td>
-				    <td align="right" width="800px"> $ (\sim 8 \frac{rays}{pixel})(1024 \times 1080\, pixels) $ = $16.6 \times 10^6$ rays</td>
-				</tr>
-				<tr style="border-bottom: 1px solid black">
-				    <td style="border-right: 1px solid black"> radiation transport </td>
-				    <td style="vertical-align:middle" align="right"> $ 1 \times 10^9 $ histories $ $ = $ 1 \times 10^9 $ rays </td>
-				</tr>
-			    </tbody>
-			</table>
-			<p align="center" class="fragment"> additional order-of-magnitude in secondary rays for radiation transport as well</p>
-				    </section>
-		    
-		    <section>
-			<h3 class="no-toc-progress"> Feature Adaptation in BVH Construction </h3>
-			<table>
-			    <tbody>
-				<tr>
-				    <td>
-					<p>$ tts $ -  time to solution</p>
-					<p>$ C $ -  cost of other operations </p>
-					<p>$ T_{B} $ -  acceleration data structure build time </p>
-					<p>$ T_{T} $ -  average traversal time </p>
-					<p>$ N_{r} $ -  ray queries  required for solution </p>
-					<p>$ q $ -  acceleration data structure quality </p>
-				    </td>
-				    <td>$$ tts = C + T_{B} + \sum_{}^{N_{r}} T_{T} $$
-					$$ tts =\,  C + T_{B} + \sum_{}^{N_{r}} T_{T}(q,\ldots) $$
-					$$ q(T_{B})  \rightarrow T_{T}(T_{B}) \rightarrow T_{T} \propto \frac{1}{{T_{B}}^{x}} \,\, (\, x \geq 0) $$
-					$$ tts =\,  C + T_{B} + \sum_{}^{N_{r}} T_{T}(T_{B},\ldots) $$
-				    </td>
-				</tr>
-			    </tbody>
-			</table>
+			<h2> Summary </h2>
 		    </section>
 		    
 		    <section>
@@ -933,73 +1011,6 @@ for axis in axes:
 			</ul>
 		    </section>
 		    
-		    <section>
-			<h3> Architecture Based Acceleration </h3>
-			<p> the Embree kernel does not meet the requirments of the robust tracking algorithm used by DAGMC as it currently exists </p>
-			<ul>
-			    <li class="fragment"> single to double precision conversion </li>
-			    <li class="fragment"> logic involving mesh interrogation </li>
-			</ul>
-			<br></br>
-			<br></br>
-			<table class="fragment">
-			    <tbody>
-				<tr>
-				    <td align="center"><b>MOAB</b></td>
-				    <td align="center"><b>EmDAG</b></td>
-				</tr>
-				<tr>
-				    <td width="300px">
-					<ul>
-					    <li>designed for interrogation/manipulation of mesh</li>
-					    <li>slow due to database context</li>
-					</ul>
-				    </td>
-				    <td width="300px">
-					<ul>
-					    <li>very fast CPU-based ray tracing</li>
-					    <li>single-precision</li>
-					    <li>limited mesh interface</li>
-					</ul>
-				    </td>
-				</tr>
-			    </tbody>
-			</table>
-		    </section>
-		    
-		    <section>
-			<h3 class="no-toc-progress"> Architecture Based Acceleration </h3>
-			<h4> Going Forward </h4>
-			<ul>
-			    <li class="fragment highlight-red">separate DAGMC tracking code from MOAB's ray tracing interface</li>
-			    <ul>
-				<div class="fragment">
-				    <li>determine what is critical; what is necessary; what requires MOAB</li>
-				</div>
-			    </ul>
-			    <br>
-			    <li class="fragment highlight-red"> couple SIMD BVH traversal to a MOAB-build hierarchy </li>
-			    <ul>
-				<div class="fragment">
-				    <li>MOAB provides contiguous memory sets via its direct access methods</li>
-				    <ul>
-					<li>no primitive  memory duplication</li>
-					<li>contiguous memory for primitives, hierarchy</li>
-				    </ul>
-				</div>
-			    </ul>
-			    <br>
-			    <li class="fragment highlight-red">proposed implementation </li>
-			    <ul>
-				<div class="fragment">
-				    <li>single-precision boxes constructed around MOAB's double-precision primitives</li>
-				    <li> perform SIMD traversal of n-ary tree </li>
-				    <li> double precision intersection of triangles</li>
-				    <li>will maintain much of Embree's speed as majority of time is spent in BVH traversal</li>
-				</div>
-			    </ul>
-			</ul>
-				    </section>
 		    
 		    <section>
 			<h3 class="no-toc-progress"> Architecture Based Acceleration </h3>
