@@ -105,7 +105,7 @@
 			<ul>
 			    <li>pathway for robust particle transport on CAD geometries exists</li>
 			    <ul>
-				<li> Direct Accelerated Geometry Mone Carlo (DAGMC<a href="#bib"><small style="vertical-align:bottom">[7]</small></a>)</li>
+				<li> Direct Accelerated Geometry Mone Carlo (DAGMC<a href="#bib"><small style="vertical-align:bottom">[9]</small></a>)</li>
 			    </ul>
 			    <br>
 			    <li> not yet at its full potential: </li>			    
@@ -193,22 +193,22 @@
 				    <td style="border-top: 2px dashed black;border-left: 2px dashed black" align="center">particle tracking</td>
 				    <td style="border-top: 2px dashed black"></td>			    
 				    <td align="center" style="border-right: 2px dashed black;border-top: 2px dashed black">
-					<span>MCNP5<a href=#"bib"><small style="vertical-align:bottom">[9]</small></a></span>
+					<span>MCNP5<a href=#"bib"><small style="vertical-align:bottom">[11]</small></a></span>
 				    </td>
 				</tr>
 				<tr class="noBorder" style="height:100px">
 				    <td class="redBlock" align="center"><p>CAD</p> <p>(Cubit/Trelis)</p></td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
-				    <td class="redBlock" align="center"><p>preprocessing</p> <p>(MOAB<a href="#bib"><small style="vertical-align:bottom;color:white">[6]</small></a>)</p></td>
+				    <td class="redBlock" align="center"><p>preprocessing</p> <p>(MOAB<a href="#bib"><small style="vertical-align:bottom;color:white">[8]</small></a>)</p></td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    			    
-				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[7]</small></a></p> <p>(MOAB)</p> </td>
+				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[9]</small></a></p> <p>(MOAB)</p> </td>
 				    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
 				    <td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
 				</tr>
 				<tr class="noBorder">
 				    <td align="center"> geometric design </td>
 				    <td></td>
-				    <td align="center"> facet sealing </td>
+				    <td align="center"> make_watertight <a href="#bib"><small style="vertical-align:bottom">[7]</small></a> </p> </td>
 				    <td></td>
 				    <td align="center" style="border-left: 2px dashed black;border-bottom: 2px dashed black"> ray tracing </td>
 				    <td style="border-bottom: 2px dashed black"></td>
@@ -239,11 +239,11 @@
 				    <td align="center" style="border-top: 2px dashed black;border-left: 2px dashed black">particle tracking</td>
 				    <td style="border-top: 2px dashed black"> </td>			    
 				    <td align="center" style="border-top: 2px dashed black;border-right: 2px dashed black">
-					<span>MCNP5<a href=#"bib"><small style="vertical-align:bottom">[9]</small></a></span>
+					<span>MCNP5<a href=#"bib"><small style="vertical-align:bottom">[11]</small></a></span>
 				    </td>
 				</tr>
 				<tr class="noBorder" style="height:100px">
-				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[7]</small></a></p> <p>(MOAB)</p> </td>
+				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[9]</small></a></p> <p>(MOAB)</p> </td>
 				    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
 				    <td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
 				</tr>
@@ -473,7 +473,7 @@ for axis in axes:
 			<h4>(SAH)</h4>
 			<p>
 			  $C =  C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i}$
-			    <a href="#bib"><small style="vertical-align:bottom">[1]</small></a> <a href="#bib"><small style="vertical-align:bottom">[4]</small></a>
+			    <a href="#bib"><small style="vertical-align:bottom">[1]</small></a> <a href="#bib"><small style="vertical-align:bottom">[5]</small></a>
 
 			</p>
 			<style class="text/css">
@@ -511,7 +511,7 @@ for axis in axes:
 		
 		    <section>
 			<h3> SAH Applied to High Valence </h3>
-			<p align="center">same tests performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel <a href="bib"><small style="vertical-align:bottom">[8]</small></a></p>
+			<p align="center">same tests performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel <a href="bib"><small style="vertical-align:bottom">[10]</small></a></p>
 			<img src="../images/hv_emdag.png" height="500px" align="center" />		    
 		    </section>
 
@@ -545,7 +545,7 @@ for axis in axes:
 				    </section>
 		    
 		    <section>
-			<h3 class="no-toc-progress"> Feature Adaptation in BVH Construction </h3>
+			<h3> General Ray Tracing Cost Analysis </h3>
 			<table>
 			    <tbody>
 				<tr>
@@ -567,7 +567,54 @@ for axis in axes:
 			</table>
 		    </section>
 		    
-		    
+		    <section>
+			<h3> Proposed Building Scheme </h3>
+			<br>
+			<p>
+			    <span class="fragment highlight-green" > $tts$ </span>
+			    $ =\,  C +$ <span class="fragment highlight-red">$T_{B}$</span>
+			    $ + $
+			    <span class="fragment highlight-green">$\sum_{}^{N_{r}} T_{T}$</span>
+			    $($
+			    <span class="fragment highlight-red">$T_{B}$</span> $,\ldots) $
+			</p>
+			<table>
+			    <tbody>
+				<tr>
+				    <td class="redBlock">
+					Construct BVH
+					<p>
+					    <ul>
+						<li> SAH </li>
+						<li> tag poorly formed leaves </li>
+					    </ul>
+					</p>
+				    </td>
+				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
+				    <td class ="redBlock">
+					Resolve Tagged Leaves
+					<p>
+					    Step 1:
+					    <ul>
+						<li>feature detection</li>
+						<li>registered features</li>
+						<ul>
+						    <li>criterion for detection</li>
+						</ul>
+					    </ul>
+					</p>
+					<p>
+					    Step 2:
+					    <ul>
+						<li>modified SAH?</li>
+						<li>modified Median Splitting</li>
+					    </ul>
+				    </td>
+				</tr>
+			    </tbody>
+			</table>
+			
+		    </section>
 		</section>
 		
 		<!-- SIMD BVH -->
@@ -778,10 +825,11 @@ for axis in axes:
 		<section>
 		    <section>
 			<h3> Enhanced SIMD BVH Traversal for MCRT</h3>
-			<p> the Embree kernel does not meet the requirments of the robust tracking algorithm used by DAGMC as it currently exists </p>
+			<p> Embree kernel does not meet the requirments of the robust tracking algorithm used by DAGMC as it currently exists </p>
 			<ul>
 			    <li class="fragment"> single to double precision conversion </li>
-			    <li class="fragment"> logic involving mesh interrogation </li>
+			    <li class="fragment"> capability for deeper mesh interrogation </li>
+			    <li class="fragment"> no closest to location capability </li>
 			</ul>
 			<br></br>
 			<br></br>
@@ -792,15 +840,15 @@ for axis in axes:
 				    <td align="center"><b>EmDAG</b></td>
 				</tr>
 				<tr>
-				    <td width="300px">
+				    <td width="500px">
 					<ul>
 					    <li>designed for interrogation/manipulation of mesh</li>
 					    <li>slow due to database context</li>
 					</ul>
 				    </td>
-				    <td width="300px">
+				    <td width="500px">
 					<ul>
-					    <li>very fast CPU-based ray tracing</li>
+					    <li>SIMD BVH ray tracing with design relevant to MCRT</li>
 					    <li>single-precision</li>
 					    <li>limited mesh interface</li>
 					</ul>
@@ -811,37 +859,58 @@ for axis in axes:
 		    </section>
 		    
 		    <section>
-			<h3 class="no-toc-progress"> Architecture Based Acceleration </h3>
-			<h4> Going Forward </h4>
+			<h3> Propsed Design of SIMD BVH for MCRT </h3>
+			<br>
 			<ul>
-			    <li class="fragment highlight-red">separate DAGMC tracking code from MOAB's ray tracing interface</li>
-			    <ul>
-				<div class="fragment">
-				    <li>determine what is critical; what is necessary; what requires MOAB</li>
-				</div>
-			    </ul>
+			    <li>natrual inclination is to make Embree double precision</li>
 			    <br>
-			    <li class="fragment highlight-red"> couple SIMD BVH traversal to a MOAB-build hierarchy </li>
+			    <li>doubly disadvantageous:</li>
 			    <ul>
-				<div class="fragment">
-				    <li>MOAB provides contiguous memory sets via its direct access methods</li>
-				    <ul>
-					<li>no primitive  memory duplication</li>
-					<li>contiguous memory for primitives, hierarchy</li>
-				    </ul>
-				</div>
-			    </ul>
-			    <br>
-			    <li class="fragment highlight-red">proposed implementation </li>
-			    <ul>
-				<div class="fragment">
-				    <li>single-precision boxes constructed around MOAB's double-precision primitives</li>
-				    <li> perform SIMD traversal of n-ary tree </li>
-				    <li> double precision intersection of triangles</li>
-				    <li>will maintain much of Embree's speed as majority of time is spent in BVH traversal</li>
-				</div>
+				<li>slower double precision calculations</li>
+				<li>increased box footprint means fewer entities in register</li>
 			    </ul>
 			</ul>
+		    </section>
+
+		    <section>
+			<h3> Mixed-precision concept<a href="#bib"><small style="vertical-align:bottom">[3]</small></a> </h3>
+			<br><br><br>
+			<object data="../images/blurry_dice.svg" type="image/svg+xml" height="300px"></object>
+		    </section>
+		    
+		    <section>
+			<h3> Proposed Design of SIMD BVH for MCRT </h3>
+			
+			<table>
+			    <tbody>
+				<tr>
+				    <td style="vertical-align:top" class="redBlock">
+					MOAB
+					<p>
+					    <ul>
+						<li>generate expanded single-precision boxes around double-precision primitives</li>
+						<li>maintians memory contiguity for other applications </li>
+					    </ul>
+					</p>
+				    </td>
+				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
+				    <td style="vertical-align:top" class="redBlock">
+					RT Kernel
+					<p>
+					    <ul>	
+						<li> triangle,hieararchy data via MOAB's direct access methods</li>
+						<li>SIMD traversal of single precision hieararchy</li>
+						<li>SIMD ray-trignale intersections in double precision</li>
+					    </ul>
+					</p>
+				    </td>
+				    
+				</tr>
+				   
+			    </tbody>
+			</table>
+			<br>
+			<p class="fragment"> will maintain much of Embree's speed as majority of time is spent in BVH traversal </p>
 		    </section>
 
 		</section>
@@ -885,7 +954,7 @@ for axis in axes:
 			<p align="left"> used for:
 			    <ul>
 				<li> modeling (CSG), simulation, triangulation </li>
-				<li class="fragment"> and rendering of dynamic surfaces like smoke or fire ($\Omega(\vec{x},t)$) <a href="#bib"><small style="vertical-align:bottom">[3]</small></a> </li>
+				<li class="fragment"> and rendering of dynamic surfaces like smoke or fire ($\Omega(\vec{x},t)$) <a href="#bib"><small style="vertical-align:bottom">[4]</small></a> </li>
 			    </ul>
 			    <p align="left" class="fragment"> ray marching: </p>
 			<p class="fragment current-visible"><object data="../images/rm0.svg" style="margin: -50px -80px 0px 0px" height="500px" type="image/svg+xml"></object></p>
@@ -1105,14 +1174,16 @@ for axis in axes:
 			<small>
 			    <div class="references">
 				<p>[1] Glassner, Andrew S., ed. 1989. <em>An Introduction to Ray Tracing</em>. London, UK, UK: Academic Press Ltd.</p>
-				<p>[2] Goorley, T., M. James, T. Booth, F. Brown, J. Bull, L.J. Cox, J. Durkee, et al. 2016. “Features of {MCNP6}.” <em>Annals of Nuclear Energy</em> 87, Part 2: 772–83. doi:<a href="http://dx.doi.org/http://dx.doi.org/10.1016/j.anucene.2015.02.020">http://dx.doi.org/10.1016/j.anucene.2015.02.020</a>.</p>				
-				<p>[3]Knoll, Aaron. 2008. “A Survey of Implicit Surface Rendering Methods, and a Proposal for a Common Sampling Framework.” <em>Lecture Notes in Informatics (LNI), Proceedings - Series of the Gesellschaft Fur Informatik (GI)</em>, 164–77.</p>				
-				<p>[4] MacDonald, Kellogg S., J. David ; Booth. 1990. “Heuristics for Ray Tracing Using Space Subdivision.” <em>The Visual Computer</em> 6 (3): 153–66. doi:<a href="http://dx.doi.org/10.1007/BF01911006">10.1007/BF01911006</a>.</p>
-				<p>[5] Setaluri, Rajsekhar, Mridul Aanjaneya, Sean Bauer, and Eftychios Sifakis. 2014. “SPGrid: A Sparse Paged Grid Structure Applied to Adaptive Smoke Simulation.” <em>ACM Trans. Graph.</em> 33 (6). New York, NY, USA: ACM: 205:1–205:12. doi:<a href="http://dx.doi.org/10.1145/2661229.2661269">10.1145/2661229.2661269</a>.</p>
-				<p>[6] Tautges, T. J., R. Meyers, K. Merkley, C. Stimpson, and C. Ernst. 2004. <em>MOAB: A Mesh-Oriented Database</em>. SAND2004-1592. Sandia National Laboratories.</p>
-				<p>[7] Tautges, Timothy J., P. P. H. Wilson, Jason Kraftcheck, Brandon M. Smith, and Douglass L. Henderson. 2009. “Acceleration Techniques for Direct Use of CAD-Based Geometries in Monte Carlo Radiation Transport.” In <em>International Conference on Mathematics, Computational Methods &amp; Reactor Physics (M&amp;C 2009)</em>. Saratoga Springs, NY: American Nuclear Society.</p>
-				<p>[8] Wald, Ingo, Sven Woop, Carsten Benthin, Gregory S. Johnson, and Manfred Ernst. 2014. “Embree: A Kernel Framework for Efficient CPU Ray Tracing.” <em>ACM Trans. Graph.</em> 33 (4). New York, NY, USA: ACM: 143:1–:8. doi:<a href="http://dx.doi.org/10.1145/2601097.2601199">10.1145/2601097.2601199</a>.</p>
-				<p>[9] X-5 Monte Carlo Team. 2004. <em>MCNP - a General Monte Carlo N-Particle Transport Code, Version 5 - Volume III: Developers Guide</em>. LA-CP-03-0284. Los Alamos National Laboratory.</p>
+				<p>[2] Goorley, T., M. James, T. Booth, F. Brown, J. Bull, L.J. Cox, J. Durkee, et al. 2016. “Features of {MCNP6}.” <em>Annals of Nuclear Energy</em> 87, Part 2: 772–83. doi:<a href="http://dx.doi.org/http://dx.doi.org/10.1016/j.anucene.2015.02.020">http://dx.doi.org/10.1016/j.anucene.2015.02.020</a>.</p>
+				<p>[3]Baboulin, Marc, Alfredo Buttari, Jack Dongarra, Jakub Kurzak, Julie Langou, Julien Langou, Piotr Luszczek, and Stanimire Tomov. 2009. “Accelerating Scientific Computations with Mixed Precision Algorithms.” <em>Computer Physics Communications</em> 180 (12): 2526–33. doi:<a href="http://dx.doi.org/http://dx.doi.org/10.1016/j.cpc.2008.11.005">http://dx.doi.org/10.1016/j.cpc.2008.11.005</a>.</p>				
+				<p>[4]Knoll, Aaron. 2008. “A Survey of Implicit Surface Rendering Methods, and a Proposal for a Common Sampling Framework.” <em>Lecture Notes in Informatics (LNI), Proceedings - Series of the Gesellschaft Fur Informatik (GI)</em>, 164–77.</p>				
+				<p>[5] MacDonald, Kellogg S., J. David ; Booth. 1990. “Heuristics for Ray Tracing Using Space Subdivision.” <em>The Visual Computer</em> 6 (3): 153–66. doi:<a href="http://dx.doi.org/10.1007/BF01911006">10.1007/BF01911006</a>.</p>
+				<p>[6] Setaluri, Rajsekhar, Mridul Aanjaneya, Sean Bauer, and Eftychios Sifakis. 2014. “SPGrid: A Sparse Paged Grid Structure Applied to Adaptive Smoke Simulation.” <em>ACM Trans. Graph.</em> 33 (6). New York, NY, USA: ACM: 205:1–205:12. doi:<a href="http://dx.doi.org/10.1145/2661229.2661269">10.1145/2661229.2661269</a>.</p>
+				<p>[7]Smith, B.M., T.J. Tautges, and P.P.H. Wilson. 2010. “Sealing Faceted Surfaces to Achieve Watertight CAD Models.” In. Chattanooga, TN, United States.</p>				
+				<p>[8] Tautges, T. J., R. Meyers, K. Merkley, C. Stimpson, and C. Ernst. 2004. <em>MOAB: A Mesh-Oriented Database</em>. SAND2004-1592. Sandia National Laboratories.</p>
+				<p>[9] Tautges, Timothy J., P. P. H. Wilson, Jason Kraftcheck, Brandon M. Smith, and Douglass L. Henderson. 2009. “Acceleration Techniques for Direct Use of CAD-Based Geometries in Monte Carlo Radiation Transport.” In <em>International Conference on Mathematics, Computational Methods &amp; Reactor Physics (M&amp;C 2009)</em>. Saratoga Springs, NY: American Nuclear Society.</p>
+				<p>[10] Wald, Ingo, Sven Woop, Carsten Benthin, Gregory S. Johnson, and Manfred Ernst. 2014. “Embree: A Kernel Framework for Efficient CPU Ray Tracing.” <em>ACM Trans. Graph.</em> 33 (4). New York, NY, USA: ACM: 143:1–:8. doi:<a href="http://dx.doi.org/10.1145/2601097.2601199">10.1145/2601097.2601199</a>.</p>
+				<p>[11] X-5 Monte Carlo Team. 2004. <em>MCNP - a General Monte Carlo N-Particle Transport Code, Version 5 - Volume III: Developers Guide</em>. LA-CP-03-0284. Los Alamos National Laboratory.</p>
 			    </div>
 			</small>
 		    </section>
