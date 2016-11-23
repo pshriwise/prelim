@@ -393,11 +393,12 @@
 
 		<!-- High Valence Features -->
 		<section>
+
 		    <!-- High Valence -->
 		    <section>
 			<h3> High Valence Mesh Features </h3>
 			<ul>
-			    <li>common feature of many triangulation algorithms</li>
+			    <li>common feature of many faceting algorithms</li>
 			    <li>result of trying to minimize triangles used to represent a surface</li>
 			    <li>shown to be detrimental to DAGMC performance</li>
 			</ul>
@@ -706,6 +707,7 @@ for axis in axes:
 				</tr>
 			    </tbody>
 			</table>
+			<p class="fragment"> flux and energy tallies in all cells </p>
 		    </section>
 		    
 		    <section>
@@ -721,14 +723,15 @@ for axis in axes:
 		    </section>
 		    
 		    <section>
-			<h3>FNG Transport Results</h3>
+			<h3>FNG Transport Test</h3>
 			<ul>
 			    <li class="fragment fade-in"> original source replaced with 14.1 MeV neutron isotropic volume source </li>
 			    <li class="fragment fade-in"> facet tolerance: 1e-04cm</li>
 			    <li class="fragment fade-in"> length tolerance: 5cm </li>
 			    <li class="fragment fade-in">  100M histories</li>
 			</ul>
-			<img src="images/fng_cad.png" height="400px">
+			<img src="images/fng_cad.png" height="350px">
+			<p class="fragment"> flux mesh tally over entire problem </p>
 		    </section>
 		    
 		    <section>
@@ -749,7 +752,7 @@ for axis in axes:
 		    </section>
 		    
 		    <section>
-			<h3> FNG Transport Test </h3>
+			<h3> FNG Transport Results </h3>
 			<object data="emdag_fng_performance.html" width="800px" height="500px"></object>
 			<p class="fragment"> 15% improvement in EmDAG performance w/ lentgh tolerance </p> 
 		    </section>
@@ -864,7 +867,7 @@ for axis in axes:
 				<li>disambiguates distance value signs using DAGMC's point containment algorithm</li>
 			    </ul>
 			</ul>
-			<img src="../images/sdf_sphere.png" height="550x"/>
+			<img src="../images/sdf_sphere.png" height="500px"/>
 		    </section>
 		    
 		    <section>
@@ -875,14 +878,14 @@ for axis in axes:
 			    <li>all volumes are water-filled </li>
 			    <li>density varied from 0 to 1 (g/cc) </li>
 			    <li>faceting tolerance: 1e-04cm </li>			
-			    <li>1M histories </li>
+			    <li>1M histories (100k for profiling) </li>
 			</ul>
-			<img src="../images/sphere_cad.png" height="400px" align="center" />
-				    </section>
+			<img src="../images/sphere_cad.png" height="300px" align="center" />
+			<p class="fragment"> flux and energy tallies applied </p>
+		    </section>
 		    
 		    <section id="precond_sphere_water">
 			<h3> Initial Results </h3>
-			
 			<object data="precond_sphere_water.html" class="stretch"></object>
 		    </section>
 
