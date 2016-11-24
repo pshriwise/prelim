@@ -65,7 +65,7 @@
 			</p>
 			
 			<ul>
-			    <li> equal freedom in deisgn and analysis </li>
+			    <li> equal freedom in design and analysis </li>
 			    <li> engineering analysis on the same model </li>
 			</ul>
 			<img src="images/cad_screenshot.png" style="border-style:none" height="450"/>
@@ -76,7 +76,7 @@
 			<table style="border-style:black">
 			    <tbody>
 				<tr>
-				    <th align="center">Native Geometries</th>
+				    <th align="center">Native Geometry</th>
 				    <th align="center">CAD Geometry</th>
 				</tr>
 				<tr>
@@ -105,7 +105,7 @@
 			<ul>
 			    <li>pathway for robust particle transport on CAD geometries exists</li>
 			    <ul>
-				<li> Direct Accelerated Geometry Mone Carlo (DAGMC<a href="#bib"><small style="vertical-align:bottom">[9]</small></a>)</li>
+				<li> Direct Accelerated Geometry Monte Carlo (DAGMC<a href="#bib"><small style="vertical-align:bottom">[9]</small></a>)</li>
 			    </ul>
 			    <br>
 			    <li> not yet at its full potential: </li>			    
@@ -118,7 +118,7 @@
 		    
 		    <section>
 			<h3> Research Goal </h3>
-			<b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
+			<b>CAD-based radiation transport performance comparable to native Monte Carlo geometry representations</b>
 			<p>
 			    <table>
 				<tbody>
@@ -161,7 +161,7 @@
 				<br>
 				<li class="fragment">current problems requiring CAD MCRT will benefit from enhanced performance</li>
 				<br>
-				<li class="fragment">performance comparable to native more  realisitc, deisrable for a more broad range of problems</li>
+				<li class="fragment">performance comparable to native more realistic, deisrable for a more broad range of problems</li>
 				<br>
 				<li class="fragment">new methods may be necessary for reasonable runtimes with charged particle transport </li>
 			    </ul>
@@ -261,7 +261,7 @@
 
 		    <section>
 			<h3> Surface Faceting </h3>
-			<p> faceting tolerance: tolerance for farthest point on the facet from the analytic surface </p>
+			<p> <i>faceting tolerance</i>: maximum allowed diatance of farthest point on the facet from the analytic surface </p>
 			<img src="images/facet_tol_zoomed.png" height="100px"/>
 			<ul>
 			    <li> reduce all surfaces to planar type (regardless of actual surface complexity) </li>
@@ -288,7 +288,7 @@
 				    <td> $1.2 \times 10^6$ </td>
 				    <td> $4.9 \times 10^6$ </td>
 				    <td> $3.3 \times 10^6$ </td>
-				    <td> $43.9 \times 10^6$ </td>
+				    <td> $4.4 \times 10^7$ </td>
 				</tr>
 			    </tbody>
 			</table>
@@ -331,9 +331,13 @@
 			<table>
 			    <tbody>
 				<tr>
-				  <td align="center"> Axis-Aligned </td>
+				    <td align="center">
+					Axis-Aligned Boxes
+				    </td>
 				  <td></td>
-				    <td align="center"> Oriented </td>
+				  <td align="center">
+				      Oriented Boxes
+				  </td>
 				</tr>
 				<tr height="300px">
 				  <td align="center"><iframe src="https://www.youtube.com/embed/w16oiYxFJJc" allowfullscreen height="300px" width="300px"></iframe></td>
@@ -350,7 +354,7 @@
 				    <td></td>
 				    <td align="center">
 					<ul>
-					    <li>higher storage (AABB+axes)</li>
+					    <li>higher storage (extents+axes)</li>
 					    <li>must re-orient ray for intersection checking</li>
 					    <li>bound triangles well</li>
 					</ul>
@@ -436,30 +440,10 @@
 		    
 		    <section>
 			<h3 class="no-toc-progress"> Median Splitting Algorithm </h3>
-			<pre width="1000px"><code class="hljs" data-trim>
-
-#//attempt split on each axis
-best_ratio = worst_split_ratio
-for axis in axes:
-    // split the box w/ a median plane along one of its axes
-    left_tris, right_tris = median_box_split(box, box_triangles, axis)
-
-    // calculate the split ratio
-    split_ratio = abs(len(left_tris)-len(right_tris))/ len(box_triangles)
-
-    // if better than the current ratio, update split
-    if ( split_ratio < best_ratio ):
-        current_best_ratio = split_ratio
-        update_split(left_tris,right_tris)
-
-//if no split better than the worst ratio is found, do nothing
-			</code></pre>
-			<br>
+			<br><br>
 			<p> $$ splitting\;ratio  = \dfrac{|left\; child\; primitives\; -\; right\; child\; primitives|}{parent\; entities} $$ </p>
 			<br>
 			<p align="center"> solution: set worst allowable splitting ratio to 1 to force continued build </p>
-
-			
 		    </section>
 		
 		    <section>
@@ -472,7 +456,7 @@ for axis in axes:
 			<h3> Surface Area Heuristic </h3>
 			<h4>(SAH)</h4>
 			<p>
-			  $C =  C_{t} + \frac{SA(B_{L})}{SA(B)} |P_{L}|C_{i} +  \frac{SA(B_{R})}{SA(B)} |P_{R}|C_{i}$
+			  $C_{s} =  C_{t} + \frac{A_{l}}{A_{p}} |P_{l}|C_{i} +  \frac{A_{r}}{A_{p}} |P_{r}|C_{i}$
 			    <a href="#bib"><small style="vertical-align:bottom">[1]</small></a> <a href="#bib"><small style="vertical-align:bottom">[5]</small></a>
 
 			</p>
@@ -482,28 +466,28 @@ for axis in axes:
 			<table>
 			    <tbody>
 				<tr class="noBorder">
+				    <td>$$C_{s}$$ </td><td> - estimated cost of split</td>
+				</tr>
+				<tr class="noBorder">
 				    <td>$$C_{t}$$ </td><td> - cost of traversal to child nodes</td>
+				</tr>
+				<tr class="noBorder">
+				    <td>$$A_{l} $$</td><td> - surface area of left child </td>
+				</tr>
+				<tr class="noBorder">
+				    <td>$$A_{p} $$</td><td> - surface area of parent bounding volume</td>
+				</tr>
+				<tr class="noBorder">
+				    <td>$$P_{l} $$</td><td> - primitives contained by the left child  </td>
 				</tr>
 				<tr class="noBorder">
 				    <td>$$C_{i} $$</td><td> - cost of primitive intersection check </td>
 				</tr>
 				<tr class="noBorder">
-				    <td>$$SA() $$</td><td> - gives surface area of bounding volume </td>
+				    <td>$$A_{r} $$</td><td> - surface area of right child </td>
 				</tr>
 				<tr class="noBorder">
-				    <td>$$B_{L} $$</td><td> - bounding volume of left child </td>
-				</tr>
-				<tr class="noBorder">
-				    <td>$$P_{L} $$</td><td> - primitives contained by the left child  </td>
-				</tr>
-				<tr class="noBorder">
-				    <td>$$B_{R} $$</td><td> - bounding volume of right child </td>
-				</tr>
-				<tr class="noBorder">
-				    <td>$$P_{R} $$</td><td> - primitives contained by the right child </td>
-				</tr>
-				<tr class="noBorder">
-				    <td>$$B $$</td><td> - parent bounding volume</td>
+				    <td>$$P_{r} $$</td><td> - primitives contained by the right child </td>
 				</tr>
 			    </tbody>
 			</table>
@@ -521,27 +505,30 @@ for axis in axes:
 
 		    <section>
 			<h3> Feature Adaptive BVH Building </h3>
-			<ul>
-			    <li>of particular current interest is the high valence case</li>
-			</ul>
-			<p align="center"> this process is likely of more interest to radiation transport than rendering </p>
+			<p align="center"> This process is likely of more interest to radiation transport than rendering. </p>
 			<table>
 			    <tbody>
 				<tr>
-				    <td align="center" colspan="2"> <b>Primary Ray Estimates</b> </td>
+				    <td></td><td></td>
+
 				</tr>
 				<tr>
-				    <td style="border-right: 1px solid black"> rendering </td>
-				    <td align="right" width="800px"> $ (\sim 8 \frac{rays}{pixel})(1024 \times 1080\, pixels) $ = $16.6 \times 10^6$ rays</td>
+				    <td style="border-right: 1px solid black"> Rendering </td>
+				    <td align="right" width="850px"> $ (\sim 8 \frac{rays}{px})(1024 \times 1080\, px) $ = $1.7 \times 10^7 $ primary rays</td>
 				</tr>
 				<tr style="border-bottom: 1px solid black">
-				    <td style="border-right: 1px solid black"> radiation transport </td>
-				    <td style="vertical-align:middle" align="right"> $ 1 \times 10^9 $ histories $ $ = $ 1 \times 10^9 $ rays </td>
+				    <td style="border-right: 1px solid black"> Radiation Transport </td>
+				    <td style="vertical-align:middle" align="right"> $ 10^9 $ histories $ $ = $ 10^9 $ primary rays </td>
 				</tr>
 			    </tbody>
 			</table>
-			<p align="center" class="fragment"> additional order-of-magnitude in secondary rays for radiation transport as well</p>
-				    </section>
+			<p align="center"> There is at least an additional order-of-magnitude in secondary rays for radiation transport.</p>
+			<ul class="fragment">
+			    <li align="left"> higher collision density </li>
+			    <li align="left"> secondary particle emission </li>
+			    <li align="left"> variance reduction </li>
+			</ul>
+		    </section>
 		    
 		    <section>
 			<h3> General Ray Tracing Cost Analysis </h3>
@@ -731,34 +718,34 @@ for axis in axes:
 			<h3> Transport Testing </h3>
 			<p align="left"> EmDAG was applied to a few simple models </p>
 			<ul>
-			    <li class="fragment fade-in">5 MeV isotropic neutron point source at model origin</li>
-			    <li class="fragment fade-in">all volumes are water-filled (&rho; = 1 g/cc)</li>
-			    <li class="fragment fade-in"> faceting tolerance: 1e-04cm </li>			
-			    <li class="fragment fade-in"> 1M histories </li>
+			    <li>5 MeV isotropic neutron point source at model origin</li>
+			    <li>all volumes are water-filled (&rho; = 1 g/cc)</li>
+			    <li> faceting tolerance: $10^{-4}$cm </li>			
+			    <li> 1M histories </li>
 			</ul>
 			<table>
 			    <tbody>
 				<tr>
-				    <td class="noBorder fragment fade-in">
+				    <td>
 					<p align="center"> Single Sphere </p>
 					<img src="../images/sphere_cad.png" width="300px" />
 				    </td>								
-				    <td class="noBorder fragment fade-in">
+				    <td>
 					<p align="center"> Nested Spheres </p>
 					<img src="../images/nested_spheres.png" width="300px" />
 				    </td>				
-				    <td class="noBorder fragment fade-in">
+				    <td>
 					<p align="center"> Cube </p>
 					<img src="../images/cube_cad.png" width="300px" />
 				    </td>
-				    <td class="noBorder fragment fade-in">
+				    <td>
 					<p align="center"> Nested Cubes </p>
 					<img src="../images/nested_cubes.png" width="300px" />
 				    </td>				
 				</tr>
 			    </tbody>
 			</table>
-			<p class="fragment"> flux and energy tallies in all cells </p>
+			<p>flux and energy tallies in all cells </p>
 		    </section>
 		    
 		    <section>
@@ -861,12 +848,13 @@ for axis in axes:
 			<h3> Propsed Design of SIMD BVH for MCRT </h3>
 			<br>
 			<ul>
-			    <li>natrual inclination is to make Embree double precision</li>
+			    <li>The natural inclination might be to make Embree double precision</li>
 			    <br>
-			    <li>doubly disadvantageous:</li>
+			    <li>This is doubly disadvantageous:</li>
+			    <br>
 			    <ul>
 				<li>slower double precision calculations</li>
-				<li>increased box footprint means fewer entities in register</li>
+				<li>increased box footprint means fewer entities can fit in lower level caches</li>
 			    </ul>
 			</ul>
 		    </section>
@@ -899,7 +887,7 @@ for axis in axes:
 					    <ul>	
 						<li> triangle,hieararchy data via MOAB's direct access methods</li>
 						<li>SIMD traversal of single precision hieararchy</li>
-						<li>SIMD ray-trignale intersections in double precision</li>
+						<li>SIMD ray-triangle intersections in double precision</li>
 					    </ul>
 					</p>
 				    </td>
@@ -909,7 +897,7 @@ for axis in axes:
 			    </tbody>
 			</table>
 			<br>
-			<p class="fragment"> will maintain much of Embree's speed as majority of time is spent in BVH traversal </p>
+			<p> Single-precision allows much of Embree's speed to be retained as majority of time is spent in BVH traversal. </p>
 		    </section>
 
 		</section>
@@ -950,19 +938,18 @@ for axis in axes:
 		    
 		    <section>
 			<h3 class="no-toc-progress"> Implicit Surfaces </h3>
-			<p align="left"> used for:
+			<p align="left"> Implicit surface uses:
 			    <ul>
 				<li> modeling (CSG), simulation, triangulation </li>
-				<li class="fragment"> and rendering of dynamic surfaces like smoke or fire ($\Omega(\vec{x},t)$) <a href="#bib"><small style="vertical-align:bottom">[4]</small></a> </li>
+				<li> rendering of dynamic surfaces like smoke or fire ($\Omega(\vec{x},t)$) <a href="#bib"><small style="vertical-align:bottom">[4]</small></a> </li>
 			    </ul>
-			    <p align="left" class="fragment"> ray marching: </p>
+			    <p align="left" class="fragment"> Ray Marching: </p>
 			<p class="fragment current-visible"><object data="../images/rm0.svg" style="margin: -50px -80px 0px 0px" height="500px" type="image/svg+xml"></object></p>
 			<p class="fragment current-visible"><object data="../images/rm1.svg" style="margin: -50px -80px 0px 0px" height="500px" type="image/svg+xml"></object></p>
 		    </section>
 		    
 		    <section>
 			<h3> Signed Distance Fields </h3>
-			<p align="left"> ray marching is accomplished using sampled fields with these requirements </p>
 			    <ul>
 				<li> $ d(\vec{x}) = 0 $ for all $x$ on the surface boundary </li>
 				<li> $ d(\vec{x}) > 0 $ for all $x$ inside the surface boundary </li>
@@ -980,7 +967,7 @@ for axis in axes:
 			    <li> best for particles traveling far from surfaces </li>
 			    <li> sign-based point containment queries </li>
 			</ul>
-			<object data="../images/preconditioner_ex.svg" type="image/svg+xml" class="stretch"></object>
+			<object data="../images/preconditioner_ex_pres.svg" type="image/svg+xml" class="stretch"></object>
 		    </section>
 		    
 		    <section>
@@ -989,21 +976,21 @@ for axis in axes:
 			<p align="center"> $$ \epsilon = \frac{1}{2} \Delta x (h-\Delta x) \frac{\partial^2 u}{\partial x^2} + \frac{1}{2} \Delta y (h-\Delta y)  \frac{\partial^2 u}{\partial y^2} $$ </p>
 			<table>
 			    <tbody>
-				<tr class="noBorder"><td>$$ h $$</td><td> - mesh interval size </td></tr>
-				<tr class="noBorder"><td>$$ \Delta x $$</td><td> - x distance to interpolation point from data point </td></tr>
-				<tr class="noBorder"><td>$$ \Delta y $$ </td> <td> - y distance to interpolation point from data point </td></tr>
-				<tr class="noBorder"><td>$$ u(x,y) $$</td><td>- sampled function on mesh </td></tr>
 				<tr class="noBorder"><td>$$ \epsilon $$</td><td>- interpolation error </td></tr>
+				<tr class="noBorder"><td>$$ \Delta x $$</td><td> - x distance to interpolation point from data point </td></tr>				
+				<tr class="noBorder"><td>$$ h $$</td><td> - mesh interval size </td></tr>
+				<tr class="noBorder"><td>$$ u(x,y) $$</td><td>- sampled function on mesh </td></tr>				
+				<tr class="noBorder"><td>$$ \Delta y $$ </td> <td> - y distance to interpolation point from data point </td></tr>
 			    </tbody>
 			</table>
-			<p align="center" class="fragment"> <i>curvature terms are problematic</i> </p>
+			<p align="center"> <i>curvature terms are problematic</i> </p>
 		    </section>
 		    
 		    <section>
 			<h3> Initial Implementation </h3>
 			<ul>
 			    <li>uses MOAB's structured mesh interface</li>
-			    <li>populated using MOAB's ray tracing interface (closest to location alg.)</li>
+			    <li>populated using MOAB's ray tracing interface (closest to location)</li>
 			    <ul>
 				<li>disambiguates distance value signs using DAGMC's point containment algorithm</li>
 			    </ul>
@@ -1018,7 +1005,7 @@ for axis in axes:
 			    <li>single volume: 10 cm radius sphere</li>
 			    <li>all volumes are water-filled </li>
 			    <li>density varied from 0 to 1 (g/cc) </li>
-			    <li>faceting tolerance: 1e-04cm </li>			
+			    <li>faceting tolerance: $10^{-4}$cm </li>			
 			    <li>1M histories (100k for profiling) </li>
 			</ul>
 			<img src="../images/sphere_cad.png" height="300px" align="center" />
@@ -1044,14 +1031,14 @@ for axis in axes:
 		    <section>
 			<h3> Charged Particle Transport </h3>
 			<ul>
-			    <li> particles take many small steps in space to approximate their arcing paths</li>
+			    <li> particles take many small steps in space to approximate their straggling paths</li>
 			    <li> each step requires a geometry check for surface crossing </li>
 			</ul>
 			<p class="fragment"> A sample problem of electron transport from MCNP6 tests </p>
 			<ul>
-			    <li class="fragment"> Flouresence test of 1 keV - 100 keV protons on Fe/W target </li>
+			    <li class="fragment"> Flouresence test of 1 keV - 100 keV photons on Fe/W target </li>
 			    <li class="fragment"> 500 histories </li>
-			    <li class="fragment"> single-event elecron physics </li>
+			    <li class="fragment"> single-event electron physics </li>
 			</ul>
 			<br>
 			<img align="center" src="../images/066_cad.png" height="250px"/>
