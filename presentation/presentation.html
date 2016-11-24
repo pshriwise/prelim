@@ -134,8 +134,8 @@
 				    </tr>
 				    <tr>
 					<td align="center"> neutron source </td>
-					<td align="center"> kcode </td>
-					<td align="center"> kcode </td>
+					<td align="center"> criticality </td>
+					<td align="center"> criticality </td>
 				    </tr>
 				</tbody>
 			    </table>
@@ -301,7 +301,7 @@
 			<br>
 			<p><i>field dedicated to geometric queries on surface meshses of triangles</i></p>
 			<br>
-			<p> employs a variety of hierarhical structures </p>
+			<p> employs a variety of hierarchical data structures </p>
 			<ul>
 			    <li class="fragment"> Bounding Volume Hierarchy (BVH) </li>
 			    <li class="fragment"> KDTree </li>
@@ -522,8 +522,7 @@ for axis in axes:
 		    <section>
 			<h3> Feature Adaptive BVH Building </h3>
 			<ul>
-			    <li>alter building parameters for problematic mesh regions which can be identified by poorly formed tree topology</li>
-			    <li>of particular interest is the high valence case</li>
+			    <li>of particular current interest is the high valence case</li>
 			</ul>
 			<p align="center"> this process is likely of more interest to radiation transport than rendering </p>
 			<table>
@@ -828,7 +827,7 @@ for axis in axes:
 			<p> Embree kernel does not meet the requirments of the robust tracking algorithm used by DAGMC as it currently exists </p>
 			<ul>
 			    <li class="fragment"> single to double precision conversion </li>
-			    <li class="fragment"> capability for deeper mesh interrogation </li>
+			    <li class="fragment"> no known capability for deeper mesh interrogation </li>
 			    <li class="fragment"> no closest to location capability </li>
 			</ul>
 			<br></br>
@@ -1189,11 +1188,18 @@ for axis in axes:
 				<p>[6] Setaluri, Rajsekhar, Mridul Aanjaneya, Sean Bauer, and Eftychios Sifakis. 2014. “SPGrid: A Sparse Paged Grid Structure Applied to Adaptive Smoke Simulation.” <em>ACM Trans. Graph.</em> 33 (6). New York, NY, USA: ACM: 205:1–205:12. doi:<a href="http://dx.doi.org/10.1145/2661229.2661269">10.1145/2661229.2661269</a>.</p>
 				<p>[7]Smith, B.M., T.J. Tautges, and P.P.H. Wilson. 2010. “Sealing Faceted Surfaces to Achieve Watertight CAD Models.” In. Chattanooga, TN, United States.</p>				
 				<p>[8] Tautges, T. J., R. Meyers, K. Merkley, C. Stimpson, and C. Ernst. 2004. <em>MOAB: A Mesh-Oriented Database</em>. SAND2004-1592. Sandia National Laboratories.</p>
-				<p>[9] Tautges, Timothy J., P. P. H. Wilson, Jason Kraftcheck, Brandon M. Smith, and Douglass L. Henderson. 2009. “Acceleration Techniques for Direct Use of CAD-Based Geometries in Monte Carlo Radiation Transport.” In <em>International Conference on Mathematics, Computational Methods &amp; Reactor Physics (M&amp;C 2009)</em>. Saratoga Springs, NY: American Nuclear Society.</p>
-				<p>[10] Wald, Ingo, Sven Woop, Carsten Benthin, Gregory S. Johnson, and Manfred Ernst. 2014. “Embree: A Kernel Framework for Efficient CPU Ray Tracing.” <em>ACM Trans. Graph.</em> 33 (4). New York, NY, USA: ACM: 143:1–:8. doi:<a href="http://dx.doi.org/10.1145/2601097.2601199">10.1145/2601097.2601199</a>.</p>
-				<p>[11] X-5 Monte Carlo Team. 2004. <em>MCNP - a General Monte Carlo N-Particle Transport Code, Version 5 - Volume III: Developers Guide</em>. LA-CP-03-0284. Los Alamos National Laboratory.</p>
 			    </div>
 			</small>
+		    </section>
+		    <section>
+		      <h3> References </h3>
+		      <small>
+			<div class="references">
+		    				<p>[9] Tautges, Timothy J., P. P. H. Wilson, Jason Kraftcheck, Brandon M. Smith, and Douglass L. Henderson. 2009. “Acceleration Techniques for Direct Use of CAD-Based Geometries in Monte Carlo Radiation Transport.” In <em>International Conference on Mathematics, Computational Methods &amp; Reactor Physics (M&amp;C 2009)</em>. Saratoga Springs, NY: American Nuclear Society.</p>
+				<p>[10] Wald, Ingo, Sven Woop, Carsten Benthin, Gregory S. Johnson, and Manfred Ernst. 2014. “Embree: A Kernel Framework for Efficient CPU Ray Tracing.” <em>ACM Trans. Graph.</em> 33 (4). New York, NY, USA: ACM: 143:1–:8. doi:<a href="http://dx.doi.org/10.1145/2601097.2601199">10.1145/2601097.2601199</a>.</p>
+				<p>[11] X-5 Monte Carlo Team. 2004. <em>MCNP - a General Monte Carlo N-Particle Transport Code, Version 5 - Volume III: Developers Guide</em>. LA-CP-03-0284. Los Alamos National Laboratory.</p>
+		      </small>
+		      </div>
 		    </section>
 		    
 	    </div>
