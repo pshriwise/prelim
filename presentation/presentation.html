@@ -90,38 +90,40 @@
 		    <section>			
 			<h2>Motivation</h2>
 			<p>
-			    CAD-based radition transport as a robust and practical analysis tool
+			    CAD-Based Monte Carlo Radiation Transport (MCRT)
 			</p>
 			
 			<ul>
 			    <li> equal freedom in design and analysis </li>
 			    <li> engineering analysis on the same model </li>
 			</ul>
-			<img src="images/cad_screenshot.png" style="border-style:none" height="450"/>
+			<img src="images/cad_screenshot.png" style="border-style:none" height="400px"/>
 		    </section>
 		    
 		    <section>
 			<h2>MC Geometry Representations</h2>
-			<table style="border-style:black">
+			<table width="100%" style="border-style:black">
 			    <tbody>
 				<tr>
 				    <th align="center">Native Geometry</th>
 				    <th align="center">CAD Geometry</th>
 				</tr>
 				<tr>
-				    <td valign="top">
+				    <td style="vertical-align:top">
 					<ul>
-					    <li>variants of Computational Solid Geometry (CSG)</li>
-					    <li>volumes formed from boolean combinations of simple implicit surfaces</li>
-					    <li>geometry queries are analytic in nature</li>
+					    <li>Variants of Computational Solid Geometry (CSG)</li>
+					    <li>Volumes formed from boolean combinations of simple implicit surfaces</li>
+					    <li>Geometry queries are analytic in nature</li>
 					</ul>
 				    </td>
 				    <td>
 					<ul>
-					    <li>allows for higher order surface complexity</li>
-					    <li>convenient design tools</li>
-					    <li>extrude, sweep, loft, splines, etc.</li>
-					    <li>geometry queries are complex and sometimes impossible analytically</li>
+					    <li>Allows for higher order surface complexity</li>
+					    <li>Contains convenient design tools:</li>
+					    <ul>
+						<li>extrude, sweep, loft, splines, etc.</li>
+					    </ul>
+					    <li>Geometry queries are complex and sometimes impossible analytically</li>
 					</ul>
 				    </td>
 				</tr>
@@ -132,22 +134,25 @@
 		    <section>
 			<h3>CAD-Based MCRT</h3>
 			<ul>
-			    <li>pathway for robust particle transport on CAD geometries exists</li>
+			    <li>A pathway for robust particle transport on CAD geometries exists.</li>
+			    <br>
 			    <ul>
 				<li> Direct Accelerated Geometry Monte Carlo (DAGMC<a href="#bib"><small style="vertical-align:bottom">[9]</small></a>)</li>
 			    </ul>
 			    <br>
-			    <li> not yet at its full potential: </li>			    
+			    <li> This toolkit is not yet at its full potential. </li>
+			    <br>
 			    <ul>
-				<li>difficult to meet CAD quality required for robustness in DAGMC</li>
-				<li class="fragment highlight-blue">long simulation times (2.5-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation runtime</li>
+				<li>Difficult to meet CAD quality required for robustness in DAGMC</li>
+				<br>
+				<li class="fragment highlight-blue">Long simulation times (2.5-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation runtime</li>
 			    </ul>
 			</ul>
 		    </section>
 		    
 		    <section>
 			<h3> Research Goal </h3>
-			<b>CAD-based radiation transport performance comparable to native Monte Carlo geometry representations</b>
+			<b>To provide CAD-based radiation transport performance comparable to native Monte Carlo geometry representations</b>
 			<p>
 			    <table>
 				<tbody>
@@ -169,32 +174,32 @@
 				</tbody>
 			    </table>
 			</p>
-			<p class="fragment fade-in"> problems run with both native & CAD geometries</p>
+			<p class="fragment fade-in"> These problems were run with both native & CAD geometrie.s</p>
 		    </section>
 		    
 		    <section>
 			<h3 class="no-toc-progress"> Research Goal </h3>
-			<b>CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
+			<b>To provide CAD-based radiation transport performance competitive with native Monte Carlo geometry representations</b>
 			<object data="performance_plot.html" width="800px" height="500px"> </object>
 		    </section>
 
 		    <section>
 			<h3> Motivation Recap </h3>
+			<br>
+			<p align="left"><b>CAD-Based MCRT:</b></p>
+			<br>
 			<ul>
-			    <li> CAD-Based MCRT </li>
+			    <li class="fragment">Better geometric fidelity</li>
 			    <br>
-			    <ul>
-				<li class="fragment">better geometric fidelity</li>
-				<br>
-				<li class="fragment">lower human time investment in model generation </li>
-				<br>
-				<li class="fragment">current problems requiring CAD MCRT will benefit from enhanced performance</li>
-				<br>
-				<li class="fragment">performance comparable to native more realistic, deisrable for a more broad range of problems</li>
-				<br>
-				<li class="fragment">new methods may be necessary for reasonable runtimes with charged particle transport </li>
-			    </ul>
+			    <li class="fragment">Lower human time investment in model generation </li>
+			    <br>
+			    <li class="fragment">Current problems requiring CAD MCRT will benefit from enhanced performance</li>
+			    <br>
+			    <li class="fragment">Performance comparable to native more realistic, deisrable for a more broad range of problems</li>
+			    <br>
+			    <li class="fragment">New methods may be necessary for reasonable runtimes with charged particle transport </li>
 			</ul>
+
 		    </section>
 		    
 		</section>
@@ -284,18 +289,19 @@
 			    </tbody>
 			</table>
 			</small>
-			<p><b> 3 types of queries </b> </p>
+			<p><b> 3 types of queries: </b> </p>
 			<object data="../images/mc_geom_queries.svg" type="image/svg+xml" class="stretch"></object>
 		    </section>
 
 		    <section>
 			<h3> Surface Faceting </h3>
-			<p> <i>faceting tolerance</i>: maximum allowed diatance of farthest point on the facet from the analytic surface </p>
-			<img src="images/facet_tol_zoomed.png" height="100px"/>
+			<p> <i>Faceting Tolerance</i>: maximum allowed diatance of farthest point on the facet from the analytic surface. </p>
+			<img src="images/facet_tol_zoomed.png" height="100px" style="margin: -10px 0px 0px 0px"/>
 			<ul>
-			    <li> reduce all surfaces to planar type (regardless of actual surface complexity) </li>
-			    <li> many many more of them </li>
+			    <li> Discretization reduces all surfaces to planar type regardless of analytic surface complexity.</li>
+			    <li> There are also now many, many more of them. </li>
 			</ul>
+			<br><br>
 			<table>
 			    <tbody>
 				<tr>
@@ -322,20 +328,21 @@
 			    </tbody>
 			</table>
 			<br>
-			<p class="fragment"><b>linear search of triangles is unreasonable</b></p>
+			<p class="fragment"><b> A linear search of triangles is unreasonable.</b></p>
 		    </section>
 
-		    <section>
+		    <section align="left">
 			<h3> Ray Tracing Acceleration Data Structures </h3>
 			<br>
-			<p><i>field dedicated to geometric queries on surface meshses of triangles</i></p>
+			<p align="left"><i> This is a field dedicated to rapid geometric queries on surface meshses of triangles.</i></p>
 			<br>
-			<p> employs a variety of hierarchical data structures </p>
+			<p align="lef"t> It commonly employs a variety of hierarchical data structures: </p>
+			<br>
 			<ul>
-			    <li class="fragment"> Bounding Volume Hierarchy (BVH) </li>
-			    <li class="fragment"> KDTree </li>
-			    <li class="fragment"> Octree </li>
-			    <li type="none" class="fragment"> ...</li>
+			    <li style="horizontal-align:left"> Bounding Volume Hierarchy (BVH) </li>
+			    <li> KDTree </li>
+			    <li> Octree </li>
+			    <li> ... </li>
 			</ul>
 		    </section>
 		    
@@ -373,17 +380,17 @@
 				</tr>
 				<tr>
 				    <td align="center">
-					<ul>
-					    <li>low storage (6 extents)</li>
-					    <li>fast, simple intersection checks</li>
+					<ul style="vertical-align:top">
+					    <li>Low storage (6 extents)</li>
+					    <li>Fast, simple intersection checks</li>
 					</ul>
 				    </td>
 				    <td></td>
 				    <td align="center">
-					<ul>
-					    <li>higher storage (extents+axes)</li>
-					    <li>must re-orient ray for intersection checking</li>
-					    <li>bound triangles well</li>
+					<ul style="vertical-align:top">
+					    <li>Higher storage (extents+axes)</li>
+					    <li>Must re-orient ray for intersection checking</li>
+					    <li>Bounds triangles well</li>
 					</ul>
 				    </td>
 				</tr>
@@ -400,9 +407,9 @@
 		    <section>
 			<h3> High Valence Mesh Features </h3>
 			<ul>
-			    <li>common feature of many faceting algorithms</li>
-			    <li>result of trying to minimize triangles used to represent a surface</li>
-			    <li>known to be detrimental to DAGMC performance</li>
+			    <li>Common feature of many faceting algorithms</li>
+			    <li>Result of trying to minimize triangles used to represent a surface</li>
+			    <li>Known to be detrimental to DAGMC performance</li>
 			</ul>
 			<object align="center" data="images/hv.svg" height="400px" style="margin: 50px 50px 50px 50px" type="image/svg+xml"></object>
 		    </section>
@@ -413,12 +420,30 @@
 			<img src="images/hv_ex1.png" height="200px" />
 			<img src="images/hv_ex2.png" height="300px" />		    
 		    </section>
-		    
+
+		    <section>
+			<h3> Altered Faceting </h3>
+			<p><i> Length Tolerance: </i> maximum allowed length of facet edge.</p>
+			<br><br>
+			<table>
+			    <tbody>
+				<tr>
+				    <td align="center"> Faceting Tolerance Only </td>
+				    <td align="center">  With Length Tolerance </td>
+				</tr>
+				<tr>
+				    <td align="center"><img src="../images/fng271_facet_tol.png" width="450px"/></td>
+				    <td align="center"><img src="../images/fng271_len_tol.png" width="450px"/></td>
+				</tr>
+			    </tbody>
+			</table>
+		    </section>
+
 		    <section>
 			<h3> High Valence Test Model </h3>
-			<p align="left"> manual faceting of cube surface </p>
+			<p align="left">Created by manually faceting a cube surface. </p>
 			<img src="../images/hv_study_design.png" height="350px"/>
-			<p align="left"> variable parameters: </p>
+			<p align="left"> Variable parameters: </p>
 			<ul>
 			    <li> fraction of surface that high valence region occupies</li>
 			    <li> valence of corner vertices </li>
@@ -429,14 +454,14 @@
 			<h3> High Valence Study </h3>
 			<img src="../images/hv_study_MOAB.png" height="500px" align="center" />
 		    </section>
-		    
+		     
 		    <section>
 			<h3> High Valence OBB Investigation </h3>
 			<img src="../images/obbs_wsr_0.95.png" height="500px" align="center" />
 		    </section>
 		    
 		    <section>
-			<h3> Median Splitting Algorithm </h3>
+			<h3 class="no-toc-progress"> Median Splitting Algorithm </h3>
 			<h4 align="center"> Controllable Parameters</h4>
 			<table>
 			    <tbody>
@@ -462,20 +487,17 @@
 				</tr>
 			    </tbody>
 			</table>
-		    </section>
-		    
-		    <section>
-			<h3 class="no-toc-progress"> Median Splitting Algorithm </h3>
-			<br><br>
+			<br>
 			<p> $$ splitting\;ratio  = \dfrac{|left\; child\; primitives\; -\; right\; child\; primitives|}{parent\; entities} $$ </p>
 			<br>
-			<p align="center"> solution: set worst allowable splitting ratio to 1 to force continued build </p>
+			<p align="center" class="fragment"> <b>Solution:</b> Set the worst splitting ratio to 1 to force continued build of leaf nodes. </p>
+			
 		    </section>
 		
 		    <section>
 			<h3> New HV Study Results </h3>
 			<img src="../images/hv_study_MOAB_wsr1.png" height="500px" align="center" />
-			<p class="fragment fade-in"> maintains performance without need for altered faceting </p> 
+			<p class="fragment fade-in"> Performance is maintained without need for altered faceting. </p> 
 		    </section>
 		        
 		    <section>
@@ -521,7 +543,7 @@
 		
 		    <section>
 			<h3> SAH Applied to High Valence </h3>
-			<p align="center">same tests performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel <a href="bib"><small style="vertical-align:bottom">[10]</small></a></p>
+			<p align="center">This same test was performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel. <a href="bib"><small style="vertical-align:bottom">[10]</small></a></p>
 			<img src="../images/hv_emdag.png" height="500px" align="center" />		    
 		    </section>
 
@@ -531,7 +553,8 @@
 
 		    <section>
 			<h3> Feature Adaptive BVH Building </h3>
-			<p align="center"> This process is likely of more interest to radiation transport than rendering. </p>
+			<br>
+			<p align="left"> This process is likely of more interest to radiation transport than rendering. </p>
 			<table>
 			    <tbody>
 				<tr>
@@ -548,11 +571,11 @@
 				</tr>
 			    </tbody>
 			</table>
-			<p align="center"> There is at least an additional order-of-magnitude in secondary rays for radiation transport.</p>
+			<p align="left"> There is at least an additional order-of-magnitude in secondary rays for radiation transport.</p>
 			<ul class="fragment">
-			    <li align="left"> higher collision density </li>
-			    <li align="left"> secondary particle emission </li>
-			    <li align="left"> variance reduction </li>
+			    <li align="left"> Higher collision density </li>
+			    <li align="left"> Secondary particle generation </li>
+			    <li align="left"> Variance reduction </li>
 			</ul>
 		    </section>
 		    
@@ -583,12 +606,12 @@
 			<h3> Proposed Building Scheme </h3>
 			<br>
 			<p>
-			    <span class="fragment highlight-green" > $tts$ </span>
-			    $ =\,  C +$ <span class="fragment highlight-red">$T_{B}$</span>
+			    <span style="color:green"> $tts$ </span>
+			    $ =\,  C +$ <span style="color:red">$T_{B}$</span>
 			    $ + $
-			    <span class="fragment highlight-green">$\sum_{}^{N_{r}} T_{T}$</span>
+			    <span style="color:green">$\sum_{}^{N_{r}} T_{T}$</span>
 			    $($
-			    <span class="fragment highlight-red">$T_{B}$</span> $,\ldots) $
+			    <span style="color:red">$T_{B}$</span> $,\ldots) $
 			</p>
 			<table>
 			    <tbody>
@@ -634,12 +657,17 @@
 		    
 		    <section>
 			<h1> EmDAG </h1>
+			<h4> DAGMC linked with a high-performance CPU ray tracing kernel </h4>
 		    </section>
 		    
 		    <section>
 			<h2 class="no-toc-progress"> Architecture Based Acceleration </h2>
-			<p align="center"> Embree not just selected for use of SAH building heuristic</p>
-			<p align="center"> Employs Single Instruction Multiple Data (SIMD) to do multiple ray-box and ray-triangle intersection checks at once in <i> single precision </i> </p>
+			<ul>
+			    <li align="left"> Embree was not selected only for its use of the SAH. </li>
+			    <br>
+			    <li align="left"> It employs Single Instruction Multiple Data (SIMD) commands, performing  multiple ray-box and ray-triangle intersection checks at once in single-precision. </li>
+			</ul>
+			<br>
 			<img src="../images/simd_ex.png" height="300px"/>
 		    </section>
 		    
@@ -650,12 +678,10 @@
 			    <li>N:1 - test many rays against a single box at once</li>
 			    <li>1:N - test one ray against many boxes at once </li>
 			</ul>
-			<div class="fragment fade-in">
-			    <p> method selection depends on <i>ray coherence</i></p>
+			    <p> Performance of selsected method selection will depend on <i>ray coherence</i>.</p>
 			    <img src="../images/ray_coherence.jpg" width="500px"/>
 			    <table width="500px"><tbody><tr><td align="center"> coherent</td><td align="center">incoherent</td></tr></tbody></table>
 			    <small> <p>* image courtesy of <a href="https://software.intel.com/en-us/articles/embree-highly-optimized-visibility-algorithms-for-monte-carlo-ray-tracing">Intel</a></p></small>
-			</div>
 		    </section>
 		    
 		    <section>
@@ -699,9 +725,9 @@
 
 		    <section>
 			<h3> SIMD BVH Trees </h3>
-			<p>in order to take advantage of SIMD register widths, tree topologies are altered</p>
+			<p>In order to take advantage of SIMD register widths BVH topologies are altered.</p>
 			<img src="../images/quad_tree.png" class="stretch" />
-			<p> this is accomplished by collapsing a binary tree into a quad tree </p>
+			<p> This is accomplished by collapsing a binary tree into an n-ary tree.</p>
 		    </section>
 		    
 		    <section>
@@ -712,6 +738,7 @@
 		    
 		    <section>
 			<h3> Ray Fire Testing Zoo </h3>
+			<br>
 			<table style="margin: 100px 0px 0px 0px">
 			    <tbody>
 				<tr>
@@ -742,12 +769,12 @@
 		    
 		    <section>
 			<h3> Transport Testing </h3>
-			<p align="left"> EmDAG was applied to a few simple models </p>
+			<p align="left"> EmDAG was applied to a few simple models: </p>
 			<ul>
 			    <li>5 MeV isotropic neutron point source at model origin</li>
 			    <li>all volumes are water-filled (&rho; = 1 g/cc)</li>
-			    <li> faceting tolerance: $10^{-4}$cm </li>			
-			    <li> 1M histories </li>
+			    <li>Faceting tolerance: $10^{-4}$cm </li>			
+			    <li>1M histories </li>
 			</ul>
 			<table>
 			    <tbody>
@@ -771,7 +798,7 @@
 				</tr>
 			    </tbody>
 			</table>
-			<p>flux and energy tallies in all cells </p>
+			<p>Flux and energy tallies were applied in all cells.</p>
 		    </section>
 		    
 		    <section>
@@ -789,13 +816,13 @@
 		    <section>
 			<h3>FNG Transport Test</h3>
 			<ul>
-			  <li class="fragment fade-in"> original source replaced with 14.1 MeV neutron isotropic volume source </li>
-			  <li class="fragment fade-in">  100M histories</li>
-			  <li class="fragment fade-in"> facet tolerance: 1e-04cm</li>
-			  <li class="fragment fade-in"> length tolerance: 5cm </li>
+			  <li> The original source was replaced with 14.1 MeV neutron isotropic volume source. </li>
+			  <li> 100M histories</li>
+			  <li> Facet tolerance: 1e-04cm</li>
+			  <li> Length tolerance: 5cm </li>
 			</ul>
 			<img src="images/fng_cad.png" height="350px">
-			<p flux mesh tally over entire problem </p>
+			<p> A flux mesh tally was applied over the entire problem. </p>
 		    </section>
 		    
 		    <section>
@@ -805,7 +832,7 @@
 			    <tbody>
 				<tr>
 				    <td align="center"> Faceting Tolerance Only </td>
-				    <td align="center">  with Length Tolerance </td>
+				    <td align="center"> With Length Tolerance </td>
 				</tr>
 				<tr>
 				    <td align="center"><img src="../images/fng271_facet_tol.png" width="450px"/></td>
@@ -818,18 +845,30 @@
 		    <section>
 			<h3> FNG Transport Results </h3>
 			<object data="emdag_fng_performance.html" width="800px" height="500px"></object>
-			<p class="fragment"> 15% improvement in EmDAG performance w/ length tolerance </p> 
+			<p> 15% improvement in EmDAG performance with length tolerance applied </p> 
 		    </section>
 		    
-		    <section>
+		    <section align="left">
 			<h3> EmDAG Limitations </h3>
-			<ul>
-			    <li> faceting tolerance: 255 lost particles </li>
-			    <li> length tolerance: 247 lost particles </li>
-			</ul>
+			<table>
+			    <tbody>
+				<tr>
+				    <td> Tolerance(s) </td>
+				    <td> Lost Particles </td>
+				</tr>
+				<tr>
+				    <td> Faceting Tolerance </td>
+				    <td align="center"> 255 </td>
+				</tr>
+				<tr>
+				    <td> Faceting & Length Tolerance </td>
+				    <td align="center"> 247 </td>
+				</tr>
+			    </tbody>
+			</table>
 			<br><br>
 			<object data="../images/emdag_fng_lost.svg" type="image/svg+xml" class="stretch"></object>
-			<p align="center "class="fragment fade-in"> caused by conversions from single to double precision and vice versa </p>
+			<p align="center"> Cause: Conversions from single to double precision and vice versa. </p>
 		    </section>
 
 		</section>
@@ -837,30 +876,37 @@
 		<section>
 		    <section>
 			<h3> Enhanced SIMD BVH Traversal for MCRT</h3>
-			<p> Embree kernel does not meet the requirments of the robust tracking algorithm used by DAGMC as it currently exists </p>
+			<p> Embree does not meet the requirments of the robust tracking algorithm used by DAGMC as it currently exists. </p>
 			<ul>
-			    <li class="fragment"> single to double precision conversion </li>
-			    <li class="fragment"> no known capability for deeper mesh interrogation </li>
-			    <li class="fragment"> no closest to location capability </li>
+			    <li> Single to double precision conversion decouples logical and numerical position of particles. </li>
+			    <li> Embree has no known capability for deeper mesh interrogation for enhanced logical tracking. </li>
+			    <li> No closest to location capability is implemented. </li>
 			</ul>
 			<br></br>
-			<br></br>
-			<table class="fragment">
+			<table>
 			    <tbody>
 				<tr>
 				    <td align="center"><b>MOAB</b></td>
 				    <td align="center"><b>EmDAG</b></td>
 				</tr>
 				<tr>
-				    <td width="500px">
+				    <td style="vertical-align:top" width="500px">
+					Pros:
 					<ul>
 					    <li>designed for interrogation/manipulation of mesh</li>
+					</ul>
+					Cons:
+					<ul>
 					    <li>slow due to database context</li>
 					</ul>
 				    </td>
-				    <td width="500px">
+				    <td style="vertical-align:top" width="500px">
+					Pros:
 					<ul>
 					    <li>SIMD BVH ray tracing with design relevant to MCRT</li>
+					</ul>
+					<p style="margin: 0px 0px 0px 0px"> Cons: </p>
+					<ul>
 					    <li>single-precision</li>
 					    <li>limited mesh interface</li>
 					</ul>
@@ -886,7 +932,7 @@
 		    </section>
 
 		    <section>
-			<h3> Mixed-precision concept<a href="#bib"><small style="vertical-align:bottom">[3]</small></a> </h3>
+			<h3> Mixed-precision concept </h3>
 			<br><br><br>
 			<object data="../images/blurry_dice.svg" type="image/svg+xml" height="300px"></object>
 		    </section>
@@ -923,7 +969,7 @@
 			    </tbody>
 			</table>
 			<br>
-			<p> Single-precision allows much of Embree's speed to be retained as majority of time is spent in BVH traversal. </p>
+			<p> Single-precision allows much of Embree's speed to be retained as majority of time is spent in BVH traversal.<a href="#bib"><small style="vertical-align:bottom">[3]</small></a></p>
 		    </section>
 
 		</section>
@@ -936,12 +982,12 @@
 		    
 		    <section>
 			<h3> Implicit Surfaces </h3>
-			<h4> (& Level-Set Methods) </h4>
+			<h4> (Level-Set Methods) </h4>
 			<p align="center"> An implicit surface is a multivariate function defined over an $ R^3 $ domain</p>
 			$$    \Omega(R^3)\rightarrow R $$
-			<p align="center"> where points on the surface are represented by the isocontour $v=0$ </p>
+			<p align="center"> where points on the surface are represented by the isocontour $v=0$. </p>
 			$$   \Omega(\vec{x}) - v  = 0 $$
-			<p align="center"> important geometric properties can be easily recovered from this represntation </p>
+			<p align="center"> Important geometric properties can be easily recovered from this represntation. </p>
 			<table>
 			    <tbody>
 				<tr class="noBorder">
@@ -977,9 +1023,9 @@
 		    <section>
 			<h3> Signed Distance Fields </h3>
 			    <ul>
-				<li> $ d(\vec{x}) = 0 $ for all $x$ on the surface boundary </li>
-				<li> $ d(\vec{x}) > 0 $ for all $x$ inside the surface boundary </li>
-				<li> $ d(\vec{x}) < 0  $ for all $x$ outside the surface boundary </li>
+				<li> $ d(\vec{x}) = 0 $ for all $\vec{x}$ on the surface boundary </li>
+				<li> $ d(\vec{x}) > 0 $ for all $\vec{x}$ inside the surface boundary </li>
+				<li> $ d(\vec{x}) < 0  $ for all $\vec{x}$ outside the surface boundary </li>
 			    </ul>
 			    <p align="center"> $ d(\vec{x}) = sign(\Omega(\vec{x}))|\Omega(\vec{x})| $ </p>
 			    <object data="../images/preconditioner_datastruct.svg" type="image/svg+xml" height="400px"></object>
@@ -987,13 +1033,24 @@
 		    
 		    <section>
 			<h3> Particle Tracking Preconditioner </h3>
+			<p align="left"> Concept: Use interpolated signed distance values to rule out surface crossing between current position and next event location. </p>
+
 			<ul>
-			    <li> use interpolated signed distance values to rule out surface crossing </li>
 			    <li> avoids O(log(N)) in favor of O(1) process </li>
-			    <li> best for particles traveling far from surfaces </li>
-			    <li> sign-based point containment queries </li>
+			    <li> best for particles traveling far from surfaces </li>			    
 			</ul>
 			<object data="../images/preconditioner_ex_pres.svg" type="image/svg+xml" class="stretch"></object>
+		    </section>
+
+		    <section>
+			<h3 class="no-toc-progress"> Particle Tracking Preconditioner </h3>
+			<br><br>
+			<ul>
+			    <li> Signed Distance Values (SDVs) can be used to precondition closest to location calls or determine point containment in O(1) complexity as well.</li>			    
+			</ul>
+
+			<p align="left"> Simple condition for these operations: </p>
+			<p align="center"> $ |SDV| > \epsilon $ </p>
 		    </section>
 		    
 		    <section>
@@ -1095,21 +1152,20 @@
 		    
 		</section>
 
-	
 		<section>
 		    
 		    <section>
 			<h3> Signed Distance Field Preconditioner </h3>
 			<ul>
-			    <li class="fragment"> has already been shown to be a powerful acceleration tool given the <a href="#precond_sphere_water">proper conditions</a>  </li>
+			    <li> The SDF preconditioner has already been shown to be a powerful acceleration tool given the <a href="#precond_sphere_water">proper conditions</a>.  </li>
 			    <br>
-			    <li class="fragment"> identification of proper conditions for this data structure is important</li>
+			    <li> The identification of proper conditions for this data structure is important</li>
 			    <br>
-			    <li class="fragment"> memory footprint is of concern </li>
-			    <ul class="fragment">
+			    <li> Memory usage is a concern: </li>
+			    <ul>
 				<li> adaptive mesh refinement or octree may be useful </li>
 				<li> error estimation becomes more difficult with non-uniform techniques </li>
-				<li> other uniform mesh methods using virtual memory could be applied<cite><small style="vertical-align:bottom">[6]</small></cite> </li>
+				<li> other uniform mesh methods using virtual memory may be useful<a href="#bib"><small style="vertical-align:bottom">[6]</small></a></li>
 			    </ul>
 			</ul>
 		    </section>
@@ -1215,6 +1271,7 @@
 		      </small>
 		      </div>
 		    </section>
+		    
 	    </div>
 	</div>
                 <!-- SCRIPTS -->
@@ -1226,8 +1283,8 @@
 			 progress: true,
 			 history: true,
 			 center: false,
-		     slideNumber: true,
-		     
+			 slideNumber: true,
+			 keyboard: { 56: function() { Reveal.slide( 8 ) } },
 			 transition: 'none', // none/fade/slide/convex/concave/zoom
 			 // More info https://github.com/hakimel/reveal.js#dependencies
 			 dependencies: [
