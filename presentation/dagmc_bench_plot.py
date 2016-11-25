@@ -8,7 +8,8 @@ import plotly
 
 dagmc_data = go.Bar(x = ['FNG','ATR','UWNR'],
                     y = [22769.33,8627.80,69429.60],
-                    name = 'DAG-MCNP5')
+                    name = 'DAG-MCNP5',
+                    marker = dict( color = 'green') )
 native_data = go.Bar(x = ['FNG','ATR','UWNR'],
                     y = [5871.92,901.68,8767.29],
                     name = 'MCNP5')
@@ -17,5 +18,4 @@ layout = go.Layout(barmode='group',
                    yaxis = dict(title = "Runtime (min)"),
                    legend = dict(font = dict( size = 20)))
 fig = go.Figure(data=data,layout=layout)
-py.plot(fig,filename="performance_plot.html",auto_open=False)
-
+py.plot(fig, filename="performance_plot.html", show_link=False, auto_open=False)

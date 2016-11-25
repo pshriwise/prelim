@@ -29,11 +29,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="692.44972"
-     inkscape:cy="10.93883"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="372.02659"
+     inkscape:cy="315.21515"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g6751"
      showgrid="false"
      inkscape:window-width="1680"
      inkscape:window-height="1013"
@@ -62,10 +62,11 @@
      id="layer1"
      transform="translate(-219.56984,1582.7805)">
     <g
-       id="g6998">
+       id="g6803"
+       transform="translate(-102,0)">
       <g
          id="g6682"
-         transform="translate(429.66809,-1191.1843)">
+         transform="translate(531.66805,-1191.1843)">
         <path
            style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
            d="m 1119.9326,-164.14373 183.8477,151.017795"
@@ -122,43 +123,44 @@
          sodipodi:linespacing="124%"
          id="text5874"
          y="-1535.3168"
-         x="1543.2258"
+         x="1645.2258"
          style="font-style:normal;font-weight:normal;font-size:14px;line-height:124.00000095%;font-family:Sans;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
            y="-1535.3168"
-           x="1543.2258"
+           x="1645.2258"
            id="tspan5876"
            sodipodi:role="line"
            style="font-size:36px">b) Fire Ray</tspan><tspan
            id="tspan5878"
            y="-1490.6768"
-           x="1543.2258"
+           x="1645.2258"
            sodipodi:role="line" /></text>
     </g>
     <g
-       id="g6949">
+       id="g6778"
+       transform="translate(-42,0)">
       <text
          sodipodi:linespacing="124%"
          id="text5884"
-         y="-1535.8685"
-         x="1079.4003"
+         y="-1536.9485"
+         x="1121.4003"
          style="font-style:normal;font-weight:normal;font-size:14px;line-height:124.00000095%;font-family:Sans;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
            style="font-size:34px;text-align:center;text-anchor:middle"
-           y="-1535.8685"
-           x="1079.4003"
+           y="-1536.9485"
+           x="1121.4003"
            sodipodi:role="line"
            id="tspan6840">c) Ambiguous</tspan></text>
       <rect
          y="-1534.1588"
-         x="814.1908"
+         x="856.1908"
          height="462.95749"
          width="466.05099"
          id="rect6013-5"
          style="opacity:0.98999999;fill:none;fill-opacity:1;stroke:none;stroke-width:0.99527693;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       <g
          id="g6662"
-         transform="translate(65.523289,-1704.1875)">
+         transform="translate(110.7795,-1704.1875)">
         <path
            style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
            d="M 912.63633,336.9734 1096.4841,487.9912"
@@ -294,56 +296,21 @@
       <text
          sodipodi:linespacing="124%"
          id="text5884-3"
-         y="-1490.9232"
-         x="1094.9933"
+         y="-1432.9232"
+         x="1208.9933"
          style="font-style:normal;font-weight:normal;font-size:14px;line-height:124.00000095%;font-family:Sans;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
            style="font-size:34px;text-align:center;text-anchor:middle"
            id="tspan5894-7"
-           y="-1490.9232"
-           x="1094.9933"
+           y="-1432.9232"
+           x="1208.9933"
            sodipodi:role="line">(Fire Ray)</tspan></text>
     </g>
-    <text
-       sodipodi:linespacing="125%"
-       id="text4418"
-       style="font-style:normal;font-weight:normal;font-size:14.375px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       xml:space="preserve"
-       transform="matrix(0.21118532,-0.97744604,0.97744604,0.21118532,0,0)"
-       x="307.99887"
-       y="272.36856"><textPath
-         xlink:href="#path4184-6-0-3"
-         id="textPath4461"><tspan
-   id="tspan4420">Signed Distance Radius</tspan></textPath></text>
     <g
-       id="g6975">
+       id="g6751"
+       transform="translate(-383.23045,-1211.0622)">
       <text
-         sodipodi:linespacing="124%"
-         id="text4157"
-         y="-1390.5359"
-         x="217.99757"
-         style="font-style:normal;font-weight:normal;font-size:28px;line-height:124.00000095%;font-family:Sans;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           y="-1390.5359"
-           x="217.99757"
-           id="tspan4159"
-           sodipodi:role="line">Current Position</tspan></text>
-      <text
-         sodipodi:linespacing="124%"
-         id="text4161"
-         y="-1193.6694"
-         x="471.28873"
-         style="font-style:normal;font-weight:normal;font-size:28px;line-height:124.00000095%;font-family:Sans;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           y="-1193.6694"
-           x="471.28873"
-           id="tspan4163"
-           sodipodi:role="line">Interaction location</tspan><tspan
-           id="tspan4186"
-           y="-1158.9495"
-           x="471.28873"
-           sodipodi:role="line" /></text>
-      <text
+         transform="translate(383.23045,1211.0622)"
          xml:space="preserve"
          style="font-style:normal;font-weight:normal;font-size:14px;line-height:124.00000095%;font-family:Sans;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          x="335.50369"
@@ -355,8 +322,43 @@
            id="tspan5882"
            x="335.50369"
            y="-1535.3168">a) No Ray Fire</tspan></text>
+      <text
+         sodipodi:linespacing="124%"
+         id="text4157"
+         y="-179.47369"
+         x="601.22803"
+         style="font-style:normal;font-weight:normal;font-size:28px;line-height:124.00000095%;font-family:Sans;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           y="-179.47369"
+           x="601.22803"
+           id="tspan4159"
+           sodipodi:role="line">Current Position</tspan></text>
+      <text
+         sodipodi:linespacing="124%"
+         id="text4161"
+         y="17.392786"
+         x="854.51917"
+         style="font-style:normal;font-weight:normal;font-size:28px;line-height:124.00000095%;font-family:Sans;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           y="17.392786"
+           x="854.51917"
+           id="tspan4163"
+           sodipodi:role="line">Interaction location</tspan><tspan
+           id="tspan4186"
+           y="52.112785"
+           x="854.51917"
+           sodipodi:role="line" /></text>
+      <text
+         transform="matrix(0.21118532,-0.97744603,0.97744603,0.21118532,714.50086,967.53018)"
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:14.375px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="text4418"
+         sodipodi:linespacing="125%"><textPath
+           id="textPath4461"
+           xlink:href="#path4184-6-0-3"><tspan
+   id="tspan4420">Signed Distance Radius</tspan></textPath></text>
       <g
-         transform="translate(-235.06949,-1641.0153)"
+         transform="translate(148.16094,-429.9531)"
          id="g5962">
         <path
            style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -411,7 +413,7 @@
            transform="matrix(0.29857362,-0.04866266,0.05480963,0.33628889,667.95543,301.36655)" />
       </g>
       <g
-         transform="matrix(2.6903652,0,0,2.5632735,-2916.2701,-1056.911)"
+         transform="matrix(2.6903652,0,0,2.5632735,-2533.0396,154.15116)"
          id="g6140">
         <path
            inkscape:connector-curvature="0"
@@ -458,23 +460,23 @@
       <text
          sodipodi:linespacing="124%"
          id="text6149"
-         y="-1299.0573"
-         x="414.09244"
+         y="-87.995003"
+         x="797.32288"
          style="font-style:normal;font-weight:normal;font-size:30.10277557px;line-height:124.00000095%;font-family:Sans;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#da1823;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
-           y="-1299.0573"
-           x="414.09244"
+           y="-87.995003"
+           x="797.32288"
            id="tspan6151"
            sodipodi:role="line"><tspan
    id="tspan6153"
    style="font-size:21.50198555px;fill:#da1823;fill-opacity:1">&gt;</tspan>ε</tspan></text>
+      <ellipse
+         ry="164.51398"
+         rx="148.23857"
+         cy="-19.979437"
+         cx="1020.7569"
+         id="path4184-6-0-3"
+         style="opacity:0.98999999;fill:none;fill-opacity:1;stroke:none;stroke-width:2.48799992;stroke-miterlimit:4;stroke-dasharray:2.488, 4.976;stroke-dashoffset:0;stroke-opacity:0.99215686" />
     </g>
-    <ellipse
-       style="opacity:0.98999999;fill:none;fill-opacity:1;stroke:none;stroke-width:2.48799992;stroke-miterlimit:4;stroke-dasharray:2.488, 4.976;stroke-dashoffset:0;stroke-opacity:0.99215686"
-       id="path4184-6-0-3"
-       cx="637.52643"
-       cy="-1231.0416"
-       rx="148.23857"
-       ry="164.51398" />
   </g>
 </svg>

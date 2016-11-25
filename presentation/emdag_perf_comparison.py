@@ -25,7 +25,7 @@ layout = go.Layout(barmode='group', font = dict(size = 20),
                    yaxis = dict(title = "Runtime (min)"),
                    legend = dict(font = dict( size = 20)))
 fig = go.Figure(data=data,layout=layout)
-py.plot(fig,filename="emdag_sphere_performance.html",auto_open=False)
+py.plot(fig, filename="emdag_sphere_performance.html", show_link = False, auto_open = False)
 
 
 cube_models = ["Cube", "Nested Cubes"]
@@ -48,5 +48,5 @@ layout = go.Layout(barmode='group', font= dict(size = 20),
                    yaxis = dict(title = "Runtime (min)"),
                    legend = dict(font = dict( size = 20)))
 fig = go.Figure(data=data,layout=layout)
-py.plot(fig,filename="emdag_cube_performance.html",auto_open=False)
+py.plot(fig, filename="emdag_cube_performance.html", show_link = False, auto_open = False)
 

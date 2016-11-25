@@ -48,11 +48,40 @@
 		<!-- Table of Contents -->		
 		<section class="no-toc">
 		    <h3 class="no-toc-progress"> Contents </h3>
-		    <nav id="presentable-toc" class="revealjs"></nav>
+		    <br><br>
+		    <table width="100%">
+			<tbody>
+			    <tr>
+				<td style="border: 0" align="left" ><a href="#Motivation">Motivation</a></td>
+				<td style="border: 0" align="right"><a href="#Motivation">1</a></td> 
+			    </tr>
+			    <tr>
+				<td style="border: 0" align="left" ><a href="#Background">Background</a></td>
+				<td style="border: 0" align="right"><a href="#Background">2</a></td> 
+			    </tr>
+			    <tr>
+				<td style="border: 0" align="left" ><a href="#HV">Feature Adaptation in BVH Construction</a></td>
+				<td style="border: 0" align="right"><a href="#HV">3</a></td> 
+			    </tr>
+			    <tr>
+				<td style="border: 0" align="left" ><a href="#SIMD_BVH">Enhanced SIMD BVH Traversals for Radiation Transport</a></td>
+				<td style="border: 0" align="right"><a href="#SIMD_BVH">4</a></td> 
+			    </tr>
+			    <tr>
+				<td style="border: 0" align="left" ><a href="#SDF">Signed Distance Field Preconditioner</a></td>
+				<td style="border: 0" align="right"><a href="#SDF">5</a></td> 
+			    </tr>
+			    <tr>
+				<td style="border: 0" align="left" ><a href="#Summary">Summary</a></td>
+				<td style="border: 0" align="right"><a href="#Summar">6</a></td> 
+			    </tr>
+			    
+			</tbody>
+		    </table>
 		</section>
 
 		<!-- Motivation -->		
-		<section>
+		<section id="Motivation">
 		    
 		    <section>
 			<h1>Motivation</h1>
@@ -171,7 +200,7 @@
 		</section>
 
 		<!-- Background  -->
- 		<section>
+ 		<section id ="Background">
 		    
 		    <section>
 			<h1> Background </h1>
@@ -309,9 +338,7 @@
 			    <li type="none" class="fragment"> ...</li>
 			</ul>
 		    </section>
-
-		</section>
-		<section>
+		    
 		    <section>
 			<h3> Bounding Volume Hierarchy </h3>
 			<br><br>
@@ -364,11 +391,10 @@
 			</table>
 		    </section>
 
-		
 		</section>
 
 		<!-- High Valence Features -->
-		<section>
+		<section id ="HV">
 
 		    <!-- High Valence -->
 		    <section>
@@ -604,7 +630,7 @@
 		</section>
 		
 		<!-- SIMD BVH -->
-		<section>
+		<section id="SIMD_BVH">
 		    
 		    <section>
 			<h1> EmDAG </h1>
@@ -902,7 +928,7 @@
 
 		</section>
 		<!-- Implicit Surfaces -->
-		<section>
+		<section id="SDF">
 		    
 		    <section>
 			<h2>Implicit Surfaces and Signed Distance Fields </h2>
@@ -1031,8 +1057,8 @@
 		    <section>
 			<h3> Charged Particle Transport </h3>
 			<ul>
-			    <li> particles take many small steps in space to approximate their straggling paths</li>
-			    <li> each step requires a geometry check for surface crossing </li>
+			    <li> Particles take many small steps in space to approximate their straggling paths. </li>
+			    <li> Each step requires a geometry check for surface crossing. </li>
 			</ul>
 			<p class="fragment"> A sample problem of electron transport from MCNP6 tests </p>
 			<ul>
@@ -1093,7 +1119,7 @@
 		<!-- Summary  -->
 		<section>
 
-		    <section>
+		    <section id="Summary">
 			<h2> Summary </h2>
 		    </section>
 		    
@@ -1178,8 +1204,9 @@
 			    </div>
 			</small>
 		    </section>
+		    
 		    <section>
-		      <h3> References </h3>
+		      <h3 class="no-toc-progress"> References </h3>
 		      <small>
 			<div class="references">
 		    				<p>[9] Tautges, Timothy J., P. P. H. Wilson, Jason Kraftcheck, Brandon M. Smith, and Douglass L. Henderson. 2009. “Acceleration Techniques for Direct Use of CAD-Based Geometries in Monte Carlo Radiation Transport.” In <em>International Conference on Mathematics, Computational Methods &amp; Reactor Physics (M&amp;C 2009)</em>. Saratoga Springs, NY: American Nuclear Society.</p>
@@ -1188,7 +1215,6 @@
 		      </small>
 		      </div>
 		    </section>
-		    
 	    </div>
 	</div>
                 <!-- SCRIPTS -->
