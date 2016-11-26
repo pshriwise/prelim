@@ -174,7 +174,7 @@
 				</tbody>
 			    </table>
 			</p>
-			<p class="fragment fade-in"> These problems were run with both native & CAD geometrie.s</p>
+			<p class="fragment fade-in"> These problems were run with both native & CAD geometries.</p>
 		    </section>
 		    
 		    <section>
@@ -331,7 +331,7 @@
 			<p class="fragment"><b> A linear search of triangles is unreasonable.</b></p>
 		    </section>
 
-		    <section align="left">
+		    <section>
 			<h3> Ray Tracing Acceleration Data Structures </h3>
 			<br>
 			<p align="left"><i> This is a field dedicated to rapid geometric queries on surface meshses of triangles.</i></p>
@@ -724,7 +724,7 @@
 		    </section>
 
 		    <section>
-			<h3> SIMD BVH Trees </h3>
+			<h3> SIMD BVH Topology </h3>
 			<p>In order to take advantage of SIMD register widths BVH topologies are altered.</p>
 			<img src="../images/quad_tree.png" class="stretch" />
 			<p> This is accomplished by collapsing a binary tree into an n-ary tree.</p>
@@ -772,7 +772,7 @@
 			<p align="left"> EmDAG was applied to a few simple models: </p>
 			<ul>
 			    <li>5 MeV isotropic neutron point source at model origin</li>
-			    <li>all volumes are water-filled (&rho; = 1 g/cc)</li>
+			    <li>All volumes are water-filled (&rho; = 1 g/cc)</li>
 			    <li>Faceting tolerance: $10^{-4}$cm </li>			
 			    <li>1M histories </li>
 			</ul>
@@ -821,7 +821,7 @@
 			  <li> Facet tolerance: 1e-04cm</li>
 			  <li> Length tolerance: 5cm </li>
 			</ul>
-			<img src="images/fng_cad.png" height="350px">
+			<img src="images/FNG_cad.png" height="350px">
 			<p> A flux mesh tally was applied over the entire problem. </p>
 		    </section>
 		    
@@ -848,7 +848,7 @@
 			<p> 15% improvement in EmDAG performance with length tolerance applied </p> 
 		    </section>
 		    
-		    <section align="left">
+		    <section>
 			<h3> EmDAG Limitations </h3>
 			<table>
 			    <tbody>
@@ -917,7 +917,7 @@
 		    </section>
 		    
 		    <section>
-			<h3> Propsed Design of SIMD BVH for MCRT </h3>
+			<h3> Higher Precision SIMD Kernel </h3>
 			<br>
 			<ul>
 			    <li>The natural inclination might be to make Embree double precision</li>
@@ -926,7 +926,7 @@
 			    <br>
 			    <ul>
 				<li>slower double precision calculations</li>
-				<li>increased box footprint means fewer entities can fit in lower level caches</li>
+				<li>increased box memory means fewer entities can fit in lower level caches</li>
 			    </ul>
 			</ul>
 		    </section>
@@ -1092,7 +1092,7 @@
 			    <li>1M histories (100k for profiling) </li>
 			</ul>
 			<img src="../images/sphere_cad.png" height="300px" align="center" />
-			<p class="fragment"> flux and energy tallies applied </p>
+			<p> Flux and energy cell tallies were applied.</p>
 		    </section>
 		    
 		    <section id="precond_sphere_water">
@@ -1117,14 +1117,17 @@
 			    <li> Particles take many small steps in space to approximate their straggling paths. </li>
 			    <li> Each step requires a geometry check for surface crossing. </li>
 			</ul>
-			<p class="fragment"> A sample problem of electron transport from MCNP6 tests </p>
+			<div class="fragment">
+			<p align="left"> A sample problem of electron transport from MCNP6 tests: </p>
 			<ul>
-			    <li class="fragment"> Flouresence test of 1 keV - 100 keV photons on Fe/W target </li>
-			    <li class="fragment"> 500 histories </li>
-			    <li class="fragment"> single-event electron physics </li>
+			    <li> Flouresence test of 1 keV - 100 keV photons on Fe/W target </li>
+			    <li> 5,000 histories </li>
+			    <li> single-event electron physics </li>
 			</ul>
 			<br>
 			<img align="center" src="../images/066_cad.png" height="250px"/>
+			</div>
+			
 		    </section>
 
 		    <section>
@@ -1140,14 +1143,13 @@
 				</tr>
 				<tr>
 				    <td align="center">Run Time (min)</td>
-				    <td align="center">0.01</td>
-				    <td align="center">0.23</td>
-				    <td align="center">151.95</td>
+				    <td align="center">0.16 </td>
+				    <td align="center">0.46</td>
+				    <td align="center">1413.94</td>
 				</tr>
 			    </tbody>
 			</table>
 			<br>
-			<p> (will run more histories) </p>
 		    </section>
 		    
 		</section>
@@ -1159,13 +1161,13 @@
 			<ul>
 			    <li> The SDF preconditioner has already been shown to be a powerful acceleration tool given the <a href="#precond_sphere_water">proper conditions</a>.  </li>
 			    <br>
-			    <li> The identification of proper conditions for this data structure is important</li>
+			    <li> The identification of proper conditions for this data structure is important.</li>
 			    <br>
 			    <li> Memory usage is a concern: </li>
 			    <ul>
-				<li> adaptive mesh refinement or octree may be useful </li>
-				<li> error estimation becomes more difficult with non-uniform techniques </li>
-				<li> other uniform mesh methods using virtual memory may be useful<a href="#bib"><small style="vertical-align:bottom">[6]</small></a></li>
+				<li> Adaptive mesh refinement or octree may be useful. </li>
+				<li> Error estimation becomes more difficult with non-uniform techniques. </li>
+				<li> Other global uniform mesh methods will be explored<a href="#bib"><small style="vertical-align:bottom">[6]</small></a></li>
 			    </ul>
 			</ul>
 		    </section>
