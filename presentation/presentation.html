@@ -60,7 +60,7 @@
 				<td style="border: 0" align="right"><a href="#Background">2</a></td> 
 			    </tr>
 			    <tr>
-				<td style="border: 0" align="left" ><a href="#HV">Feature Adaptation in BVH Construction</a></td>
+				<td style="border: 0" align="left" ><a href="#HV">Feature-Adaptive BVH Construction</a></td>
 				<td style="border: 0" align="right"><a href="#HV">3</a></td> 
 			    </tr>
 			    <tr>
@@ -137,7 +137,7 @@
 			    <li>A pathway for robust particle transport on CAD geometries exists.</li>
 			    <br>
 			    <ul>
-				<li> Direct Accelerated Geometry Monte Carlo (DAGMC<a href="#bib"><small style="vertical-align:bottom">[10]</small></a>)</li>
+				<li> Direct Accelerated Geometry Monte Carlo (DAGMC<a href="#bib1"><small style="vertical-align:bottom">[10]</small></a>)</li>
 				<uL>
 				    <li>Relies heavily on Mesh-Oriented DataBase (MOAB<a href="#bib"><small style="vertical-align:bottom">[9]</small></a>)</li>
 				</uL>
@@ -229,15 +229,15 @@
 				    <td style="border-top: 2px dashed black;border-left: 2px dashed black" align="center">particle tracking</td>
 				    <td style="border-top: 2px dashed black"></td>			    
 				    <td align="center" style="border-right: 2px dashed black;border-top: 2px dashed black">
-					<span>MCNP5<a href=#"bib"><small style="vertical-align:bottom">[12]</small></a></span>
+					<span>MCNP5<a href="#bib1"><small style="vertical-align:bottom">[12]</small></a></span>
 				    </td>
 				</tr>
 				<tr class="noBorder" style="height:100px">
 				    <td class="redBlock" align="center"><p>CAD</p> <p>(Cubit/Trelis)</p></td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
-				    <td class="redBlock" align="center"><p>preprocessing</p> <p>(MOAB<a href="#bib"><small style="vertical-align:bottom;color:white">[9]</small></a>)</p></td>
+				    <td class="redBlock" align="center"><p>preprocessing</p><p>(MOAB)</p></td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    			    
-				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[10]</small></a></p> <p>(MOAB)</p> </td>
+				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC</p><p>(MOAB)</p></td>
 				    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
 				    <td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
 				</tr>
@@ -279,7 +279,7 @@
 				    </td>
 				</tr>
 				<tr class="noBorder" style="height:100px">
-				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[10]</small></a></p> <p>(MOAB)</p> </td>
+				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC</p> <p>(MOAB)</p> </td>
 				    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
 				    <td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
 				</tr>
@@ -504,11 +504,11 @@
 		        
 		    <section>
 			<h3> Surface Area Heuristic </h3>
-			<h4>(SAH)</h4>
+			<p>The Surface Area Heuristic (SAH) improves BVH traversal performance by 30% on average.<a href="#bib"><small style="vertical-align:bottom">[5]</small></a></p>
+			<br>
 			<p>
 			  $C_{s} =  C_{t} + \frac{A_{l}}{A_{p}} |P_{l}|C_{i} +  \frac{A_{r}}{A_{p}} |P_{r}|C_{i}$
-			    <a href="#bib"><small style="vertical-align:bottom">[1]</small></a> <a href="#bib"><small style="vertical-align:bottom">[5]</small></a>
-
+			    <a href="#bib"><small style="vertical-align:bottom">[1]</small></a> 
 			</p>
 			<style class="text/css">
 			 tr.noBorder td {border: 0;}
@@ -545,16 +545,19 @@
 		
 		    <section>
 			<h3> SAH Applied to High Valence </h3>
-			<p align="center">This same test was performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel. <a href="bib"><small style="vertical-align:bottom">[11]</small></a></p>
+			<p align="center">This same test was performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel. <a href="bib1"><small style="vertical-align:bottom">[11]</small></a></p>
 			<img src="../images/hv_emdag.png" height="500px" align="center" />		    
 		    </section>
 
 		</section>
 
 		<section>
-
 		    <section>
-			<h3> Feature Adaptive BVH Building </h3>
+			<h2>Feature-Adaptive BVH Construction</h2>
+		    </section>
+		    
+		    <section>
+			<h3>Feature-Adaptive BVH Construction</h3>
 			<br>
 			<p align="left"> This process is likely of more interest to radiation transport than rendering. </p>
 			<table>
@@ -607,14 +610,6 @@
 		    <section>
 			<h3> Proposed Building Scheme </h3>
 			<br>
-			<p>
-			    <span style="color:green"> $tts$ </span>
-			    $ =\,  C +$ <span style="color:red">$T_{B}$</span>
-			    $ + $
-			    <span style="color:green">$\sum_{}^{N_{r}} T_{T}$</span>
-			    $($
-			    <span style="color:red">$T_{B}$</span> $,\ldots) $
-			</p>
 			<table>
 			    <tbody>
 				<tr>
@@ -652,6 +647,28 @@
 			</table>
 			
 		    </section>
+
+		    <section>
+			<h3> Feature-Adaptive BVH Contributions </h3>
+			<br><br>
+			
+			<ul>
+			    <li> Adaptive building addresses common mesh feature which is difficult for generalized heuristics to cope with and is deterimental to performance. </li>
+			    <br>
+			    <li> BVH heuristic adaptation maintains expected O(logN) performance without the need for additional triangles or mesh alteration. </li>
+			</ul>
+			<br><br>
+			<p>
+			    <span style="color:green"> $tts$ </span>
+			    $ =\,  C +$ <span style="color:red">$T_{B}$</span>
+			    $ + $
+			    <span style="color:green">$\sum_{}^{N_{r}} T_{T}$</span>
+			    $($
+			    <span style="color:red">$T_{B}$</span> $,\ldots) $
+			</p>
+
+		    </section>
+		    
 		</section>
 		
 		<!-- SIMD BVH -->
@@ -950,38 +967,61 @@
 		    <section>
 			<h3> Proposed Design of SIMD BVH for MCRT </h3>
 			
-			<table>
+			<table align="left">
 			    <tbody>
 				<tr>
-				    <td style="vertical-align:top" class="redBlock">
+				    <td style="vertical-align:top" class="redBlock" width="400px">
 					MOAB
 					<p>
 					    <ul>
 						<li>generate expanded single-precision boxes around double-precision primitives</li>
-						<li>maintians memory contiguity for other applications </li>
 					    </ul>
 					</p>
 				    </td>
-				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
-				    <td style="vertical-align:top" class="redBlock">
+				    <td style="vertical-align:middle;border-bottom: 0px black solid" align="center">&#8594;</td>			    
+				    <td style="vertical-align:top" class="redBlock" width="400px">
 					RT Kernel
 					<p>
 					    <ul>	
-						<li> triangle,hieararchy data via MOAB's direct access methods</li>
+						<li> mesh provision via MOAB's direct access</li>
 						<li>SIMD traversal of single precision hieararchy</li>
 						<li>SIMD ray-triangle intersections in double precision</li>
 					    </ul>
 					</p>
 				    </td>
-				    
+				</tr>
+				<br>
+				<tr>
+				    <td align="right">&#8598;</td>
+				    <td class="redBlock" width ="400px">
+					DAGMC
+					<p>
+					    <ul>
+						<li> RT Kernel for numerical position </li>
+						<li> MOAB for logical position when necessary </li>
+					    </ul>
+					</p>
+				    </td>
+				    <td>&#8599;</td>
 				</tr>
 				   
 			    </tbody>
 			</table>
-			<br>
-			<p> Single-precision allows much of Embree's speed to be retained as majority of time is spent in BVH traversal.<a href="#bib"><small style="vertical-align:bottom">[3]</small></a></p>
 		    </section>
 
+		    <section>
+			<h3> Enhanced SIMD BVH for MCRT Contributions </h3>
+			<br>
+			<ul>
+			    <li> SIMD BVH oriented closest to location algorithm</li>
+			    <br>
+			    <li>Single-precision allows much of Embree's speed to be retained as majority of time is spent in BVH traversal.<a href="#bib"><small style="vertical-align:bottom">[3]</small></a></li>
+			    <br>
+			    <li>Takes advantage of MOAB's direct access methods to provide a spatial hierarchy traversal suitable for engineering analysis purposes with comparable performance to that of analytic geometry methods such as CSG on common CPU architectures.</li>
+			    <br>
+			</ul>
+		    </section>
+		    
 		</section>
 		<!-- Implicit Surfaces -->
 		<section id="SDF">
@@ -1191,9 +1231,24 @@
 			    <ul>
 				<li> Adaptive mesh refinement or octree may be useful. </li>
 				<li> Error estimation becomes more difficult with non-uniform techniques. </li>
-				<li> Other global uniform mesh methods will be explored<a href="#bib"><small style="vertical-align:bottom">[7]</small></a></li>
+				<li> Other global uniform mesh methods will be explored.<a href="#bib"><small style="vertical-align:bottom">[7]</small></a></li>
 			    </ul>
 			</ul>
+		    </section>
+
+		    <section>
+			<h3> Signed Distance Field Preconditioner Contributions </h3>
+			<ul>
+			    <li>Population of signed distance field with ray tracing kernel rather than generating an implicit surface representation for static mesh application.</li>
+			    <br>
+			    <li>When applied in a robust manner, this method can decrease lost particle rate in unsealed models.</li>
+			    <br>
+			    <li>Coupling of the signed distance field to the BVH may provide insight for further accelerations.</li>
+			    <br>
+			    <li>When well utilized, this data structure can bring particle tracking closer to an O(1) process than the O(logN) process relied upon in the past.</li>
+			</ul>
+			<br>
+			<p> $$ u\, O(1) + (1-u)\,O(logN) $$ </p>
 		    </section>
 
 		</section>
@@ -1204,73 +1259,124 @@
 		    <section id="Summary">
 			<h2> Summary </h2>
 		    </section>
-		    
+
 		    <section>
-			<h3 class="no-toc-progress"> Feature Adaptation in BVH Construction </h3>
-			<h4> Objectives </h4>
+			<h3> Feature-Adaptive BVH Contributions </h3>
+			<br><br>
 			<ul>
-			    <li> create a generalized building scheme for poorly formed tree nodes involving two steps</li>
+			    <li> Adaptive building addresses common mesh feature which is difficult for generalized heuristics to cope with and is deterimental to performance. </li>
+			    <br>
+			    <li> BVH heuristic adaptation maintains expected O(logN) performance without the need for additional triangles or mesh alteration. </li>
+			</ul>
+			<br><br>
+			<p>
+			    <span style="color:green"> $tts$ </span>
+			    $ =\,  C +$ <span style="color:red">$T_{B}$</span>
+			    $ + $
+			    <span style="color:green">$\sum_{}^{N_{r}} T_{T}$</span>
+			    $($
+			    <span style="color:red">$T_{B}$</span> $,\ldots) $
+			</p>
+		    </section>
+
+		    <section>
+			<h3> Feature-Adaptive BVH Objectives </h3>
+
+			<ul>
+			    <br>
+			    <li> Implement feature-adaptive BVH builder in MOAB as proposed </li>
+			    <br>
+			    <li> Establish conditions for leaf nodes expected to have a significant impact on performance </li>
+			    <br>
+			    <li> Characterize and address any other detrimental mesh features discovered along the way </li>
+			    <br>
 			    <ul>
-				<li> feature detection </li>
-				<li> feature adaptation </li>
-				<li> can similar solution be applied to SAH building or is the modified median splitting build necessary?</li>
+				<li>These additional mesh features may only be elucidated by a higher-performance system.</li>
 			    </ul>
-			    <li>
-				<li> ideally this can be applied to other problematic mesh features as well </li>
-				<li> apply to test model and other production models known to contain high valence regions to examine improvement </li>
+			    <li>Demonstrate effecitveness for transport on HV test model and other production models known to contain HV featires.</li>
 			</ul>
-			<span style="color: #00b300"  > $tts$ </span>
-			$ =\,  C +$ <span style="color: #b70101">$T_{B}$</span>
-			$ + $
-			<span style="color: #00b300"> $\sum_{}^{N_{r}} T_{T}$</span>
-			$($
-			<span style="color: #b70101">$T_{B}$</span> $,\ldots) $
+			
+		    </section>
 
-		    </section>
-		    
-		    
 		    <section>
-			<h3 class="no-toc-progress"> Architecture Based Acceleration </h3>
-			<h4> Contributions </h4>
+			<h3> Enhanced SIMD BVH for MCRT Contributions </h3>
+			<br>
 			<ul>
-			    <li class="fragment"> mixed-precision SIMD BVH traversal on common CPU architectures </li>
+			    <li> SIMD BVH oriented closest to location algorithm</li>
 			    <br>
-			    <li class="fragment"> provides high-performance spatial searches coupled with mesh database designed for engineering analysis </li>
+			    <li>Single-precision allows much of Embree's speed to be retained as majority of time is spent in BVH traversal.<a href="#bib"><small style="vertical-align:bottom">[3]</small></a></li>
 			    <br>
-			    <li class="fragment"> allows DAGMC particle tracking logic to be coupled to high-performance CPU ray tracer w/ double precision </li>
+			    <li>Takes advantage of MOAB's direct access methods to provide a spatial hierarchy traversal suitable for engineering analysis purposes with comparable performance to that of analytic geometry methods such as CSG on common CPU architectures.</li>
 			    <br>
-			    <li class="fragment"> significantly improves performance of radiation transport on CAD models </li>
+			    <li> Allows DAGMC's robust particle tracking to be coupled to a high-performance ray tracing kernel for improved CAD-Based radiation transport performance.</li>
 			</ul>
 		    </section>
-		    
+
 		    <section>
-			<h3> Signed Distance Field Preconditioner </h3>
+			<h3> Enhanced SIMD BVH for MCRT Objectives </h3>
 			<ul>
-			    <li class="fragment"> has already been shown to be a powerful acceleration tool given the <a href="#precond_sphere_water">proper conditions</a>  </li>
 			    <br>
-			    <li class="fragment"> identification of proper conditions for this data structure is important</li>
+			    <li>Implement a SIMD-oriented BVH builder in MOAB which generates memory contiguous single-precision bounding boxes around double-precision primitives (triangles).</li>
 			    <br>
-			    <li class="fragment"> memory footprint is of concern </li>
-			    <ul class="fragment">
-				<li> adaptive mesh refinement or octree may be useful </li>
-				<li> error estimation becomes more difficult with non-uniform techniques </li>
-				<li> other uniform mesh methods could be helpful <cite><small style="vertical-align:bottom">Setaulri_2014</small></cite> </li>
+			    <li>Develop or extend a ray tracing kernel which is capable of SIMD traversal on the MOAB-provided BVH and associated double-precision triangles. </li>
+			    <ul>
+				<li>Kernel should have no more lost particles than would be seen in the current version of DAGMC for the same triangle mesh. </li>
+				<li>Kernel should provide comparable performance to the EmDAG system. </li>
 			    </ul>
+			    <br>
+			    <li>Compare performance and robustness to EmDAG system for simple transport problems</li>
+			    <br>
+			    <li>Demonstrate effectiveness for production models as well</li>
+			</ul>
+		    </section>
+		    
+		    <section>
+			<h3> Signed Distance Field Preconditioner Contributions </h3>
+			<ul>
+			    <li>Population of signed distance field with ray tracing kernel rather than generating an implicit surface representation for static mesh application.</li>
+			    <br>
+			    <li>When applied in a robust manner, this method can decrease lost particle rate in unsealed models.</li>
+			    <br>
+			    <li>When well utilized, this data structure can bring particle tracking closer to an O(1) process than the O(logN) process relied upon in the past.</li>
+			</ul>
+			<br>
+			<p> $$ u\, O(1) + (1-u)\,O(logN) $$ </p>
+		    </section>
+
+		    <section>
+			<h3> Signed Distance Field Preconditioner Objectives </h3>
+			<ul>
+			    <li>Create a predictive model for the preconditioner based on three problem-specific factors:</li>
+			    <br>
+			    <ul>
+				<li>mean free path</li>
+				<li>characteristic volume size</li>
+				<li>preconditioner mesh step size</li>
+			    </ul>
+			    <br>
+			    <li>Explore global uniform mesh preconditioner solutions for production DAGMC models.</li>
+			    <br>
+			    <li>Demonstrate effectiveness of the utilization model and resulting data structure in toy and production models for neutron, photon, and charged particle transport.</li>
 			</ul>
 		    </section>
 
 		    <section>
-			<h3 class="no-toc-progress"> Summary </h3>
-			<p> each approach aides in goal of CAD-Based Monte Carlo Radiation Transport performance on the order of analytic/native/CSG geometry representations</p>
+			<h3> Complementary Effects </h3>
+			<br>
 			<ul>
-			    <li class="fragment"> trees should now be optimized for high valence regions </li>
-			    <li class="fragment"> ray tracing greatly increases single-node efficiency </li>
-			    <li class="fragment"> preconditioner will help to reduce overall order of particle tracking compelxity if utilized well</li>
-			    <li class="fragment"> increased ray tracing performance assists other MOAB and DAGMC based applications as well </li>
+			    <li> A SIMD-based closest to location algorithm </li>
+			    <br>
+			    <li> A SIMD-based closest to location algorithm may allow us to avoid other, more costly methods of populating the SDF data structure.</li>
+			    <br>
+			    <li>Coupling of the signed distance field to the BVH may provide insight for further accelerations.</li>
+			    <br>
+			    <li> Feature-adaptive BVH construction will improve performance of both signed distance field population and transport queries during simulation.</li>
+			    <br>
 			</ul>
-			<p class="fragment"><b>final combined effect is a more effective CB-MCRT pathway for analysis</b></p>
-		    </section>
+			<p class="fragment"><b>The combined effect provides a more efficient pathway for CAD-Based Monte Carlo Radiation Transport analysis.</b></p>
 
+		    </section>
+		    
 		    <section id="bib">
 			<h3> References </h3>
 			<small>
@@ -1288,7 +1394,7 @@
 			</small>
 		    </section>
 		    
-		    <section>
+		    <section id="bib1">
 		      <h3 class="no-toc-progress"> References </h3>
 		      <small>
 			<div class="references">
