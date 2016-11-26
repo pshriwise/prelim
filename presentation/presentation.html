@@ -138,6 +138,10 @@
 			    <br>
 			    <ul>
 				<li> Direct Accelerated Geometry Monte Carlo (DAGMC<a href="#bib"><small style="vertical-align:bottom">[10]</small></a>)</li>
+				<uL>
+				    <li>Relies heavily on Mesh-Oriented DataBase (MOAB<a href="#bib"><small style="vertical-align:bottom">[9]</small></a>)</li>
+				</uL>
+					
 			    </ul>
 			    <br>
 			    <li> This toolkit is not yet at its full potential. </li>
@@ -881,6 +885,11 @@
 			    <li> No closest to location capability is implemented. </li>
 			</ul>
 			<br></br>
+		    </section>
+		    
+		    <section>
+			<h3> Kernel Comparison </h3>
+			<br><br>
 			<table>
 			    <tbody>
 				<tr>
@@ -888,25 +897,28 @@
 				    <td align="center"><b>EmDAG</b></td>
 				</tr>
 				<tr>
-				    <td style="vertical-align:top" width="500px">
-					Pros:
+				    <td style="vertical-align:top" width="550px">
+					<p><b>Pros:</b></p>
 					<ul>
 					    <li>designed for interrogation/manipulation of mesh</li>
+					    <li>mesh data in contiguous memory</li>
 					</ul>
-					Cons:
+					<p><b>Cons:</b></p>
 					<ul>
-					    <li>slow due to database context</li>
+					    <li>double-precision</li>
+					    <li>kernel impeded by database context</li>
 					</ul>
 				    </td>
-				    <td style="vertical-align:top" width="500px">
-					Pros:
+				    <td style="vertical-align:top" width="550px">
+					<p><b>Pros:</b></p>
 					<ul>
-					    <li>SIMD BVH ray tracing with design relevant to MCRT</li>
+					    <li>SIMD BVH ray tracing framework relevant to MCRT</li>
+					    <li>mesh data provision design</li>
 					</ul>
-					<p style="margin: 0px 0px 0px 0px"> Cons: </p>
+					<p><b>Cons:</b></p>
 					<ul>
 					    <li>single-precision</li>
-					    <li>limited mesh interface</li>
+					    <li>limited mesh data interface</li>
 					</ul>
 				    </td>
 				</tr>
@@ -1081,14 +1093,28 @@
 		    
 		    <section>
 			<h3> Preconditioner Test </h3>
-			<ul>
-			    <li>5 MeV isotropic neutron point source at model origin</li>
-			    <li>single volume: 10 cm radius sphere</li>
-			    <li>all volumes are water-filled </li>
-			    <li>density varied from 0 to 1 (g/cc) </li>
-			    <li>faceting tolerance: $10^{-4}$cm </li>			
-			    <li>1M histories (100k for profiling) </li>
-			</ul>
+			<table>
+			    <tbody>
+				<tr>
+				    <td width="500px">
+					<ul>
+					    <li>10cm radius sphere</li>
+					    <li>5 MeV isotropic neutron point source at origin</li>
+
+					    <li>density varied from 0 to 1 (g/cc) </li>
+					</ul>
+				    </td>
+				    <td width="500px">
+					<ul>
+					    <li>faceting tolerance: $10^{-4}$cm </li>			
+					    <li>1M histories (100k for profiling) </li>
+					    <li> Mesh step size: $h = 0.5cm$ </li>
+					    <li> Error evaluation: $\sqrt{3}h$
+					</ul>
+				    </td>
+				</tr>
+			    </tbody>
+			</table>
 			<img src="../images/sphere_cad.png" height="300px" align="center" />
 			<p> Flux and energy cell tallies were applied.</p>
 		    </section>
@@ -1105,7 +1131,7 @@
 		    
 		    <section>
 			<h3> Initial Results </h3>
-			<p align="center"> $$ U = \frac{dagmc\, rays -  dagmc\, w/\, precond.\, rays}{dagmc\, rays}$$ </p>
+			<p align="center"> $$ u = \frac{dagmc\, rays -  dagmc\, w/\, precond.\, rays}{dagmc\, rays}$$ </p>
 			<object data="precond_utilization.html" class="stretch"></object>
 		    </section>
 
