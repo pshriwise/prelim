@@ -137,7 +137,7 @@
 			    <li>A pathway for robust particle transport on CAD geometries exists.</li>
 			    <br>
 			    <ul>
-				<li> Direct Accelerated Geometry Monte Carlo (DAGMC<a href="#bib"><small style="vertical-align:bottom">[9]</small></a>)</li>
+				<li> Direct Accelerated Geometry Monte Carlo (DAGMC<a href="#bib"><small style="vertical-align:bottom">[10]</small></a>)</li>
 			    </ul>
 			    <br>
 			    <li> This toolkit is not yet at its full potential. </li>
@@ -227,22 +227,22 @@
 				    <td style="border-top: 2px dashed black;border-left: 2px dashed black" align="center">particle tracking</td>
 				    <td style="border-top: 2px dashed black"></td>			    
 				    <td align="center" style="border-right: 2px dashed black;border-top: 2px dashed black">
-					<span>MCNP5<a href=#"bib"><small style="vertical-align:bottom">[11]</small></a></span>
+					<span>MCNP5<a href=#"bib"><small style="vertical-align:bottom">[12]</small></a></span>
 				    </td>
 				</tr>
 				<tr class="noBorder" style="height:100px">
 				    <td class="redBlock" align="center"><p>CAD</p> <p>(Cubit/Trelis)</p></td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
-				    <td class="redBlock" align="center"><p>preprocessing</p> <p>(MOAB<a href="#bib"><small style="vertical-align:bottom;color:white">[8]</small></a>)</p></td>
+				    <td class="redBlock" align="center"><p>preprocessing</p> <p>(MOAB<a href="#bib"><small style="vertical-align:bottom;color:white">[9]</small></a>)</p></td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    			    
-				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[9]</small></a></p> <p>(MOAB)</p> </td>
+				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[10]</small></a></p> <p>(MOAB)</p> </td>
 				    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
 				    <td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
 				</tr>
 				<tr class="noBorder">
 				    <td align="center"> geometric design </td>
 				    <td></td>
-				    <td align="center"> make_watertight <a href="#bib"><small style="vertical-align:bottom">[7]</small></a> </p> </td>
+				    <td align="center"> make_watertight <a href="#bib"><small style="vertical-align:bottom">[8]</small></a> </p> </td>
 				    <td></td>
 				    <td align="center" style="border-left: 2px dashed black;border-bottom: 2px dashed black"> ray tracing </td>
 				    <td style="border-bottom: 2px dashed black"></td>
@@ -273,11 +273,11 @@
 				    <td align="center" style="border-top: 2px dashed black;border-left: 2px dashed black">particle tracking</td>
 				    <td style="border-top: 2px dashed black"> </td>			    
 				    <td align="center" style="border-top: 2px dashed black;border-right: 2px dashed black">
-					<span>MCNP5<a href=#"bib"><small style="vertical-align:bottom">[11]</small></a></span>
+					<span>MCNP5<a href=#"bib"><small style="vertical-align:bottom">[12]</small></a></span>
 				    </td>
 				</tr>
 				<tr class="noBorder" style="height:100px">
-				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[9]</small></a></p> <p>(MOAB)</p> </td>
+				    <td class="redBlock" align="center" style="border-left: 2px dashed black"> <p>DAGMC<a href="#bib"><small style="vertical-align:bottom;color:white">[10]</small></a></p> <p>(MOAB)</p> </td>
 				    <td style="vertical-align:middle" align="center"> <p>&#8594;</p> <p>&#8592;</p> </td>			    			    
 				    <td class="redBlock" align="center" style="border-right: 2px dashed black"> Monte Carlo </td>
 				</tr>
@@ -543,7 +543,7 @@
 		
 		    <section>
 			<h3> SAH Applied to High Valence </h3>
-			<p align="center">This same test was performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel. <a href="bib"><small style="vertical-align:bottom">[10]</small></a></p>
+			<p align="center">This same test was performed using the <a href="https://embree.github.io/">Embree</a> ray tracing kernel. <a href="bib"><small style="vertical-align:bottom">[11]</small></a></p>
 			<img src="../images/hv_emdag.png" height="500px" align="center" />		    
 		    </section>
 
@@ -985,7 +985,7 @@
 			<h4> (Level-Set Methods) </h4>
 			<p align="center"> An implicit surface is a multivariate function defined over an $ R^3 $ domain</p>
 			$$    \Omega(R^3)\rightarrow R $$
-			<p align="center"> where points on the surface are represented by the isocontour $v=0$. </p>
+			<p align="center"> where points on the surface are represented by the isocontour $v=0$.<a href="#bib"><small style="vertical-align:bottom">[6]</small></a> </p>
 			$$   \Omega(\vec{x}) - v  = 0 $$
 			<p align="center"> Important geometric properties can be easily recovered from this represntation. </p>
 			<table>
@@ -1167,7 +1167,7 @@
 			    <ul>
 				<li> Adaptive mesh refinement or octree may be useful. </li>
 				<li> Error estimation becomes more difficult with non-uniform techniques. </li>
-				<li> Other global uniform mesh methods will be explored<a href="#bib"><small style="vertical-align:bottom">[6]</small></a></li>
+				<li> Other global uniform mesh methods will be explored<a href="#bib"><small style="vertical-align:bottom">[7]</small></a></li>
 			    </ul>
 			</ul>
 		    </section>
@@ -1256,9 +1256,10 @@
 				<p>[3]Baboulin, Marc, Alfredo Buttari, Jack Dongarra, Jakub Kurzak, Julie Langou, Julien Langou, Piotr Luszczek, and Stanimire Tomov. 2009. “Accelerating Scientific Computations with Mixed Precision Algorithms.” <em>Computer Physics Communications</em> 180 (12): 2526–33. doi:<a href="http://dx.doi.org/http://dx.doi.org/10.1016/j.cpc.2008.11.005">http://dx.doi.org/10.1016/j.cpc.2008.11.005</a>.</p>				
 				<p>[4]Knoll, Aaron. 2008. “A Survey of Implicit Surface Rendering Methods, and a Proposal for a Common Sampling Framework.” <em>Lecture Notes in Informatics (LNI), Proceedings - Series of the Gesellschaft Fur Informatik (GI)</em>, 164–77.</p>				
 				<p>[5] MacDonald, Kellogg S., J. David ; Booth. 1990. “Heuristics for Ray Tracing Using Space Subdivision.” <em>The Visual Computer</em> 6 (3): 153–66. doi:<a href="http://dx.doi.org/10.1007/BF01911006">10.1007/BF01911006</a>.</p>
-				<p>[6] Setaluri, Rajsekhar, Mridul Aanjaneya, Sean Bauer, and Eftychios Sifakis. 2014. “SPGrid: A Sparse Paged Grid Structure Applied to Adaptive Smoke Simulation.” <em>ACM Trans. Graph.</em> 33 (6). New York, NY, USA: ACM: 205:1–205:12. doi:<a href="http://dx.doi.org/10.1145/2661229.2661269">10.1145/2661229.2661269</a>.</p>
-				<p>[7]Smith, B.M., T.J. Tautges, and P.P.H. Wilson. 2010. “Sealing Faceted Surfaces to Achieve Watertight CAD Models.” In. Chattanooga, TN, United States.</p>				
-				<p>[8] Tautges, T. J., R. Meyers, K. Merkley, C. Stimpson, and C. Ernst. 2004. <em>MOAB: A Mesh-Oriented Database</em>. SAND2004-1592. Sandia National Laboratories.</p>
+				<p>[6]Osher, Stanley, and Ronald P. Fedkiw. 2003. <em>Level Set Methods and Dynamic Implicit Surfaces</em>. Applied Mathematical Science. New York, N.Y.: Springer. <a href="http://opac.inria.fr/record=b1099358" class="uri">http://opac.inria.fr/record=b1099358</a>.</p>
+				<p>[7] Setaluri, Rajsekhar, Mridul Aanjaneya, Sean Bauer, and Eftychios Sifakis. 2014. “SPGrid: A Sparse Paged Grid Structure Applied to Adaptive Smoke Simulation.” <em>ACM Trans. Graph.</em> 33 (6). New York, NY, USA: ACM: 205:1–205:12. doi:<a href="http://dx.doi.org/10.1145/2661229.2661269">10.1145/2661229.2661269</a>.</p>
+				<p>[8]Smith, B.M., T.J. Tautges, and P.P.H. Wilson. 2010. “Sealing Faceted Surfaces to Achieve Watertight CAD Models.” In. Chattanooga, TN, United States.</p>				
+				<p>[9] Tautges, T. J., R. Meyers, K. Merkley, C. Stimpson, and C. Ernst. 2004. <em>MOAB: A Mesh-Oriented Database</em>. SAND2004-1592. Sandia National Laboratories.</p>
 			    </div>
 			</small>
 		    </section>
@@ -1267,9 +1268,9 @@
 		      <h3 class="no-toc-progress"> References </h3>
 		      <small>
 			<div class="references">
-		    				<p>[9] Tautges, Timothy J., P. P. H. Wilson, Jason Kraftcheck, Brandon M. Smith, and Douglass L. Henderson. 2009. “Acceleration Techniques for Direct Use of CAD-Based Geometries in Monte Carlo Radiation Transport.” In <em>International Conference on Mathematics, Computational Methods &amp; Reactor Physics (M&amp;C 2009)</em>. Saratoga Springs, NY: American Nuclear Society.</p>
-				<p>[10] Wald, Ingo, Sven Woop, Carsten Benthin, Gregory S. Johnson, and Manfred Ernst. 2014. “Embree: A Kernel Framework for Efficient CPU Ray Tracing.” <em>ACM Trans. Graph.</em> 33 (4). New York, NY, USA: ACM: 143:1–:8. doi:<a href="http://dx.doi.org/10.1145/2601097.2601199">10.1145/2601097.2601199</a>.</p>
-				<p>[11] X-5 Monte Carlo Team. 2004. <em>MCNP - a General Monte Carlo N-Particle Transport Code, Version 5 - Volume III: Developers Guide</em>. LA-CP-03-0284. Los Alamos National Laboratory.</p>
+		    				<p>[10] Tautges, Timothy J., P. P. H. Wilson, Jason Kraftcheck, Brandon M. Smith, and Douglass L. Henderson. 2009. “Acceleration Techniques for Direct Use of CAD-Based Geometries in Monte Carlo Radiation Transport.” In <em>International Conference on Mathematics, Computational Methods &amp; Reactor Physics (M&amp;C 2009)</em>. Saratoga Springs, NY: American Nuclear Society.</p>
+				<p>[11] Wald, Ingo, Sven Woop, Carsten Benthin, Gregory S. Johnson, and Manfred Ernst. 2014. “Embree: A Kernel Framework for Efficient CPU Ray Tracing.” <em>ACM Trans. Graph.</em> 33 (4). New York, NY, USA: ACM: 143:1–:8. doi:<a href="http://dx.doi.org/10.1145/2601097.2601199">10.1145/2601097.2601199</a>.</p>
+				<p>[12] X-5 Monte Carlo Team. 2004. <em>MCNP - a General Monte Carlo N-Particle Transport Code, Version 5 - Volume III: Developers Guide</em>. LA-CP-03-0284. Los Alamos National Laboratory.</p>
 		      </small>
 		      </div>
 		    </section>
