@@ -1328,6 +1328,7 @@
 			    <br>
 			    <li>Demonstrate effectiveness for production models as well</li>
 			</ul>
+			<
 		    </section>
 		    
 		    <section>
@@ -1346,12 +1347,13 @@
 		    <section>
 			<h3> Signed Distance Field Preconditioner Objectives </h3>
 			<ul>
-			    <li>Create a predictive model for the preconditioner based on three problem-specific factors:</li>
+			    <li>Create a predictive model for preconditioner utilization, $u$, based on three problem-specific factors:</li>
 			    <br>
+			    <p> $$ u(\lambda,v,h) $$ </p>
 			    <ul>
-				<li>mean free path</li>
-				<li>characteristic volume size</li>
-				<li>preconditioner mesh step size</li>
+				<li>$\lambda$ - average mean free path</li>
+				<li>$v$ - characteristic volume size</li>
+				<li>$h$ - preconditioner mesh step size</li>
 			    </ul>
 			    <br>
 			    <li>Explore global uniform mesh preconditioner solutions for production DAGMC models.</li>
@@ -1361,6 +1363,14 @@
 		    </section>
 
 		    <section>
+			<h3> Preliminary Timeline </h3>
+			<br><br>
+			<p>Feature-Adaptive BVH Construction: 1-2 months</p>
+			<p>Enhanced SIMD BVH for MCRT: 6-8 months</p>
+			<p>Signed Distance Field Preconditioner: 4-6 months</p>			    
+		    </section>
+		    
+		    <section>
 			<h3> Complementary Effects </h3>
 			<br>
 			<ul>
@@ -1368,13 +1378,26 @@
 			    <br>
 			    <li> A SIMD-based closest to location algorithm may allow us to avoid other, more costly methods of populating the SDF data structure.</li>
 			    <br>
-			    <li>Coupling of the signed distance field to the BVH may provide insight for further accelerations.</li>
+			    <li> Coupling of the signed distance field to the BVH may provide insight for further accelerations.</li>
 			    <br>
 			    <li> Feature-adaptive BVH construction will improve performance of both signed distance field population and transport queries during simulation.</li>
 			    <br>
 			</ul>
 			<p class="fragment"><b>The combined effect provides a more efficient pathway for CAD-Based Monte Carlo Radiation Transport analysis.</b></p>
 
+		    </section>
+
+		    <section>
+			<h3> Acknowledgements </h3>
+			<br><br>
+			<p> I would like to thank all members of the Computational Nuclear Engineering Reserach Group here at UW and in particular: </p>
+			<ul>
+			    <li> Dr. Paul Wilson </li>
+			    <li> Dr. Andrew Davis </li>
+			    <li> Lucas Jacobson </li>
+			</ul>
+			<p>And to the Nuclear Regulatory Comission for funding this work.</p>
+			<img align="center" src="images/NRClogo.png" height="100px"/>
 		    </section>
 		    
 		    <section id="bib">
