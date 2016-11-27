@@ -145,7 +145,7 @@
 					
 			    </ul>
 			    <br>
-			    <li> Not yet at its full potential</li>
+			    <li> Not yet at its full potential:</li>
 			    <br>
 			    <ul>
 				<li>Difficult to meet CAD quality required for robust DAGMC transport</li>
@@ -179,7 +179,7 @@
 				</tbody>
 			    </table>
 			</p>
-			<p class="fragment fade-in"> These problems were run with both native & CAD geometries.<a href="#bib"><small style="vertical-align:bottom">[4]</small></a></p>
+			<p class="fragment fade-in"> These problems were run with both native & CAD geometries via MCNP2CAD<a href="#bib"><small style="vertical-align:bottom">[4]</small></a>.</p>
 		    </section>
 		    
 		    <section>
@@ -438,7 +438,7 @@
 			    <tbody>
 				<tr>
 				    <td align="center"> Faceting Tolerance Only </td>
-				    <td align="center">  With Length Tolerance </td>
+				    <td align="center">  with Length Tolerance </td>
 				</tr>
 				<tr>
 				    <td align="center"><img src="../images/fng271_facet_tol.png" width="450px"/></td>
@@ -702,7 +702,7 @@
 			    <li>N:1 - test many rays against a single box at once</li>
 			    <li>1:N - test one ray against many boxes at once </li>
 			</ul>
-			    <p> Performance of selected method will depend on <i>ray coherence</i>.</p>
+			    <p> The performance of a given method will depend on <i>ray coherence</i>.</p>
 			    <img src="../images/ray_coherence.jpg" width="500px"/>
 			    <table width="500px"><tbody><tr><td align="center"> coherent</td><td align="center">incoherent</td></tr></tbody></table>
 			    <small> <p>* image courtesy of <a href="https://software.intel.com/en-us/articles/embree-highly-optimized-visibility-algorithms-for-monte-carlo-ray-tracing">Intel</a></p></small>
@@ -714,6 +714,7 @@
 			<style class="text/css">
 			 tr.noBorder td {border: 0;}
 			</style>
+			<br><br>
 			<table>
 			    <tbody>
 				<tr class="noBorder">
@@ -856,7 +857,7 @@
 			    <tbody>
 				<tr>
 				    <td align="center"> Faceting Tolerance Only </td>
-				    <td align="center"> With Length Tolerance </td>
+				    <td align="center"> with Length Tolerance </td>
 				</tr>
 				<tr>
 				    <td align="center"><img src="../images/fng271_facet_tol.png" width="450px"/></td>
@@ -890,9 +891,8 @@
 				</tr>
 			    </tbody>
 			</table>
-			<br><br>
-			<object data="../images/emdag_fng_lost.svg" type="image/svg+xml" height="400px"></object>
 			<p align="center"> Cause: Conversions from single to double precision and vice versa. </p>
+			<object data="../images/emdag_fng_lost.svg" type="image/svg+xml" height="400px"></object>
 		    </section>
 
 		</section>
@@ -955,7 +955,7 @@
 			<h3> Higher Precision SIMD Kernel </h3>
 			<br>
 			<ul>
-			    <li>The natural inclination might be to make Embree double precision</li>
+			    <li>Natural inclination might be to make Embree double precision</li>
 			    <br>
 			    <li>This is doubly disadvantageous:</li>
 			    <br>
@@ -1410,7 +1410,7 @@
 			<p align="left"><b>End-term (8-12 months):</b></p>
 			<ul>
 			    <li> Demonstrate new ray tracing kernel effectiveness in comparison to native codes and EmDAG</li>
-			    <li> Finalize form of SDF Preconditioner </li>
+			    <li> Finalize SDF Preconditioner implementation</li>
 			    <ul>
 				<li>Global solution application</li>
 				<li>Selective application based on predictive model</li>
@@ -1427,8 +1427,6 @@
 			<h3> Complementary Effects </h3>
 			<br>
 			<ul>
-			    <li> A SIMD-based closest to location algorithm </li>
-			    <br>
 			    <li> A SIMD-based closest to location algorithm may allow avoidance of other, more costly methods of populating the SDF data structure.</li>
 			    <br>
 			    <li> Coupling of the signed distance field to the BVH may provide insight for further accelerations.</li>
@@ -1436,7 +1434,7 @@
 			    <li> Feature-adaptive BVH construction will improve performance of both signed distance field population and transport queries during simulation.</li>
 			    <br>
 			</ul>
-			<p class="fragment"><b>The combined effect provides a more efficient pathway for CAD-Based Monte Carlo Radiation Transport analysis.</b></p>
+			<p class="fragment"><b>The combined effect provides a more efficient analysis  CAD-Based Monte Carlo Radiation Transport analysis.</b></p>
 
 		    </section>
 
