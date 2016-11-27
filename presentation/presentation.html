@@ -29,6 +29,14 @@
 		    <script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
     </head>
+    <!-- some custom css classes -->
+    <style class="text/css">
+      h2.vcenter {
+      text-align: center; letter-spacing: 1px; height: 10em; padding: 4em 0%; width:100%;}
+      tr.noBorder td {border: 0;}
+      td.redBlock {text-align: center; color: white; background-color: #b70101; vertical-align: middle; }
+    </style>
+    
     <body>
 	<div class="reveal">
 	    <div class="slides">
@@ -79,12 +87,11 @@
 			</tbody>
 		    </table>
 		</section>
-
 		<!-- Motivation -->		
 		<section id="Motivation">
-		    
+		  
 		    <section>
-			<h1>Motivation</h1>
+		      <h2 class="vcenter">Motivation</h2>
 		    </section>
 		    
 		    <section>			
@@ -210,15 +217,11 @@
  		<section id ="Background">
 		    
 		    <section>
-			<h1> Background </h1>
+			<h2 class="vcenter"> Background </h2>
 		    </section>
 		    
 		    <section>
 			<h2>DAGMC Geometry Workflow</h2>
-			<style class="text/css">
-			 tr.noBorder td {border: 0;}
-			 td.redBlock {text-align: center; color: white; background-color: #b70101; vertical-align: middle; }
-			</style>
 			<table>
 			    <tbody>
 				<tr class="noBorder">
@@ -405,6 +408,10 @@
 		<!-- High Valence Features -->
 		<section id ="HV">
 
+		  <section>
+		    <h2 class="vcenter"> High Valence Mesh Features </h2>
+		  </section>
+		  
 		    <!-- High Valence -->
 		    <section>
 			<h3> High Valence Mesh Features </h3>
@@ -553,7 +560,7 @@
 
 		<section>
 		    <section>
-			<h2>Feature-Adaptive BVH Construction</h2>
+			<h2 class="vcenter">Feature-Adaptive BVH Construction</h2>
 		    </section>
 		    
 		    <section>
@@ -623,7 +630,7 @@
 					</p>
 				    </td>
 				    <td style="vertical-align:middle" align="center"> &#8594; </td>			    
-				    <td class ="redBlock">
+				    <td class="redBlock">
 					Resolve Tagged Leaves
 					<p>
 					    Step 1:
@@ -675,10 +682,8 @@
 		<section id="SIMD_BVH">
 		    
 		    <section>
-			<h1> EmDAG </h1>
-			<h4> DAGMC linked with a high-performance CPU ray tracing kernel </h4>
+			<h2 class="vcenter"> EmDAG </h2>
 		    </section>
-		    
 		    <section>
 			<h2 class="no-toc-progress"> Architecture Based Acceleration </h2>
 			<ul>
@@ -893,6 +898,9 @@
 		</section>
 
 		<section>
+		  <section>
+		    <h2 class="vcenter">Enhanced SIMD BVH Traversal for MCRT</h2>
+		  </section>
 		    <section>
 			<h3> Enhanced SIMD BVH Traversal for MCRT</h3>
 			<p> Embree does not meet the requirments of the robust tracking algorithm used by DAGMC as it currently exists. </p>
@@ -1027,7 +1035,7 @@
 		<section id="SDF">
 		    
 		    <section>
-			<h2>Implicit Surfaces and Signed Distance Fields </h2>
+			<h2 class="vcenter">Implicit Surfaces and Signed Distance Fields </h2>
 		    </section>
 		    
 		    <section>
@@ -1219,8 +1227,12 @@
 		</section>
 
 		<section>
-		    
-		    <section>
+
+		  <section>
+		    <h2 class="vcenter"> Signed Distance Field Preconditioner </h2>
+		  </section>
+		  
+		  <section>
 			<h3> Signed Distance Field Preconditioner </h3>
 			<ul>
 			    <li> The SDF preconditioner has already been shown to be a powerful acceleration tool given the <a href="#precond_sphere_water">proper conditions</a>.  </li>
@@ -1257,7 +1269,7 @@
 		<section>
 
 		    <section id="Summary">
-			<h2> Summary </h2>
+			<h2 class="vcenter">Summary</h2>
 		    </section>
 
 		    <section>
