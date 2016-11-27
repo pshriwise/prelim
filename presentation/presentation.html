@@ -974,34 +974,38 @@
 		    
 		    <section>
 			<h3> Proposed Design of SIMD BVH for MCRT </h3>
-			
-			<table align="left">
+			<table width="1000px" style="margin: -50px 0px 0px 0px">
 			    <tbody>
 				<tr>
-				    <td style="vertical-align:top" class="redBlock" width="400px">
+				    <td style="vertical-align:top" class="redBlock" width="500px">
 					MOAB
 					<p>
 					    <ul>
-						<li>generate expanded single-precision boxes around double-precision primitives</li>
+						<li>generate single-precision bounding boxes around double-precision primitives</li>
 					    </ul>
 					</p>
 				    </td>
 				    <td style="vertical-align:middle;border-bottom: 0px black solid" align="center">&#8594;</td>			    
-				    <td style="vertical-align:top" class="redBlock" width="400px">
+				    <td style="vertical-align:top" class="redBlock" width="500px">
 					RT Kernel
 					<p>
 					    <ul>	
 						<li> mesh provision via MOAB's direct access</li>
-						<li>SIMD traversal of single precision hieararchy</li>
-						<li>SIMD ray-triangle intersections in double precision</li>
+						<li>SIMD traversal in single-precision hieararchy</li>
+						<li>SIMD double-precision triangle intersections</li>
 					    </ul>
 					</p>
 				    </td>
 				</tr>
 				<br>
+				<tr class="noBorder">
+				  <td></td>
+				  <td></td>
+				  <td></td>
+				</tr>
 				<tr>
 				    <td align="right">&#8598;</td>
-				    <td class="redBlock" width ="400px">
+				    <td class="redBlock" width ="500px">
 					DAGMC
 					<p>
 					    <ul>
