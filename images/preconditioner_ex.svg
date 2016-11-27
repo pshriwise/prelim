@@ -33,7 +33,7 @@
      inkscape:cx="334.54013"
      inkscape:cy="670.9296"
      inkscape:document-units="px"
-     inkscape:current-layer="g5962"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1600"
      inkscape:window-height="827"
@@ -169,14 +169,14 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:28px;line-height:124.00000095%;font-family:Sans;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="677.59558"
-       y="-165.33156"
+       x="565.59558"
+       y="-176.33156"
        id="text4157"
        sodipodi:linespacing="124%"><tspan
          sodipodi:role="line"
          id="tspan4159"
-         x="677.59558"
-         y="-165.33156">Current Position</tspan></text>
+         x="565.59558"
+         y="-176.33156">Current Position</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:28px;line-height:124.00000095%;font-family:Sans;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"

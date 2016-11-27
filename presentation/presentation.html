@@ -61,27 +61,21 @@
 			<tbody>
 			    <tr>
 				<td style="border: 0" align="left" ><a href="#Motivation">Motivation</a></td>
-				<td style="border: 0" align="right"><a href="#Motivation">1</a></td> 
 			    </tr>
 			    <tr>
 				<td style="border: 0" align="left" ><a href="#Background">Background</a></td>
-				<td style="border: 0" align="right"><a href="#Background">2</a></td> 
 			    </tr>
 			    <tr>
 				<td style="border: 0" align="left" ><a href="#HV">Feature-Adaptive BVH Construction</a></td>
-				<td style="border: 0" align="right"><a href="#HV">3</a></td> 
 			    </tr>
 			    <tr>
 				<td style="border: 0" align="left" ><a href="#SIMD_BVH">Enhanced SIMD BVH Traversals for Radiation Transport</a></td>
-				<td style="border: 0" align="right"><a href="#SIMD_BVH">4</a></td> 
 			    </tr>
 			    <tr>
 				<td style="border: 0" align="left" ><a href="#SDF">Signed Distance Field Preconditioner</a></td>
-				<td style="border: 0" align="right"><a href="#SDF">5</a></td> 
 			    </tr>
 			    <tr>
 				<td style="border: 0" align="left" ><a href="#Summary">Summary</a></td>
-				<td style="border: 0" align="right"><a href="#Summar">6</a></td> 
 			    </tr>
 			    
 			</tbody>
@@ -151,10 +145,10 @@
 					
 			    </ul>
 			    <br>
-			    <li> This toolkit is not yet at its full potential. </li>
+			    <li> Not yet at its full potential</li>
 			    <br>
 			    <ul>
-				<li>Difficult to meet CAD quality required for robustness in DAGMC</li>
+				<li>Difficult to meet CAD quality required for robust DAGMC transpport</li>
 				<br>
 				<li class="fragment highlight-blue">Long simulation times (2.5-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation runtime</li>
 			    </ul>
@@ -300,7 +294,7 @@
 
 		    <section>
 			<h3> Surface Faceting </h3>
-			<p> <i>Faceting Tolerance</i>: maximum allowed diatance of farthest point on the facet from the analytic surface. </p>
+			<p> <i>Faceting Tolerance</i>: maximum allowed distance of farthest point on the facet from the analytic surface. </p>
 			<img src="images/facet_tol_zoomed.png" height="100px" style="margin: -10px 0px 0px 0px"/>
 			<ul>
 			    <li> Discretization reduces all surfaces to planar type regardless of analytic surface complexity.</li>
@@ -702,7 +696,7 @@
 			    <li>N:1 - test many rays against a single box at once</li>
 			    <li>1:N - test one ray against many boxes at once </li>
 			</ul>
-			    <p> Performance of selsected method selection will depend on <i>ray coherence</i>.</p>
+			    <p> Performance of selected method will depend on <i>ray coherence</i>.</p>
 			    <img src="../images/ray_coherence.jpg" width="500px"/>
 			    <table width="500px"><tbody><tr><td align="center"> coherent</td><td align="center">incoherent</td></tr></tbody></table>
 			    <small> <p>* image courtesy of <a href="https://software.intel.com/en-us/articles/embree-highly-optimized-visibility-algorithms-for-monte-carlo-ray-tracing">Intel</a></p></small>
@@ -919,7 +913,7 @@
 			    <tbody>
 				<tr>
 				    <td align="center"><b>MOAB</b></td>
-				    <td align="center"><b>EmDAG</b></td>
+				    <td align="center"><b>Embree</b></td>
 				</tr>
 				<tr>
 				    <td style="vertical-align:top" width="550px">
@@ -1025,7 +1019,7 @@
 			<h3> Enhanced SIMD BVH for MCRT Contributions </h3>
 			<br>
 			<ul>
-			    <li> SIMD BVH oriented closest to location algorithm</li>
+			    <li> SIMD oriented closest to location algorithm</li>
 			    <br>
 			    <li>Single-precision allows much of Embree's speed to be retained as majority of time is spent in BVH traversal.<a href="#bib"><small style="vertical-align:bottom">[3]</small></a></li>
 			    <br>
@@ -1049,7 +1043,7 @@
 			$$    \Omega(R^3)\rightarrow R $$
 			<p align="center"> where points on the surface are represented by the isocontour $v=0$.<a href="#bib"><small style="vertical-align:bottom">[6]</small></a> </p>
 			$$   \Omega(\vec{x}) - v  = 0 $$
-			<p align="center"> Important geometric properties can be easily recovered from this represntation. </p>
+			<p align="center"> Important geometric properties can be easily recovered from this representation. </p>
 			<table>
 			    <tbody>
 				<tr class="noBorder">
@@ -1247,8 +1241,10 @@
 			    <ul>
 				<li> Adaptive mesh refinement or octree may be useful. </li>
 				<li> Error estimation becomes more difficult with non-uniform techniques. </li>
-				<li> Other global uniform mesh methods will be explored.<a href="#bib"><small style="vertical-align:bottom">[7]</small></a></li>
+				<li> Other global mesh methods will be explored.<a href="#bib"><small style="vertical-align:bottom">[7]</small></a></li>
 			    </ul>
+			    <br>
+			    <li> Predicitve model of utilization will be important if global uniform mesh is not an option.</li>
 			</ul>
 		    </section>
 
@@ -1331,7 +1327,6 @@
 		    <section>
 			<h3> Enhanced SIMD BVH for MCRT Objectives </h3>
 			<ul>
-			    <br>
 			    <li>Implement a SIMD-oriented BVH builder in MOAB which generates memory contiguous single-precision bounding boxes around double-precision primitives (triangles).</li>
 			    <br>
 			    <li>Develop or extend a ray tracing kernel which is capable of SIMD traversal on the MOAB-provided BVH and associated double-precision triangles. </li>
@@ -1344,7 +1339,6 @@
 			    <br>
 			    <li>Demonstrate effectiveness for production models as well</li>
 			</ul>
-			<
 		    </section>
 		    
 		    <section>
@@ -1372,7 +1366,7 @@
 				<li>$h$ - preconditioner mesh step size</li>
 			    </ul>
 			    <br>
-			    <li>Explore global uniform mesh preconditioner solutions for production DAGMC models.</li>
+			    <li>Explore global mesh preconditioner solutions for production DAGMC models.</li>
 			    <br>
 			    <li>Demonstrate effectiveness of the utilization model and resulting data structure in toy and production models for neutron, photon, and charged particle transport.</li>
 			</ul>
@@ -1384,7 +1378,7 @@
 			<ul>
 			  <li>Feature-adaptive BVH construction implementation </li>
 			  <ul>
-			    <li> Adress any new mesh features encountered along the way </li>
+			    <li> Address any new mesh features encountered along the way </li>
 			  </ul>
 			  <li> Studying preconditioner utilization model </li>
 			  <ul>
@@ -1393,10 +1387,10 @@
 			  <li> SIMD closest to location algorithm </li>
 			  <li> SIMD ray tracing kernel design and implementation</li>
 			  <ul>
-			    <li> Extende Embree </li>
+			    <li> Extend Embree </li>
 			    <li> New kernel which is better aligned with MOAB design </li>
 			  </ul>
-			  <li> Explore global uniform mesh solutions for preconditioner </li>
+			  <li> Explore global mesh solutions for preconditioner </li>
 			  <li> Continue data collection and write </li>
 			</ul>
 
@@ -1411,7 +1405,7 @@
 			<ul>
 			    <li> A SIMD-based closest to location algorithm </li>
 			    <br>
-			    <li> A SIMD-based closest to location algorithm may allow us to avoid other, more costly methods of populating the SDF data structure.</li>
+			    <li> A SIMD-based closest to location algorithm may allow avoidance of other, more costly methods of populating the SDF data structure.</li>
 			    <br>
 			    <li> Coupling of the signed distance field to the BVH may provide insight for further accelerations.</li>
 			    <br>
@@ -1431,7 +1425,7 @@
 			    <li> Dr. Andrew Davis </li>
 			    <li> Lucas Jacobson </li>
 			</ul>
-			<p>And to the Nuclear Regulatory Comission for funding this work.</p>
+			<p>and to the Nuclear Regulatory Comission for funding this work</p>
 			<img align="center" src="images/NRClogo.png" height="100px"/>
 		    </section>
 		    
