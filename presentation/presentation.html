@@ -1305,6 +1305,7 @@
 			    <ul>
 				<li>These additional mesh features may only be elucidated by a higher-performance system.</li>
 			    </ul>
+			    <br>
 			    <li>Demonstrate effectiveness for transport on HV test model and other production models known to contain HV features.</li>
 			</ul>
 			
@@ -1314,7 +1315,7 @@
 			<h3> Enhanced SIMD BVH for MCRT Contributions </h3>
 			<br>
 			<ul>
-			    <li> SIMD BVH oriented closest to location algorithm</li>
+			    <li> SIMD-oriented closest to location algorithm</li>
 			    <br>
 			    <li>Single-precision allows much of Embree's speed to be retained as majority of time is spent in BVH traversal.<a href="#bib"><small style="vertical-align:bottom">[3]</small></a></li>
 			    <br>
@@ -1373,30 +1374,48 @@
 		    </section>
 
 		    <section>
-			<h3> Next Steps </h3>
-			<br>
+			<h3> Preliminary Plan and Timeline </h3>
+			<p align="left"><b>Short-term (next 3 months):</b></p>
 			<ul>
-			  <li>Feature-adaptive BVH construction implementation </li>
-			  <ul>
-			    <li> Address any new mesh features encountered along the way </li>
-			  </ul>
-			  <li> Studying preconditioner utilization model </li>
-			  <ul>
-			    <li> Obtain and modify one-group cross sections for control of $\lambda$ </li>
-			  </ul>
-			  <li> SIMD closest to location algorithm </li>
-			  <li> SIMD ray tracing kernel design and implementation</li>
-			  <ul>
-			    <li> Extend Embree </li>
-			    <li> New kernel which is better aligned with MOAB design </li>
-			  </ul>
-			  <li> Explore global mesh solutions for preconditioner </li>
-			  <li> Continue data collection and write </li>
+			    <li>Feature-adaptive BVH construction implementation in MOAB</li>
+			    <li>Predictive model development for SDF Preconditioner</li>
+			    <ul>
+				<li>Obtain and modify one-group cross-sections for control of $\lambda$</li>
+			    </ul>
+			    <li> Evaluate Feature-Adaptive BVH on HV test model and production models</li>
 			</ul>
+			<div class="fragment">
+			<p align="left"><b>Mid-term (next 6-8 months):</b></p>
+			<ul>
+			    <li>Explore global mesh options for SDF preconditioner</li>
+			    <ul>
+				<li>Either ARM or SPGrid</li>
+			    </ul>
+			    <li> Begin R&D of SIMD BVH for MCRT </li>
+			    <ul>
+				<li>Single-precision BVH construction in MOAB</li>
+				<li>Robust single-precision BVH traversal w/ double-precision triangle intersections</li>
+			    </ul>
+			</ul>
+			</div>
+		    </section>
 
-			<p>Feature-Adaptive BVH Construction: 1-2 months</p>
-			<p>Enhanced SIMD BVH for MCRT: 6-8 months</p>
-			<p>Signed Distance Field Preconditioner: 4-6 months</p>			    
+		    <section>
+			<h3> Preliminary Plan and Timeline </h3>
+			<p align="left"><b>End-term (8-12 months):</b></p>
+			<ul>
+			    <li> Demonstrate new ray tracing kernel effectiveness in comparison to native codes and EmDAG</li>
+			    <li> Finalize form of SDF Preconditioner </li>
+			    <ul>
+				<li>Global solution application</li>
+				<li>Selective application based on predictive model</li>
+			    </ul>
+			    <li>Demonstrate SDF preconditioner effectiveness on toy and production models</li>
+			</ul>
+			<br><br>
+			<div class="fragment">
+			<b>Complete data collection & write</b>
+			</div>
 		    </section>
 		    
 		    <section>
