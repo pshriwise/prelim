@@ -113,7 +113,7 @@
 				    <td style="vertical-align:top">
 					<ul>
 					    <li>Variants of Computational Solid Geometry (CSG)</li>
-					    <li>Volumes formed from boolean combinations of simple implicit surfaces</li>
+					    <li>Volumes formed from Boolean combinations of simple implicit surfaces</li>
 					    <li>Geometry queries are analytic in nature</li>
 					</ul>
 				    </td>
@@ -148,9 +148,9 @@
 			    <li> Not yet at its full potential</li>
 			    <br>
 			    <ul>
-				<li>Difficult to meet CAD quality required for robust DAGMC transpport</li>
+				<li>Difficult to meet CAD quality required for robust DAGMC transport</li>
 				<br>
-				<li class="fragment highlight-blue">Long simulation times (2.5-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation runtime</li>
+				<li class="fragment highlight-blue">Long simulation times (2.5-10<i>x</i> longer than native codes) resulting in  hours or even days of additional simulation run-time</li>
 			    </ul>
 			</ul>
 		    </section>
@@ -197,11 +197,11 @@
 			    <br>
 			    <li class="fragment">Requires less human time in model generation </li>
 			    <p align="left"><b>Benefits of this work:</b></p>
-			    <li class="fragment">Performance comparable to native geometry makes this more realistic/deisrable for a more broad range of problems.</li>
+			    <li class="fragment">Performance comparable to native geometry makes this more realistic/desirable for a more broad range of problems.</li>
 			    <br>
 			    <li class="fragment">Current problems requiring CAD-based MCRT will benefit from enhanced performance.</li>
 			    <br>			    
-			    <li class="fragment">New methods may be necessary for reasonable runtimes with charged particle transport.</li>
+			    <li class="fragment">New methods may be necessary for reasonable run-times with charged particle transport.</li>
 			</ul>
 		    </section>
 		    
@@ -459,7 +459,7 @@
 		    </section>
 		     
 		    <section>
-			<h3> High Valence OBB Investigation </h3>
+			<h3> High Valence Bounding Box Investigation </h3>
 			<img src="../images/obbs_wsr_0.95.png" height="500px" align="center" />
 		    </section>
 		    
@@ -654,7 +654,7 @@
 			<br><br>
 			
 			<ul>
-			    <li> Adaptive building addresses common mesh feature which is difficult for generalized heuristics to cope with and is deterimental to performance. </li>
+			    <li> Adaptive building addresses common mesh feature which is difficult for generalized heuristics to cope with and is detrimental to performance. </li>
 			    <br>
 			    <li> BVH heuristic adaptation maintains expected O(logN) performance without the need for additional triangles or mesh alteration. </li>
 			</ul>
@@ -897,7 +897,7 @@
 		  </section>
 		    <section>
 			<h3> Enhanced SIMD BVH Traversal for MCRT</h3>
-			<p> Embree does not meet the requirments of the robust tracking algorithm used by DAGMC as it currently exists. </p>
+			<p> Embree does not meet the requirements of the robust tracking algorithm used by DAGMC as it currently exists. </p>
 			<ul>
 			    <li> Single to double precision conversion decouples logical and numerical position of particles. </li>
 			    <li> Embree has no known capability for deeper mesh interrogation for enhanced logical tracking. </li>
@@ -985,7 +985,7 @@
 					<p>
 					    <ul>	
 						<li> mesh provision via MOAB's direct access</li>
-						<li>SIMD traversal in single-precision hieararchy</li>
+						<li>SIMD traversal in single-precision hierarchy</li>
 						<li>SIMD double-precision triangle intersections</li>
 					    </ul>
 					</p>
@@ -1131,7 +1131,7 @@
 			    <li>uses MOAB's structured mesh interface</li>
 			    <li>populated using MOAB's ray tracing interface (closest to location)</li>
 			    <ul>
-				<li>disambiguates distance value signs using DAGMC's point containment algorithm</li>
+				<li>disambiguate distance value signs using DAGMC's point containment algorithm</li>
 			    </ul>
 			</ul>
 			<img src="../images/sdf_sphere.png" height="500px"/>
@@ -1177,7 +1177,7 @@
 		    
 		    <section>
 			<h3> Initial Results </h3>
-			<p align="center"> $$ u = \frac{dagmc\, rays -  dagmc\, w/\, precond.\, rays}{dagmc\, rays}$$ </p>
+			<p align="center"> $$ u = \frac{DAGMC\, rays -  DAGMC\, w/\, precond.\, rays}{DAGMC\, rays}$$ </p>
 			<object data="precond_utilization.html" class="stretch"></object>
 		    </section>
 
@@ -1190,7 +1190,7 @@
 			<div class="fragment">
 			<p align="left"> A sample problem of electron transport from MCNP6 tests: </p>
 			<ul>
-			    <li> Flouresence test of 1 keV - 100 keV photons on Fe/W target </li>
+			    <li> Fluorescence test of 1 keV - 100 keV photons on Fe/W target </li>
 			    <li> 5,000 histories </li>
 			    <li> single-event electron physics </li>
 			</ul>
@@ -1244,7 +1244,7 @@
 				<li> Other global mesh methods will be explored.<a href="#bib"><small style="vertical-align:bottom">[7]</small></a></li>
 			    </ul>
 			    <br>
-			    <li> Predicitve model of utilization will be important if global uniform mesh is not an option.</li>
+			    <li> Predictive model of utilization will be important if global uniform mesh is not an option.</li>
 			</ul>
 		    </section>
 
@@ -1276,7 +1276,7 @@
 			<h3> Feature-Adaptive BVH Contributions </h3>
 			<br><br>
 			<ul>
-			    <li> Adaptive building addresses common mesh feature which is difficult for generalized heuristics to cope with and is deterimental to performance. </li>
+			    <li> Adaptive building addresses common mesh feature which is difficult for generalized heuristics to cope with and is detrimental to performance. </li>
 			    <br>
 			    <li> BVH heuristic adaptation maintains expected O(logN) performance without the need for additional triangles or mesh alteration. </li>
 			</ul>
@@ -1305,7 +1305,7 @@
 			    <ul>
 				<li>These additional mesh features may only be elucidated by a higher-performance system.</li>
 			    </ul>
-			    <li>Demonstrate effecitveness for transport on HV test model and other production models known to contain HV featires.</li>
+			    <li>Demonstrate effectiveness for transport on HV test model and other production models known to contain HV features.</li>
 			</ul>
 			
 		    </section>
@@ -1417,15 +1417,15 @@
 		    </section>
 
 		    <section>
-			<h3> Acknowledgements </h3>
+			<h3> Acknowledgments </h3>
 			<br><br>
-			<p> I would like to thank all members of the Computational Nuclear Engineering Reserach Group here at UW and in particular: </p>
+			<p> I would like to thank all members of the Computational Nuclear Engineering Research Group here at UW and in particular: </p>
 			<ul>
 			    <li> Dr. Paul Wilson </li>
 			    <li> Dr. Andrew Davis </li>
 			    <li> Lucas Jacobson </li>
 			</ul>
-			<p>and to the Nuclear Regulatory Comission for funding this work</p>
+			<p>and to the Nuclear Regulatory Commission for funding this work</p>
 			<img align="center" src="images/NRClogo.png" height="100px"/>
 		    </section>
 		    
