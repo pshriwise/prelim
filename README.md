@@ -1,8 +1,11 @@
 Preliminary defense document for Patrick Shriwise at the University of Wisconsin - Madison
 
-
 To Build Presentation
 =====================
+
+A .pdf exists of the presentation given on 11/28/16 but if you'd like to view
+the presentation interactively the following instructions will allow one to do
+so.
 
 Clone repository:
 
