@@ -1,6 +1,6 @@
 [submodule "presentation/reveal.js"]
 	path = presentation/reveal.js
-	url = git@github.com:pshriwise/reveal.js
+	url = https://github.com/pshriwise/reveal.js
 [submodule "presentation/--force"]
 	path = presentation/presentable
 	url = https://github.com/pshriwise/presentable
